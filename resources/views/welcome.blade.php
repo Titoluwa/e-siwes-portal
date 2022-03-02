@@ -7,7 +7,7 @@
         <title>Welcome</title>
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:200,600" rel="stylesheet">
 
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -20,15 +20,24 @@
                 background-size: cover;
                 width:100%;
                 height:100vh;
-                font-family: 'Nunito', sans-serif;
+                font-family: 'Poppins', sans-serif;
                 font-weight: 200;
                 margin: 0;
             }
             .nav-color{
                 background: #0B2D78;
             }
+            .oth-color{
+                color:#F9C920;
+            }
+            .othe-color{
+                color: #F4F0E8;
+            }
+            .display-5{
+                font-size: 45px;
+            }
             .full-height {
-                height: 100vh;
+                height: 90vh;
             }
 
             .flex-center {
@@ -48,9 +57,17 @@
             }
 
             .content {
+                background: rgba(62, 165, 219, 0.8);
+                /* background: rgba(244, 240, 232, 0.8); */
+                /* border-radius: 10px; */
+                /* background-color: #3EA5DB; */
                 text-align: center;
             }
-            /* 
+            /* .logo{
+                width: 20px;
+                height: 20px;
+            } */
+            
             .title {
                 font-size: 84px;
             }
@@ -67,14 +84,14 @@
 
             .m-b-md {
                 margin-bottom: 30px;
-            } */
+            }
         </style>
     </head>
     <body>
         <nav class="navbar navbar-expand-md navbar-dark nav-color">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Logo here*
+                    <img class="logo" width="75" height="75" src="{{ asset('images/OAU-Logo.png') }}" alt="">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -135,22 +152,17 @@
         </nav>
         <div class="flex-center position-ref full-height">  
 
-            <!-- <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+            <div class="p-3 content oth-color">
+                <div class="px-5 py-3">
+                    <h1 class="display-3 font-weight-bold">OAU e-SIWES Portal</h1>
+                    <h3 class="display-5 text-uppercase font-weight-bold">Welcome</h3>
+                </div>    
+                <div class="p-4">
+                    <a class="px-2 h5 othe-color" href="http://">Register as a STUDENT</a>
+                    <a class="px-2 h5 othe-color" href="http://">Register as a SCHOOL SUPERVISOR</a>
+                    <a class="px-2 h5 othe-color" href="http://">Register as a INDUSTRY BASED SUPERVISOR</a>
                 </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div> -->
+            </div>
         </div>
     </body>
 </html>
