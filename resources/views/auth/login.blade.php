@@ -14,13 +14,13 @@
 
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
 
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <style>
             html, body {
-                font-family: 'Nunito', sans-serif;
+                font-family: 'Poppins', sans-serif;
                 /* font-weight: 200; */
                 
             }
@@ -54,7 +54,9 @@
                 </div>
                 <div class="col-lg-5 col-md-6 col-sm-7 bg-white pt-5">
                     <div class="text-center pt-5">
-                        <img class="logo" src="{{ asset('images/OAU-Logo.png') }}" alt="">
+                        <a class="navbar-brand" href="{{ url('/') }}">
+                            <img class="logo" src="{{ asset('images/OAU-Logo.png') }}" alt="">
+                        </a>
                     </div>
                     <div class="text-center">
                         <h4 class="pt-3 font-weight-bolder" style="color:#0B2D78;">OBAFEMI AWOLOWO UNIVERSITY</h4>

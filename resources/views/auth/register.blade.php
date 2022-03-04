@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
+@section('title', 'Register')
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="oth-color card-header" style="font-weight: 600;">{{ __('Student Registration') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
@@ -77,21 +79,8 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> 
 
-                        <div class="form-group row">
-                            <label for="staff_id" class="col-md-4 col-form-label text-md-right">{{ __('Staff Id') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="staff_id" type="text" class="form-control @error('staff_id') is-invalid @enderror" name="staff_id" value="{{ old('staff_id') }}" required autocomplete="staff_id" autofocus>
-
-                                @error('staff_id')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
                         <div class="form-group row">
                             <label for="gender" class="col-md-4 col-form-label text-md-right">{{ __('Gender') }}</label>
 
