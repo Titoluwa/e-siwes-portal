@@ -31,14 +31,26 @@
         .nav-color{
             background: #0B2D78;
         }
+        .nav-text-color{
+            color: #0B2D78;
+        }
         .oth-color{
             color: #F9C920;
+        }
+        .bg-oth-color{
+            background: #F9C920;
         }
         .othe-color{
             color: #F4F0E8;
         }
+        .bg-othe-color{
+            background: #F4F0E8;
+        }
         .display-5{
             font-size: 45px;
+        }
+        .display-7{
+            font-size: 25px;
         }
         .full-height {
             height: 90vh;

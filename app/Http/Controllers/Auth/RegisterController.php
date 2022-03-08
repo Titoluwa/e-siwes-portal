@@ -47,6 +47,22 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+    // private function validateRequest(){
+    //     return request()->validate([
+    //         'last_name' => 'required|string|max:100',
+    //         'first_name' => 'required|string|max:100',
+    //         'middle_name' => 'string|max:100',
+    //         'matric_no' => 'string|max:12|min:12|unique:users',
+    //         'staff_id' => 'string|max:100',
+    //         'faculty' => 'string|max:100',
+    //         'department' => 'required|string|max:100',
+    //         'course_of_study' => 'string|max:100',
+    //         'contact_no' => 'required|integer',
+    //         'gender' => 'required|string|max:100',          
+    //         'email' => 'required|string|email|max:255|unique:users',
+    //         'password' => 'required|string|min:8|confirmed',
+    //     ]);
+    // }
     protected function validator(array $data)
     {
         // dd($data);
@@ -54,7 +70,7 @@ class RegisterController extends Controller
             'last_name' => ['required', 'string', 'max:100'],
             'first_name' => ['required', 'string', 'max:100'],
             'middle_name' => ['string', 'max:100'],
-            'matric_no' => ['string', 'max:100'],
+            'matric_no' => ['string', 'max:12', 'min:12', 'unique:users'],
             'staff_id' => ['string', 'max:100'],
             'faculty' => ['string', 'max:100'],
             'department' => ['required', 'string', 'max:100'],
@@ -74,6 +90,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // User::create($this->validateRequest());
         return User::create([
             'last_name' => $data['last_name'],
             'first_name' => $data['first_name'],

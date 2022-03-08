@@ -40,6 +40,9 @@
                 width: 140px;
                 height: 140px;
             }
+        .bg-othe-color{
+            background: #F4F0E8;
+        }
             /* color:#F9C920; */
             /* color:#0B2D78; */
 
@@ -52,7 +55,7 @@
                     <div class="bg-imgg"></div>
                     <!-- <img class="img-fluid" src="{{ asset('images/ES.webp') }}" alt="login image"> -->
                 </div>
-                <div class="col-lg-5 col-md-6 col-sm-7 bg-white pt-5">
+                <div class="col-lg-5 col-md-6 col-sm-7 bg-othe-color pt-5">
                     <div class="text-center pt-5">
                         <a class="navbar-brand" href="{{ url('/') }}">
                             <img class="logo" src="{{ asset('images/OAU-Logo.png') }}" alt="">

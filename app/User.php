@@ -15,13 +15,13 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $guarded = ['id', 'role_id', 'status_id'];
+    protected $guarded = ['id', 'status_id'];
     // protected $fillable = [
-    //     'name', 'email', 'password', 
+    //     'email', 'password', 
     //     'last_name', 'first_name', 
     //     'middle_name', 'matric_no',
     //     'staff_id','faculty','department','course_of_study' ,
-    //     'contact_no',
+    //     'contact_no', 'role_id', 'status_id'
     //     'gender',
     // ];
 
