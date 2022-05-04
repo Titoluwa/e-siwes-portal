@@ -10,10 +10,13 @@
                 <div class="bg-othe-color nav-text-color card-header text-center display-7" style="font-weight: 600;">Industry Based Supervisor Registration</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="/industryreg">
                         @csrf
 
                         <input type="hidden" name="role_id" value="2">
+                        <input type="hidden" name="matric_no" id="matric_no" value="null">
+                        <input type="hidden" name="faculty" id="faculty" value="null">
+                        <input type="hidden" name="course_of_study" id="course_of_study" value="null">
 
                         <div class="form-group row">
                             <label for="email" class="col-md-2 col-form-label">E-Mail Address</label>

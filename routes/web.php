@@ -19,6 +19,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/student',  'StudentController@create')->name('student');
+Route::post('/studentreg', 'StudentController@store');
+
+Route::get('/school',  'SchoolController@create')->name('school');
+Route::post('/schoolreg', 'SchoolController@store');
+
+Route::get('/industry',  'IndustryController@create')->name('industry');
+Route::post('/industryreg', 'IndustryController@store');
+
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/school',  'PageController@schoolreg')->name('school');
-Route::get('/industry',  'PageController@industryreg')->name('industry');

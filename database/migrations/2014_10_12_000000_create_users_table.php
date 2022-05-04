@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('first_name');
             $table->string('middle_name')->default(null);
             $table->integer('contact_no');
-            $table->string('matric_no')->unique()->default(null);
+            $table->string('matric_no')->default(null);
             $table->string('staff_id')->default(null);
             $table->string('gender');
             $table->string('faculty')->default(null);

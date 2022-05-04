@@ -1,21 +1,21 @@
 @extends('layouts.app')
 
-@section('title', 'Register')
+@section('title', 'Student Register')
 
 @section('content')
 <div class="py-5 container">
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card bg-othe-color">
-                <div class="bg-othe-color nav-text-color card-header text-center display-7" style="font-weight: 600;">School Supervisor Registration</div>
+                <div class="bg-othe-color nav-text-color card-header text-center display-7" style="font-weight: 600;">Student Registration</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="/studentreg">
                         @csrf
 
-                        <input type="hidden" name="role_id" value="1">
-                        <input type="hidden" name="matric_no" id="matric_no" value="null">
-                        <input type="hidden" name="course_of_study" id="course_of_study" value="null">
+                        <input type="hidden" name="role_id" value="0">
+                        <input type="hidden" name="staff_id" value="null">
+                        
 
                         <div class="form-group row">
                             <label for="email" class="col-md-2 col-form-label">E-Mail Address</label>
@@ -29,18 +29,17 @@
                                     </span>
                                 @enderror
                             </div>
+                            <label for="matric_no" class="col-md-2 col-form-label">Matric Number</label>
 
-                            <label for="staff_id" class="col-md-2 col-form-label">Staff ID</label>
                             <div class="col-md-4">
-                                <input id="staff_id" type="text" class="form-control @error('staff_id') is-invalid @enderror" name="staff_id" value="{{ old('staff_id') }}" required autocomplete="staff_id" autofocus>
+                                <input id="matric_no" type="text" class="form-control @error('matric_no') is-invalid @enderror" name="matric_no" value="{{ old('matric_no') }}" required autocomplete="matric_no" autofocus>
 
-                                @error('staff_id')
+                                @error('matric_no')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
-                            
                         </div>
 
                         <div class="form-group row">
@@ -87,6 +86,7 @@
                                 <input class="form-check-input" type="radio" name="gender" id="male" value="Male">
                                 <label class="form-check-label" for="male">Male</label>
                             </div>
+                            
                         </div>
 
                         <div class="form-group row">
@@ -100,6 +100,7 @@
                                     </span>
                                 @enderror
                             </div>
+
                             <label for="department" class="col-md-2 col-form-label">Department</label>
                             <div class="col-md-4">
                                 <input id="department" type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{ old('department') }}" required autocomplete="department" autofocus>
@@ -113,8 +114,19 @@
                         </div>
                         
                         <div class="form-group row">
-                            <label for="contact_no" class="col-md-2 col-form-label">Contact Number</label>
+                            <label for="course_of_study" class="col-md-2 col-form-label">Course of Study</label>
                             <div class="col-md-4">
+                                <input id="course_of_study" type="text" class="form-control @error('course_of_study') is-invalid @enderror" name="course_of_study" value="{{ old('course_of_study') }}" required autocomplete="course_of_study" autofocus>
+
+                                @error('course_of_study')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <label for="contact_no" class="col-md-2 col-form-label">Contact Number</label>
+                            <div class="col-md-3">
                                 <input id="contact_no" type="number" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ old('contact_no') }}" required autocomplete="contact_no" autofocus>
 
                                 @error('contact_no')

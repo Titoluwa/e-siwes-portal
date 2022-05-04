@@ -111,7 +111,7 @@
                                         Register
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('register') }}">
+                                        <a class="dropdown-item" href="{{ route('student') }}">
                                             Register as a Student
                                         </a>
                                         <a class="dropdown-item" href="{{ route('school') }}">

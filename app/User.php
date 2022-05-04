@@ -21,7 +21,7 @@ class User extends Authenticatable
     //     'last_name', 'first_name', 
     //     'middle_name', 'matric_no',
     //     'staff_id','faculty','department','course_of_study' ,
-    //     'contact_no', 'role_id', 'status_id'
+    //     'contact_no', 'role_id', 'status_id',
     //     'gender',
     // ];
 

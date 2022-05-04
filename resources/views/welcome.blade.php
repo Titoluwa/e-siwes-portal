@@ -13,7 +13,7 @@
                         <h3 class="display-5 text-uppercase font-weight-bold">Welcome</h3>
                     </div>    
                     <div class="p-4">
-                        <a class="px-2 h5 othe-color" href="{{ route('register') }}">Register as a STUDENT</a>
+                        <a class="px-2 h5 othe-color" href="{{ route('student') }}">Register as a STUDENT</a>
                         <a class="px-2 h5 othe-color" href="{{ route('school') }}">Register as a SCHOOL SUPERVISOR</a>
                         <a class="px-2 h5 othe-color" href="{{ route('industry') }}">Register as an INDUSTRY BASED SUPERVISOR</a>
                     </div>
