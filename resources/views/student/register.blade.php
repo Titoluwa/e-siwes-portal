@@ -10,7 +10,7 @@
                 <div class="bg-othe-color nav-text-color card-header text-center display-7" style="font-weight: 600;">Student Registration</div>
 
                 <div class="card-body">
-                    <form method="POST" action="/studentreg">
+                    <form method="POST" action="/studentreg" enctype="multipart/form-data">
                         @csrf
 
                         <input type="hidden" name="role_id" value="0">
@@ -135,6 +135,18 @@
                                     </span>
                                 @enderror
                             </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-3" for="profile_pic">Upload your profile picture</label>
+                            <div class="col-md-5">
+                                <input type="file" class="form-control" id="profile_pic" name="profile_pic">
+                                @error('profile_pic')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            
                         </div>
                         
                         <div class="form-group row">

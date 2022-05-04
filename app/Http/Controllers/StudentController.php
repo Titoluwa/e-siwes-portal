@@ -18,11 +18,15 @@ class StudentController extends Controller
     }
     public function store(Request $request)
     {
+        
         $user = User::create($this->validateRequest()); 
         $user->last_name = Str::ucfirst($request->last_name);
         $user->first_name = Str::ucfirst($request->first_name);
         $user->middle_name = Str::ucfirst($request->middle_name);
         $user->password = Hash::make($request->password);
+        if ($request->hasFile('profile_pic')){
+            $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
+        }
         $user->save();
         return redirect('login');
     }
@@ -40,7 +44,8 @@ class StudentController extends Controller
             'contact_no'=> 'required|integer',
             'gender'=> 'required|string|max:100',
             'password' => 'required|string|min:8|confirmed',
-            'staff_id' => 'string'
+            'staff_id' => 'string',
+            'profile_pic' => 'required',
         ]);
     }
     // public function fetch(Request $request){

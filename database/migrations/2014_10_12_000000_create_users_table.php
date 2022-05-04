@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->integer('status_id')->default(1);            
             $table->string('last_name');
             $table->string('first_name');
+            $table->string('profile_pic')->nullable();
             $table->string('middle_name')->default(null);
             $table->integer('contact_no');
             $table->string('matric_no')->default(null);
