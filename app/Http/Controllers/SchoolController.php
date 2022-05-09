@@ -13,6 +13,9 @@ use App\Mail\UserRegMail;
 
 class SchoolController extends Controller
 {
+    public function index(){
+        return view('school.home');
+    }
     // Show the registraton form for the student user
     public function create(){
         return view('school.register');

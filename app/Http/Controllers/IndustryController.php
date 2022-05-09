@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Hash;
 
 class IndustryController extends Controller
 {
+    public function index(){
+        return view('industry.home');
+    }
     // Show the registraton form for the industry supervisor user
     public function create(){
         return view('industry.register');

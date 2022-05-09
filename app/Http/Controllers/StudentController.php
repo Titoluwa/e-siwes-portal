@@ -16,6 +16,9 @@ class StudentController extends Controller
     public function create(){
         return view('student.register');
     }
+    public function index(){
+        return view('student.home');
+    }
     public function store(Request $request)
     {
         

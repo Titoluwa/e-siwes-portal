@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,11 +22,12 @@ Auth::routes();
 
 Route::get('/student',  'StudentController@create')->name('student');
 Route::post('/studentreg', 'StudentController@store');
+Route::get('/studenthome', 'StudentController@index')->name('studenthome')->middleware('student');
 
 Route::get('/school',  'SchoolController@create')->name('school');
 Route::post('/schoolreg', 'SchoolController@store');
+Route::get('/schoolhome', 'SchoolController@index')->name('schoolhome')->middleware('school');
 
 Route::get('/industry',  'IndustryController@create')->name('industry');
 Route::post('/industryreg', 'IndustryController@store');
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/industryhome', 'IndustryController@index')->name('industryhome')->middleware('industry');
