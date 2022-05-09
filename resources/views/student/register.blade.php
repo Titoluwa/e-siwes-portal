@@ -77,15 +77,21 @@
                                     </span>
                                 @enderror
                             </div>
-                            <label for="gender" class="col-md-2 col-form-label">Gender</label>
-                            <div class="pl-3 form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
-                                <label class="form-check-label" for="female">Female</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="gender" id="male" value="Male">
-                                <label class="form-check-label" for="male">Male</label>
-                            </div>
+
+                            <label for="gender" class="col-md-2 col-form-label @error('gender') is-invalid @enderror">Gender</label>
+                                <div class="pl-3 form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
+                                    <label class="form-check-label" for="female">Female</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="male" value="Male">
+                                    <label class="form-check-label" for="male">Male</label>
+                                </div>
+                            @error('gender')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                             
                         </div>
 
@@ -137,9 +143,9 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-form-label col-md-3" for="profile_pic">Upload your profile picture</label>
-                            <div class="col-md-5">
-                                <input type="file" class="form-control" id="profile_pic" name="profile_pic">
+                            <label class="col-form-label col-md-2" for="profile_pic">Upload your profile picture</label>
+                            <div class="col-md-4">
+                                <input type="file" class="@error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic">
                                 @error('profile_pic')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

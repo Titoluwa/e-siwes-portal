@@ -71,7 +71,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-2"></div>
                                     <div class="text-center col-md-8">
-                                        <input class="form-control" type="email" name="email" id="email" placeholder="E-mail Address">
+                                        <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" id="email" value="{{ old('email') }}" placeholder="E-mail Address">
 
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
@@ -85,7 +85,9 @@
                                 <div class="form-group row pt-2">
                                     <div class="col-md-2"></div>
                                     <div class="text-center col-md-8">
-                                        <input class="form-control" type="password" name="password" id="password" placeholder="Password">
+                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password">
+
+                                        <!-- <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" id="password" placeholder="Password"> -->
 
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">

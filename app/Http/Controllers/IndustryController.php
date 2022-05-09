@@ -8,14 +8,14 @@ use App\User;
 use DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\UserRegMail;
 
 class IndustryController extends Controller
 {
+    // Show the registraton form for the industry supervisor user
     public function create(){
         return view('industry.register');
     }
+    // Store the inputed information of the industry supervisor user
     public function store(Request $request)
     {
         $user = User::create($this->validateRequest()); 
@@ -23,9 +23,13 @@ class IndustryController extends Controller
         $user->first_name = Str::ucfirst($request->first_name);
         $user->middle_name = Str::ucfirst($request->middle_name);
         $user->password = Hash::make($request->password);
+        if ($request->hasFile('profile_pic')){
+            $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
+        }
         $user->save();
         return redirect('login');
     }
+    // To validate the inputs
     private function validateRequest(){
         return request()->validate([
             'role_id'=> 'required|integer',
@@ -38,6 +42,7 @@ class IndustryController extends Controller
             'contact_no'=> 'required|integer',
             'gender'=> 'required|string|max:20',
             'password' => 'required|string|min:8|confirmed',
+            'profile_pic' => 'required',
             'matric_no' => 'string', 'faculty' => 'string','course_of_study' => 'string',
         ]);
     }

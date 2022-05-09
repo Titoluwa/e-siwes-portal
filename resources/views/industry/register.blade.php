@@ -113,7 +113,17 @@
                                 @enderror
                             </div>
                         </div>
-                                              
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2" for="profile_pic">Upload your office stamp</label>
+                            <div class="col-md-4">
+                                <input type="file" class="@error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic">
+                                @error('profile_pic')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>                      
                         <div class="form-group row">
                             <label for="password" class="col-md-2 col-form-label">Password</label>
                             <div class="col-md-4">
