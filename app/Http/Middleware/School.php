@@ -21,7 +21,7 @@ class School
         }
         // role_id 0 = Student
         if (Auth::user()->role_id==0){
-            return redirect()->route('studenthome');
+            return redirect()->route('student');
         }
         // role_id 1 = School
         if (Auth::user()->role_id==1){
@@ -29,7 +29,7 @@ class School
         }
         // role_id 2 = Indsustry
         if (Auth::user()->role_id==2){
-            return redirect()->route('industryhome');
+            return redirect()->route('industry');
         }
     }
 }

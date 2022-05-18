@@ -17,7 +17,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
         html, body {
-            background-image: url('images/E3.webp');
+            background-image: url('images/E3.webp') !important;
+            background-color: white;
             position: relative;
             background-position: center;
             background-repeat: no-repeat;
@@ -27,6 +28,9 @@
             font-family: 'Poppins', sans-serif;
             font-weight: 200;
             margin: 0;
+        }
+        .sidebar-color{
+            background-color: #3EA5DB;
         }
         .nav-color{
             background: #0B2D78;
@@ -76,6 +80,13 @@
             /* letter-spacing: .1rem; */
             text-decoration: none;
         }
+        b{
+            font-weight: bold;
+        }
+        .no-deco:hover{
+            text-decoration: none;
+            
+        }
     </style>
 </head>
 <body>
@@ -111,13 +122,13 @@
                                         Register
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('student') }}">
+                                        <a class="dropdown-item" href="{{ route('studentform') }}">
                                             Register as a Student
                                         </a>
-                                        <a class="dropdown-item" href="{{ route('school') }}">
+                                        <a class="dropdown-item" href="{{ route('schoolform') }}">
                                             Register as a School Supervisor
                                         </a>
-                                        <a class="dropdown-item" href="{{ route('industry') }}">
+                                        <a class="dropdown-item" href="{{ route('industryform') }}">
                                             Register as an Industry based Supervisor
                                         </a>
                                     </div>
@@ -144,13 +155,16 @@
                                     </form>
                                 </div>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/">{{ __('Home') }}</a>
+                            </li>
                         @endguest
                     </ul>
                 </div>
             </div>
         </nav>
 
-        <main class="">
+        <main class="container-fluid">
             @yield('content')
         </main>
     </div>
@@ -158,5 +172,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <script src="/js/all.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
 </body>
 </html>

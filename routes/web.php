@@ -20,14 +20,15 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/student',  'StudentController@create')->name('student');
+Route::get('/studentform',  'StudentController@create')->name('studentform');
 Route::post('/studentreg', 'StudentController@store');
-Route::get('/studenthome', 'StudentController@index')->name('studenthome')->middleware('student');
+Route::get('/student', 'StudentController@index')->name('student')->middleware('student');
+Route::get('/student/profile', 'StudentController@show')->middleware('student');
 
-Route::get('/school',  'SchoolController@create')->name('school');
+Route::get('/schoolform',  'SchoolController@create')->name('schoolform');
 Route::post('/schoolreg', 'SchoolController@store');
-Route::get('/schoolhome', 'SchoolController@index')->name('schoolhome')->middleware('school');
+Route::get('/school', 'SchoolController@index')->name('school')->middleware('school');
 
-Route::get('/industry',  'IndustryController@create')->name('industry');
+Route::get('/industryform',  'IndustryController@create')->name('industryform');
 Route::post('/industryreg', 'IndustryController@store');
-Route::get('/industryhome', 'IndustryController@index')->name('industryhome')->middleware('industry');
+Route::get('/industry', 'IndustryController@index')->name('industryhome')->middleware('industry');

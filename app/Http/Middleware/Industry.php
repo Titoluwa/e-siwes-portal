@@ -21,11 +21,11 @@ class Industry
         }
         // role_id 0 = Student
         if (Auth::user()->role_id==0){
-            return redirect()->route('studenthome');
+            return redirect()->route('student');
         }
         // role_id 1 = School
         if (Auth::user()->role_id==1){
-            return redirect()->route('schoolhome');
+            return redirect()->route('school');
         }
         // role_id 2 = Industry
         if (Auth::user()->role_id==2){
