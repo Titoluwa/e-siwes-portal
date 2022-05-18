@@ -4,11 +4,22 @@
 
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header bg-oth-color"><h3 class="text-center">{{ __('Particulars') }}</h3></div>
+            <div class="card border-warning">
+                <div class="card-header bg-transparent clearfix">
+
+                    <div class="float-left mt-2">
+                        <h3 style="font-weight: 900;">{{ __("STUDENT PARTICULAR") }}</h3>
+                    </div>
+                    <div class="float-right mt-4">
+                        <a href="">
+                            <i class="fas fa-edit"></i>EDIT
+                        </a>
+                    </div>
+                    
+                </div>
 
                 <div class="card-body">
-                    <img class="rounded float-right img-thumbnail" src="{{asset('storage/'. Auth::user()->profile_pic)}}" alt="profile image" srcset="" width="150" height="150">
+                    <img class="rounded float-right img-thumbnail" src="{{asset('storage/'. Auth::user()->profile_pic)}}" alt="profile image" srcset="" width="170" height="170">
                     <div>
                         <p>
                             Registration Number: <b>{{Auth::user()->matric_no}}</b>
@@ -23,7 +34,7 @@
                             Faculty: <b>{{Auth::user()->faculty}}</b>
                         </p> 
                         <p>
-                        Department: <b>{{Auth::user()->department}}</b>
+                            Department: <b>{{Auth::user()->department}}</b>
                         </p>
                         <p>
                             Course of study: <b>{{Auth::user()->course_of_study}}</b>
@@ -39,11 +50,7 @@
                             <img src="" alt="upload signature" width="150" height="30">
                         </p>
                     </div>
-                    <div class="float-right">
-                        <button type="submit" class="btn bg-oth-color nav-text-color">
-                            EDIT
-                        </button>
-                    </div>
+                    
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-2 bg-othe-color othe-color shadow-sm">
         <div class="m-2">
-                <h6 class="mt-3 text-center" style="font-size:17px; font: weight 800px;"><a href="/student" class="no-deco oth-color"> Student </a></h6>
+                <h6 class="mt-3 text-center" style="font-size:17px; font-weight: 700;"><a href="/student" class="no-deco oth-color"> Student </a></h6>
                 <hr>
                 <ul class="nav flex-column mb-auto">
                     <li>

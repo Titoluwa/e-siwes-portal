@@ -72,7 +72,7 @@
             border-radius: 5px;
             text-align: center;
         }            
-        div > a {
+        .navv{
             color: white;
             padding: 0 25px;
             font-size: 16px;
@@ -92,7 +92,7 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark nav-color">
-            <div class="container">
+            <div class="container navv">
                 <!-- <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a> -->
