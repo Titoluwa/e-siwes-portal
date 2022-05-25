@@ -114,7 +114,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-form-label col-md-2" for="profile_pic">Upload your office stamp</label>
+                            <label class="col-form-label col-md-2" for="profile_pic">Office Logo</label>
                             <div class="col-md-4">
                                 <input type="file" class="@error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic">
                                 @error('profile_pic')

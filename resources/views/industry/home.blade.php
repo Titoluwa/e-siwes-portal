@@ -1,21 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header bg-oth-color">{{ __('Industry Supervisor Dashboard') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8">
+        <div class="card border-warning">
 
-                    {{ __('You are logged in!') }}
-                </div>
+            <div class="card-header border-warning bg-transparent">
+                <h5 class="mt-2">{{ __('Dashboard') }}</h5>
+            </div>
+
+            <div class="card-body border-warning text-center">
+                <h3 class="">Welcome, <b>{{Auth::user()->first_name}}!</b></h3>
+                <p class="">You're logged in</p>  
+            </div>
+            
+            
+            <div class="p-5 text-center">
+                <a class="px-2 h5 oth-color" href="/industry/org">Register Organisation</a>
+                <a class="px-2 h5 oth-color" href="/industry/student">Manage Students</a>
             </div>
         </div>
     </div>

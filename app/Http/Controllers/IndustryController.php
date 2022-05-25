@@ -14,6 +14,12 @@ class IndustryController extends Controller
     public function index(){
         return view('industry.home');
     }
+    public function org(){
+        return view('industry.org');
+    }
+    public function student(){
+        return view('industry.student');
+    }
     // Show the registraton form for the industry supervisor user
     public function create(){
         return view('industry.register');

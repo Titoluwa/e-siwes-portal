@@ -13,7 +13,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="" class="nav-link">
+                        <a href="/student/orgprofile" class="nav-link">
                         <i class="fa fa-sliders-h"></i> Organization Profile
                         </a>
                     </li>

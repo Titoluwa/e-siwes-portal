@@ -133,7 +133,7 @@
                             </div>
 
                             
-                            <label class="col-form-label col-md-2" for="profile_pic">Upload your profile picture</label>
+                            <label class="col-form-label col-md-2" for="profile_pic">Profile Picture</label>
                             <div class="col-md-4">
                                 <input type="file" class="@error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic">
                                 @error('profile_pic')

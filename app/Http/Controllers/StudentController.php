@@ -19,6 +19,15 @@ class StudentController extends Controller
     public function show(){
         return view('student.profile');
     }
+    public function edit(){
+        return view('student.editpro');
+    }
+    public function org(){
+        return view('student.orgprofile');
+    }
+    public function orgedit(){
+        return view('student.editorg');
+    }
     public function index(){
         return view('student.home');
     }
