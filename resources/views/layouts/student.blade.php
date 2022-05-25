@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('homelink', '/student')
+
 @section('content')
     <div class="row">
         <div class="col-md-2 bg-othe-color othe-color shadow-sm">

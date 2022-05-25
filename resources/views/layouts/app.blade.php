@@ -96,9 +96,10 @@
                 <!-- <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a> -->
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="@yield('homelink','/')">
                     <img class="logo" width="50" height="50" src="{{ asset('images/OAU-Logo.png') }}" alt="">
                 </a>
+                @yield('nav')
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -155,9 +156,9 @@
                                     </form>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/">{{ __('Home') }}</a>
-                            </li>
+                            <!-- <li class="nav-item">
+                                <a class="nav-link" href="@yield('title','/')">{{ __('Home') }}"</a>
+                            </li> -->
                         @endguest
                     </ul>
                 </div>

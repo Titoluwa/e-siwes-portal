@@ -10,7 +10,7 @@
                 <div class="bg-othe-color nav-text-color card-header text-center display-7" style="font-weight: 600;">Industry Based Supervisor Registration</div>
 
                 <div class="card-body">
-                    <form method="POST" action="/industryreg">
+                    <form method="POST" action="/industryreg" enctype="multipart/form-data">
                         @csrf
 
                         <input type="hidden" name="role_id" value="2">
@@ -114,7 +114,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-form-label col-md-2" for="profile_pic">Office Logo</label>
+                            <label class="col-form-label col-md-2" for="profile_pic">Profile Picture</label>
                             <div class="col-md-4">
                                 <input type="file" class="@error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic">
                                 @error('profile_pic')

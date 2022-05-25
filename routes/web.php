@@ -35,6 +35,7 @@ Route::get('/school', 'SchoolController@index')->name('school')->middleware('sch
 
 Route::get('/industryform',  'IndustryController@create')->name('industryform');
 Route::post('/industryreg', 'IndustryController@store');
+Route::post('/industry/orgreg', 'IndustryController@orgstore');
 Route::get('/industry', 'IndustryController@index')->name('industryhome')->middleware('industry');
 Route::get('/industry/org', 'IndustryController@org')->middleware('industry');
 Route::get('/industry/student', 'IndustryController@student')->middleware('industry');

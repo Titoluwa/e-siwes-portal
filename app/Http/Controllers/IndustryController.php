@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Organization;
 use Illuminate\Http\Request;
 use App\User;
 
@@ -15,6 +16,15 @@ class IndustryController extends Controller
         return view('industry.home');
     }
     public function org(){
+        return view('industry.org');
+    }
+    public function orgstore(Request $request){
+        $org = Organization::create($this->orgvalidateRequest());
+        $org->name = Str::ucfirst($request->name);
+        if ($request->hasFile('logo')){
+            $org->logo = $request->file('logo')->store('logos', 'public');
+        }
+        $org->save();
         return view('industry.org');
     }
     public function student(){
@@ -53,6 +63,19 @@ class IndustryController extends Controller
             'password' => 'required|string|min:8|confirmed',
             'profile_pic' => 'required',
             'matric_no' => 'string', 'faculty' => 'string','course_of_study' => 'string',
+        ]);
+    }
+    private function orgvalidateRequest(){
+        return request()->validate([
+            'name' => 'string|required', 
+            'full_addresss' => 'string|required',
+            'postal_address' => 'email|required',
+            'year_of_est' => 'required', 
+            'nature' => 'required|string',
+            'specialization' => 'required|string',
+            'plant_capacity' => 'string',
+            'other_info' => 'string',
+            'logo'=>'required',
         ]);
     }
 }

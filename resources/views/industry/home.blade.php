@@ -1,5 +1,12 @@
 @extends('layouts.app')
 
+@section('homelink', '/industry')
+
+@section('nav')
+    <a class="nav-link" href="/industry/org">Register Organisation</a>
+    <a class="nav-link" href="/industry/student">Manage Students</a>
+@endsection
+
 @section('content')
 
 <div class="row justify-content-center mt-5">
@@ -14,8 +21,7 @@
                 <h3 class="">Welcome, <b>{{Auth::user()->first_name}}!</b></h3>
                 <p class="">You're logged in</p>  
             </div>
-            
-            
+
             <div class="p-5 text-center">
                 <a class="px-2 h5 oth-color" href="/industry/org">Register Organisation</a>
                 <a class="px-2 h5 oth-color" href="/industry/student">Manage Students</a>

@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserRegMail;
+use App\Organization;
 
 class StudentController extends Controller
 {
@@ -26,14 +27,14 @@ class StudentController extends Controller
         return view('student.orgprofile');
     }
     public function orgedit(){
-        return view('student.editorg');
+        $orgs = Organization::all();
+        return view('student.editorg', compact('orgs'));
     }
     public function index(){
         return view('student.home');
     }
     public function store(Request $request)
     {
-        
         $user = User::create($this->validateRequest()); 
         $user->last_name = Str::ucfirst($request->last_name);
         $user->first_name = Str::ucfirst($request->first_name);

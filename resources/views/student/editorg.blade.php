@@ -41,10 +41,9 @@
                             <div class="col-md-5">
                                 <select class="form-control  @error('org_name') is-invalid @enderror" name="org_name" id="org_name">
                                     <option value="" disabled selected>Select from  database</option>
-                                    <option value="">Cavidel</option>
-                                    <option value="">Opolo</option>
-                                    <option value="">Randall Ltd</option>
-                                    <option value="">Eastwind Labs</option>
+                                    @foreach($orgs as $org)
+                                        <option value="{{$org->id}}">{{$org->name}}</option>
+                                    @endforeach
                                 </select>
                                 @error('org_name')
                                     <span class="invalid-feedback" role="alert">
