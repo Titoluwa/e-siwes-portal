@@ -44,6 +44,9 @@
         .bg-oth-color{
             background: #F9C920;
         }
+        .blue-text{
+            color: #0B2D78;
+        }
         .othe-color{
             color: #F4F0E8;
         }

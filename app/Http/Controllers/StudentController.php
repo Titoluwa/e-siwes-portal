@@ -35,6 +35,12 @@ class StudentController extends Controller
         $student = Student::where('user_id', $id)->first();
         return view('student.editpro', compact('student'));
     }
+    public function editorg(){
+        return view('student.editorgpro');
+    }
+    public function add(){
+        return view('student.addpro');
+    }
     public function org(){
         $id = Auth::user()->id;
         $student = Student::where('user_id', $id)->first();
@@ -54,7 +60,10 @@ class StudentController extends Controller
         return redirect('student.editorg');
     }
     public function index(){
-        return view('student.home');
+        $id = Auth::user()->id;
+        $student = Student::where('user_id', $id)->first();
+        $orgs = Organization::all();
+        return view('student.home', compact('student', 'orgs'));
     }
     public function store(Request $request)
     {

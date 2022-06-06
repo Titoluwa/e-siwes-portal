@@ -49,7 +49,7 @@
                         <div class="form-group row">
                             <label for="last_name" class="col-md-2 col-form-label">Last Name</label>
                             <div class="col-md-4">
-                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{Auth::user()->last_name}}" required autocomplete="last_name">
+                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{Auth::user()->last_name}}" disabled>
 
                                 @error('last_name')
                                     <span class="invalid-feedback" role="alert">
@@ -60,7 +60,7 @@
 
                             <label for="first_name" class="col-md-2 col-form-label">First Name</label>
                             <div class="col-md-4">
-                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{Auth::user()->first_name}}" required autocomplete="first_name" autofocus>
+                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{Auth::user()->first_name}}" disabled>
 
                                 @error('first_name')
                                     <span class="invalid-feedback" role="alert">
@@ -73,7 +73,7 @@
                         <div class="form-group row">
                             <label for="middle_name" class="col-md-2 col-form-label">Middle Name</label>
                             <div class="col-md-4">
-                                <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{Auth::user()->middle_name}}" required autocomplete="middle_name" autofocus>
+                                <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{Auth::user()->middle_name}}" disabled>
 
                                 @error('middle_name')
                                     <span class="invalid-feedback" role="alert">
@@ -102,7 +102,7 @@
                         <div class="form-group row">
                             <label for="faculty" class="col-md-2 col-form-label">Faculty</label>
                             <div class="col-md-4">
-                                <input id="faculty" type="text" class="form-control @error('faculty') is-invalid @enderror" name="faculty" value="{{Auth::user()->faculty}}" required autocomplete="faculty" autofocus>
+                                <input id="faculty" type="text" class="form-control @error('faculty') is-invalid @enderror" name="faculty" value="{{Auth::user()->faculty}}" disabled>
 
                                 @error('faculty')
                                     <span class="invalid-feedback" role="alert">
@@ -113,7 +113,7 @@
 
                             <label for="department" class="col-md-2 col-form-label">Department</label>
                             <div class="col-md-4">
-                                <input id="department" type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{Auth::user()->department}}" required autocomplete="department" autofocus>
+                                <input id="department" type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{Auth::user()->department}}" disabled>
 
                                 @error('department')
                                     <span class="invalid-feedback" role="alert">
@@ -126,7 +126,7 @@
                         <div class="form-group row">
                             <label for="course_of_study" class="col-md-2 col-form-label">Course of Study</label>
                             <div class="col-md-4">
-                                <input id="course_of_study" type="text" class="form-control @error('course_of_study') is-invalid @enderror" name="course_of_study" value="{{Auth::user()->course_of_study}}" required autocomplete="course_of_study" autofocus>
+                                <input id="course_of_study" type="text" class="form-control @error('course_of_study') is-invalid @enderror" name="course_of_study" value="{{Auth::user()->course_of_study}}" disabled>
 
                                 @error('course_of_study')
                                     <span class="invalid-feedback" role="alert">
@@ -137,7 +137,7 @@
 
                             <label for="contact_no" class="col-md-2 col-form-label">Contact Number</label>
                             <div class="col-md-4">
-                                <input id="contact_no" type="number" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{Auth::user()->contact_no}}" required autocomplete="contact_no" autofocus>
+                                <input id="contact_no" type="number" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{Auth::user()->contact_no}}" disabled>
 
                                 @error('contact_no')
                                     <span class="invalid-feedback" role="alert">
@@ -147,18 +147,74 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="address_of_training" class="col-md-2 col-form-label">Address of IT</label>
+                            <div class="col-md-4">
+                                <textarea name="address_of_training" id="address_of_training" cols="29" rows="2"></textarea>
+                                @error('address_of_training')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <label for="year_of_training" class="col-md-2 col-form-label">Year of IT</label>
+                            <div class="col-md-4">
+                                
+                                <select class="form-control  @error('year_of_training') is-invalid @enderror" name="year_of_training" id="year_of_training">
+                                    <option value="" disabled selected>Select Year</option>
+                                    <option value="">2021</option>
+                                    <option value="">2022</option>
+                                    <option value="">2023</option>
+                                    <option value="">2024</option>
+                                </select>    
+                                @error('year_of_training')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>                         
+                        </div>
+                        <div class="form-group row">
+                            <label for="duration_of_training" class="col-md-2 col-form-label">Duration of IT</label>
+                            <div class="col-md-4">
+                                <select class="form-control  @error('duration_of_training') is-invalid @enderror" name="duration_of_training" id="duration_of_training">
+                                    <option value="" disabled selected>Select Duration</option>
+                                    <option value="">3 weeks</option>
+                                    <option value="">6 weeks</option>
+                                    <option value="">3 months</option>
+                                    <option value="">6 months</option>
+                                </select>
+                                @error('duration_of_training')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                             <label class="col-form-label col-md-2" for="profile_pic">Profile Picture</label>
                             <div class="col-md-4">
-                                <img src="{{asset('storage/'. Auth::user()->profile_pic)}}" alt="" width="70" height="70">
-                                
-                                <input type="file" class="@error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic">
+                                <img src="{{asset('storage/'. Auth::user()->profile_pic)}}" alt="" width="60" height="60">
+                                <!-- <input type="file" class="@error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic"> -->
                                 @error('profile_pic')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>                   
+                            </div>
                         </div>
+                        <div class="form-group row">
+                        <label class="col-form-label col-md-2" for="signature">Signature</label>
+                            <div class="col-md-4">
+                                <!-- <img src="{{asset('storage/')}}" alt="" width="60" height="60"> -->
+                                <input type="file" class="@error('signature') is-invalid @enderror" id="signature" name="signature">
+                                @error('signature')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            
+                        </div>
+                        
+
                         <div class="row py-2">
                             <div class="offset-md-10">
                                 <button type="submit" class="btn btn-lg bg-oth-color nav-text-color">

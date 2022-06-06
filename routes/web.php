@@ -25,6 +25,8 @@ Route::post('/studentreg', 'StudentController@store');
 Route::get('/student', 'StudentController@index')->name('student');
 Route::get('/student/profile', 'StudentController@show');
 Route::get('/student/profile/edit', 'StudentController@edit');
+Route::get('/student/profile/org/edit', 'StudentController@editorg');
+Route::get('/student/profile/org/add', 'StudentController@add');
 Route::get('/student/org', 'StudentController@org');
 Route::get('/student/org/edit', 'StudentController@orgedit');
 // Route::post('/student/org/edit', 'StudentController@updateorg');
