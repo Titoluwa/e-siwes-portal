@@ -7,28 +7,45 @@ use Illuminate\Http\Request;
 use App\User;
 
 use DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 
 class IndustryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('industry')->except(['create', 'store']);
+    }
     public function index(){
-        return view('industry.home');
+        $id = Auth::user()->id;
+        $org = Organization::where('staff_id', $id)->first();
+        return view('industry.home', compact('org'));
     }
     public function org(){
         return view('industry.org');
     }
+    public function edit()
+    {
+        $id = Auth::user()->id;
+        $org = Organization::where('staff_id', $id)->first();
+        return view('industry.orgedit', compact('org'));
+    }
     public function orgstore(Request $request){
-        $org = Organization::create($this->orgvalidateRequest());
+        $org = Organization::create($request->all());
         $org->name = Str::ucfirst($request->name);
         if ($request->hasFile('logo')){
             $org->logo = $request->file('logo')->store('logos', 'public');
         }
         $org->save();
-        return view('industry.org');
+        // dd($org); 
+        return redirect('industry');
     }
     public function student(){
-        return view('industry.student');
+        $id = Auth::user()->id;
+        $org = Organization::where('staff_id', $id)->first();
+        return view('industry.student', compact('org'));
     }
     // Show the registraton form for the industry supervisor user
     public function create(){
@@ -75,6 +92,7 @@ class IndustryController extends Controller
             'specialization' => 'required|string',
             'plant_capacity' => 'string',
             'other_info' => 'string',
+            'staff_id' =>'required',
             'logo'=>'required',
         ]);
     }

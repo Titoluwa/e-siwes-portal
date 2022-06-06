@@ -25,7 +25,7 @@ class CreateOrganizationsTable extends Migration
             $table->string('plant_capacity')->nullable();
             $table->string('other_info')->nullable();
             $table->string('logo');
-            $table->integer('status_id')->default(0);
+            $table->integer('status_id')->default(1);
             $table->timestamps();
         });
     }

@@ -13,6 +13,10 @@ use App\Mail\UserRegMail;
 
 class SchoolController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('school')->except(['create', 'store']);
+    }
     public function index(){
         return view('school.home');
     }

@@ -14,9 +14,9 @@
                         @csrf
 
                         <input type="hidden" name="role_id" value="2">
-                        <input type="hidden" name="matric_no" id="matric_no" value="null">
-                        <input type="hidden" name="faculty" id="faculty" value="null">
-                        <input type="hidden" name="course_of_study" id="course_of_study" value="null">
+                        <input type="hidden" name="matric_no" id="matric_no" value="NULL">
+                        <input type="hidden" name="faculty" id="faculty" value="NULL">
+                        <input type="hidden" name="course_of_study" id="course_of_study" value="NULL">
 
                         <div class="form-group row">
                             <label for="email" class="col-md-2 col-form-label">E-Mail Address</label>

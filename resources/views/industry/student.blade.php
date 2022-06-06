@@ -3,7 +3,11 @@
 @section('homelink', '/industry')
 
 @section('nav')
-    <a class="nav-link" href="/industry/org">Register Organisation</a>
+    @if (!empty($org))
+        <a class="nav-link" href="/industry/org/edit">Edit Organisation</a>
+    @else
+        <a class="nav-link" href="/industry/org">Register Organisation</a>
+    @endif
     <a class="nav-link" href="/industry/student">Manage Students</a>
 @endsection
 

@@ -2,33 +2,56 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\User;
 
 use DB;
+use App\User;
+
+use App\Organization;
+use App\Student;
+use App\Mail\UserRegMail;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\UserRegMail;
-use App\Organization;
 
 class StudentController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware('student')->except(['create', 'store']);
+    }
     public function create(){
         return view('student.register');
     }
     public function show(){
-        return view('student.profile');
+        $id = Auth::user()->id;
+        $student = Student::where('user_id', $id)->first();
+        return view('student.profile', compact('student'));
     }
     public function edit(){
-        return view('student.editpro');
+        $id = Auth::user()->id;
+        $student = Student::where('user_id', $id)->first();
+        return view('student.editpro', compact('student'));
     }
     public function org(){
-        return view('student.orgprofile');
+        $id = Auth::user()->id;
+        $student = Student::where('user_id', $id)->first();
+        return view('student.orgprofile', compact('student'));
     }
     public function orgedit(){
+        $id = Auth::user()->id;
+        $student = Student::where('user_id', $id)->first();
         $orgs = Organization::all();
-        return view('student.editorg', compact('orgs'));
+        return view('student.editorg', compact('orgs', 'student'));
+    }
+    public function updateorg(Request $request)
+    {
+        dd($request);
+        $id = $request->id;
+        Student::where('id', $id)->update(['org_id'=> $request->org_id]);
+        return redirect('student.editorg');
     }
     public function index(){
         return view('student.home');

@@ -15,8 +15,13 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/student/orgprofile" class="nav-link">
+                        <a href="/student/org" class="nav-link">
                         <i class="fa fa-sliders-h"></i> Organization Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/student/log" class="nav-link">
+                        <i class="fa fa-user-friends"></i> Daily Record of Activities
                         </a>
                     </li>
                     <li>
@@ -24,16 +29,11 @@
                         <i class="fa fa-user-tie"></i> Form 8
                         </a>
                     </li>
-                    <li>
-                        <a href="" class="nav-link">
-                        <i class="fa fa-user-friends"></i> Daily Record of Activities
-                        </a>
-                    </li>
-                    <li>
+                    <!-- <li>
                         <a href="" class="nav-link">
                         <i class="fa fa-poll"></i> Letter from Company
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>

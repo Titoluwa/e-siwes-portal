@@ -3,7 +3,11 @@
 @section('homelink', '/industry')
 
 @section('nav')
-    <a class="nav-link" href="/industry/org">Register Organisation</a>
+    @if (!empty($org))
+        <a class="nav-link" href="/industry/org/edit">Edit Organisation</a>
+    @else
+        <a class="nav-link" href="/industry/org">Register Organisation</a>
+    @endif
     <a class="nav-link" href="/industry/student">Manage Students</a>
 @endsection
 
@@ -23,7 +27,11 @@
             </div>
 
             <div class="p-5 text-center">
-                <a class="px-2 h5 oth-color" href="/industry/org">Register Organisation</a>
+                @if (!empty($org))
+                    <a class="px-2 h5 oth-color" href="/industry/org/edit">Edit Organisation</a>
+                @else
+                    <a class="px-2 h5 oth-color" href="/industry/org">Register Organisation</a>
+                @endif
                 <a class="px-2 h5 oth-color" href="/industry/student">Manage Students</a>
             </div>
         </div>
