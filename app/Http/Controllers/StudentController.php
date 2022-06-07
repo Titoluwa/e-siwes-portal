@@ -38,6 +38,15 @@ class StudentController extends Controller
     public function editorg(){
         return view('student.editorgpro');
     }
+    public function addorg(Request $request)
+    {
+        $student = new Student();
+        $student->org_id = $request->org_id;
+        $student->user_id = Auth::user()->id;
+        $student->save();
+
+        return back();
+    }
     public function add(){
         return view('student.addpro');
     }

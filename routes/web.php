@@ -28,6 +28,7 @@ Route::get('/student/profile/edit', 'StudentController@edit');
 Route::get('/student/profile/org/edit', 'StudentController@editorg');
 Route::get('/student/profile/org/add', 'StudentController@add');
 Route::get('/student/org', 'StudentController@org');
+Route::post('/student/org/add', 'StudentController@addorg');
 Route::get('/student/org/edit', 'StudentController@orgedit');
 // Route::post('/student/org/edit', 'StudentController@updateorg');
 

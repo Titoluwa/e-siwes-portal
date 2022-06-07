@@ -17,9 +17,9 @@ class CreateStudentsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('org_id')->constrained('organizations');
-            $table->year('year_of_training');
-            $table->string('duration_of_training');
-            $table->string('signature');
+            $table->year('year_of_training')->nullable();
+            $table->string('duration_of_training')->nullable();
+            $table->string('signature')->nullable();
             $table->timestamps();
         });
     }
