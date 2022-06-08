@@ -33,16 +33,15 @@ Route::prefix('student')->group(function () {
     Route::get('', 'StudentController@index')->name('student');
     Route::get('/profile', 'StudentController@show');
     Route::get('/profile/edit', 'StudentController@edit');
-    
+    Route::put('/profile/update', 'StudentController@update');
+
     Route::get('/org', 'StudentController@org');
     Route::post('/org/add', 'StudentController@orgadd');
     // Route::get('/org/edit', 'StudentController@orgedit');
 
     Route::get('/profile/org/edit', 'StudentController@editorg');
-
-   
     Route::get('/org/edit', 'StudentController@orgedit');
-    // Route::post('/student/org/edit', 'StudentController@updateorg');
+    
     Route::get('/log', 'LogbookController@index');
 });
 

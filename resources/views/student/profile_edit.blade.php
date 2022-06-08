@@ -18,7 +18,8 @@
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="/" enctype="multipart/form-data">
+                    <form method="POST" action="/student/profile/update" enctype="multipart/form-data">
+                        @method('PUT')
                         @csrf                      
 
                         <div class="form-group row">
@@ -84,11 +85,11 @@
 
                             <label for="gender" class="col-md-2 col-form-label @error('gender') is-invalid @enderror">Gender</label>
                                 <div class="pl-3 form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
+                                    <input class="form-check-input" type="radio" name="gender" id="female" value="Female" {{ (Auth::user()->gender=="Female")? "checked" : "" }}>
                                     <label class="form-check-label" for="female">Female</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" id="male" value="Male">
+                                    <input class="form-check-input" type="radio" name="gender" id="male" value="Male" {{ (Auth::user()->gender=="Male")? "checked" : "" }}>
                                     <label class="form-check-label" for="male">Male</label>
                                 </div>
                             @error('gender')

@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\User;
+use App\Student;
 
 use App\Organization;
-use App\Student;
-use App\Mail\UserRegMail;
+// use App\Mail\UserRegMail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+// use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -78,7 +79,11 @@ class StudentController extends Controller
     public function edit(){
         $id = Auth::user()->id;
         $student = Student::where('user_id', $id)->first();
-        return view('student.editpro', compact('student'));
+        return view('student.profile_edit', compact('student'));
+    }
+        // Update the form for users
+    public function update(Request $request){
+
     }
         // Show StudentUser Organization profile
     public function org(){
