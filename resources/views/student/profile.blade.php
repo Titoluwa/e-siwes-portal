@@ -52,7 +52,7 @@
                             <h5><b> Other Information </b></h5>
                         </div>
                         <div class="float-right">
-                                <a href="/student/profile/org/edit">
+                                <a href="/student/profile/other/edit">
                                     <i class="fas fa-edit"></i> EDIT
                                 </a>
                             

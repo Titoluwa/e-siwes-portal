@@ -29,19 +29,22 @@ Route::get('/industryform',  'IndustryController@create')->name('industryform');
 Route::post('/industryreg', 'IndustryController@store');
 
     // STUDENT Routes 
-Route::prefix('student')->group(function () {
+Route::prefix('student')->group(function () 
+{
     Route::get('', 'StudentController@index')->name('student');
+
     Route::get('/profile', 'StudentController@show');
     Route::get('/profile/edit', 'StudentController@edit');
     Route::put('/profile/update', 'StudentController@update');
+    Route::get('/profile/other/edit', 'StudentController@other_edit');
+    Route::put('/profile/other/update', 'StudentController@other_update');
 
     Route::get('/org', 'StudentController@org');
-    Route::post('/org/add', 'StudentController@orgadd');
-    // Route::get('/org/edit', 'StudentController@orgedit');
-
-    Route::get('/profile/org/edit', 'StudentController@editorg');
-    Route::get('/org/edit', 'StudentController@orgedit');
+    Route::post('/org/add', 'StudentController@org_add');
+    Route::get('/org/edit', 'StudentController@org_edit');
+    Route::put('/org/update', 'StudentController@org_update');
     
+    //LogBook 
     Route::get('/log', 'LogbookController@index');
 });
 

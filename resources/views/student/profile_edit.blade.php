@@ -21,7 +21,7 @@
                     <form method="POST" action="/student/profile/update" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf                      
-
+                        <input type="hidden" name="id" value="{{Auth::user()->id}}">
                         <div class="form-group row">
                             <label for="email" class="col-md-2 col-form-label">E-Mail Address</label>
 
@@ -50,7 +50,7 @@
                         <div class="form-group row">
                             <label for="last_name" class="col-md-2 col-form-label">Last Name</label>
                             <div class="col-md-4">
-                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{Auth::user()->last_name}}" required autocomplete="last_name">
+                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{Auth::user()->last_name}}" required >
 
                                 @error('last_name')
                                     <span class="invalid-feedback" role="alert">
@@ -61,7 +61,7 @@
 
                             <label for="first_name" class="col-md-2 col-form-label">First Name</label>
                             <div class="col-md-4">
-                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{Auth::user()->first_name}}" required autocomplete="first_name" autofocus>
+                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{Auth::user()->first_name}}" required>
 
                                 @error('first_name')
                                     <span class="invalid-feedback" role="alert">
@@ -74,7 +74,7 @@
                         <div class="form-group row">
                             <label for="middle_name" class="col-md-2 col-form-label">Middle Name</label>
                             <div class="col-md-4">
-                                <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{Auth::user()->middle_name}}" required autocomplete="middle_name" autofocus>
+                                <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{Auth::user()->middle_name}}" required>
 
                                 @error('middle_name')
                                     <span class="invalid-feedback" role="alert">
@@ -103,7 +103,7 @@
                         <div class="form-group row">
                             <label for="faculty" class="col-md-2 col-form-label">Faculty</label>
                             <div class="col-md-4">
-                                <input id="faculty" type="text" class="form-control @error('faculty') is-invalid @enderror" name="faculty" value="{{Auth::user()->faculty}}" required autocomplete="faculty" autofocus>
+                                <input id="faculty" type="text" class="form-control @error('faculty') is-invalid @enderror" name="faculty" value="{{Auth::user()->faculty}}" required>
 
                                 @error('faculty')
                                     <span class="invalid-feedback" role="alert">
@@ -114,7 +114,7 @@
 
                             <label for="department" class="col-md-2 col-form-label">Department</label>
                             <div class="col-md-4">
-                                <input id="department" type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{Auth::user()->department}}" required autocomplete="department" autofocus>
+                                <input id="department" type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{Auth::user()->department}}" required >
 
                                 @error('department')
                                     <span class="invalid-feedback" role="alert">
@@ -127,7 +127,7 @@
                         <div class="form-group row">
                             <label for="course_of_study" class="col-md-2 col-form-label">Course of Study</label>
                             <div class="col-md-4">
-                                <input id="course_of_study" type="text" class="form-control @error('course_of_study') is-invalid @enderror" name="course_of_study" value="{{Auth::user()->course_of_study}}" required autocomplete="course_of_study" autofocus>
+                                <input id="course_of_study" type="text" class="form-control @error('course_of_study') is-invalid @enderror" name="course_of_study" value="{{Auth::user()->course_of_study}}" required>
 
                                 @error('course_of_study')
                                     <span class="invalid-feedback" role="alert">
@@ -138,7 +138,7 @@
 
                             <label for="contact_no" class="col-md-2 col-form-label">Contact Number</label>
                             <div class="col-md-4">
-                                <input id="contact_no" type="number" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{Auth::user()->contact_no}}" required autocomplete="contact_no" autofocus>
+                                <input id="contact_no" type="number" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{Auth::user()->contact_no}}" required>
 
                                 @error('contact_no')
                                     <span class="invalid-feedback" role="alert">
@@ -162,7 +162,7 @@
                         </div>
                         <div class="row py-2">
                             <div class="offset-md-10">
-                                <button type="submit" class="btn btn-lg bg-oth-color nav-text-color">
+                                <button type="submit" class="btn bg-oth-color nav-text-color">
                                 <i class="fas fa-edit"></i>SAVE
                                 </button>
                             </div>

@@ -12,6 +12,7 @@ class LogbookController extends Controller
     {
         $id = Auth::user()->id;
         $student = Student::where('user_id', $id)->first();
+        
         return view('student.log', compact('student'));
     }
 }

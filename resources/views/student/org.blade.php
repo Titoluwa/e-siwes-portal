@@ -11,11 +11,13 @@
                         <h3 style="font-weight: 700;">{{ __("Organization Profile") }}</h3>
                         <p>This is information about your organization of Training</p>
                     </div>
+                    @if (!empty($student))
                     <div class="float-right mt-4">
                         <a href="/student/org/edit">
                             <i class="fas fa-edit"></i>EDIT
                         </a>
                     </div>
+                    @endif
                     
                 </div>
 
@@ -24,7 +26,7 @@
                         <img class="rounded border-warning float-right img-thumbnail" src="{{asset('storage/'. $student->org->logo)}}" alt="organization logo" srcset="" width="150" height="150">
                         <div>
                             <p>
-                                Student Name: <b>{{$student->user->first_name}}, {{$student->user->first_name}} {{$student->user->middle_name}}</b>
+                                Student Name: <b>{{$student->user->last_name}}, {{$student->user->first_name}} {{$student->user->middle_name}}</b>
                             </p>
                             <p>
                                 Organization Name: <b>{{$student->org->name}}</b>

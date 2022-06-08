@@ -3,22 +3,23 @@
 namespace App\Http\Controllers;
 
 
-use DB;
+// use DB;
+
 use App\User;
 use App\Student;
-
 use App\Organization;
-// use App\Mail\UserRegMail;
+
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-// use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
+
+// use App\Mail\UserRegMail;
+// use Illuminate\Support\Facades\Mail;
 
 class StudentController extends Controller
 {
-    // Middleware for Student activites except Initial Registration
+    // Middleware for Student activites excepts Initial Registration
     public function __construct()
     {
         $this->middleware('student')->except(['create', 'store']);
@@ -43,7 +44,8 @@ class StudentController extends Controller
         return redirect('login');
     }
         // Validation for StudentUser Form
-    private function validateRequest(){
+    private function validateRequest()
+    {
         return request()->validate([
             'role_id'=> 'required|integer',
             'matric_no' => 'required|string|max:12|min:12|unique:users',
@@ -62,38 +64,79 @@ class StudentController extends Controller
         ]);
     }
         // Show homepage of StudentUser
-    public function index(){
+    public function index()
+    {
         $id = Auth::user()->id;
         $student = Student::where('user_id', $id)->first();
         $orgs = Organization::all();
         return view('student.home', compact('student', 'orgs'));
     }
         // Show single StudentUser profile 
-    public function show(){
+    public function show()
+    {
         $id = Auth::user()->id;
         $student = Student::where('user_id', $id)->first();
         $orgs = Organization::all();
         return view('student.profile', compact('student', 'orgs'));
     }
         // Show StudentUser edit form
-    public function edit(){
+    public function edit()
+    {
         $id = Auth::user()->id;
         $student = Student::where('user_id', $id)->first();
         return view('student.profile_edit', compact('student'));
     }
-        // Update the form for users
-    public function update(Request $request){
+        // Update the information for StudentUser
+    public function update(Request $request)
+    {
+        $user = User::where('id', $request->id)->first();
+   
+        $user->last_name = Str::ucfirst($request->last_name);
+        $user->first_name = Str::ucfirst($request->first_name);
+        $user->middle_name = Str::ucfirst($request->middle_name);
+        $user->gender = ($request->gender);
+        $user->faculty = ($request->faculty);
+        $user->department = ($request->department);
+        $user->course_of_study = $request->course_of_study;
+        $user->contact_no = ($request->contact_no);
+        if ($request->hasFile('profile_pic')){
+            $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
+        }
+        $user->update();
+        return redirect("/student/profile");
+    }
+        // Show edit form for student other information.
+    public function other_edit()
+    {        
+        $id = Auth::user()->id;
+        $student = Student::where('user_id', $id)->first();
+        $orgs = Organization::all();
+        return view('student.profile_other_edit', compact('student', 'orgs'));
+    }
+        // update the other info of students
+    public function other_update(Request $request)
+    {
+        // dd($request);
+        $student = Student::where('id', $request->id)->first();
+        $student->duration_of_training = $request->duration_of_training;
+        $student->year_of_training = $request->year_of_training;
+        if ($request->hasFile('signature')){
+            $student->signature = $request->file('signature')->store('signatures', 'public');
+        }
+        $student->update();
 
+        return redirect('/student/profile');
     }
         // Show StudentUser Organization profile
-    public function org(){
+    public function org()
+    {
         $id = Auth::user()->id;
         $student = Student::where('user_id', $id)->first();
         $orgs = Organization::all();
         return view('student.org', compact('student', 'orgs'));
     }
         // create Student and add organization to database
-    public function orgadd(Request $request)
+    public function org_add(Request $request)
     {
         $student = new Student();
         $student->user_id = Auth::user()->id;
@@ -107,24 +150,24 @@ class StudentController extends Controller
 
         return back();
     }
-    public function editorg(){
-        return view('student.editorgpro');
-    }
-
-    
-    public function orgedit(){
+        // Show the edit form for Student org
+    public function org_edit()
+    {
         $id = Auth::user()->id;
         $student = Student::where('user_id', $id)->first();
         $orgs = Organization::all();
-        return view('student.editorg', compact('orgs', 'student'));
+        return view('student.org_edit', compact('orgs', 'student'));
     }
-    public function updateorg(Request $request)
+        // update the organization of the student
+    public function org_update(Request $request)
     {
-        dd($request);
-        $id = $request->id;
-        Student::where('id', $id)->update(['org_id'=> $request->org_id]);
-        return redirect('student.editorg');
-    }
+        // dd($request);
+        $student = Student::where('id', $request->id)->first();
+        $student->org_id = $request->org_name;
+        $student->update();
+
+        return redirect('/student/org');
+    }    
 }   
     // public function fetch(Request $request){
     //     $value = $request->get('value');
