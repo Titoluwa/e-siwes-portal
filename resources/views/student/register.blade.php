@@ -5,7 +5,7 @@
 @section('content')
 <div class="py-5 container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card bg-othe-color">
                 <div class="bg-othe-color nav-text-color card-header text-center display-7" style="font-weight: 600;">Student Registration</div>
 

@@ -14,7 +14,7 @@
                     <h3 class="text-center">Welcome, <b>{{Auth::user()->last_name}}!</b></h3>
                     <p class="text-center">You're logged in</p>
                     @if (!empty($student))
-                        <p class="text-center">Working at <b>{{$student->org->name}}</b></p>  
+                        <p class="text-center">Training at <b>{{$student->org->name}}</b></p>  
                     @else
                         <hr>
                         <p class="text-center"><b>Add Organization to your profile</b></p>

@@ -1,20 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.industry')
 
-@section('homelink', '/industry')
+@section('industrycontent')
 
-@section('nav')
-    @if (!empty($org))
-        <a class="nav-link" href="/industry/org/edit">Edit Organisation</a>
-    @else
-        <a class="nav-link" href="/industry/org">Register Organisation</a>
-    @endif
-    <a class="nav-link" href="/industry/student">Manage Students</a>
-@endsection
-
-@section('content')
-
-<div class="row justify-content-center mt-5">
-    <div class="col-md-8">
+    <div class="col-md-12">
         <div class="card border-warning">
 
             <div class="card-header border-warning bg-transparent">
@@ -38,5 +26,5 @@
             
         </div>
     </div>
-</div>
+
 @endsection
