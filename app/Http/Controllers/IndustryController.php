@@ -10,14 +10,16 @@ use DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
-use Symfony\Component\HttpKernel\Event\ViewEvent;
+// use Symfony\Component\HttpKernel\Event\ViewEvent;
 
 class IndustryController extends Controller
 {
+        // Middleware for Industry Supervisor activites excepts initial registration
     public function __construct()
     {
         $this->middleware('industry')->except(['create', 'store']);
     }
+        // Show IndustryUser dashboard - homepage
     public function index(){
         $id = Auth::user()->id;
         $org = Organization::where('staff_id', $id)->first();

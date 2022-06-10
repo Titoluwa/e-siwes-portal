@@ -19,13 +19,13 @@ use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
-    // Middleware for Student activites excepts Initial Registration
+        // Middleware for Student activites excepts Initial Registration
     public function __construct()
     {
         $this->middleware('student')->except(['create', 'store']);
     }
 
-    // Show StudentUser registration form
+        // Show StudentUser registration form
     public function create(){
         return view('student.register');
     }

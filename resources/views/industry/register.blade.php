@@ -10,7 +10,7 @@
                 <div class="bg-othe-color nav-text-color card-header text-center display-7" style="font-weight: 600;">Industry Based Supervisor Registration</div>
 
                 <div class="card-body">
-                    <form method="POST" action="/industryreg" enctype="multipart/form-data">
+                    <form method="POST" action="/register/industry" enctype="multipart/form-data">
                         @csrf
 
                         <input type="hidden" name="role_id" value="2">

@@ -14,7 +14,7 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container">
         <div class="justify-content-center p-4">
             @yield('industrycontent') 
         </div>

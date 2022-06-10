@@ -20,13 +20,18 @@ Route::get('/', function () {
 
 Auth::routes();
 
-    // REGISTRATION Routes *change to prefix form and reg*
-Route::get('/studentform',  'StudentController@create')->name('studentform');
-Route::post('/studentreg', 'StudentController@store');
-Route::get('/schoolform',  'SchoolController@create')->name('schoolform');
-Route::post('/schoolreg', 'SchoolController@store');
-Route::get('/industryform',  'IndustryController@create')->name('industryform');
-Route::post('/industryreg', 'IndustryController@store');
+    // REGISTRATION Routes
+Route::prefix('/register')->group(function()
+{
+    Route::get('student', 'StudentController@create')->name('studentform');
+    Route::post('student', 'StudentController@store');
+
+    Route::get('industry', 'IndustryController@create')->name('industryform');
+    Route::post('industry', 'IndustryController@store');
+
+    Route::get('school', 'SchoolController@create')->name('schoolform');
+    Route::post('school', 'SchoolController@store');
+});
 
     // STUDENT Routes 
 Route::prefix('student')->group(function () 
