@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Organization;
-use Illuminate\Http\Request;
-use App\User;
-
 use DB;
-use Illuminate\Support\Facades\Auth;
+use App\User;
+use App\Organization;
+
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+// use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 // use Symfony\Component\HttpKernel\Event\ViewEvent;
 
@@ -19,41 +20,12 @@ class IndustryController extends Controller
     {
         $this->middleware('industry')->except(['create', 'store']);
     }
-        // Show IndustryUser dashboard - homepage
-    public function index(){
-        $id = Auth::user()->id;
-        $org = Organization::where('staff_id', $id)->first();
-        return view('industry.home', compact('org'));
-    }
-    public function org(){
-        return view('industry.org');
-    }
-    public function edit()
+        // Show the registraton form for the industry supervisor user
+    public function create()
     {
-        $id = Auth::user()->id;
-        $org = Organization::where('staff_id', $id)->first();
-        return view('industry.orgedit', compact('org'));
-    }
-    public function orgstore(Request $request){
-        $org = Organization::create($request->all());
-        $org->name = Str::ucfirst($request->name);
-        if ($request->hasFile('logo')){
-            $org->logo = $request->file('logo')->store('logos', 'public');
-        }
-        $org->save();
-        // dd($org); 
-        return redirect('industry');
-    }
-    public function student(){
-        $id = Auth::user()->id;
-        $org = Organization::where('staff_id', $id)->first();
-        return view('industry.student', compact('org'));
-    }
-    // Show the registraton form for the industry supervisor user
-    public function create(){
         return view('industry.register');
     }
-    // Store the inputed information of the industry supervisor user
+        // Store the inputed information of the industry supervisor user
     public function store(Request $request)
     {
         $user = User::create($this->validateRequest()); 
@@ -68,7 +40,8 @@ class IndustryController extends Controller
         return redirect('login');
     }
     // To validate the inputs
-    private function validateRequest(){
+    private function validateRequest()
+    {
         return request()->validate([
             'role_id'=> 'required|integer',
             'staff_id' => 'required|string|max:30|unique:users',
@@ -84,18 +57,48 @@ class IndustryController extends Controller
             'matric_no' => 'string', 'faculty' => 'string','course_of_study' => 'string',
         ]);
     }
-    private function orgvalidateRequest(){
-        return request()->validate([
-            'name' => 'string|required', 
-            'full_addresss' => 'string|required',
-            'postal_address' => 'email|required',
-            'year_of_est' => 'required', 
-            'nature' => 'required|string',
-            'specialization' => 'required|string',
-            'plant_capacity' => 'string',
-            'other_info' => 'string',
-            'staff_id' =>'required',
-            'logo'=>'required',
-        ]);
+        // Show IndustryUser dashboard - homepage
+    public function index()
+    {
+        $id = Auth::user()->id;
+        $org = Organization::where('staff_id', $id)->first();
+        return view('industry.home', compact('org'));
     }
+        // Shows the create form for organization.
+    public function org()
+    {
+        return view('industry.org');
+    }
+        // Adds the all details to database
+    public function org_store(Request $request)
+    {
+        $org = Organization::create($request->all());
+        $org->name = Str::ucfirst($request->name);
+        if ($request->hasFile('logo')){
+            $org->logo = $request->file('logo')->store('logos', 'public');
+        }
+        $org->save();
+        return redirect('industry');
+    }
+        // Shows the edit form for organization.
+    public function org_edit()
+    {
+        $id = Auth::user()->id;
+        $org = Organization::where('staff_id', $id)->first();
+        return view('industry.org_edit', compact('org'));
+    }
+        // update the organization table 
+    public function org_update(Request $request)
+    {
+        $org = Organization::where('id', $request->id)->first();
+        return redirect('industry');
+    }
+
+    public function student()
+    {
+        $id = Auth::user()->id;
+        $org = Organization::where('staff_id', $id)->first();
+        return view('industry.student', compact('org'));
+    }
+    
 }

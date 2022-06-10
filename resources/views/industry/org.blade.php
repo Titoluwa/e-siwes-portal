@@ -6,7 +6,7 @@
         <div class="card border-warning">
 
             <div class="card-header border-warning bg-transparent">
-                <h4 class="mt-2 text-center">{{ __('Register Your Organization') }}</h4>
+                <h4 class="mt-2 blue-text"><b>{{ __('Register Your Organization') }}</b></h4>
             </div>
 
             <div class="card-body border-warning">
@@ -136,7 +136,7 @@
                     </div>
 
                     <div class="row py-2">
-                        <div class="offset-md-10">
+                        <div class="offset-md-11">
                             <button type="submit" class="btn bg-oth-color nav-text-color">
                                 Submit
                             </button>

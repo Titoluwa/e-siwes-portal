@@ -58,10 +58,13 @@ Route::prefix('industry')->group(function ()
 {
     Route::get('', 'IndustryController@index')->name('industry');
 
-    Route::post('/orgreg', 'IndustryController@orgstore');
-    Route::get('/org/edit', 'IndustryController@edit');
     Route::get('/org', 'IndustryController@org');
-    Route::get('/student', 'IndustryController@student');
+    Route::post('/org', 'IndustryController@org_store');
+
+    Route::get('/org/edit', 'IndustryController@org_edit');
+    Route::put('/org/update', 'IndustryController@org_update');
+        
+    Route::get('/student/{id}', 'IndustryController@student');
 });
 
     // SCHOOL Routes
