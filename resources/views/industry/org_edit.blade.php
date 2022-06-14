@@ -10,12 +10,12 @@
             </div>
 
             <div class="card-body border-warning">
-                <form method="POST" action="/industry/orgedit" enctype="multipart/form-data">
+                <form method="POST" action="/industry/org/update" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf                      
 
                     <div class="form-group row">
-                        <input type="hidden" id='staff_id' name="staff_id" value="{{Auth::user()->id}}">
+                        <input type="hidden" id='id' name="id" value="{{$org->id}}">
                         <label for="super_name" class="col-md-2 col-form-label">Supervisor Name</label>
 
                         <div class="col-md-4">

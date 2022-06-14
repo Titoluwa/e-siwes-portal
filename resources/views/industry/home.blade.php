@@ -48,10 +48,15 @@
                 <div class="card-body border-warning">
                     <div class="p-2">
                         @if (!empty($org))
-                            <p class=""><b>Details</b></p>
-                            <p>{{$org->name}}</p>
-                            <p>{{$org->full_address}}</p>
-                            <p>{{$org->postal_address}}</p>
+                            <div class="float-left">
+                                <p class=""><b>Details</b></p>
+                                <p>{{$org->name}}</p>
+                                <p>{{$org->full_address}}</p>
+                                <p>{{$org->postal_address}}</p>
+                            </div>
+                            <div class="float-right">
+                                <img class="rounded border-warning float-right img-thumbnail" src="{{asset('storage/'. $org->logo)}}" alt="profile image" srcset="" width="150" height="150">
+                            </div>
                         @else
                             <p class="h5 p-3 m-4 text-center">Register Your Organisation</p>
                         @endif
@@ -73,45 +78,51 @@
 
                 <div class="card-body border-warning">
                     <div class="p-2">
-
-                        <!-- <h5 class="pt-2">Students under your organisation</h5> -->
-                        <div class="table-responsive">
-                            <table id="myTable" class="table " style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Last Name</th>
-                                        <th>First Name</th>
-                                        <th>Matric Number</th>
-                                        <th>Email</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <!-- <tfoot>
-                                    <tr>
-                                        <th>Matric Number</th>
-                                        <th>Email</th>
-                                        <th>Last Name</th>
-                                        <th>Faculty</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </tfoot> -->
-                                <tbody>
-                                  
-                                    <tr>
-                                        <td>Eample</td>
-                                        <td>exaam </td>
-                                        <td>lastname </td>
-                                        <td>someht </td>
-                                        <td>
-                                            <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
-                                            <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Forms</a>
-                                            <button type='button' class='btn btn-sm btn-outline-danger delete'><i class="fa fa-trash-alt"></i></button>
-                                        </td>
-                                    </tr>
-                                    
-                                </tbody>
-                            </table>
-                        </div>
+                        @if (!empty($org))
+                            <!-- <h5 class="pt-2">Students under your organisation</h5> -->
+                            <div class="table-responsive">
+                                <table id="myTable" class="table " style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Last Name</th>
+                                            <th>First Name</th>
+                                            <th>Matric Number</th>
+                                            <th>Email</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>tesr</td></tr>
+                                        @if(!is_null($students))
+                                            <!-- <td>Last Name</td>
+                                            <td>Last Name</td>
+                                            <td>Last Name</td>
+                                            <td>Last Name</td>
+                                            <td>Last Name</td> -->
+                                            <tr><td>tes2</td></tr>
+                                        @else
+                                            @foreach($students as $student)
+                                            <tr><td>tes1</td></tr>
+                                                <!-- <tr>
+                                                    <td>{{$student->user->last_name}}</td>
+                                                    <td>{{$student->user->first_name}}</td>
+                                                    <td>{{$student->user->matric_no}} </td>
+                                                    <td>{{$student->user->email}} </td>
+                                                    <td>
+                                                        <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
+                                                        <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Forms</a>
+                                                        <button type='button' class='btn btn-sm btn-outline-danger delete'><i class="fa fa-trash-alt"></i></button>
+                                                    </td>
+                                                </tr> -->
+                                            @endforeach
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        @else
+                            <p class="h5 p-3 m-4 text-center">Register Your Organisation</p>
+                        @endif
+                       
                     </div>
                 </div>
             </div>

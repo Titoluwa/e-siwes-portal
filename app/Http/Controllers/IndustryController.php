@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\User;
 use App\Organization;
-
+use App\Student;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 // use Illuminate\Http\Response;
@@ -62,7 +62,14 @@ class IndustryController extends Controller
     {
         $id = Auth::user()->id;
         $org = Organization::where('staff_id', $id)->first();
-        return view('industry.home', compact('org'));
+        if(!empty($org)){
+            $students = Student::where('org_id', $org->id)->get();
+        }else
+        {
+            $students = null;  
+        }
+        // dd($students);
+        return view('industry.home', compact('org', 'students'));
     }
         // Shows the create form for organization.
     public function org()
@@ -91,6 +98,19 @@ class IndustryController extends Controller
     public function org_update(Request $request)
     {
         $org = Organization::where('id', $request->id)->first();
+        $org->name = $request->name;
+        $org->full_address = $request->full_address;
+        $org->postal_address = $request->postal_address;
+        $org->year_of_est = $request->year_of_est;
+        $org->nature = $request->nature;
+        $org->specialization = $request->specialization;
+        $org->plant_capacity = $request->plant_capacity;
+        $org->other_info = $request->other_info;
+        if ($request->hasFile('logo')){
+            $org->logo = $request->file('logo')->store('logos', 'public');
+        }
+        $org->update();
+
         return redirect('industry');
     }
 

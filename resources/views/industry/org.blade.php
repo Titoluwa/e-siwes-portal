@@ -10,7 +10,7 @@
             </div>
 
             <div class="card-body border-warning">
-                <form method="POST" action="/industry/orgreg" enctype="multipart/form-data">
+                <form method="POST" action="/industry/org" enctype="multipart/form-data">
                     @csrf                      
 
                     <div class="form-group row">
