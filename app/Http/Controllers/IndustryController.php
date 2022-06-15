@@ -39,7 +39,7 @@ class IndustryController extends Controller
         $user->save();
         return redirect('login');
     }
-    // To validate the inputs
+        // To validate the inputs
     private function validateRequest()
     {
         return request()->validate([
@@ -62,14 +62,14 @@ class IndustryController extends Controller
     {
         $id = Auth::user()->id;
         $org = Organization::where('staff_id', $id)->first();
-        if(!empty($org)){
+        if (!empty($org)){
+            $studs = Student::where('org_id', $org->id)->first();
             $students = Student::where('org_id', $org->id)->get();
-        }else
-        {
-            $students = null;  
+        }else{
+            $students = $studs = null;
+            // $students = Student::where('org_id', $org->id)->first();
         }
-        // dd($students);
-        return view('industry.home', compact('org', 'students'));
+        return view('industry.home', compact('org', 'students', 'studs'));
     }
         // Shows the create form for organization.
     public function org()
@@ -113,7 +113,27 @@ class IndustryController extends Controller
 
         return redirect('industry');
     }
-
+        // Show the edit form for Industry Supervisor user 
+    public function profile()
+    {
+        return view('industry.profile');
+    }
+        // updates the industryuser's profile
+    public function profile_update(Request $request)
+    {
+        $user = User::where('id', $request->id)->first();
+        $user->last_name = Str::ucfirst($request->last_name);
+        $user->first_name = Str::ucfirst($request->first_name);
+        $user->middle_name = Str::ucfirst($request->middle_name);
+        $user->staff_id = ($request->staff_id);
+        $user->department = ($request->department);
+        $user->contact_no = ($request->contact_no);
+        if ($request->hasFile('profile_pic')){
+            $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
+        }
+        $user->update();
+        return redirect("/industry");
+    }
     public function student()
     {
         $id = Auth::user()->id;

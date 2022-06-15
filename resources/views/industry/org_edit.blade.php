@@ -1,12 +1,18 @@
 @extends('layouts.industry')
 
+@section('title', 'Edit Organisation')
+
 @section('industrycontent')
 
     <div class="col-md-12">
         <div class="card border-warning">
-
-            <div class="card-header border-warning bg-transparent">
-                <h4 class="mt-2 text-center">{{ __('Edit Organization') }}</h4>
+            <div class="card-header border-warning bg-transparent blue-text clearfix mt-2 ">
+                <div class="float-left">
+                    <h4 class=""><b>{{ __('Edit Organization') }}</b> </h4>
+                </div>
+                <div class="float-right">
+                    <a class="btn btn-warning" href="/industry"><i class="fas fa-arrow-left"></i> Back</a>
+                </div>
             </div>
 
             <div class="card-body border-warning">

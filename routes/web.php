@@ -60,10 +60,12 @@ Route::prefix('industry')->group(function ()
 
     Route::get('/org', 'IndustryController@org');
     Route::post('/org', 'IndustryController@org_store');
-
     Route::get('/org/edit', 'IndustryController@org_edit');
     Route::put('/org/update', 'IndustryController@org_update');
-        
+    
+    Route::get('/profile', 'IndustryController@profile');
+    Route::put('/profile/update', 'IndustryController@profile_update');
+
     Route::get('/student/{id}', 'IndustryController@student');
 });
 

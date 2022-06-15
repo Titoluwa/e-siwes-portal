@@ -1,5 +1,7 @@
 @extends('layouts.industry')
 
+@section('title', 'Industry Supervisor')
+
 @section('industrycontent')
     <div class="row">
         <div class="col-lg-5 col-sm-12  p-4">
@@ -9,7 +11,7 @@
                         <h4 class=""><b>{{ __('Profile') }}</b> </h4>
                     </div>
                     <div class="float-right">
-                        <a class="h4" href="/industry"><i class="fas fa-edit"></i></a>
+                        <a class="h4" href="/industry/profile"><i class="fas fa-edit"></i></a>
                     </div>
                 </div>
 
@@ -72,7 +74,7 @@
                         <h4 class=""><b>{{ __('Manage Student') }}</b> </h4>
                     </div>
                     <div class="float-right">
-                        <a class="h4" href="/industry"><i class="fas fa-eye"></i></a>
+                        <!-- <a class="h4" href="/industry"><i class="fas fa-eye"></i></a> -->
                     </div>
                 </div>
 
@@ -80,30 +82,21 @@
                     <div class="p-2">
                         @if (!empty($org))
                             <!-- <h5 class="pt-2">Students under your organisation</h5> -->
-                            <div class="table-responsive">
-                                <table id="myTable" class="table " style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Last Name</th>
-                                            <th>First Name</th>
-                                            <th>Matric Number</th>
-                                            <th>Email</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr><td>tesr</td></tr>
-                                        @if(!is_null($students))
-                                            <!-- <td>Last Name</td>
-                                            <td>Last Name</td>
-                                            <td>Last Name</td>
-                                            <td>Last Name</td>
-                                            <td>Last Name</td> -->
-                                            <tr><td>tes2</td></tr>
-                                        @else
+                            @if(!empty($studs))
+                                <div class="table-responsive">
+                                    <table id="myTable" class="table " style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Last Name</th>
+                                                <th>First Name</th>
+                                                <th>Matric Number</th>
+                                                <th>Email</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                             @foreach($students as $student)
-                                            <tr><td>tes1</td></tr>
-                                                <!-- <tr>
+                                                <tr>
                                                     <td>{{$student->user->last_name}}</td>
                                                     <td>{{$student->user->first_name}}</td>
                                                     <td>{{$student->user->matric_no}} </td>
@@ -113,12 +106,14 @@
                                                         <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Forms</a>
                                                         <button type='button' class='btn btn-sm btn-outline-danger delete'><i class="fa fa-trash-alt"></i></button>
                                                     </td>
-                                                </tr> -->
+                                                </tr>
                                             @endforeach
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @else
+                                <p class="h5 p-3 m-4 text-center">No Registered Student Yet!</p>
+                            @endif
                         @else
                             <p class="h5 p-3 m-4 text-center">Register Your Organisation</p>
                         @endif

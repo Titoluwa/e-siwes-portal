@@ -1,5 +1,7 @@
 @extends('layouts.industry')
 
+@section('title', 'Add Organisation')
+ 
 @section('industrycontent')
 
     <div class="col-md-12">
@@ -53,7 +55,7 @@
 
                         <label for="postal_address" class="col-md-2 col-form-label">Postal Address</label>
                         <div class="col-md-4">
-                            <input id="postal_address" type="text" class="form-control @error('postal_address') is-invalid @enderror" name="postal_address" value="{{old('postal_address')}}" required>
+                            <input id="postal_address" type="email" class="form-control @error('postal_address') is-invalid @enderror" name="postal_address" value="{{old('postal_address')}}" required>
 
                             @error('postal_address')
                                 <span class="invalid-feedback" role="alert">
