@@ -49,7 +49,7 @@ Route::prefix('student')->group(function ()
     Route::get('/org/edit', 'StudentController@org_edit');
     Route::put('/org/update', 'StudentController@org_update');
     
-    //LogBook 
+    // Student LogBook 
     Route::get('/log', 'LogbookController@index');
 });
 

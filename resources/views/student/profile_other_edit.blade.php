@@ -79,7 +79,7 @@
                         <!-- <div class="form-group row">
                             <label for="address_of_training" class="col-md-3 col-form-label">Address of Training</label>
                             <div class="col-md-5">
-                                <textarea name="address_of_training" id="address_of_training" cols="40" rows="1" disabled>{{$student->org->full_address}}</textarea>
+                                <textarea name="address_of_training" class="form-control" id="address_of_training" rows="4" disabled>{{$student->org->full_address}}</textarea>
                                 @error('address_of_training')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
