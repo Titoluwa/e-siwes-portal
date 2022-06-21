@@ -11,17 +11,17 @@
                 <ul class="nav flex-column mb-auto">
                     <li>
                         <a href="/student/profile" class="nav-link">
-                        <i class="fa fa-users"></i> Your Profile
+                        <i class="fa fa-id-badge"></i> Your Profile
                         </a>
                     </li>
                     <li>
                         <a href="/student/org" class="nav-link">
-                        <i class="fa fa-sliders-h"></i> Organization Profile
+                        <i class="fa fa-building"></i> Organization Profile
                         </a>
                     </li>
                     <li>
                         <a href="/student/log" class="nav-link">
-                        <i class="fa fa-user-friends"></i> Daily Record of Activities
+                        <i class="fa fa-book"></i> Logbook
                         </a>
                     </li>
                     <li>

@@ -51,6 +51,7 @@ Route::prefix('student')->group(function ()
     
     // Student LogBook 
     Route::get('/log', 'LogbookController@index');
+    Route::post('/log', 'LogbookController@store');
 });
 
     //INDUSTRY Routes

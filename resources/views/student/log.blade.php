@@ -18,7 +18,7 @@
                         <!-- Button trigger for Add Activity modal -->
                         <div class="py-1">
                         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#activityModal">
-                            Add Daily Activity
+                            <i class="fa fa-book-open"></i> Add Daily Activity
                         </button>
                         </div>
                     </div>
@@ -27,10 +27,11 @@
                 <div class="card-body border-warning">
                     <p>Your duration of training at <b>{{$student->org->name}}</b> is <b>{{$student->duration_of_training}}</b> for <b>{{$student->year_of_training}}</b>.</p> 
                     <p>You are to fill your Logbook of each day's activities.</p>
-
-                    
-                        <h5 class="text-center p-2"> <a href="#" class="card-link">Week 1</a>
+                    @if(empty($records))
+                        <h5 class="text-center p-2"> 
+                            <a href="#" class="card-link">Week 1</a>
                         </h5>
+                        
                         <div class="row mb-3">
                             <div class="col-lg-4 themed-grid-col mb-3 card-group">
                                 <div class="card">
@@ -44,100 +45,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 themed-grid-col mb-3 card-group">
-                                <div class="card">
-                                    <div class="card-body">
-                                    <h5 class="card-title">Tuesday</h5>
-                                    <p class="card-text"> This content is a little bit longer.</p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <a href="#" class="card-link"><i class="fas fa-edit"></i>Edit</a>
-                                        <!-- <a href="#" class="card-link">Another link</a> -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 themed-grid-col mb-3 card-group">
-                                <div class="card">
-                                    <div class="card-body">
-                                    <h5 class="card-title">Wednesday</h5>
-                                    <p class="card-text"> This content is a little bit longer. This content is a little bit longer.</p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <a href="#" class="card-link"><i class="fas fa-edit"></i>Edit</a>
-                                        <!-- <a href="#" class="card-link">Another link</a> -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 themed-grid-col mb-3 card-group">
-                                <div class="card">
-                                    <div class="card-body">
-                                    <h5 class="card-title">Thursday</h5>
-                                    <p class="card-text"> This content is a little bit longer. This content is a little bit longer.</p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <a href="#" class="card-link"><i class="fas fa-edit"></i>Edit</a>
-                                        <!-- <a href="#" class="card-link">Another link</a> -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 themed-grid-col mb-3 card-group">
-                                <div class="card">
-                                    <div class="card-body">
-                                    <h5 class="card-title">Friday</h5>
-                                    <p class="card-text"> This content is a little bit longer. This content is a little bit longer.</p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <a href="#" class="card-link"><i class="fas fa-edit"></i>Edit</a>
-                                        <!-- <a href="#" class="card-link">Another link</a> -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 themed-grid-col mb-3 card-group">
-                                <div class="card">
-                                    <div class="card-body">
-                                    <h5 class="card-title">Saturday</h5>
-                                    <p class="card-text"> This content is a little bit longer. This content is a little bit longer.</p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <a href="#" class="card-link"><i class="fas fa-edit"></i>Edit</a>
-                                        <!-- <a href="#" class="card-link">Another link</a> -->
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-                    <!-- <h5 class="text-center p-2">Week 1 </h5>
-                    <div class="card-group p-2">
-                        <div class="card">
-                            <div class="card-body">
-                            <h5 class="card-title">Monday</h5>
-                            <p class="card-text"> This content is a little bit longer.</p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-body">
-                            <h5 class="card-title">Tuesday</h5>
-                            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                            <h5 class="card-title">Thursday</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </div>
-                        </div>
-                    </div> -->
+                    @else
+                        <h5 class="text-center p-2">
+                           No Records Yet
+                        </h5>
+                    @endif
                     
-                    
+                                           
                 </div>
                 
 
@@ -146,14 +61,15 @@
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="activityModalLabel"><b>Daily Activities</b></h5>
+                            <h5 class="modal-title" id="activityModalLabel"><b>Daily Activity</b></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"><b>&times;</b></span>
                             </button>
                         </div>
-                        <form class="" action="">
+                        <form class="" action="/student/log" method="POST">
+                            @csrf
                             <div class="modal-body">
-                                <div class="row form-group">
+                                <!-- <div class="row form-group">
                                 
                                     <div class="col-md-12">
                                         <label for="week" class="col-form-label">Select Week</label>
@@ -170,9 +86,9 @@
                                         @enderror
                                     </div>
                                 
-                                </div>
+                                </div> -->
                                 <div class="row form-group">
-                                
+                                    <input type="hidden" name="user_id" value="0">
                                     <div class="col-md-6">
                                         <label for="day" class="col-form-label">Pick Day</label>
                                         <select class="form-control  @error('day') is-invalid @enderror" name="day" id="day">
@@ -202,7 +118,7 @@
                                 
                                 </div>
                                 
-                                <div class="row form-group">
+                                <!-- <div class="row form-group">
                                     <div class="col-md-12">
                                         <label for="department" class="col-form-label">Department</label>
                                         <input type="text" name="depatment" id="department" class="form-control @error('department') is-invalid @enderror">   
@@ -212,13 +128,13 @@
                                             </span>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="row form-group">
                                 
                                     <div class="col-md-12">
-                                        <label for="summary" class="col-form-label">Summary of activities</label>
-                                        <textarea class="form-control" id="summary" rows="5"></textarea>
-                                        @error('summary')
+                                        <label for="description_of_work" class="col-form-label">Description of work</label>
+                                        <textarea class="form-control @error('description_of_work') is-invalid @enderror" name="description_of_work" rows="5"></textarea>
+                                        @error('description_of_work')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
