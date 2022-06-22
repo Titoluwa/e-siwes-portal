@@ -15,15 +15,18 @@ class LogbookController extends Controller
         $id = Auth::user()->id;
         $student = Student::where('user_id', $id)->first();
         $currentdate = Carbon::now()->format('Y-m-d');
-        $records = DailyRecord::where('user_id', $id)->where('weeked', 0)->get();
+        $records = DailyRecord::where('user_id', $id)->where('weeked', 0)->first();
+        if (!empty($records)){
+            $records = DailyRecord::where('user_id', $id)->where('weeked', 0)->orderBy('date', 'ASC')->get();
+        }else{
+            $records = null;
+        }
         return view('student.log', compact('student', 'currentdate', 'records'));
     }
     public function store(Request $request)
     {
-        // dd($request);
-        $id = Auth::user()->id;
+        // $id = Auth::user()->id;
         $record = DailyRecord::create($request->all());
-        $record->user_id = $id;
         $record->save();
         return back();
     }
