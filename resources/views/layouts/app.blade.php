@@ -174,9 +174,12 @@
     </div>
 
     <!-- Scripts -->
+    
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="/js/all.min.js"></script>
+    <script src="/js/sweetalert.min.js"></script>
     <script src="/js/jquery.min.js"></script>
+    @yield('scripts')
 </body>
 </html>

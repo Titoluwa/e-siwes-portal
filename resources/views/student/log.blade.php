@@ -43,9 +43,15 @@
                                         <h6 class="card-subtitle mb-2 text-muted">{{$rec->date}}</h6>
                                         <p class="card-text">{{$rec->description_of_work}}</p>
                                     </div>
-                                    <div class="card-footer">
-                                        <a href="/student/log/edit/{{$rec->id}}" class="card-link"><i class="fas fa-edit"></i>Edit</a>
-                                        <!-- <a href="#" class="card-link">Another link</a> -->
+                                    <div class="card-footer clearfix">
+                                        <a data-toggle="modal" data-target="#edit_daily_modal" onclick="get_record({{$rec->id}})" class="card-link"><i class="fas fa-edit"></i>Edit</a>
+                                       
+                                        <div class="float-right">
+                                            <input class="delete_val" type="hidden" value="{{$rec->id}}">
+                                            <a class="delete card-link text-danger">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -119,6 +125,71 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-warning">Submit</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edit Daily Activity Modal -->
+                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="edit_daily_modal" tabindex="-1" role="dialog" aria-labelledby="activityModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="activityModalLabel"><b>Edit Daily Activity</b></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><b>&times;</b></span>
+                            </button>
+                        </div>
+                        <form class="" action="/student/log/daily/update" method="POST">
+                            @method('PUT')
+                            @csrf
+                            <div class="modal-body">
+                                <div class="row form-group">
+                                    <div class="col-md-6">
+                                        <input type="hidden" name="edit_id" id="edit_id">
+                                        <label for="day" class="col-form-label">Pick Day</label>
+                                        <select class="form-control  @error('day') is-invalid @enderror" name="edit_day" id="edit_day">
+                                            <option value="" disabled selected>Day</option>
+                                            <option value="Monday">Monday</option>
+                                            <option value="Tuesday">Tuesday</option>
+                                            <option value="Wednesday">Wednesday</option>
+                                            <option value="Thursday">Thursday</option>
+                                            <option value="Friday">Friday</option>
+                                            <option value="Saturday">Saturday</option>
+                                        </select>    
+                                        @error('day')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="date" class="col-form-label">Date</label>
+                                        <input type="date" name="edit_date" id="edit_date" value="" class="form-control @error('date') is-invalid @enderror">   
+                                        @error('date')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label for="description_of_work" class="col-form-label">Description of work</label>
+                                        <textarea class="form-control @error('description_of_work') is-invalid @enderror" id="edit_description_of_work" name="edit_description_of_work" rows="5"></textarea>
+                                        @error('description_of_work')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-warning">Update</button>
                             </div>
                         </form>
                         </div>
@@ -200,4 +271,63 @@
         </div>
     </div>
 
+@endsection
+@section('scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('.delete').click(function(e) {
+                e.preventDefault();
+                var delete_id = $(this).closest('div').find('.delete_val').val();
+                // alert(delete_id);
+                swal({
+                    title: "Are you sure want to Delete?",
+                    text: "You will not be able to recover this records",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        
+                        var data = {
+                            "_token": $('input[name=_token]').val(),
+                            "id": delete_id,
+                        }
+                        $.ajax({
+                            type: "DELETE",
+                            url: "/student/log/daily/delete/"+ delete_id,
+                            data: data,
+                            success: function (response){
+                                swal(response.status, {
+                                    icon: "success",
+                                })
+                                .then((result)=>{
+                                    location.reload();
+                                });
+                            }
+                        });
+                    }
+                });
+                
+            });
+        });
+    </script>
+    <script>
+        function get_record(id){
+            $.get('/student/log/daily/'+id, function(data){
+                console.log(data);
+                $('#edit_id').val(data.id);
+                $('#edit_day').val(data.day);
+                $('#edit_date').val(data.date);
+                $('#edit_description_of_work').val(data.description_of_work);
+            })
+        };
+    </script>
 @endsection

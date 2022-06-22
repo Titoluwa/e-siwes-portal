@@ -7,6 +7,8 @@ use App\Student;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
+use LDAP\Result;
 
 class LogbookController extends Controller
 {
@@ -23,11 +25,31 @@ class LogbookController extends Controller
         }
         return view('student.log', compact('student', 'currentdate', 'records'));
     }
-    public function store(Request $request)
+    public function store_daily(Request $request)
     {
-        // $id = Auth::user()->id;
         $record = DailyRecord::create($request->all());
         $record->save();
         return back();
+    }
+    public function show_daily($id)
+    {
+        $record = DailyRecord::where('id', $id)->first();
+        return Response::json($record, 200);
+    }
+    public function update_daily(Request $request)
+    {
+        // dd($request->all());
+        $record = DailyRecord::where('id', $request->edit_id)->first();
+        $record->day = $request->edit_day;
+        $record->date = $request->edit_date;
+        $record->description_of_work = $request->edit_description_of_work;
+        $record->update();
+        return back();
+    }
+    public function destroy_daily($id)
+    {
+        $record = DailyRecord::findOrFail($id);
+        $record->delete();
+        return response()->json(['status'=>"Daily Record Deleted Successfully!"]);
     }
 }
