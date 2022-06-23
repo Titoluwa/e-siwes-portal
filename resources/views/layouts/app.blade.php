@@ -17,7 +17,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
         html, body {
-            background-image: url('images/E3.webp') !important;
+            /* background-image: url('images/E3.webp') !important; */
             background-color: white;
             position: relative;
             background-position: center;

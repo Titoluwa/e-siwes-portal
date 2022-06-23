@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card border-warning">
-                <div class="card-header border-warning bg-transparent clearfix">
+                <div class="card-header border-warning bg-othe-color clearfix">
 
                     <div class="float-left mt-2 blue-text">
                         <h3 style="font-weight: 700;">{{ __("STUDENT PARTICULAR") }}</h3>

@@ -39,10 +39,10 @@ class LogbookController extends Controller
     public function update_daily(Request $request)
     {
         // dd($request->all());
-        $record = DailyRecord::where('id', $request->edit_id)->first();
-        $record->day = $request->edit_day;
-        $record->date = $request->edit_date;
-        $record->description_of_work = $request->edit_description_of_work;
+        $record = DailyRecord::where('id', $request->id)->first();
+        $record->day = $request->day;
+        $record->date = $request->date;
+        $record->description_of_work = $request->description_of_work;
         $record->update();
         return back();
     }

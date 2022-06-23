@@ -17,7 +17,7 @@
                     <div class="float-right">
                         <!-- Button trigger for Add Daily Activity modal -->
                         <div class="py-1">
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#dailyactivityModal">
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#dailyactivityModal">
                             <i class="fa fa-book-open"></i> Add Daily Activity
                         </button>
                         </div>
@@ -29,12 +29,12 @@
                     <p>You are to fill your Logbook of each day's activities.</p>
                     <div class="mb-3">
                         <!-- Button trigger for Add Weekly Activity modal -->
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#weekactivityModal">
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#weekactivityModal">
                             <i class="fa fa-book"></i> Add Weekly Activity
                         </button>
                     </div>
                     @if(!empty($records))
-                        <div class="row row-cols-1 row-cols-xl-3 g-4">
+                        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-4">
                             @foreach($records as $rec)
                             <div class="col mb-3">
                                 <div class="card h-100">
@@ -44,11 +44,11 @@
                                         <p class="card-text">{{$rec->description_of_work}}</p>
                                     </div>
                                     <div class="card-footer clearfix">
-                                        <a data-toggle="modal" data-target="#edit_daily_modal" onclick="get_record({{$rec->id}})" class="card-link"><i class="fas fa-edit"></i>Edit</a>
+                                        <a data-toggle="modal" data-target="#edit_daily_modal" onclick="get_record({{$rec->id}})" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>Edit</a>
                                        
                                         <div class="float-right">
                                             <input class="delete_val" type="hidden" value="{{$rec->id}}">
-                                            <a class="delete card-link text-danger">
+                                            <a class="delete btn btn-sm btn-danger">
                                                 <i class="fas fa-trash-alt"></i>
                                             </a>
                                         </div>
@@ -77,7 +77,7 @@
                             <span aria-hidden="true"><b>&times;</b></span>
                             </button>
                         </div>
-                        <form class="" action="/student/log" method="POST">
+                        <form class="" action="/student/log/daily" method="POST">
                             @csrf
                             <div class="modal-body">
                                 <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
@@ -147,9 +147,9 @@
                             <div class="modal-body">
                                 <div class="row form-group">
                                     <div class="col-md-6">
-                                        <input type="hidden" name="edit_id" id="edit_id">
+                                        <input type="hidden" name="id" id="edit_id">
                                         <label for="day" class="col-form-label">Pick Day</label>
-                                        <select class="form-control  @error('day') is-invalid @enderror" name="edit_day" id="edit_day">
+                                        <select class="form-control  @error('day') is-invalid @enderror" name="day" id="edit_day">
                                             <option value="" disabled selected>Day</option>
                                             <option value="Monday">Monday</option>
                                             <option value="Tuesday">Tuesday</option>
@@ -166,7 +166,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="date" class="col-form-label">Date</label>
-                                        <input type="date" name="edit_date" id="edit_date" value="" class="form-control @error('date') is-invalid @enderror">   
+                                        <input type="date" name="date" id="edit_date" value="" class="form-control @error('date') is-invalid @enderror">   
                                         @error('date')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -178,7 +178,7 @@
                                 <div class="row form-group">
                                     <div class="col-md-12">
                                         <label for="description_of_work" class="col-form-label">Description of work</label>
-                                        <textarea class="form-control @error('description_of_work') is-invalid @enderror" id="edit_description_of_work" name="edit_description_of_work" rows="5"></textarea>
+                                        <textarea class="form-control @error('description_of_work') is-invalid @enderror" id="edit_description_of_work" name="description_of_work" rows="5"></textarea>
                                         @error('description_of_work')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -302,7 +302,7 @@
                         }
                         $.ajax({
                             type: "DELETE",
-                            url: "/student/log/daily/delete/"+ delete_id,
+                            url: "/student/log/daily/"+ delete_id,
                             data: data,
                             success: function (response){
                                 swal(response.status, {

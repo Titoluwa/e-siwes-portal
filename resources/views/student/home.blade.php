@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card border-warning">
 
-                <div class="card-header border-warning bg-oth-color">
+                <div class="card-header border-warning bg-othe-color">
                     <h5 class="mt-2">{{ __('Dashboard') }}</h5>
                 </div>
 
