@@ -51,10 +51,13 @@ Route::prefix('student')->group(function ()
     
     // Student LogBook 
     Route::get('/log', 'LogbookController@index');
+
     Route::post('/log/daily', 'LogbookController@store_daily');
     Route::get('/log/daily/{id}', 'LogbookController@show_daily');
     Route::put('/log/daily/update', 'LogbookController@update_daily');
     Route::delete('log/daily/{id}', 'LogbookController@destroy_daily');
+
+    Route::post('/log/weekly', 'LogbookController@store_weekly');
 });
 
     //INDUSTRY Routes

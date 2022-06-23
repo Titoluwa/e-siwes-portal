@@ -17,6 +17,7 @@ class CreateMonthlyRecordsTable extends Migration
             $table->id();
             
             $table->foreignId('user_id')->constrained('users');
+            $table->string('name');
             $table->json('weekly_records');
             $table->text('description_of_month');
             $table->string('sketch');

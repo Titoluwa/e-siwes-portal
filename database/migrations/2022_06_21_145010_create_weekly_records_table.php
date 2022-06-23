@@ -18,6 +18,7 @@ class CreateWeeklyRecordsTable extends Migration
 
             $table->foreignId('user_id')->constrained('users');
             $table->integer('monthed')->default(0);
+            $table->string('name');
             $table->json('daily_records');
             $table->string('department');
             $table->text('description_of_week');
