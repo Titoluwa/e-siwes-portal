@@ -74,4 +74,10 @@ class LogbookController extends Controller
         $record->save();
         return back();
     }
+        // show a weekly record
+    public function show_week($id)
+    {
+        $record = WeeklyRecord::where('id', $id)->first();
+        return Response::json($record, 200);
+    }
 }

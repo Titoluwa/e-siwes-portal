@@ -49,7 +49,7 @@
                             <div class="card-header border-primary bg-othe-color " id="Daily_heading">
                                 <h4 class="mb-0 clearfix">
                                     <div class="float-left">
-                                        <button class="btn btn-link" data-toggle="collapse" data-target="#DailyRecord" aria-expanded="true" aria-controls="DailyRecord">
+                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#DailyRecord" aria-expanded="true" aria-controls="DailyRecord">
                                             Daily Records
                                         </button>
                                     </div>
@@ -63,7 +63,7 @@
                                 </h4>
                             </div>
 
-                            <div id="DailyRecord" class="collapse show" aria-labelledby="Daily_heading" data-parent="#Records">
+                            <div id="DailyRecord" class="collapse" aria-labelledby="Daily_heading" data-parent="#Records">
                                 <div class="card-body">
                                     @if(!empty($dailyrecords))
                                         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-4">
@@ -140,12 +140,6 @@
                                                                 </a>
                                                             </div>
                                                         </div>
-                                                        <!-- <div class="flaot-left">
-                                                        </div>
-                                                    
-                                                        <div class="float-right pt-1">
-                                                            
-                                                        </div> -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -161,11 +155,20 @@
                         </div>
                         <div class="card border-primary">
                             <div class="card-header border-primary bg-othe-color" id="Monthly_heading">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#MonthlyRecord" aria-expanded="false" aria-controls="MonthlyRecord">
-                                    Monthly Records
-                                </button>
-                            </h5>
+                                <h4 class="mb-0 clearfix">
+                                    <div class="float-left">
+                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#MonthlyRecord" aria-expanded="false" aria-controls="MonthlyRecord">
+                                            Monthly Records
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Button trigger for Add Monthly Activity modal -->
+                                    <div class="float-right pt-1">
+                                        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#monthlyactivityModal">
+                                            <i class="fa fa-calendar-alt"></i> Add
+                                        </button>
+                                    </div>
+                                </h4>
                             </div>
                             <div id="MonthlyRecord" class="collapse" aria-labelledby="Monthly_heading" data-parent="#Records">
                             <div class="card-body">
@@ -178,14 +181,13 @@
                     </div>
                                            
                 </div>
-                
 
                 <!-- Add Daily Activity Modal -->
-                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="dailyactivityModal" tabindex="-1" role="dialog" aria-labelledby="activityModalLabel" aria-hidden="true">
+                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="dailyactivityModal" tabindex="-1" role="dialog" aria-labelledby="dailyModal" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="activityModalLabel"><b><i class="fa fa-calendar-day"></i> Daily Activity  </b></h5>
+                            <h5 class="modal-title" id="dailyModalLabel"><b><i class="fa fa-calendar-day"></i> Daily Activity</b></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"><b>&times;</b></span>
                             </button>
@@ -245,11 +247,11 @@
                 </div>
 
                 <!-- Edit Daily Activity Modal -->
-                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="edit_daily_modal" tabindex="-1" role="dialog" aria-labelledby="activityModalLabel" aria-hidden="true">
+                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="edit_daily_modal" tabindex="-1" role="dialog" aria-labelledby="edit_dailyModal" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="activityModalLabel"><b>Edit Daily Activity</b></h5>
+                            <h5 class="modal-title" id="edit_dailyModalLabel"><b>Edit Daily Activity</b></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"><b>&times;</b></span>
                             </button>
@@ -310,11 +312,11 @@
                 </div>
 
                 <!-- Add Weekly Activity Modal -->
-                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="weekactivityModal" tabindex="-1" role="dialog" aria-labelledby="activityModalLabel" aria-hidden="true">
+                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="weekactivityModal" tabindex="-1" role="dialog" aria-labelledby="weeklyModal" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="activityModalLabel"><b><i class="fa fa-calendar-week"></i> Weekly Activity  </b></h5>
+                            <h5 class="modal-title" id="weeklyModalLabel"><b><i class="fa fa-calendar-week"></i> Weekly Activity  </b></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"><b>&times;</b></span>
                             </button>
@@ -398,6 +400,196 @@
                     </div>
                 </div>
 
+                <!-- Edit Weekly Activity Modal -->
+                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="edit_weekly_modal" tabindex="-1" role="dialog" aria-labelledby="edit_weeklyModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="edit_weeklyModalLabel"><b><i class="fa fa-calendar-week"></i> Weekly Activity  </b></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><b>&times;</b></span>
+                            </button>
+                        </div>
+                        <form class="" action="/student/log/weekly/update" method="POST">
+                            @method('PUT')
+                            @csrf
+                            <div class="modal-body">
+                                <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label for="name" class="col-form-label"><b>Name Week</b></label>
+                                        <select class="form-control  @error('name') is-invalid @enderror" name="name" id="edit_w_name">
+                                            <option value="" disabled selected>Week</option>
+                                            <option value="Week 1">Week 1</option>
+                                            <option value="Week 2">Week 2</option>
+                                            <option value="Week 3">Week 3</option>
+                                            <option value="Week 4">Week 4</option>
+                                        </select>    
+                                        @error('name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label for="daily_records" class="col-form-label"><b>Pick Days</b></label>
+                                        
+                                        <!-- @if(!empty($dailyrecords))
+                                            @foreach($dailyrecords as $rec)
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="daily_records[]" value="{{$rec->id}}" id="{{$rec->date}}">
+                                                    <label class="form-check-label" for="{{$rec->date}}">
+                                                        <b>{{$rec->date}}</b> ({{$rec->day}})
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                        @else
+                                            <div class="form-check">
+                                               <p>No Daily Record</p>
+                                            </div>
+                                        @endif -->
+
+                                        @error('daily_records')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label for="department" class="col-form-label"><b>Department/Section</b></label>
+                                        <input id="edit_w_department" type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{ old('department') }}">
+
+                                        @error('department')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label for="description_of_week" class="col-form-label"><b>Description of Week</b></label>
+                                        <textarea class="form-control @error('description_of_week') is-invalid @enderror" id="edit_description_of_week" name="description_of_week" rows="5">{{old('description_of_week')}}</textarea>
+                                        @error('description_of_week')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-warning">Submit</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View Weekly Activity Modal -->
+                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="view_weekly_modal" tabindex="-1" role="dialog" aria-labelledby="view_weekly" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="view_weekly"><b><i class="fa fa-calendar-week"></i> <span id="weekname">Week</span></b></h5>
+                                
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>                        
+                            <div class="modal-body">
+                                <div class="">
+                                    <div class="p-2"><h6>
+                                        <b>Department: </b> <span id="week_dept"></span></h6>
+                                    </div>
+                                    <div class="p-2"><h6>
+                                        <b>Description of Week: </b> <span id="week_dow"></span></h6>
+                                    </div>
+                                    <div class="p-2">
+                                        <h6><b>Days of the week: </b> 
+                                            <span id="week_days">
+
+                                            </span>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Monthly Activity Modal -->
+                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="monthlyactivityModal" tabindex="-1" role="dialog" aria-labelledby="monthlyModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="monthlyModal"><b><i class="fa fa-calendar-alt"></i> Monthly Activity</b></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><b>&times;</b></span>
+                            </button>
+                        </div>
+                        <form class="" action="/student/log/daily" method="POST">
+                            @csrf
+                            <!-- <div class="modal-body">
+                                <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                                <div class="row form-group">
+                                    <div class="col-md-6">
+                                        <label for="day" class="col-form-label">Pick Day</label>
+                                        <select class="form-control  @error('day') is-invalid @enderror" name="day" id="day">
+                                            <option value="" disabled selected>Day</option>
+                                            <option value="Monday">Monday</option>
+                                            <option value="Tuesday">Tuesday</option>
+                                            <option value="Wednesday">Wednesday</option>
+                                            <option value="Thursday">Thursday</option>
+                                            <option value="Friday">Friday</option>
+                                            <option value="Saturday">Saturday</option>
+                                        </select>    
+                                        @error('day')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="date" class="col-form-label">Date</label>
+                                        <input type="date" name="date" id="date" value="{{$currentdate}}" class="form-control @error('date') is-invalid @enderror">   
+                                        @error('date')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label for="description_of_work" class="col-form-label">Description of work</label>
+                                        <textarea class="form-control @error('description_of_work') is-invalid @enderror" id="description_of_work" name="description_of_work" rows="5"></textarea>
+                                        @error('description_of_work')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div> 
+                            </div> -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-warning">Submit</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -454,11 +646,25 @@
     <script>
         function get_dailyrecord(id){
             $.get('/student/log/daily/'+id, function(data){
-                console.log(data);
+                // console.log(data);
                 $('#edit_id').val(data.id);
                 $('#edit_day').val(data.day);
                 $('#edit_date').val(data.date);
                 $('#edit_description_of_work').val(data.description_of_work);
+            })
+        };
+        function get_weeklyrecord(id){
+            $.get('/student/log/weekly/'+id, function(data){
+                console.log(data);
+                // $('#edit_id').val(data.id);
+                $('#edit_w_name').val(data.name);
+                $('#edit_w_department').val(data.department);
+                $('#edit_description_of_week').val(data.description_of_week);
+                
+                $('#weekname').html(data.name);
+                $('#week_dept').html(data.department);
+                $('#week_dow').html(data.description_of_week);
+                $('#week_days').html(data.daily_records);
             })
         };
     </script>
