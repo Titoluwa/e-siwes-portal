@@ -20,9 +20,9 @@ class CreateMonthlyRecordsTable extends Migration
             $table->string('name');
             $table->json('weekly_records');
             $table->text('description_of_month');
-            $table->string('sketch');
+            $table->string('sketch')->nullable();
             $table->integer('sch_sup_approval')->default(0);
-            $table->string('org_sup_comment')->default(NULL);
+            $table->string('org_sup_comment')->nullable();
             
             $table->timestamps();
         });

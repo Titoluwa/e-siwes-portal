@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LogbookController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -61,6 +62,11 @@ Route::prefix('student')->group(function ()
     Route::get('/log/weekly/{id}', 'LogbookController@show_week');
     Route::put('/log/weekly/update', 'LogbookController@update_weekly');
     Route::delete('log/weekly/{id}', 'LogbookController@destroy_weekly');
+
+    Route::post('/log/monthly', 'LogbookController@store_monthly');
+    Route::get('/log/monthly/{id}', 'LogbookController@show_month');
+    Route::put('/log/monthly/update', 'LogbookController@update_monthly');
+    Route::delete('log/monthly/{id}', 'LogbookController@destroy_monthly');
 });
 
     //INDUSTRY Routes

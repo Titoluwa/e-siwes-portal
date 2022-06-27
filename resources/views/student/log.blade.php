@@ -150,11 +150,43 @@
                                 </h4>
                             </div>
                             <div id="MonthlyRecord" class="collapse" aria-labelledby="Monthly_heading" data-parent="#Records">
-                            <div class="card-body">
-                                <h5 class="text-center p-2">
-                                    No Monthly Record
-                                </h5>
-                            </div>
+                                <div class="card-body">
+                                    @if(!empty($monthlyrecords))
+                                        <div class="row row-cols-1 g-4">
+                                            @foreach($monthlyrecords as $month)
+                                            <div class="col mb-3">
+                                                <div class="card h-100">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title"><b>{{$month->name}}</b></h5>
+                                                        <!-- <h6 class="card-subtitle mb-2 text-muted">{{$month->department}}</h6> -->
+                                                        <p class="card-text">{{$month->description_of_month}}</p>
+                                                    </div>
+                                                    <div class="card-footer clearfix">
+                                                        <div class="d-flex">
+                                                            <div class="">
+                                                                <a data-toggle="modal" data-target="#edit_monthly_modal" onclick="get_monthlyrecord({{$month->id}})" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>Edit</a>
+                                                            </div>
+                                                            <div class="px-2">
+                                                                <a data-toggle="modal" data-target="#view_monthly_modal" onclick="get_monthlyrecord({{$month->id}})" class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i>View</a>
+                                                            </div>
+                                                            <div class="ml-auto">
+                                                                <input class="delete_val" type="hidden" value="{{$month->id}}">
+                                                                <a class="delete-week btn btn-sm btn-danger">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        <h5 class="text-center p-2">
+                                        No Weekly Record
+                                        </h5>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -307,13 +339,14 @@
                                 <div class="row form-group">
                                     <div class="col-md-12">
                                         <label for="name" class="col-form-label"><b>Name Week</b></label>
-                                        <select class="form-control  @error('name') is-invalid @enderror" name="name" id="name">
+                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}">
+                                        <!-- <select class="form-control  @error('name') is-invalid @enderror" name="name" id="name">
                                             <option value="" disabled selected>Week</option>
                                             <option value="Week 1">Week 1</option>
                                             <option value="Week 2">Week 2</option>
                                             <option value="Week 3">Week 3</option>
                                             <option value="Week 4">Week 4</option>
-                                        </select>    
+                                        </select>     -->
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -389,7 +422,7 @@
                             <span aria-hidden="true"><b>&times;</b></span>
                             </button>
                         </div>
-                        <form class="" action="/student/log/weekly/update" method="POST">
+                        <form action="/student/log/weekly/update" method="POST">
                             @method('PUT')
                             @csrf
                             <div class="modal-body">
@@ -398,13 +431,14 @@
                                 <div class="row form-group">
                                     <div class="col-md-12">
                                         <label for="name" class="col-form-label"><b>Name Week</b></label>
-                                        <select class="form-control  @error('name') is-invalid @enderror" name="name" id="edit_w_name">
+                                        <!-- <select class="form-control  @error('name') is-invalid @enderror" name="name" id="edit_w_name">
                                             <option value="" disabled selected>Week</option>
                                             <option value="Week 1">Week 1</option>
                                             <option value="Week 2">Week 2</option>
                                             <option value="Week 3">Week 3</option>
                                             <option value="Week 4">Week 4</option>
-                                        </select>    
+                                        </select>     -->
+                                        <input id="edit_w_name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="">
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -492,13 +526,13 @@
                                     </div>
                                     <div class="p-2">
                                         <h6><b>Days in week: </b> </h6>
-                                        <div class="table-responsive">
-                                            <table id="myTable" class="table" style="width:100%">
-                                                <thead>
+                                        <div class="">
+                                            <table id="myTable" class="table table-bordered table-hover" style="width:100%">
+                                                <thead class="thead-light">
                                                     <tr>
-                                                        <th>Day</th>
-                                                        <th>Date</th>
-                                                        <th>Description</th>
+                                                        <th class="col-2">Day</th>
+                                                        <th class="col-2">Date</th>
+                                                        <th class="col-8">Description</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="week_days">
@@ -518,7 +552,7 @@
 
                 <!-- Add Monthly Activity Modal -->
                 <div class="modal fade" data-keyboard="false" data-backdrop="static" id="monthlyactivityModal" tabindex="-1" role="dialog" aria-labelledby="monthlyModal" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="monthlyModal"><b><i class="fa fa-calendar-alt"></i> Monthly Activity</b></h5>
@@ -526,56 +560,206 @@
                             <span aria-hidden="true"><b>&times;</b></span>
                             </button>
                         </div>
-                        <form class="" action="/student/log/daily" method="POST">
+                        <form class="" action="/student/log/monthly" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <!-- <div class="modal-body">
+                            <div class="modal-body">
                                 <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                                 <div class="row form-group">
-                                    <div class="col-md-6">
-                                        <label for="day" class="col-form-label">Pick Day</label>
-                                        <select class="form-control  @error('day') is-invalid @enderror" name="day" id="day">
-                                            <option value="" disabled selected>Day</option>
-                                            <option value="Monday">Monday</option>
-                                            <option value="Tuesday">Tuesday</option>
-                                            <option value="Wednesday">Wednesday</option>
-                                            <option value="Thursday">Thursday</option>
-                                            <option value="Friday">Friday</option>
-                                            <option value="Saturday">Saturday</option>
-                                        </select>    
-                                        @error('day')
+                                    <div class="col-md-12">
+                                        <label for="name" class="col-form-label"><b>Name of Month</b></label>
+                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}">
+                                        
+                                        @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="date" class="col-form-label">Date</label>
-                                        <input type="date" name="date" id="date" value="{{$currentdate}}" class="form-control @error('date') is-invalid @enderror">   
-                                        @error('date')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                
                                 </div>
                                 <div class="row form-group">
                                     <div class="col-md-12">
-                                        <label for="description_of_work" class="col-form-label">Description of work</label>
-                                        <textarea class="form-control @error('description_of_work') is-invalid @enderror" id="description_of_work" name="description_of_work" rows="5"></textarea>
-                                        @error('description_of_work')
+                                        <label for="daily_records" class="col-form-label"><b>Pick Weeks</b></label>
+                                        @if(!empty($weeklyrecords))
+                                            @foreach($weeklyrecords as $rec)
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="weekly_records[]" value="{{$rec->id}}" id="{{$rec->name}}">
+                                                    <label class="form-check-label" for="{{$rec->name}}">
+                                                        <b>{{$rec->name}}</b> ({{$rec->department}})
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                        @else
+                                            <div class="form-check">
+                                               <p>No Weekly Record</p>
+                                            </div>
+                                        @endif
+
+                                        @error('daily_records')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label for="description_of_month" class="col-form-label"><b>Description of Month</b></label>
+                                        <textarea class="form-control @error('description_of_month') is-invalid @enderror" id="description_of_month" name="description_of_month" rows="8">{{old('description_of_month')}}</textarea>
+                                        @error('description_of_month')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
                                 </div> 
-                            </div> -->
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label for="sketch" class="col-form-label"><b>Any Sketch or Image Description</b></label>
+                                        <input type="file" name="sketch" id="sketch" class="form-control-file @error('sketch') is-invalid @enderror" value="{{ old('sketch') }}">
+                                        @error('sketch')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-warning">Submit</button>
                             </div>
                         </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edit Monthly Activity Modal -->
+                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="edit_monthly_modal" tabindex="-1" role="dialog" aria-labelledby="edit_monthlyModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="edit_monthlyModal"><b><i class="fa fa-calendar-week"></i> Edit Monthly Activity  </b></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><b>&times;</b></span>
+                            </button>
+                        </div>
+                        <form action="/student/log/monthly/update" method="POST" enctype="multipart/form-data">
+                            @method('PUT')
+                            @csrf
+                            <div class="modal-body">
+                                <input type="hidden" name="id" id="e_month_id" >
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label for="name" class="col-form-label"><b>Name of Month</b></label>
+                                        <input id="e_month_name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="">
+                                        
+                                        @error('name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label for="weekly_records" class="col-form-label"><b>Pick Weeks</b></label>
+                                        @if(!empty($all_weeks))
+                                            @foreach($all_weeks as $rec)
+                                                <div class="form-check">
+                                                    <input class="wrecord form-check-input" type="checkbox" name="weekly_records[]" value="{{$rec->id}}" id="{{$rec->id}}">
+                                                    <label class="form-check-label" for="{{$rec->id}}">
+                                                        <b>{{$rec->name}}</b> ({{$rec->department}})
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                        @else
+                                            <div class="form-check">
+                                               <p>No Weekly Record</p>
+                                            </div>
+                                        @endif
+
+                                        @error('weekly_records')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label for="description_of_month" class="col-form-label"><b>Description of Month</b></label>
+                                        <textarea class="form-control @error('description_of_month') is-invalid @enderror" id="e_description_of_month" name="description_of_month" rows="8">{{old('description_of_month')}}</textarea>
+                                        @error('description_of_month')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div> 
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label for="sketch" class="col-form-label"><b>Any Sketch or Image Description</b></label>
+                                        <input type="file" name="sketch" id="e_sketch" class="form-control-file @error('sketch') is-invalid @enderror" value="{{ old('sketch') }}">
+                                        @error('sketch')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-warning">Update</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View Monthly Activity Modal -->
+                <div class="modal fade" id="view_monthly_modal" tabindex="-1" role="dialog" aria-labelledby="view_monthly" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="view_monthly"><b><i class="fa fa-calendar-alt"></i> <span id="monthname">Week</span></b></h5>
+                                
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>                        
+                            <div class="modal-body">
+                                <div class="">
+                                    <!-- <div class="p-2"><h6>
+                                        <b>Department: </b> <span id="week_dept"></span></h6>
+                                    </div> -->
+                                    <div class="p-2"><h6>
+                                        <b>Description of Month: </b> <p class="p-2" id="month_dow"></p></h6>
+                                    </div>
+                                    <div class="p-2">
+                                        <h6><b>Weeks in this Month: </b> </h6>
+                                        <div class="">
+                                            <table id="myTable" class="table table-bordered table-hover" style="width:100%">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th class="col-2">Week</th>
+                                                        <th class="col-2">Department</th>
+                                                        <th class="col-8">Description</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="weeks">
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -587,6 +771,7 @@
 @endsection
 
 @section('scripts')
+        <!-- Delete Scripts  -->
     <script type="text/javascript">
         $(document).ready(function() {
 
@@ -667,10 +852,11 @@
             });
         });
     </script>
-    <script>
+
+    <!-- Get Scripts -->
+    <script  type="text/javascript">
         function get_dailyrecord(id){
             $.get('/student/log/daily/'+id, function(data){
-                // console.log(data);
                 $('#edit_id').val(data.id);
                 $('#edit_day').val(data.day);
                 $('#edit_date').val(data.date);
@@ -700,11 +886,39 @@
                             <td>${val.day}</td>
                             <td>${val.date}</td>
                             <td>${val.description_of_work}</td>
-
                         </tr>
                     `);
                 });
             })
         };
+        function get_monthlyrecord(id){
+            $.get('/student/log/monthly/'+id, function(data)
+            {
+                $('#e_month_id').val(data.record.id);
+                $('#e_month_name').val(data.record.name);
+                $('#e_description_of_month').val(data.record.description_of_month);
+
+                $('#monthname').html(data.record.name);
+                $('#month_dow').html(data.record.description_of_month);
+                $('#weeks').html(' ');
+                $('.wrecord').removeAttr('checked', 'checked');
+                $.each(data.weeks, function(index, val)
+                {
+                    var id = val.id;
+                    console.log(id);
+                    if(id){
+                        $('#'+id).attr('checked', 'checked');
+                    }
+                    $('#weeks').append(`
+                        <tr>
+                            <td>${val.name}</td>
+                            <td>${val.department}</td>
+                            <td>${val.description_of_week}</td>
+
+                        </tr>
+                    `);
+                });
+            })
+        }
     </script>
 @endsection

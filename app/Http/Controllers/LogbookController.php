@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DailyRecord;
+use App\MonthlyRecord;
 use App\Student;
 use App\WeeklyRecord;
 use Carbon\Carbon;
@@ -23,15 +24,17 @@ class LogbookController extends Controller
         $student = Student::where('user_id', $id)->first();
         $currentdate = Carbon::now()->format('Y-m-d');
         $all_dailys = DailyRecord::where('user_id', $id)->orderBy('date', 'ASC')->first();
+        $all_weeks = WeeklyRecord::where('user_id', $id)->first();
         $dailyrecords = DailyRecord::where('user_id', $id)->where('weeked', 0)->first();
         $weeklyrecords = WeeklyRecord::where('user_id', $id)->where('monthed', 0)->first();
+        $monthlyrecords = MonthlyRecord::where('user_id', $id)->first();
 
         if (!empty($all_dailys)){
             $all_dailys = DailyRecord::where('user_id', $id)->orderBy('date', 'ASC')->get();
         }else{
             $all_dailys = null;
         }
-       
+
         if (!empty($dailyrecords)){
             $dailyrecords = DailyRecord::where('user_id', $id)->where('weeked', 0)->orderBy('date', 'ASC')->get();
         }else{
@@ -43,7 +46,20 @@ class LogbookController extends Controller
         }else{
             $weeklyrecords = null;
         }
-        return view('student.log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys'));
+        
+        if (!empty($all_weeks)){
+            $all_weeks = WeeklyRecord::where('user_id', $id)->get();
+        }else{
+            $all_weeks = null;
+        }
+
+        if (!empty($monthlyrecords)){
+            $monthlyrecords = MonthlyRecord::where('user_id', $id)->get();
+        }else{
+            $monthlyrecords = null;
+        }
+
+        return view('student.log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks'));
     }
         // stores the daily activity of each student
     public function store_daily(Request $request)
@@ -133,5 +149,64 @@ class LogbookController extends Controller
         };
         $record->delete();
         return response()->json(['status'=>"Week Record Deleted Successfully!"]);
+    }
+    public function store_monthly(Request $request)
+    {
+        $record = MonthlyRecord::create($request->all());
+        if ($request->hasFile('sketch')){
+            $record->sketch = $request->file('sketch')->store('sketches', 'public');
+        }
+        $record->weekly_records = $request->input('weekly_records');
+        foreach ($record->weekly_records as $week){
+            WeeklyRecord::where('id', $week)->update(['monthed'=> 1]);
+        }
+        $record->save();
+        return back();
+    }
+    public function show_month($id)
+    {
+        $record = MonthlyRecord::where('id', $id)->first();
+        $weeks = array();
+        foreach($record->weekly_records as $week)
+        {
+            $weekly = WeeklyRecord::where('id', $week)->first();
+            array_push($weeks, $weekly);
+        }
+        $data = [
+            'record' => $record,
+            'weeks' => $weeks
+        ];
+        return Response::json($data, 200);
+    }
+        // Updates a MONTH record for a particular user
+    public function update_monthly(Request $request)
+    {
+        $record = MonthlyRecord::where('id', $request->id)->first();
+        foreach ($record->weekly_records as $week)
+        {
+            WeeklyRecord::where('id', $week)->update(['monthed'=> 0]);
+        };
+        $record->weekly_records = [];
+        $record->name = $request->name;
+        $record->department = $request->department;
+        $record->description_of_month = $request->description_of_month;
+        $record->weekly_records = $request->input('weekly_records');
+        foreach ($request->weekly_records as $week)
+        {
+            WeeklyRecord::where('id', $week)->update(['monthed'=> 1]);
+        };
+        $record->update();
+        return back();
+    }
+        // Deletes a monthly_record
+    public function destroy_monthly($id)
+    {
+        $record = MonthlyRecord::findOrFail($id);
+        foreach ($record->weekly_records as $week)
+        {
+            WeeklyRecord::where('id', $week)->update(['monthed'=> 0]);
+        };
+        $record->delete();
+        return response()->json(['status'=>"Month Record Deleted Successfully!"]);
     }
 }
