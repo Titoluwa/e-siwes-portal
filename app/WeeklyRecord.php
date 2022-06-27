@@ -16,6 +16,10 @@ class WeeklyRecord extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function daily()
+    {
+        return $this->belongsTo(DailyRecord::class);
+    }
     public function org()
     {
         return $this->belongsTo(Organization::class);

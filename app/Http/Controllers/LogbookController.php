@@ -12,25 +12,38 @@ use Illuminate\Support\Facades\Response;
 
 class LogbookController extends Controller
 {
-        // Show initial view of logbook module
+    public function __construct()
+    {
+        $this->middleware('student');
+    }
+        // Show initial view of logbook module : shows ALL Records 
     public function index()
     {
         $id = Auth::user()->id;
         $student = Student::where('user_id', $id)->first();
         $currentdate = Carbon::now()->format('Y-m-d');
+        $all_dailys = DailyRecord::where('user_id', $id)->orderBy('date', 'ASC')->first();
         $dailyrecords = DailyRecord::where('user_id', $id)->where('weeked', 0)->first();
         $weeklyrecords = WeeklyRecord::where('user_id', $id)->where('monthed', 0)->first();
+
+        if (!empty($all_dailys)){
+            $all_dailys = DailyRecord::where('user_id', $id)->orderBy('date', 'ASC')->get();
+        }else{
+            $all_dailys = null;
+        }
+       
         if (!empty($dailyrecords)){
             $dailyrecords = DailyRecord::where('user_id', $id)->where('weeked', 0)->orderBy('date', 'ASC')->get();
         }else{
             $dailyrecords = null;
         }
+        
         if (!empty($weeklyrecords)){
             $weeklyrecords = WeeklyRecord::where('user_id', $id)->where('monthed', 0)->orderBy('name', 'ASC')->get();
         }else{
             $weeklyrecords = null;
         }
-        return view('student.log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords'));
+        return view('student.log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys'));
     }
         // stores the daily activity of each student
     public function store_daily(Request $request)
@@ -77,7 +90,48 @@ class LogbookController extends Controller
         // show a weekly record
     public function show_week($id)
     {
-        $record = WeeklyRecord::where('id', $id)->first();
-        return Response::json($record, 200);
+        $record = WeeklyRecord::where('id', $id)->with('daily')->first();
+        $days = array();
+        foreach($record->daily_records as $day)
+        {
+            $daily = DailyRecord::where('id', $day)->first();
+            array_push($days, $daily);
+        }
+        $data = [
+            'record' => $record,
+            'days' => $days
+        ];
+        return Response::json($data, 200);
+    }
+        // Updates a WEEKLY record for a particular user
+    public function update_weekly(Request $request)
+    {
+        $record = WeeklyRecord::where('id', $request->id)->first();
+        foreach ($record->daily_records as $day)
+        {
+            DailyRecord::where('id', $day)->update(['weeked'=> 0]);
+        };
+        $record->daily_records = [];
+        $record->name = $request->name;
+        $record->department = $request->department;
+        $record->description_of_week = $request->description_of_week;
+        $record->daily_records = $request->input('daily_records');
+        foreach ($request->daily_records as $day)
+        {
+            DailyRecord::where('id', $day)->update(['weeked'=> 1]);
+        };
+        $record->update();
+        return back();
+    }
+        // Deletes a weekly_record
+    public function destroy_weekly($id)
+    {
+        $record = WeeklyRecord::findOrFail($id);
+        foreach ($record->daily_records as $day)
+        {
+            DailyRecord::where('id', $day)->update(['weeked'=> 0]);
+        };
+        $record->delete();
+        return response()->json(['status'=>"Week Record Deleted Successfully!"]);
     }
 }

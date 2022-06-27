@@ -59,6 +59,8 @@ Route::prefix('student')->group(function ()
 
     Route::post('/log/weekly', 'LogbookController@store_weekly');
     Route::get('/log/weekly/{id}', 'LogbookController@show_week');
+    Route::put('/log/weekly/update', 'LogbookController@update_weekly');
+    Route::delete('log/weekly/{id}', 'LogbookController@destroy_weekly');
 });
 
     //INDUSTRY Routes

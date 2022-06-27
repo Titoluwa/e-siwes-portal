@@ -23,33 +23,12 @@
                     <p class="text-center">Your duration of training at <b>{{$student->org->name}}</b> is <b>{{$student->duration_of_training}}</b> for <b>{{$student->year_of_training}}</b>.</p> 
                     <p class="text-center mb-4">You are to fill your Logbook with each day's activities.</p>
 
-                    <!-- <div class="d-flex justify-content-around  mb-3">
-                        Button trigger for Add Daily Activity modal 
-                        <div class="p-2">
-                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#dailyactivityModal">
-                                <i class="fa fa-book-open"></i> Add Daily Record
-                            </button>
-                        </div>
-                        Button trigger for Add Weekly Activity modal 
-                        <div class="p-2">
-                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#weekactivityModal">
-                                <i class="fa fa-book"></i> Add Weekly Record
-                            </button>
-                        </div>
-                        Button trigger for Add Monthly Activity modal 
-                        <div class="p-2">
-                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#monthactivityModal">
-                                <i class="fa fa-book-open"></i> Add Monthly Record
-                            </button>
-                        </div>
-                    </div> -->
-
                     <div id="Records">
                         <div class="card border-primary">
                             <div class="card-header border-primary bg-othe-color " id="Daily_heading">
                                 <h4 class="mb-0 clearfix">
                                     <div class="float-left">
-                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#DailyRecord" aria-expanded="true" aria-controls="DailyRecord">
+                                        <button class="btn btn-link" data-toggle="collapse" data-target="#DailyRecord" aria-expanded="true" aria-controls="DailyRecord">
                                             Daily Records
                                         </button>
                                     </div>
@@ -63,7 +42,7 @@
                                 </h4>
                             </div>
 
-                            <div id="DailyRecord" class="collapse" aria-labelledby="Daily_heading" data-parent="#Records">
+                            <div id="DailyRecord" class="collapse show" aria-labelledby="Daily_heading" data-parent="#Records">
                                 <div class="card-body">
                                     @if(!empty($dailyrecords))
                                         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-4">
@@ -135,7 +114,7 @@
                                                             </div>
                                                             <div class="ml-auto">
                                                                 <input class="delete_val" type="hidden" value="{{$weekrec->id}}">
-                                                                <a class="delete btn btn-sm btn-danger">
+                                                                <a class="delete-week btn btn-sm btn-danger">
                                                                     <i class="fas fa-trash-alt"></i>
                                                                 </a>
                                                             </div>
@@ -405,7 +384,7 @@
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="edit_weeklyModalLabel"><b><i class="fa fa-calendar-week"></i> Weekly Activity  </b></h5>
+                            <h5 class="modal-title" id="edit_weeklyModalLabel"><b><i class="fa fa-calendar-week"></i> Edit Weekly Activity  </b></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"><b>&times;</b></span>
                             </button>
@@ -415,6 +394,7 @@
                             @csrf
                             <div class="modal-body">
                                 <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                                <input type="hidden" name="id" id="edit_w_id" value="">
                                 <div class="row form-group">
                                     <div class="col-md-12">
                                         <label for="name" class="col-form-label"><b>Name Week</b></label>
@@ -436,11 +416,11 @@
                                     <div class="col-md-12">
                                         <label for="daily_records" class="col-form-label"><b>Pick Days</b></label>
                                         
-                                        <!-- @if(!empty($dailyrecords))
-                                            @foreach($dailyrecords as $rec)
+                                        @if(!empty($all_dailys))
+                                            @foreach($all_dailys as $rec)
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="daily_records[]" value="{{$rec->id}}" id="{{$rec->date}}">
-                                                    <label class="form-check-label" for="{{$rec->date}}">
+                                                    <input class="drecord form-check-input" type="checkbox" name="daily_records[]" value="{{$rec->id}}" id="{{$rec->id}}">
+                                                    <label class="form-check-label" for="{{$rec->id}}">
                                                         <b>{{$rec->date}}</b> ({{$rec->day}})
                                                     </label>
                                                 </div>
@@ -449,7 +429,7 @@
                                             <div class="form-check">
                                                <p>No Daily Record</p>
                                             </div>
-                                        @endif -->
+                                        @endif
 
                                         @error('daily_records')
                                             <span class="invalid-feedback" role="alert">
@@ -473,7 +453,7 @@
                                 <div class="row form-group">
                                     <div class="col-md-12">
                                         <label for="description_of_week" class="col-form-label"><b>Description of Week</b></label>
-                                        <textarea class="form-control @error('description_of_week') is-invalid @enderror" id="edit_description_of_week" name="description_of_week" rows="5">{{old('description_of_week')}}</textarea>
+                                        <textarea class="form-control @error('description_of_week') is-invalid @enderror" id="edit_description_of_week" name="description_of_week" rows="5"></textarea>
                                         @error('description_of_week')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -484,7 +464,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-warning">Submit</button>
+                                <button type="submit" class="btn btn-warning">Update</button>
                             </div>
                         </form>
                         </div>
@@ -492,8 +472,8 @@
                 </div>
 
                 <!-- View Weekly Activity Modal -->
-                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="view_weekly_modal" tabindex="-1" role="dialog" aria-labelledby="view_weekly" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal fade" id="view_weekly_modal" tabindex="-1" role="dialog" aria-labelledby="view_weekly" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="view_weekly"><b><i class="fa fa-calendar-week"></i> <span id="weekname">Week</span></b></h5>
@@ -511,11 +491,21 @@
                                         <b>Description of Week: </b> <span id="week_dow"></span></h6>
                                     </div>
                                     <div class="p-2">
-                                        <h6><b>Days of the week: </b> 
-                                            <span id="week_days">
-
-                                            </span>
-                                        </h6>
+                                        <h6><b>Days in week: </b> </h6>
+                                        <div class="table-responsive">
+                                            <table id="myTable" class="table" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Day</th>
+                                                        <th>Date</th>
+                                                        <th>Description</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="week_days">
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -611,8 +601,8 @@
                 var delete_id = $(this).closest('div').find('.delete_val').val();
                 // alert(delete_id);
                 swal({
-                    title: "Are you sure want to Delete?",
-                    text: "You will not be able to recover this records",
+                    title: "Delete Day Record?",
+                    text: "You will not be able to recover this day's record",
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,
@@ -641,6 +631,40 @@
                 });
                 
             });
+            $('.delete-week').click(function(e) {
+                e.preventDefault();
+                var delete_id = $(this).closest('div').find('.delete_val').val();
+                swal({
+                    title: "Delete Week Record?",
+                    text: "You will not be able to recover this week's record",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        
+                        var data = {
+                            "_token": $('input[name=_token]').val(),
+                            "id": delete_id,
+                        }
+                        $.ajax({
+                            type: "DELETE",
+                            url: "/student/log/weekly/"+ delete_id,
+                            data: data,
+                            success: function (response){
+                                swal(response.status, {
+                                    icon: "success",
+                                })
+                                .then((result)=>{
+                                    location.reload();
+                                });
+                            }
+                        });
+                    }
+                });
+                
+            });
         });
     </script>
     <script>
@@ -654,17 +678,32 @@
             })
         };
         function get_weeklyrecord(id){
-            $.get('/student/log/weekly/'+id, function(data){
-                console.log(data);
-                // $('#edit_id').val(data.id);
-                $('#edit_w_name').val(data.name);
-                $('#edit_w_department').val(data.department);
-                $('#edit_description_of_week').val(data.description_of_week);
-                
-                $('#weekname').html(data.name);
-                $('#week_dept').html(data.department);
-                $('#week_dow').html(data.description_of_week);
-                $('#week_days').html(data.daily_records);
+            $.get('/student/log/weekly/'+id, function(data)
+            {
+                $('#edit_w_id').val(data.record.id);
+                $('#edit_w_name').val(data.record.name);
+                $('#edit_w_department').val(data.record.department);
+                $('#edit_description_of_week').val(data.record.description_of_week);
+                $('#weekname').html(data.record.name);
+                $('#week_dept').html(data.record.department);
+                $('#week_dow').html(data.record.description_of_week);
+                $('#week_days').html(' ');
+                $('.drecord').removeAttr('checked', 'checked');
+                $.each(data.days, function(index, val)
+                {
+                    var id = val.id;
+                    if(id){
+                        $('#'+id).attr('checked', 'checked');
+                    }
+                    $('#week_days').append(`
+                        <tr>
+                            <td>${val.day}</td>
+                            <td>${val.date}</td>
+                            <td>${val.description_of_work}</td>
+
+                        </tr>
+                    `);
+                });
             })
         };
     </script>
