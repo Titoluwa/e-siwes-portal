@@ -45,7 +45,7 @@
                             <div id="DailyRecord" class="collapse show" aria-labelledby="Daily_heading" data-parent="#Records">
                                 <div class="card-body">
                                     @if(!empty($dailyrecords))
-                                        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-4">
+                                        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-2">
                                             @foreach($dailyrecords as $rec)
                                             <div class="col mb-3">
                                                 <div class="card h-100">
@@ -92,6 +92,7 @@
                                     </div>
                                 </h4>
                             </div>
+
                             <div id="WeeklyRecord" class="collapse" aria-labelledby="Weekly_heading" data-parent="#Records">
                                 <div class="card-body">
                                     @if(!empty($weeklyrecords))
@@ -149,6 +150,7 @@
                                     </div>
                                 </h4>
                             </div>
+                            
                             <div id="MonthlyRecord" class="collapse" aria-labelledby="Monthly_heading" data-parent="#Records">
                                 <div class="card-body">
                                     @if(!empty($monthlyrecords))
@@ -183,7 +185,7 @@
                                         </div>
                                     @else
                                         <h5 class="text-center p-2">
-                                        No Weekly Record
+                                        No Montly Record
                                         </h5>
                                     @endif
                                 </div>
@@ -192,7 +194,7 @@
                     </div>
                                            
                 </div>
-
+                        <!-- MODALS -->
                 <!-- Add Daily Activity Modal -->
                 <div class="modal fade" data-keyboard="false" data-backdrop="static" id="dailyactivityModal" tabindex="-1" role="dialog" aria-labelledby="dailyModal" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -324,7 +326,7 @@
 
                 <!-- Add Weekly Activity Modal -->
                 <div class="modal fade" data-keyboard="false" data-backdrop="static" id="weekactivityModal" tabindex="-1" role="dialog" aria-labelledby="weeklyModal" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="weeklyModalLabel"><b><i class="fa fa-calendar-week"></i> Weekly Activity  </b></h5>
@@ -414,7 +416,7 @@
 
                 <!-- Edit Weekly Activity Modal -->
                 <div class="modal fade" data-keyboard="false" data-backdrop="static" id="edit_weekly_modal" tabindex="-1" role="dialog" aria-labelledby="edit_weeklyModal" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="edit_weeklyModalLabel"><b><i class="fa fa-calendar-week"></i> Edit Weekly Activity  </b></h5>
@@ -636,7 +638,7 @@
 
                 <!-- Edit Monthly Activity Modal -->
                 <div class="modal fade" data-keyboard="false" data-backdrop="static" id="edit_monthly_modal" tabindex="-1" role="dialog" aria-labelledby="edit_monthlyModal" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="edit_monthlyModal"><b><i class="fa fa-calendar-week"></i> Edit Monthly Activity  </b></h5>
@@ -771,7 +773,8 @@
 @endsection
 
 @section('scripts')
-        <!-- Delete Scripts  -->
+        
+    <!-- Delete Scripts  -->
     <script type="text/javascript">
         $(document).ready(function() {
 
@@ -902,10 +905,11 @@
                 $('#month_dow').html(data.record.description_of_month);
                 $('#weeks').html(' ');
                 $('.wrecord').removeAttr('checked', 'checked');
+
                 $.each(data.weeks, function(index, val)
                 {
                     var id = val.id;
-                    console.log(id);
+                    console.log(data.weeks);
                     if(id){
                         $('#'+id).attr('checked', 'checked');
                     }

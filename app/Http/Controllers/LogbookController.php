@@ -42,7 +42,7 @@ class LogbookController extends Controller
         }
         
         if (!empty($weeklyrecords)){
-            $weeklyrecords = WeeklyRecord::where('user_id', $id)->where('monthed', 0)->orderBy('name', 'ASC')->get();
+            $weeklyrecords = WeeklyRecord::where('user_id', $id)->where('monthed', 0)->orderBy('created_at', 'ASC')->get();
         }else{
             $weeklyrecords = null;
         }
