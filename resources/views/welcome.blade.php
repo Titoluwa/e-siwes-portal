@@ -13,9 +13,9 @@
                         <h3 class="display-5 text-uppercase font-weight-bold">Welcome</h3>
                     </div>    
                     <div class="p-4">
-                        <a class="px-2 h5 othe-color" href="{{ route('studentform') }}">Register as a STUDENT</a>
-                        <a class="px-2 h5 othe-color" href="{{ route('schoolform') }}">Register as a SCHOOL SUPERVISOR</a>
-                        <a class="px-2 h5 othe-color" href="{{ route('industryform') }}">Register as an INDUSTRY BASED SUPERVISOR</a>
+                        <a class="px-2 h5 othe-color" href="{{ route('studentform') }}">STUDENT</a>
+                        <a class="px-2 h5 othe-color" href="{{ route('schoolform') }}">SCHOOL SUPERVISOR</a>
+                        <a class="px-2 h5 othe-color" href="{{ route('industryform') }}">INDUSTRY BASED SUPERVISOR</a>
                     </div>
                 </div>
             </div>
