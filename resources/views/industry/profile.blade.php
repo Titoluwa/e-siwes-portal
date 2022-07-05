@@ -29,7 +29,7 @@
                         <label for="email" class="col-md-2 col-form-label">E-Mail Address</label>
 
                         <div class="col-md-4">
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{Auth::user()->email}}" required disabled>
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{Auth::user()->email}}" disabled>
 
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -40,7 +40,7 @@
 
                         <label for="staff_id" class="col-md-2 col-form-label">Staff ID</label>
                         <div class="col-md-4">
-                            <input id="staff_id" type="text" class="form-control @error('staff_id') is-invalid @enderror" name="staff_id" value="{{Auth::user()->staff_id}}" required>
+                            <input id="staff_id" type="text" class="form-control @error('staff_id') is-invalid @enderror" name="staff_id" value="{{Auth::user()->staff_id}}">
 
                             @error('staff_id')
                                 <span class="invalid-feedback" role="alert">
@@ -54,7 +54,7 @@
                     <div class="form-group row">
                         <label for="last_name" class="col-md-2 col-form-label">Last Name</label>
                         <div class="col-md-4">
-                            <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{Auth::user()->last_name}}" required>
+                            <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{Auth::user()->last_name}}">
 
                             @error('last_name')
                                 <span class="invalid-feedback" role="alert">
@@ -65,7 +65,7 @@
 
                         <label for="first_name" class="col-md-2 col-form-label">First Name</label>
                         <div class="col-md-4">
-                            <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{Auth::user()->first_name}}" required>
+                            <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{Auth::user()->first_name}}">
 
                             @error('first_name')
                                 <span class="invalid-feedback" role="alert">
@@ -78,7 +78,7 @@
                     <div class="form-group row">
                         <label for="middle_name" class="col-md-2 col-form-label">Middle Name</label>
                         <div class="col-md-4">
-                            <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{Auth::user()->middle_name}}" required>
+                            <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{Auth::user()->middle_name}}">
 
                             @error('middle_name')
                                 <span class="invalid-feedback" role="alert">
@@ -100,7 +100,7 @@
                     <div class="form-group row">
                         <label for="department" class="col-md-2 col-form-label">Department</label>
                         <div class="col-md-4">
-                            <input id="department" type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{Auth::user()->department}}" required>
+                            <input id="department" type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{Auth::user()->department}}">
 
                             @error('department')
                                 <span class="invalid-feedback" role="alert">
@@ -111,7 +111,7 @@
 
                         <label for="contact_no" class="col-md-2 col-form-label">Contact Number</label>
                         <div class="col-md-4">
-                            <input id="contact_no" type="number" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{Auth::user()->contact_no}}" required>
+                            <input id="contact_no" type="number" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{Auth::user()->contact_no}}">
 
                             @error('contact_no')
                                 <span class="invalid-feedback" role="alert">

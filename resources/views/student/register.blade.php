@@ -75,7 +75,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <!-- <div class="form-group row">
                             <div class="col-lg-4">
                                 <label for="faculty" class="col-form-label">Faculty</label>
                                 <input id="faculty" type="text" class="form-control @error('faculty') is-invalid @enderror" name="faculty" value="{{ old('faculty') }}" required>
@@ -105,8 +105,50 @@
                                     </span>
                                 @enderror
                             </div>
+                        </div>   -->
+                        <div class="form-group row">
+                            <div class="col-lg-4">
+                                <label for="faculty" class="col-form-label">{{ __('Faculty') }}</label>
+                                <select name="faculty" id="faculty" value="{{ old('faculty') }}" class="form-control @error('faculty') is-invalid @enderror" data-dependant='department' >
+                                    <option value="" disabled selected hidden>Select Faculty</option>
+                                    @foreach($faculty as $f)
+                                    <option value="{{ $f->faculty }}">{{ $f->faculty }}</option>
+                                    @endforeach
+                                </select>
+                                @error('faculty')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-lg-4">
+                                <label for="department" class="col-form-label">{{ __('Department') }}</label> 
+                                <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" data-dependant='course_of_study' value="{{ old('department') }}">
+                                    <option value="" disabled selected hidden>Select Department</option>
+                                </select>
+
+                                @error('department')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-lg-4">
+                                <label for="course_of_study" class="col-form-label">Course of Study</label>
+                                <select  id="course_of_study" value="{{ old('course_of_study') }}" class="form-control @error('course_of_study') is-invalid @enderror" name="course_of_study" value="{{ old('course_of_study') }}">
+                                    <option value="" disabled selected hidden>Select Course</option>
+                                </select>
+                                
+                                @error('course_of_study')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
-                        
+                                                
                         <div class="form-group row">
                             <div class="col-lg-4">
                                 <label for="gender" class="col-form-label @error('gender') is-invalid @enderror">Gender</label>
@@ -138,7 +180,7 @@
 
                             <div class="col-lg-4">
                                 <label for="contact_no" class="col-form-label">Contact Number</label>
-                                <input id="contact_no" type="number" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ old('contact_no') }}" required>
+                                <input id="contact_no" type="tel" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ old('contact_no') }}" required>
                                 @error('contact_no')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -164,8 +206,8 @@
                             </div>
                         </div>
 
-                        <div class="row py-2">
-                            <div class="offset-md-10">
+                        <div class="clearfix">
+                            <div class="float-right">
                                 <button type="submit" class="btn bg-oth-color nav-text-color">
                                    Register
                                 </button>
@@ -177,4 +219,49 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+    <script  type="text/javascript">
+        $(document).ready(function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('#faculty').change(function(){
+                if($(this).val()!= ''){   
+                    var value = $(this).val();
+                    var _token = $('input[name="_token"]').val();
+                    console.log(value);
+                    $.ajax({
+                        url:"{{ route('dept.fetch') }}",
+                        method:'POST',
+                        data: {value:value, _token:_token},
+                        success: function (result)
+                        {
+                            $('#course_of_study').html('');
+                            $('#department').html(result);
+                        }
+                    });
+                }
+            });
+            $('#department').change(function(){
+                if($(this).val()!= ''){   
+                    var value = $(this).val();
+                    var _token = $('input[name="_token"]').val();
+                    console.log(value);
+                    $.ajax({
+                        url:"{{ route('course.fetch') }}",
+                        method:'POST',
+                        data: {value:value, _token:_token},
+                        success: function (result)
+                        {
+                            $('#course_of_study').html(result);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\DailyRecord;
-use App\MonthlyRecord;
 use App\Student;
-use App\WeeklyRecord;
 use Carbon\Carbon;
+use App\DailyRecord;
+use App\Organization;
+use App\WeeklyRecord;
+use App\MonthlyRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -22,6 +23,7 @@ class LogbookController extends Controller
     {
         $id = Auth::user()->id;
         $student = Student::where('user_id', $id)->first();
+        $orgs = Organization::all();
         $currentdate = Carbon::now()->format('Y-m-d');
         $all_dailys = DailyRecord::where('user_id', $id)->orderBy('date', 'ASC')->first();
         $all_weeks = WeeklyRecord::where('user_id', $id)->first();
@@ -59,7 +61,7 @@ class LogbookController extends Controller
             $monthlyrecords = null;
         }
 
-        return view('student.log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks'));
+        return view('student.log', compact('student', 'orgs', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks'));
     }
         // stores the daily activity of each student
     public function store_daily(Request $request)

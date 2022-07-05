@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('first_name');
             $table->string('profile_pic')->nullable();
             $table->string('middle_name')->default(null);
-            $table->integer('contact_no');
+            $table->bigInteger('contact_no');
             $table->string('matric_no')->default(null);
             $table->string('staff_id')->default(null);
             $table->string('gender');

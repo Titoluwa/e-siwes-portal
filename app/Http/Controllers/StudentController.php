@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 // use DB;
 
 use App\User;
@@ -11,6 +10,7 @@ use App\Organization;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -22,12 +22,33 @@ class StudentController extends Controller
         // Middleware for Student activites excepts Initial Registration
     public function __construct()
     {
-        $this->middleware('student')->except(['create', 'store']);
+        $this->middleware('student')->except(['create', 'store', 'dept_fetch', 'course_fetch']);
     }
-
         // Show StudentUser registration form
-    public function create(){
-        return view('student.register');
+    public function create()
+    {
+        $faculty = DB::table('departments')->selectRaw('faculty')->groupBy('faculty')->get();
+        return view('student.register', compact('faculty'));
+    }
+    public function dept_fetch(Request $request){
+        $value = $request->get('value');
+        $dept = DB::table('departments')->select('department')->where('faculty', $value)->groupBy('department')->get();
+        $output = '';
+        $output = '<option value="" selected disabled hidden> Select Department </option>';
+        foreach($dept as $d){
+            $output .= '<option value="' .$d->department.'">' .$d->department.' </option>';
+        }
+        echo $output;
+    }
+    public function course_fetch(Request $request){
+        $value = $request->get('value');
+        $course = DB::table('departments')->select('course_study')->where('department', $value)->groupBy('course_study')->get();
+        $output = '';
+        $output = '<option value="" selected disabled hidden> Select Course </option>';
+        foreach($course as $c){
+            $output .= '<option value="' .$c->course_study.'">' .$c->course_study.' </option>';
+        }
+        echo $output;
     }
         // For storing the StudentUser registration form
     public function store(Request $request)
@@ -56,7 +77,7 @@ class StudentController extends Controller
             'faculty' => 'required|string|max:200',
             'department' => 'required|string|max:200',
             'course_of_study' => 'string|max:100',
-            'contact_no'=> 'required|integer',
+            'contact_no'=> 'required|digits_between:9,16',
             'gender'=> 'required|string|max:100',
             'password' => 'required|string|min:8|confirmed',
             'staff_id' => 'string',
@@ -169,12 +190,3 @@ class StudentController extends Controller
         return redirect('/student/org');
     }    
 }   
-    // public function fetch(Request $request){
-    //     $value = $request->get('value');
-    //     $dept = DB::table('department')->where('faculty', $value)->groupBy('department')->get();
-    //     $output = '<option value="" selected disabled hidden> Select Department </option>';
-    //     foreach($dept as $d){
-    //         $output .= '<option value="' .$d->department.'">' .$d->department.' </option>';
-    //     }
-    //     echo $output;
-    // }

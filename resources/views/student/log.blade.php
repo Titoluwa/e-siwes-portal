@@ -20,179 +20,260 @@
                 </div>
 
                 <div class="card-body border-warning m-4 p-2">
-                    <p class="text-center">Your duration of training at <b>{{$student->org->name}}</b> is <b>{{$student->duration_of_training}}</b> for <b>{{$student->year_of_training}}</b>.</p> 
-                    <p class="text-center mb-4">You are to fill your Logbook with each day's activities.</p>
+                    @if (!empty($student))
+                
+                        <p class="text-center">Your duration of training at <b>{{$student->org->name}}</b> is <b>{{$student->duration_of_training}}</b> for <b>{{$student->year_of_training}}</b>.</p> 
+                        <p class="text-center mb-4">You are to fill your Logbook with each day's activities.</p>
 
-                    <div id="Records">
-                        <div class="card border-primary">
-                            <div class="card-header border-primary bg-othe-color " id="Daily_heading">
-                                <h4 class="mb-0 clearfix">
-                                    <div class="float-left">
-                                        <button class="btn btn-link" data-toggle="collapse" data-target="#DailyRecord" aria-expanded="true" aria-controls="DailyRecord">
-                                            Daily Records
-                                        </button>
-                                    </div>
-                                    
-                                    <!-- Button trigger for Add Daily Activity modal -->
-                                    <div class="float-right pt-1">
-                                        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#dailyactivityModal">
-                                            <i class="fa fa-calendar-day"></i> Add
-                                        </button>
-                                    </div>
-                                </h4>
-                            </div>
-
-                            <div id="DailyRecord" class="collapse show" aria-labelledby="Daily_heading" data-parent="#Records">
-                                <div class="card-body">
-                                    @if(!empty($dailyrecords))
-                                        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-2">
-                                            @foreach($dailyrecords as $rec)
-                                            <div class="col mb-3">
-                                                <div class="card h-100">
-                                                    <div class="card-body">
-                                                        <b class="card-title">{{$rec->day}}</b>
-                                                        <small class="card-subtitle mb-2 text-muted">({{$rec->date}})</small>
-                                                        <p class="card-text">{{$rec->description_of_work}}</p>
-                                                    </div>
-                                                    <div class="card-footer clearfix">
-                                                        <a data-toggle="modal" data-target="#edit_daily_modal" onclick="get_dailyrecord({{$rec->id}})" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>Edit</a>
-                                                    
-                                                        <div class="float-right">
-                                                            <input class="delete_val" type="hidden" value="{{$rec->id}}">
-                                                            <a class="delete btn btn-sm btn-danger">
-                                                                <i class="fas fa-trash-alt"></i>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @endforeach
+                        <div id="Records">
+                            <div class="card border-primary">
+                                <div class="card-header border-primary bg-othe-color " id="Daily_heading">
+                                    <h4 class="mb-0 clearfix">
+                                        <div class="float-left">
+                                            <button class="btn btn-link" data-toggle="collapse" data-target="#DailyRecord" aria-expanded="true" aria-controls="DailyRecord">
+                                                Daily Records
+                                            </button>
                                         </div>
-                                    @else
-                                        <h5 class="text-center p-2">
-                                            No Daily Record
-                                        </h5>
-                                    @endif
+                                        
+                                        <!-- Button trigger for Add Daily Activity modal -->
+                                        <div class="float-right pt-1">
+                                            <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#dailyactivityModal">
+                                                <i class="fa fa-calendar-day"></i> Add
+                                            </button>
+                                        </div>
+                                    </h4>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="card border-primary">
-                            <div class="card-header border-primary bg-othe-color" id="Weekly_heading">
-                                <h4 class="mb-0 clearfix">
-                                    <div class="float-left">
-                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#WeeklyRecord" aria-expanded="false" aria-controls="WeeklyRecord">
-                                            Weekly Records
-                                        </button>
-                                    </div>
-                                    <!-- Button trigger for Add Weekly Activity modal -->
-                                    <div class="float-right pt-1">
-                                        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#weekactivityModal">
-                                            <i class="fa fa-calendar-week"></i> Add 
-                                        </button>
-                                    </div>
-                                </h4>
-                            </div>
 
-                            <div id="WeeklyRecord" class="collapse" aria-labelledby="Weekly_heading" data-parent="#Records">
-                                <div class="card-body">
-                                    @if(!empty($weeklyrecords))
-                                        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-2 g-4">
-                                            @foreach($weeklyrecords as $weekrec)
-                                            <div class="col mb-3">
-                                                <div class="card h-100">
-                                                    <div class="card-body">
-                                                        <h6 class="card-title"><b>{{$weekrec->name}}</b></h6>
-                                                        <h6 class="card-subtitle mb-2 text-muted">{{$weekrec->department}}</h6>
-                                                        <p class="card-text">{{$weekrec->description_of_week}}</p>
-                                                    </div>
-                                                    <div class="card-footer clearfix">
-                                                        <div class="d-flex">
-                                                            <div class="">
-                                                                <a data-toggle="modal" data-target="#edit_weekly_modal" onclick="get_weeklyrecord({{$weekrec->id}})" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>Edit</a>
-                                                            </div>
-                                                            <div class="px-2">
-                                                                <a data-toggle="modal" data-target="#view_weekly_modal" onclick="get_weeklyrecord({{$weekrec->id}})" class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i>View</a>
-                                                            </div>
-                                                            <div class="ml-auto">
-                                                                <input class="delete_val" type="hidden" value="{{$weekrec->id}}">
-                                                                <a class="delete-week btn btn-sm btn-danger">
+                                <div id="DailyRecord" class="collapse show" aria-labelledby="Daily_heading" data-parent="#Records">
+                                    <div class="card-body">
+                                        @if(!empty($dailyrecords))
+                                            <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-2">
+                                                @foreach($dailyrecords as $rec)
+                                                <div class="col mb-3">
+                                                    <div class="card h-100">
+                                                        <div class="card-body">
+                                                            <b class="card-title">{{$rec->day}}</b>
+                                                            <small class="card-subtitle mb-2 text-muted">({{$rec->date}})</small>
+                                                            <p class="card-text">{{$rec->description_of_work}}</p>
+                                                        </div>
+                                                        <div class="card-footer clearfix">
+                                                            <a data-toggle="modal" data-target="#edit_daily_modal" onclick="get_dailyrecord({{$rec->id}})" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>Edit</a>
+                                                        
+                                                            <div class="float-right">
+                                                                <input class="delete_val" type="hidden" value="{{$rec->id}}">
+                                                                <a class="delete btn btn-sm btn-danger">
                                                                     <i class="fas fa-trash-alt"></i>
                                                                 </a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @endforeach
                                             </div>
-                                            @endforeach
-                                        </div>
-                                    @else
-                                        <h5 class="text-center p-2">
-                                        No Weekly Record
-                                        </h5>
-                                    @endif
+                                        @else
+                                            <h5 class="text-center p-2">
+                                                No Daily Record
+                                            </h5>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card border-primary">
-                            <div class="card-header border-primary bg-othe-color" id="Monthly_heading">
-                                <h4 class="mb-0 clearfix">
-                                    <div class="float-left">
-                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#MonthlyRecord" aria-expanded="false" aria-controls="MonthlyRecord">
-                                            Monthly Records
-                                        </button>
-                                    </div>
-                                    
-                                    <!-- Button trigger for Add Monthly Activity modal -->
-                                    <div class="float-right pt-1">
-                                        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#monthlyactivityModal">
-                                            <i class="fa fa-calendar-alt"></i> Add
-                                        </button>
-                                    </div>
-                                </h4>
-                            </div>
-                            
-                            <div id="MonthlyRecord" class="collapse" aria-labelledby="Monthly_heading" data-parent="#Records">
-                                <div class="card-body">
-                                    @if(!empty($monthlyrecords))
-                                        <div class="row row-cols-1 g-4">
-                                            @foreach($monthlyrecords as $month)
-                                            <div class="col mb-3">
-                                                <div class="card h-100">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title"><b>{{$month->name}}</b></h5>
-                                                        <!-- <h6 class="card-subtitle mb-2 text-muted">{{$month->department}}</h6> -->
-                                                        <p class="card-text">{{$month->description_of_month}}</p>
-                                                    </div>
-                                                    <div class="card-footer clearfix">
-                                                        <div class="d-flex">
-                                                            <div class="">
-                                                                <a data-toggle="modal" data-target="#edit_monthly_modal" onclick="get_monthlyrecord({{$month->id}})" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>Edit</a>
-                                                            </div>
-                                                            <div class="px-2">
-                                                                <a data-toggle="modal" data-target="#view_monthly_modal" onclick="get_monthlyrecord({{$month->id}})" class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i>View</a>
-                                                            </div>
-                                                            <div class="ml-auto">
-                                                                <input class="delete_val" type="hidden" value="{{$month->id}}">
-                                                                <a class="delete-week btn btn-sm btn-danger">
-                                                                    <i class="fas fa-trash-alt"></i>
-                                                                </a>
+                            <div class="card border-primary">
+                                <div class="card-header border-primary bg-othe-color" id="Weekly_heading">
+                                    <h4 class="mb-0 clearfix">
+                                        <div class="float-left">
+                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#WeeklyRecord" aria-expanded="false" aria-controls="WeeklyRecord">
+                                                Weekly Records
+                                            </button>
+                                        </div>
+                                        <!-- Button trigger for Add Weekly Activity modal -->
+                                        <div class="float-right pt-1">
+                                            <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#weekactivityModal">
+                                                <i class="fa fa-calendar-week"></i> Add 
+                                            </button>
+                                        </div>
+                                    </h4>
+                                </div>
+
+                                <div id="WeeklyRecord" class="collapse" aria-labelledby="Weekly_heading" data-parent="#Records">
+                                    <div class="card-body">
+                                        @if(!empty($weeklyrecords))
+                                            <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-2 g-4">
+                                                @foreach($weeklyrecords as $weekrec)
+                                                <div class="col mb-3">
+                                                    <div class="card h-100">
+                                                        <div class="card-body">
+                                                            <h6 class="card-title"><b>{{$weekrec->name}}</b></h6>
+                                                            <h6 class="card-subtitle mb-2 text-muted">{{$weekrec->department}}</h6>
+                                                            <p class="card-text">{{$weekrec->description_of_week}}</p>
+                                                        </div>
+                                                        <div class="card-footer clearfix">
+                                                            <div class="d-flex">
+                                                                <div class="">
+                                                                    <a data-toggle="modal" data-target="#edit_weekly_modal" onclick="get_weeklyrecord({{$weekrec->id}})" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>Edit</a>
+                                                                </div>
+                                                                <div class="px-2">
+                                                                    <a data-toggle="modal" data-target="#view_weekly_modal" onclick="get_weeklyrecord({{$weekrec->id}})" class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i>View</a>
+                                                                </div>
+                                                                <div class="ml-auto">
+                                                                    <input class="delete_val" type="hidden" value="{{$weekrec->id}}">
+                                                                    <a class="delete-week btn btn-sm btn-danger">
+                                                                        <i class="fas fa-trash-alt"></i>
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @endforeach
                                             </div>
-                                            @endforeach
+                                        @else
+                                            <h5 class="text-center p-2">
+                                            No Weekly Record
+                                            </h5>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card border-primary">
+                                <div class="card-header border-primary bg-othe-color" id="Monthly_heading">
+                                    <h4 class="mb-0 clearfix">
+                                        <div class="float-left">
+                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#MonthlyRecord" aria-expanded="false" aria-controls="MonthlyRecord">
+                                                Monthly Records
+                                            </button>
                                         </div>
-                                    @else
-                                        <h5 class="text-center p-2">
-                                        No Montly Record
-                                        </h5>
-                                    @endif
+                                        
+                                        <!-- Button trigger for Add Monthly Activity modal -->
+                                        <div class="float-right pt-1">
+                                            <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#monthlyactivityModal">
+                                                <i class="fa fa-calendar-alt"></i> Add
+                                            </button>
+                                        </div>
+                                    </h4>
+                                </div>
+                                
+                                <div id="MonthlyRecord" class="collapse" aria-labelledby="Monthly_heading" data-parent="#Records">
+                                    <div class="card-body">
+                                        @if(!empty($monthlyrecords))
+                                            <div class="row row-cols-1 g-4">
+                                                @foreach($monthlyrecords as $month)
+                                                <div class="col mb-3">
+                                                    <div class="card h-100">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title"><b>{{$month->name}}</b></h5>
+                                                            <!-- <h6 class="card-subtitle mb-2 text-muted">{{$month->department}}</h6> -->
+                                                            <p class="card-text">{{$month->description_of_month}}</p>
+                                                        </div>
+                                                        <div class="card-footer clearfix">
+                                                            <div class="d-flex">
+                                                                <div class="">
+                                                                    <a data-toggle="modal" data-target="#edit_monthly_modal" onclick="get_monthlyrecord({{$month->id}})" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>Edit</a>
+                                                                </div>
+                                                                <div class="px-2">
+                                                                    <a data-toggle="modal" data-target="#view_monthly_modal" onclick="get_monthlyrecord({{$month->id}})" class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i>View</a>
+                                                                </div>
+                                                                <div class="ml-auto">
+                                                                    <input class="delete_val" type="hidden" value="{{$month->id}}">
+                                                                    <a class="delete-week btn btn-sm btn-danger">
+                                                                        <i class="fas fa-trash-alt"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                        @else
+                                            <h5 class="text-center p-2">
+                                            No Montly Record
+                                            </h5>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                                           
+                                            
+
+                    @else
+                        <h5 class="text-center pb-3"><b>Add Organization to your profile</b></h5>
+                        <form method="POST" action="/student/org/add" enctype="multipart/form-data">
+                            @csrf                      
+
+                            <div class="form-group row">
+                                <label for="org_id" class="col-md-4 col-form-label">Organization Name</label>
+                                <div class="col-md-6">
+                                    <select class="form-control  @error('org_id') is-invalid @enderror" name="org_id" id="org_id">
+                                        <option value="" disabled selected>Select from  database</option>
+                                        @foreach($orgs as $org)
+                                            <option value="{{$org->id}}">{{$org->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('org_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="year_of_training" class="col-md-4 col-form-label">Year of IT</label>
+                                <div class="col-md-6">
+                                    
+                                    <select class="form-control  @error('year_of_training') is-invalid @enderror" name="year_of_training" id="year_of_training">
+                                        <option value="" disabled selected>Select Year</option>
+                                        <option value="2021">2021</option>
+                                        <option value="2022">2022</option>
+                                        <option value="2023">2023</option>
+                                        <option value="2024">2024</option>
+                                    </select>    
+                                    @error('year_of_training')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>                         
+                            </div>
+                            <div class="form-group row">
+                                <label for="duration_of_training" class="col-md-4 col-form-label">Duration of IT</label>
+                                <div class="col-md-6">
+                                    <select class="form-control  @error('duration_of_training') is-invalid @enderror" name="duration_of_training" id="duration_of_training">
+                                        <option value="" disabled selected>Select Duration</option>
+                                        <option value="3 weeks">3 weeks</option>
+                                        <option value="6 weeks">6 weeks</option>
+                                        <option value="3 months">3 months</option>
+                                        <option value="6 months">6 months</option>
+                                    </select>
+                                    @error('duration_of_training')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-4" for="signature">Signature</label>
+                                <div class="col-md-6">
+                                    <!-- <img src="{{asset('storage/')}}" alt="" width="60" height="60"> -->
+                                    <input type="file" class="@error('signature') is-invalid @enderror" id="signature" name="signature">
+                                    @error('signature')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="offset-md-10">
+                                    <button type="submit" class="btn bg-oth-color nav-text-color">
+                                    ADD
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    @endif
                 </div>
                         <!-- MODALS -->
                 <!-- Add Daily Activity Modal -->

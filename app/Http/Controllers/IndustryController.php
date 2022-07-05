@@ -50,7 +50,7 @@ class IndustryController extends Controller
             'first_name' => 'required|string|max:100',
             'middle_name' => 'string|max:100',
             'department' => 'required|string|max:200',
-            'contact_no'=> 'required|integer',
+            'contact_no'=> 'required|digits_between:9,16',
             'gender'=> 'required|string|max:20',
             'password' => 'required|string|min:8|confirmed',
             'profile_pic' => 'required',

@@ -26,6 +26,9 @@ Route::prefix('/register')->group(function()
 {
     Route::get('student', 'StudentController@create')->name('studentform');
     Route::post('student', 'StudentController@store');
+    
+    Route::post('/dept/fetch','StudentController@dept_fetch')->name('dept.fetch');
+    Route::post('/course/fetch','StudentController@course_fetch')->name('course.fetch');
 
     Route::get('industry', 'IndustryController@create')->name('industryform');
     Route::post('industry', 'IndustryController@store');
@@ -83,6 +86,7 @@ Route::prefix('industry')->group(function ()
     Route::put('/profile/update', 'IndustryController@profile_update');
 
     Route::get('/student/{id}', 'IndustryController@student');
+
 });
 
     // SCHOOL Routes

@@ -128,7 +128,7 @@
 
                             <div class="col-lg-4">
                                 <label for="contact_no" class="col-form-label">Contact Number</label>
-                                <input id="contact_no" type="number" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ old('contact_no') }}" required>
+                                <input id="contact_no" type="tel" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ old('contact_no') }}" required>
                                 @error('contact_no')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -154,8 +154,8 @@
                             </div>
                         </div>
 
-                        <div class="row py-2">
-                            <div class="offset-lg-10">
+                        <div class="clearfix">
+                            <div class="float-right">
                                 <button type="submit" class="btn bg-oth-color nav-text-color">
                                    Register
                                 </button>
