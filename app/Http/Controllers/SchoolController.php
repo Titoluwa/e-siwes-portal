@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\User;
 
-use DB;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\UserRegMail;
+
+// use App\Mail\UserRegMail;
+// use Illuminate\Support\Facades\Mail;
 
 class SchoolController extends Controller
 {
@@ -22,7 +23,8 @@ class SchoolController extends Controller
     }
     // Show the registraton form for the student user
     public function create(){
-        return view('school.register');
+        $faculty = DB::table('departments')->selectRaw('faculty')->groupBy('faculty')->get();
+        return view('school.register', compact('faculty'));
     }
     // Store the inputed information of the student user
     public function store(Request $request)

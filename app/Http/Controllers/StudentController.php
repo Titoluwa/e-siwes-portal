@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-// use DB;
-
 use App\User;
 use App\Student;
 use App\Organization;

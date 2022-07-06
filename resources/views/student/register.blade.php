@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Student Register')
+@section('title', 'Student Registration')
 
 @section('content')
 <div class="py-5 container">
@@ -21,7 +21,7 @@
                         <div class="form-group row">
                             <div class="col-lg-6">
                                 <label for="email" class="col-form-label">E-Mail Address</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -32,7 +32,7 @@
 
                             <div class="col-lg-6">
                             <label for="matric_no" class="col-form-label">Matric Number</label>
-                                <input id="matric_no" type="text" class="form-control @error('matric_no') is-invalid @enderror" name="matric_no" value="{{ old('matric_no') }}" required>
+                                <input id="matric_no" type="text" class="form-control @error('matric_no') is-invalid @enderror" name="matric_no" value="{{ old('matric_no') }}">
 
                                 @error('matric_no')
                                     <span class="invalid-feedback" role="alert">
@@ -46,7 +46,7 @@
                             <div class="col-lg-4">
                                 <label for="last_name" class="col-form-label">Last Name</label>
 
-                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required>
+                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}">
 
                                 @error('last_name')
                                     <span class="invalid-feedback" role="alert">
@@ -57,7 +57,7 @@
                           
                             <div class="col-lg-4">
                                 <label for="first_name" class="col-form-label">First Name</label>
-                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required>
+                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}">
                                 @error('first_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -67,7 +67,7 @@
 
                             <div class="col-lg-4">
                                 <label for="middle_name" class="col-form-label">Middle Name</label>
-                                <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{ old('middle_name') }}" required>
+                                <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{ old('middle_name') }}">
                                 @error('middle_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -75,37 +75,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <!-- <div class="form-group row">
-                            <div class="col-lg-4">
-                                <label for="faculty" class="col-form-label">Faculty</label>
-                                <input id="faculty" type="text" class="form-control @error('faculty') is-invalid @enderror" name="faculty" value="{{ old('faculty') }}" required>
-                                @error('faculty')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="col-lg-4">
-                                <label for="department" class="col-form-label">Department</label>
-                                <input id="department" type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{ old('department') }}" required>
-                                @error('department')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="col-lg-4">
-                                <label for="course_of_study" class="col-form-label">Course of Study</label>
-                                <input id="course_of_study" type="text" class="form-control @error('course_of_study') is-invalid @enderror" name="course_of_study" value="{{ old('course_of_study') }}" required>
-                                @error('course_of_study')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>   -->
+                        
                         <div class="form-group row">
                             <div class="col-lg-4">
                                 <label for="faculty" class="col-form-label">{{ __('Faculty') }}</label>
@@ -180,7 +150,7 @@
 
                             <div class="col-lg-4">
                                 <label for="contact_no" class="col-form-label">Contact Number</label>
-                                <input id="contact_no" type="tel" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ old('contact_no') }}" required>
+                                <input id="contact_no" type="tel" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ old('contact_no') }}">
                                 @error('contact_no')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -192,7 +162,7 @@
                         <div class="form-group row">
                             <div class="col-lg-6">
                                 <label for="password" class="col-form-label">Password</label>
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -202,7 +172,7 @@
 
                             <div class="col-lg-6">
                             <label for="password-confirm" class="col-form-label">Confirm Password</label>
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
                             </div>
                         </div>
 

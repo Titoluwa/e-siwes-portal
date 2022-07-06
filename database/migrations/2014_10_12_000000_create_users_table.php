@@ -17,21 +17,22 @@ class CreateUsersTable extends Migration
             $table->id();
 
             $table->integer('role_id')->default(0);
-            $table->integer('status_id')->default(1);            
+            $table->integer('status_id')->default(1);
+            $table->string('email')->unique();            
             $table->string('last_name');
             $table->string('first_name');
-            $table->string('profile_pic')->nullable();
-            $table->string('middle_name')->default(null);
             $table->bigInteger('contact_no');
-            $table->string('matric_no')->default(null);
-            $table->string('staff_id')->default(null);
-            $table->string('gender');
-            $table->string('faculty')->default(null);
-            $table->string('department');
-            $table->string('course_of_study')->default(null);
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('matric_no')->nullable();
+            $table->string('staff_id')->nullable();
+            $table->string('middle_name')->nullable();
+            $table->string('profile_pic')->nullable();          
+            $table->string('gender')->nullable();
+            $table->string('faculty')->nullable();
+            $table->string('department')->nullable();
+            $table->string('course_of_study')->nullable(); 
             $table->string('password');
+            
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
