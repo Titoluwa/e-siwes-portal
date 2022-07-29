@@ -51,7 +51,7 @@ class StudentController extends Controller
         // For storing the StudentUser registration form
     public function store(Request $request)
     {
-        $user = User::create($this->validateRequest()); 
+        $user = User::create($this->validateRequest());
         $user->last_name = Str::ucfirst($request->last_name);
         $user->first_name = Str::ucfirst($request->first_name);
         $user->middle_name = Str::ucfirst($request->middle_name);
@@ -71,14 +71,12 @@ class StudentController extends Controller
             'email' => 'required|email|max:50|unique:users',
             'last_name' => 'required|string|max:100',
             'first_name' => 'required|string|max:100',
-            'middle_name' => 'required|string|max:100',
             'faculty' => 'required|string|max:200',
             'department' => 'required|string|max:200',
             'course_of_study' => 'string|max:100',
             'contact_no'=> 'required|digits_between:9,16',
             'gender'=> 'required|string|max:100',
             'password' => 'required|string|min:8|confirmed',
-            'staff_id' => 'string',
             'profile_pic' => 'required',
         ]);
     }
@@ -90,7 +88,7 @@ class StudentController extends Controller
         $orgs = Organization::all();
         return view('student.home', compact('student', 'orgs'));
     }
-        // Show single StudentUser profile 
+        // Show single StudentUser profile
     public function show()
     {
         $id = Auth::user()->id;
@@ -109,7 +107,7 @@ class StudentController extends Controller
     public function update(Request $request)
     {
         $user = User::where('id', $request->id)->first();
-   
+
         $user->last_name = Str::ucfirst($request->last_name);
         $user->first_name = Str::ucfirst($request->first_name);
         $user->middle_name = Str::ucfirst($request->middle_name);
@@ -126,7 +124,7 @@ class StudentController extends Controller
     }
         // Show edit form for student other information.
     public function other_edit()
-    {        
+    {
         $id = Auth::user()->id;
         $student = Student::where('user_id', $id)->first();
         $orgs = Organization::all();
@@ -186,5 +184,5 @@ class StudentController extends Controller
         $student->update();
 
         return redirect('/student/org');
-    }    
-}   
+    }
+}
