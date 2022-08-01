@@ -15,10 +15,7 @@
                         @csrf
 
                         <input type="hidden" name="role_id" value="2">
-                        <input type="hidden" name="matric_no" id="matric_no" value="NULL">
-                        <input type="hidden" name="faculty" id="faculty" value="NULL">
-                        <input type="hidden" name="course_of_study" id="course_of_study" value="NULL">
-
+                        
                         <div class="form-group row">
                             <div class="col-lg-7">
                                 <label for="email" class="col-form-label">E-Mail Address</label>
@@ -61,7 +58,7 @@
                                     </span>
                                 @enderror
                             </div>
-                            
+
                             <div class="col-lg-4">
                                 <label for="middle_name" class="col-form-label">Middle Name</label>
                                 <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{ old('middle_name') }}">
@@ -72,9 +69,9 @@
                                 @enderror
                             </div>
                         </div>
-                                                
+
                         <div class="form-group row">
-                            
+
                             <div class="col-lg-6">
                                 <label for="department" class="col-form-label">Department</label>
                                 <input id="department" type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{ old('department') }}">
@@ -95,7 +92,7 @@
                                     <input class="form-check-input" type="radio" name="gender" id="male" value="Male">
                                     <label class="form-check-label" for="male">Male</label>
                                 </div>
-                            </div>    
+                            </div>
                         </div>
 
                         <div class="form-group row">
@@ -119,7 +116,7 @@
                                 @enderror
                             </div>
                         </div>
-                                             
+
                         <div class="form-group row">
                             <div class="col-lg-6">
                                 <label for="password" class="col-form-label">Password</label>

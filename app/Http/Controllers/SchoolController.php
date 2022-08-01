@@ -29,7 +29,7 @@ class SchoolController extends Controller
     // Store the inputed information of the student user
     public function store(Request $request)
     {
-        $user = User::create($this->validateRequest()); 
+        $user = User::create($this->validateRequest());
         $user->last_name = Str::ucfirst($request->last_name);
         $user->first_name = Str::ucfirst($request->first_name);
         $user->middle_name = Str::ucfirst($request->middle_name);
@@ -48,14 +48,13 @@ class SchoolController extends Controller
             'email' => 'required|email|max:50|unique:users',
             'last_name' => 'required|string|max:100',
             'first_name' => 'required|string|max:100',
-            'middle_name' => 'string|max:100',
+            // 'middle_name' => 'string|max:100',
             'faculty' => 'required|string|max:200',
             'department' => 'required|string|max:200',
             'contact_no'=> 'required|digits_between:9,16',
             'gender'=> 'required|string|max:20',
             'password' => 'required|string|min:8|confirmed',
             'profile_pic' => 'required',
-            'matric_no' => 'string','course_of_study' => 'string',
         ]);
     }
 }

@@ -7,22 +7,19 @@
             <div class="card border-warning">
 
                 <div class="card-header border-warning bg-othe-color">
-                    <div class="mt-2">
-                       
-                    </div>
-                    <div class="float-left">
-                        <h4 style="font-weight: 700;">LogBook</h4>
+                    <div class="float-left blue-text">
+                        <h3 style="font-weight: 700;">LogBook</h3>
                         <small>Fill in your daily activities after each day of training</small>
                     </div>
                     <div class="float-right">
-                        
+
                     </div>
                 </div>
 
                 <div class="card-body border-warning m-4 p-2">
                     @if (!empty($student))
-                
-                        <p class="text-center">Your duration of training at <b>{{$student->org->name}}</b> is <b>{{$student->duration_of_training}}</b> for <b>{{$student->year_of_training}}</b>.</p> 
+
+                        <p class="text-center">Your duration of training at <b>{{$student->org->name}}</b> is <b>{{$student->duration_of_training}}</b> for <b>{{$student->year_of_training}}</b>.</p>
                         <p class="text-center mb-4">You are to fill your Logbook with each day's activities.</p>
 
                         <div id="Records">
@@ -34,7 +31,7 @@
                                                 Daily Records
                                             </button>
                                         </div>
-                                        
+
                                         <!-- Button trigger for Add Daily Activity modal -->
                                         <div class="float-right pt-1">
                                             <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#dailyactivityModal">
@@ -58,7 +55,7 @@
                                                         </div>
                                                         <div class="card-footer clearfix">
                                                             <a data-toggle="modal" data-target="#edit_daily_modal" onclick="get_dailyrecord({{$rec->id}})" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>Edit</a>
-                                                        
+
                                                             <div class="float-right">
                                                                 <input class="delete_val" type="hidden" value="{{$rec->id}}">
                                                                 <a class="delete btn btn-sm btn-danger">
@@ -89,7 +86,7 @@
                                         <!-- Button trigger for Add Weekly Activity modal -->
                                         <div class="float-right pt-1">
                                             <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#weekactivityModal">
-                                                <i class="fa fa-calendar-week"></i> Add 
+                                                <i class="fa fa-calendar-week"></i> Add
                                             </button>
                                         </div>
                                     </h4>
@@ -143,7 +140,7 @@
                                                 Monthly Records
                                             </button>
                                         </div>
-                                        
+
                                         <!-- Button trigger for Add Monthly Activity modal -->
                                         <div class="float-right pt-1">
                                             <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#monthlyactivityModal">
@@ -152,7 +149,7 @@
                                         </div>
                                     </h4>
                                 </div>
-                                
+
                                 <div id="MonthlyRecord" class="collapse" aria-labelledby="Monthly_heading" data-parent="#Records">
                                     <div class="card-body">
                                         @if(!empty($monthlyrecords))
@@ -194,12 +191,12 @@
                                 </div>
                             </div>
                         </div>
-                                            
+
 
                     @else
                         <h5 class="text-center pb-3"><b>Add Organization to your profile</b></h5>
                         <form method="POST" action="/student/org/add" enctype="multipart/form-data">
-                            @csrf                      
+                            @csrf
 
                             <div class="form-group row">
                                 <label for="org_id" class="col-md-4 col-form-label">Organization Name</label>
@@ -220,20 +217,20 @@
                             <div class="form-group row">
                                 <label for="year_of_training" class="col-md-4 col-form-label">Year of IT</label>
                                 <div class="col-md-6">
-                                    
+
                                     <select class="form-control  @error('year_of_training') is-invalid @enderror" name="year_of_training" id="year_of_training">
                                         <option value="" disabled selected>Select Year</option>
                                         <option value="2021">2021</option>
                                         <option value="2022">2022</option>
                                         <option value="2023">2023</option>
                                         <option value="2024">2024</option>
-                                    </select>    
+                                    </select>
                                     @error('year_of_training')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                </div>                         
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <label for="duration_of_training" class="col-md-4 col-form-label">Duration of IT</label>
@@ -301,7 +298,7 @@
                                             <option value="Thursday">Thursday</option>
                                             <option value="Friday">Friday</option>
                                             <option value="Saturday">Saturday</option>
-                                        </select>    
+                                        </select>
                                         @error('day')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -310,14 +307,14 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="date" class="col-form-label">Date</label>
-                                        <input type="date" name="date" id="date" value="{{$currentdate}}" class="form-control @error('date') is-invalid @enderror">   
+                                        <input type="date" name="date" id="date" value="{{$currentdate}}" class="form-control @error('date') is-invalid @enderror">
                                         @error('date')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
-                                
+
                                 </div>
                                 <div class="row form-group">
                                     <div class="col-md-12">
@@ -329,7 +326,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -366,7 +363,7 @@
                                             <option value="Thursday">Thursday</option>
                                             <option value="Friday">Friday</option>
                                             <option value="Saturday">Saturday</option>
-                                        </select>    
+                                        </select>
                                         @error('day')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -375,14 +372,14 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="date" class="col-form-label">Date</label>
-                                        <input type="date" name="date" id="edit_date" value="" class="form-control @error('date') is-invalid @enderror">   
+                                        <input type="date" name="date" id="edit_date" value="" class="form-control @error('date') is-invalid @enderror">
                                         @error('date')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
-                                
+
                                 </div>
                                 <div class="row form-group">
                                     <div class="col-md-12">
@@ -394,7 +391,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -484,7 +481,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -532,7 +529,7 @@
                                 <div class="row form-group">
                                     <div class="col-md-12">
                                         <label for="daily_records" class="col-form-label"><b>Pick Days</b></label>
-                                        
+
                                         @if(!empty($all_dailys))
                                             @foreach($all_dailys as $rec)
                                                 <div class="form-check">
@@ -577,7 +574,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -594,11 +591,11 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="view_weekly"><b><i class="fa fa-calendar-week"></i> <span id="weekname">Week</span></b></h5>
-                                
+
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
-                            </div>                        
+                            </div>
                             <div class="modal-body">
                                 <div class="">
                                     <div class="p-2"><h6>
@@ -619,7 +616,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="week_days">
-                                                    
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -651,7 +648,7 @@
                                     <div class="col-md-12">
                                         <label for="name" class="col-form-label"><b>Name of Month</b></label>
                                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}">
-                                        
+
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -684,7 +681,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                
+
                                 <div class="row form-group">
                                     <div class="col-md-12">
                                         <label for="description_of_month" class="col-form-label"><b>Description of Month</b></label>
@@ -695,7 +692,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row form-group">
                                     <div class="col-md-12">
                                         <label for="sketch" class="col-form-label"><b>Any Sketch or Image Description</b></label>
@@ -736,7 +733,7 @@
                                     <div class="col-md-12">
                                         <label for="name" class="col-form-label"><b>Name of Month</b></label>
                                         <input id="e_month_name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="">
-                                        
+
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -769,7 +766,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                
+
                                 <div class="row form-group">
                                     <div class="col-md-12">
                                         <label for="description_of_month" class="col-form-label"><b>Description of Month</b></label>
@@ -780,7 +777,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row form-group">
                                     <div class="col-md-12">
                                         <label for="sketch" class="col-form-label"><b>Any Sketch or Image Description</b></label>
@@ -808,11 +805,11 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="view_monthly"><b><i class="fa fa-calendar-alt"></i> <span id="monthname">Week</span></b></h5>
-                                
+
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
-                            </div>                        
+                            </div>
                             <div class="modal-body">
                                 <div class="">
                                     <!-- <div class="p-2"><h6>
@@ -833,7 +830,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="weeks">
-                                                    
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -854,7 +851,7 @@
 @endsection
 
 @section('scripts')
-        
+
     <!-- Delete Scripts  -->
     <script type="text/javascript">
         $(document).ready(function() {
@@ -878,7 +875,7 @@
                 })
                 .then((willDelete) => {
                     if (willDelete) {
-                        
+
                         var data = {
                             "_token": $('input[name=_token]').val(),
                             "id": delete_id,
@@ -898,7 +895,7 @@
                         });
                     }
                 });
-                
+
             });
             $('.delete-week').click(function(e) {
                 e.preventDefault();
@@ -912,7 +909,7 @@
                 })
                 .then((willDelete) => {
                     if (willDelete) {
-                        
+
                         var data = {
                             "_token": $('input[name=_token]').val(),
                             "id": delete_id,
@@ -932,7 +929,7 @@
                         });
                     }
                 });
-                
+
             });
         });
     </script>

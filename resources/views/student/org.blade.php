@@ -7,7 +7,7 @@
             <div class="card border-warning">
                 <div class="card-header border-warning bg-othe-color clearfix">
 
-                    <div class="float-left mt-2">
+                    <div class="float-left mt-2 blue-text">
                         <h3 style="font-weight: 700;">{{ __("Organization Profile") }}</h3>
                         <p>This is information about your organization of Training</p>
                     </div>
@@ -18,7 +18,7 @@
                         </a>
                     </div>
                     @endif
-                    
+
                 </div>
 
                 <div class="card-body">
@@ -33,28 +33,28 @@
                             </p>
                             <p>
                                 Year of establishment: <b>{{$student->org->year_of_est}}</b>
-                            </p>  
+                            </p>
                             <p>
                                 Postal Address: <b>{{$student->org->postal_address}}</b>
-                            </p> 
+                            </p>
                             <p>
                                 Area of Specialization: <b>{{$student->org->specialization}}</b>
-                            </p> 
+                            </p>
                             <p>
-                                Address During Industrial Training: <b>{{$student->org->full_address}}</b> 
+                                Address During Industrial Training: <b>{{$student->org->full_address}}</b>
                             </p>
                             <p>
                                 Year of Industrial Training: <b>{{$student->year_of_training}}</b>
                             </p>
                             <p>
                                 Duration of Industrial Training: <b>{{$student->duration_of_training}}</b>
-                            </p> 
+                            </p>
                         </div>
-                        
+
                     @else
                         <p class=""><b>Add Organization to your profile</b></p>
                         <form method="POST" action="/student/org/add" enctype="multipart/form-data">
-                            @csrf                      
+                            @csrf
 
                             <div class="form-group row">
                                 <label for="org_id" class="col-md-4 col-form-label">Organization Name</label>
@@ -75,20 +75,20 @@
                             <div class="form-group row">
                                 <label for="year_of_training" class="col-md-4 col-form-label">Year of IT</label>
                                 <div class="col-md-6">
-                                    
+
                                     <select class="form-control  @error('year_of_training') is-invalid @enderror" name="year_of_training" id="year_of_training">
                                         <option value="" disabled selected>Select Year</option>
                                         <option value="2021">2021</option>
                                         <option value="2022">2022</option>
                                         <option value="2023">2023</option>
                                         <option value="2024">2024</option>
-                                    </select>    
+                                    </select>
                                     @error('year_of_training')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                </div>                         
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <label for="duration_of_training" class="col-md-4 col-form-label">Duration of IT</label>

@@ -15,8 +15,6 @@
                         @csrf
 
                         <input type="hidden" name="role_id" value="1">
-                        <input type="hidden" name="matric_no" id="matric_no" value="NULL">
-                        <input type="hidden" name="course_of_study" id="course_of_study" value="NULL">
 
                         <div class="form-group row">
                             <div class="col-lg-6">
@@ -71,7 +69,7 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <div class="form-group row">
                             <div class="col-lg-6">
                                 <label for="faculty" class="col-form-label">{{ __('Faculty') }}</label>
@@ -89,7 +87,7 @@
                             </div>
 
                             <div class="col-lg-6">
-                                <label for="department" class="col-form-label">{{ __('Department') }}</label> 
+                                <label for="department" class="col-form-label">{{ __('Department') }}</label>
                                 <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" value="{{ old('department') }}">
                                     <option value="" disabled selected hidden>Select Department</option>
                                 </select>
@@ -101,7 +99,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group row"> 
+                        <div class="form-group row">
                             <div class="col-lg-4">
                                 <label class="col-form-label"  for="profile_pic">Profile Picture</label>
 
@@ -184,7 +182,7 @@
                 }
             });
             $('#faculty').change(function(){
-                if($(this).val()!= ''){   
+                if($(this).val()!= ''){
                     var value = $(this).val();
                     var _token = $('input[name="_token"]').val();
                     console.log(value);

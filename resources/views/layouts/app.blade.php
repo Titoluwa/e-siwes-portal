@@ -17,7 +17,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
         body {
-            background-image: url('images/E.webp') !important;
+            background-image: url('images/E3.webp') !important;
             background-color: white;
             position: relative;
             background-position: center;
@@ -74,7 +74,7 @@
             background: rgba(62, 165, 219, 0.8);
             border-radius: 5px;
             text-align: center;
-        }            
+        }
         .navv{
             color: white;
             padding: 0 25px;
@@ -88,7 +88,7 @@
         }
         .no-deco:hover{
             text-decoration: none;
-            
+
         }
     </style>
 </head>
@@ -174,7 +174,7 @@
     </div>
 
     <!-- Scripts -->
-    
+
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="/js/all.min.js"></script>

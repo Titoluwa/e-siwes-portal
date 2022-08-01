@@ -28,7 +28,7 @@ class IndustryController extends Controller
         // Store the inputed information of the industry supervisor user
     public function store(Request $request)
     {
-        $user = User::create($this->validateRequest()); 
+        $user = User::create($this->validateRequest());
         $user->last_name = Str::ucfirst($request->last_name);
         $user->first_name = Str::ucfirst($request->first_name);
         $user->middle_name = Str::ucfirst($request->middle_name);
@@ -48,13 +48,12 @@ class IndustryController extends Controller
             'email' => 'required|email|max:50|unique:users',
             'last_name' => 'required|string|max:100',
             'first_name' => 'required|string|max:100',
-            'middle_name' => 'string|max:100',
+            // 'middle_name' => 'string|max:100',
             'department' => 'required|string|max:200',
             'contact_no'=> 'required|digits_between:9,16',
             'gender'=> 'required|string|max:20',
             'password' => 'required|string|min:8|confirmed',
             'profile_pic' => 'required',
-            'matric_no' => 'string', 'faculty' => 'string','course_of_study' => 'string',
         ]);
     }
         // Show IndustryUser dashboard - homepage
@@ -94,7 +93,7 @@ class IndustryController extends Controller
         $org = Organization::where('staff_id', $id)->first();
         return view('industry.org_edit', compact('org'));
     }
-        // update the organization table 
+        // update the organization table
     public function org_update(Request $request)
     {
         $org = Organization::where('id', $request->id)->first();
@@ -113,7 +112,7 @@ class IndustryController extends Controller
 
         return redirect('industry');
     }
-        // Show the edit form for Industry Supervisor user 
+        // Show the edit form for Industry Supervisor user
     public function profile()
     {
         return view('industry.profile');
@@ -140,5 +139,5 @@ class IndustryController extends Controller
         $org = Organization::where('staff_id', $id)->first();
         return view('industry.student', compact('org'));
     }
-    
+
 }

@@ -16,7 +16,6 @@
                         @csrf
 
                         <input type="hidden" name="role_id" value="0">
-                        <input type="hidden" name="staff_id" value="null">
 
                         <div class="form-group row">
                             <div class="col-lg-6">
@@ -54,7 +53,7 @@
                                     </span>
                                 @enderror
                             </div>
-                          
+
                             <div class="col-lg-4">
                                 <label for="first_name" class="col-form-label">First Name</label>
                                 <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}">
@@ -75,7 +74,7 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <div class="form-group row">
                             <div class="col-lg-4">
                                 <label for="faculty" class="col-form-label">{{ __('Faculty') }}</label>
@@ -93,7 +92,7 @@
                             </div>
 
                             <div class="col-lg-4">
-                                <label for="department" class="col-form-label">{{ __('Department') }}</label> 
+                                <label for="department" class="col-form-label">{{ __('Department') }}</label>
                                 <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" data-dependant='course_of_study' value="{{ old('department') }}">
                                     <option value="" disabled selected hidden>Select Department</option>
                                 </select>
@@ -110,7 +109,7 @@
                                 <select  id="course_of_study" value="{{ old('course_of_study') }}" class="form-control @error('course_of_study') is-invalid @enderror" name="course_of_study" value="{{ old('course_of_study') }}">
                                     <option value="" disabled selected hidden>Select Course</option>
                                 </select>
-                                
+
                                 @error('course_of_study')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -118,7 +117,7 @@
                                 @enderror
                             </div>
                         </div>
-                                                
+
                         <div class="form-group row">
                             <div class="col-lg-4">
                                 <label for="gender" class="col-form-label @error('gender') is-invalid @enderror">Gender</label>
@@ -139,7 +138,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label"  for="profile_pic">Profile Picture</label>
-    
+
                                 <input type="file" class="form-control-file @error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic">
                                 @error('profile_pic')
                                     <span class="invalid-feedback" role="alert">
@@ -200,7 +199,7 @@
                 }
             });
             $('#faculty').change(function(){
-                if($(this).val()!= ''){   
+                if($(this).val()!= ''){
                     var value = $(this).val();
                     var _token = $('input[name="_token"]').val();
                     console.log(value);
@@ -217,7 +216,7 @@
                 }
             });
             $('#department').change(function(){
-                if($(this).val()!= ''){   
+                if($(this).val()!= ''){
                     var value = $(this).val();
                     var _token = $('input[name="_token"]').val();
                     console.log(value);
