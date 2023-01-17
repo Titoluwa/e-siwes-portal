@@ -26,7 +26,7 @@ Route::prefix('/register')->group(function()
 {
     Route::get('student', 'StudentController@create')->name('studentform');
     Route::post('student', 'StudentController@store');
-    
+
     Route::post('/dept/fetch','StudentController@dept_fetch')->name('dept.fetch');
     Route::post('/course/fetch','StudentController@course_fetch')->name('course.fetch');
 
@@ -37,8 +37,8 @@ Route::prefix('/register')->group(function()
     Route::post('school', 'SchoolController@store');
 });
 
-    // STUDENT Routes 
-Route::prefix('student')->group(function () 
+    // STUDENT Routes
+Route::prefix('student')->group(function ()
 {
     Route::get('', 'StudentController@index')->name('student');
 
@@ -52,28 +52,28 @@ Route::prefix('student')->group(function ()
     Route::post('/org/add', 'StudentController@org_add');
     Route::get('/org/edit', 'StudentController@org_edit');
     Route::put('/org/update', 'StudentController@org_update');
-    
-    // Student LogBook 
+
+    // Student LogBook
     Route::get('/log', 'LogbookController@index');
 
     Route::post('/log/daily', 'LogbookController@store_daily');
     Route::get('/log/daily/{id}', 'LogbookController@show_daily');
     Route::put('/log/daily/update', 'LogbookController@update_daily');
-    Route::delete('log/daily/{id}', 'LogbookController@destroy_daily');
+    Route::delete('/log/daily/{id}', 'LogbookController@destroy_daily');
 
     Route::post('/log/weekly', 'LogbookController@store_weekly');
     Route::get('/log/weekly/{id}', 'LogbookController@show_week');
     Route::put('/log/weekly/update', 'LogbookController@update_weekly');
-    Route::delete('log/weekly/{id}', 'LogbookController@destroy_weekly');
+    Route::delete('/log/weekly/{id}', 'LogbookController@destroy_weekly');
 
     Route::post('/log/monthly', 'LogbookController@store_monthly');
     Route::get('/log/monthly/{id}', 'LogbookController@show_month');
     Route::put('/log/monthly/update', 'LogbookController@update_monthly');
-    Route::delete('log/monthly/{id}', 'LogbookController@destroy_monthly');
+    Route::delete('/log/monthly/{id}', 'LogbookController@destroy_monthly');
 });
 
     //INDUSTRY Routes
-Route::prefix('industry')->group(function () 
+Route::prefix('industry')->group(function ()
 {
     Route::get('', 'IndustryController@index')->name('industry');
 
@@ -81,16 +81,17 @@ Route::prefix('industry')->group(function ()
     Route::post('/org', 'IndustryController@org_store');
     Route::get('/org/edit', 'IndustryController@org_edit');
     Route::put('/org/update', 'IndustryController@org_update');
-    
+
     Route::get('/profile', 'IndustryController@profile');
     Route::put('/profile/update', 'IndustryController@profile_update');
 
     Route::get('/student/{id}', 'IndustryController@student');
+    Route::get('/student/log/{id}', 'IndustryController@student_log');
 
 });
 
     // SCHOOL Routes
-Route::prefix('school')->group(function () 
+Route::prefix('school')->group(function ()
 {
     Route::get('', 'SchoolController@index')->name('school');
 });

@@ -133,11 +133,15 @@ class IndustryController extends Controller
         $user->update();
         return redirect("/industry");
     }
-    public function student()
+    public function student($id)
     {
-        $id = Auth::user()->id;
-        $org = Organization::where('staff_id', $id)->first();
-        return view('industry.student', compact('org'));
+        $student = Student::where('user_id', $id)->first();
+        // $org = Organization::where('staff_id', $id)->first();
+        return view('industry.student', compact('student'));
     }
-
+    public function student_log($id)
+    {
+        $student = Student::where('user_id', $id)->first();
+        return view('industry.student_log', compact('student'));
+    }
 }

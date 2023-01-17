@@ -17,7 +17,7 @@
 
                 <div class="card-body border-warning text-center">
                     <h5 class="">Welcome, <b>{{Auth::user()->first_name}}!</b></h5>
-                    <p class="">You're logged in</p>  
+                    <p class="">You're logged in</p>
                 </div>
 
                 <div class="p-2 text-center">
@@ -44,7 +44,7 @@
                             <a class="h4" href="/industry/org"><i class="fas fa-plus"></i></a>
                         @endif
                     </div>
-                    
+
                 </div>
 
                 <div class="card-body border-warning">
@@ -63,7 +63,7 @@
                             <p class="h5 p-3 m-4 text-center">Register Your Organisation</p>
                         @endif
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
         <div class="col-lg-12 col-sm-12 p-4">
@@ -87,8 +87,8 @@
                                     <table id="myTable" class="table " style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>Last Name</th>
-                                                <th>First Name</th>
+                                                {{-- <th>Last Name</th> --}}
+                                                <th>Name</th>
                                                 <th>Matric Number</th>
                                                 <th>Email</th>
                                                 <th></th>
@@ -97,12 +97,12 @@
                                         <tbody>
                                             @foreach($students as $student)
                                                 <tr>
-                                                    <td>{{$student->user->last_name}}</td>
-                                                    <td>{{$student->user->first_name}}</td>
+                                                    {{-- <td></td> --}}
+                                                    <td><a href="/industry/student/{{$student->user_id}}">{{$student->user->last_name}} {{$student->user->first_name}}</a></td>
                                                     <td>{{$student->user->matric_no}} </td>
                                                     <td>{{$student->user->email}} </td>
                                                     <td>
-                                                        <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
+                                                        <a href="/industry/student/log/{{$student->user->id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
                                                         <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Forms</a>
                                                         <button type='button' class='btn btn-sm btn-outline-danger delete'><i class="fa fa-trash-alt"></i></button>
                                                     </td>
@@ -117,11 +117,11 @@
                         @else
                             <p class="h5 p-3 m-4 text-center">Register Your Organisation</p>
                         @endif
-                       
+
                     </div>
                 </div>
             </div>
         </div>
-    </div>  
+    </div>
 
 @endsection
