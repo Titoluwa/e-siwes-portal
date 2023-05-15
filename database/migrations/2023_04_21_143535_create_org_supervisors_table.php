@@ -15,6 +15,12 @@ class CreateOrgSupervisorsTable extends Migration
     {
         Schema::create('org_supervisors', function (Blueprint $table) {
             $table->id();
+            $table->string('staff_id');
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('org_id')->constrained('organizations');
+            $table->string('department');
+            $table->string('position');
+            $table->string('signature')->nullable();
             $table->timestamps();
         });
     }

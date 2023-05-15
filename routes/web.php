@@ -37,6 +37,12 @@ Route::prefix('/register')->group(function()
     Route::post('school', 'SchoolController@store');
 });
 
+    // ADMIN Routes
+Route::prefix('admin')->group(function ()
+{
+    Route::get('', 'AdminController@index')->name('admin');
+});
+
     // STUDENT Routes
 Route::prefix('student')->group(function ()
 {
@@ -72,6 +78,12 @@ Route::prefix('student')->group(function ()
     Route::delete('/log/monthly/{id}', 'LogbookController@destroy_monthly');
 });
 
+// SCHOOL Routes
+Route::prefix('school')->group(function ()
+{
+    Route::get('', 'SchoolController@index')->name('school');
+});
+
     //INDUSTRY Routes
 Route::prefix('industry')->group(function ()
 {
@@ -90,8 +102,8 @@ Route::prefix('industry')->group(function ()
 
 });
 
-    // SCHOOL Routes
-Route::prefix('school')->group(function ()
+    // ITF Routes
+Route::prefix('itf')->group(function ()
 {
-    Route::get('', 'SchoolController@index')->name('school');
+    Route::get('', 'ItfController@index')->name('itf');
 });

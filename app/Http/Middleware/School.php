@@ -19,17 +19,25 @@ class School
         if(!Auth::check()){
             return redirect()->route('login');
         }
-        // role_id 0 = Student
-        if (Auth::user()->role_id==0){
+        // role_id 0 = Admin
+        if (Auth::user()->role_id == 0){
+            return redirect()->route('admin');
+        }
+        // role_id 1 = Student
+        if (Auth::user()->role_id == 1){
             return redirect()->route('student');
         }
-        // role_id 1 = School
-        if (Auth::user()->role_id==1){
+        // role_id 2 = School Staff
+        if (Auth::user()->role_id == 2){
             return $next($request);
         }
-        // role_id 2 = Indsustry
-        if (Auth::user()->role_id==2){
+        // role_id 3 = Industry
+        if (Auth::user()->role_id == 3){
             return redirect()->route('industry');
         }
+        // role_id 4 = ITF
+        if (Auth::user()->role_id == 4){
+            return redirect()->route('itf');
+        } 
     }
 }

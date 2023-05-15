@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class Student
+class Itf
 {
     /**
      * Handle an incoming request.
@@ -16,6 +16,7 @@ class Student
      */
     public function handle($request, Closure $next)
     {
+        // return $next($request);
         if(!Auth::check()){
             return redirect()->route('login');
         }
@@ -25,7 +26,7 @@ class Student
         }
         // role_id 1 = Student
         if (Auth::user()->role_id == 1){
-            return $next($request);
+            return redirect()->route('student');
         }
         // role_id 2 = School Staff
         if (Auth::user()->role_id == 2){
@@ -37,7 +38,7 @@ class Student
         }
         // role_id 4 = ITF
         if (Auth::user()->role_id == 4){
-            return redirect()->route('itf');
-        }
+            return $next($request);
+        } 
     }
 }

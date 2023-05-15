@@ -15,6 +15,10 @@ class CreateItfsTable extends Migration
     {
         Schema::create('itfs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
+            $table->string('state_location');
+            $table->string('office_address');
+            $table->string('signature')->nullable();
             $table->timestamps();
         });
     }
