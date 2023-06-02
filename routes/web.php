@@ -40,7 +40,12 @@ Route::prefix('/register')->group(function()
     // ADMIN Routes
 Route::prefix('admin')->group(function ()
 {
-    Route::get('', 'AdminController@index')->name('admin');
+    Route::get('', 'AdminController@index')->name('adminhome');
+    Route::get('setup', 'AdminController@setup')->name('admin.setup');
+    Route::get('students', 'AdminController@students')->name('admin.students');
+    Route::get('staffs', 'AdminController@staffs')->name('admin.staffs');
+    Route::get('organizations', 'AdminController@organizations')->name('admin.orgs');
+    Route::get('itf-agents', 'AdminController@itf_agents')->name('admin.itfagents');
 });
 
     // STUDENT Routes

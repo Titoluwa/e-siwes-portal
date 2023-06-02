@@ -17,8 +17,8 @@ class CreateSessionsTable extends Migration
             $table->id();
             $table->string('year');
             $table->integer('status')->default(1);
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }

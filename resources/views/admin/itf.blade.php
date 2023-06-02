@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Industrial Training Coordinating Unit (ICTU)')
+@section('title', 'ITF Agents')
 
 @section('admincontent')
     
@@ -12,11 +12,9 @@
                     <h5 class="mt-2">{{ __('Dashboard') }}</h5>
                 </div> -->
 
-                <div class="card-body p-5">
-                    <h1 class="text-center">Welcome!</h1>
-                    <h2 class="text-center">Admin Dashboard</h2>
-                    <p class="text-center">You're logged in!</p>
-
+                <div class="card-body p-3">
+                    <h3 class="text-primary">ITF Agents</h3>
+                
                 </div>
                 
             </div>
