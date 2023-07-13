@@ -25,7 +25,7 @@
                         <label for="super_name" class="col-md-2 col-form-label">Supervisor Name</label>
 
                         <div class="col-md-4">
-                            <input id="super_name" type="integer" class="form-control @error('super_name') is-invalid @enderror" name="super_name" placeholder="{{Auth::user()->last_name}} {{Auth::user()->first_name}}" disabled>
+                            <input id="super_name" type="integer" class="form-control @error('super_name') is-invalid @enderror" name="super_name" placeholder="{{Auth::user()->name()}}" disabled>
 
                             @error('super_name')
                                 <span class="invalid-feedback" role="alert">

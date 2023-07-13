@@ -27,7 +27,7 @@
                             <label for="name" class="col-md-3 col-form-label">Student Name</label>
                             <input type="hidden" id="id" name="id" value="{{$student->id}}">
                             <div class="col-md-5">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{Auth::user()->last_name}} {{Auth::user()->first_name}}" disabled>
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{Auth::user()->name()}}" disabled>
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">

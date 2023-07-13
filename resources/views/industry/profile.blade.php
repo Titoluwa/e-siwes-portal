@@ -40,7 +40,7 @@
 
                         <label for="staff_id" class="col-md-2 col-form-label">Staff ID</label>
                         <div class="col-md-4">
-                            <input id="staff_id" type="text" class="form-control @error('staff_id') is-invalid @enderror" name="staff_id" value="{{Auth::user()->staff_id}}">
+                            <input id="staff_id" type="text" class="form-control @error('staff_id') is-invalid @enderror" name="staff_id" value="{{$orgsup->staff_id}}">
 
                             @error('staff_id')
                                 <span class="invalid-feedback" role="alert">
@@ -100,7 +100,7 @@
                     <div class="form-group row">
                         <label for="department" class="col-md-2 col-form-label">Department</label>
                         <div class="col-md-4">
-                            <input id="department" type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{Auth::user()->department}}">
+                            <input id="department" type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{$orgsup->department}}">
 
                             @error('department')
                                 <span class="invalid-feedback" role="alert">

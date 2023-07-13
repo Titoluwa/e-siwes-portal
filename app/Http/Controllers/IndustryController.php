@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use App\User;
-use App\Organization;
 use App\Student;
+use App\Organization;
+use App\OrgSupervisor;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 // use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -28,39 +29,71 @@ class IndustryController extends Controller
         // Store the inputed information of the industry supervisor user
     public function store(Request $request)
     {
-        $user = User::create($this->validateRequest());
-        $user->last_name = Str::ucfirst($request->last_name);
-        $user->first_name = Str::ucfirst($request->first_name);
-        $user->middle_name = Str::ucfirst($request->middle_name);
-        $user->password = Hash::make($request->password);
-        if ($request->hasFile('profile_pic')){
-            $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
+        try {
+            // DB::beginTransaction();
+            DB::commit();
+                // Adding New User 
+                // $user = User::create($this->validateRequest());
+                $user = new User();
+                $user->role_id = 3;
+                $user->email = $request->email;
+                $user->last_name = Str::ucfirst($request->last_name);
+                $user->first_name = Str::ucfirst($request->first_name);
+                $user->middle_name = Str::ucfirst($request->middle_name);
+                $user->contact_no = $request->contact_no;
+                $user->gender = $request->gender;
+                $user->password = Hash::make($request->password);
+                if ($request->hasFile('profile_pic')){
+                    $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
+                }
+
+                $user->save();
+
+                // Adding Student Details
+                $supervisor = new OrgSupervisor();
+                $supervisor->staff_id = $request->staff_id;
+                $supervisor->user_id = $user->id;
+                $supervisor->org_id = 1; //default organization
+                $supervisor->department = $request->department;
+                
+                $supervisor->position = " "; //should be nullable
+                $supervisor->signature = " "; //should be nullable
+
+                $supervisor->save();
+
+                // if (Auth::user()->role_id == 0) {
+                //    return redirect('/admin/students'); 
+                // } else {
+                    return redirect('login');
+                // }             
+            
+        } catch(\Exception $e){
+            DB::rollback();
+            return $e;
         }
-        $user->save();
-        return redirect('login');
     }
         // To validate the inputs
-    private function validateRequest()
-    {
-        return request()->validate([
-            'role_id'=> 'required|integer',
-            'staff_id' => 'required|string|max:30|unique:users',
-            'email' => 'required|email|max:50|unique:users',
-            'last_name' => 'required|string|max:100',
-            'first_name' => 'required|string|max:100',
-            // 'middle_name' => 'string|max:100',
-            'department' => 'required|string|max:200',
-            'contact_no'=> 'required|digits_between:9,16',
-            'gender'=> 'required|string|max:20',
-            'password' => 'required|string|min:8|confirmed',
-            'profile_pic' => 'required',
-        ]);
-    }
+    // private function validateRequest()
+    // {
+    //     return request()->validate([
+    //         'role_id'=> 'required|integer',
+    //         'staff_id' => 'required|string|max:30|unique:users',
+    //         'email' => 'required|email|max:50|unique:users',
+    //         'last_name' => 'required|string|max:100',
+    //         'first_name' => 'required|string|max:100',
+    //         // 'middle_name' => 'string|max:100',
+    //         'department' => 'required|string|max:200',
+    //         'contact_no'=> 'required|digits_between:9,16',
+    //         'gender'=> 'required|string|max:20',
+    //         'password' => 'required|string|min:8|confirmed',
+    //         'profile_pic' => 'required',
+    //     ]);
+    // }
         // Show IndustryUser dashboard - homepage
     public function index()
     {
         $id = Auth::user()->id;
-        $org = Organization::where('staff_id', $id)->first();
+        $org = Organization::where('user_id', $id)->first();
         if (!empty($org)){
             $studs = Student::where('org_id', $org->id)->first();
             $students = Student::where('org_id', $org->id)->get();
@@ -68,7 +101,8 @@ class IndustryController extends Controller
             $students = $studs = null;
             // $students = Student::where('org_id', $org->id)->first();
         }
-        return view('industry.home', compact('org', 'students', 'studs'));
+        $orgsup = OrgSupervisor::where('user_id', $id)->first();
+        return view('industry.home', compact('orgsup', 'org', 'students', 'studs'));
     }
         // Shows the create form for organization.
     public function org()
@@ -90,7 +124,7 @@ class IndustryController extends Controller
     public function org_edit()
     {
         $id = Auth::user()->id;
-        $org = Organization::where('staff_id', $id)->first();
+        $org = Organization::where('user_id', $id)->first();
         return view('industry.org_edit', compact('org'));
     }
         // update the organization table
@@ -115,7 +149,10 @@ class IndustryController extends Controller
         // Show the edit form for Industry Supervisor user
     public function profile()
     {
-        return view('industry.profile');
+        $id = Auth::user()->id;
+        $orgsup = OrgSupervisor::where('user_id', $id)->first();
+
+        return view('industry.profile', compact('orgsup'));
     }
         // updates the industryuser's profile
     public function profile_update(Request $request)
@@ -136,7 +173,7 @@ class IndustryController extends Controller
     public function student($id)
     {
         $student = Student::where('user_id', $id)->first();
-        // $org = Organization::where('staff_id', $id)->first();
+        // $org = Organization::where('user_id', $id)->first();
         return view('industry.student', compact('student'));
     }
     public function student_log($id)

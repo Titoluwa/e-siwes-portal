@@ -23,26 +23,26 @@
                     </div>
                     <br>
                     <div class="mt-3">
-                        <img class="rounded border-warning float-right img-thumbnail" src="{{asset('storage/'. Auth::user()->profile_pic)}}" alt="profile image" srcset="" width="150" height="150">
+                        <img class="rounded border-warning float-right img-thumbnail" src="{{asset('storage/'. $student->profile_pic)}}" alt="profile image" srcset="" width="150" height="150">
                     
                         <div>
                             <p>
-                                Registration Number: <b>{{Auth::user()->matric_no}}</b>
+                                Registration Number: <b>{{$student->matric_no}}</b>
                             </p>
                             <p>
-                                Surname: <b>{{Auth::user()->last_name}}</b>
+                                Surname: <b>{{$student->user->last_name}}</b>
                             </p>  
                             <p>
-                                Other Names: <b>{{Auth::user()->first_name}} {{Auth::user()->middle_name}}</b>
+                                Other Names: <b>{{$student->user->first_name}} {{$student->user->middle_name}}</b>
                             </p> 
                             <p>
-                                Faculty: <b>{{Auth::user()->faculty}}</b>
+                                Faculty: <b>{{$student->faculty}}</b>
                             </p> 
                             <p>
-                                Department: <b>{{Auth::user()->department}}</b>
+                                Department: <b>{{$student->department}}</b>
                             </p>
                             <p>
-                                Course of study: <b>{{Auth::user()->course_of_study}}</b>
+                                Course of study: <b>{{$student->course_of_study}}</b>
                             </p> 
                         </div>
                     </div>

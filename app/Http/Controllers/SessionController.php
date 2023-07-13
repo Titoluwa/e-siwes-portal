@@ -13,13 +13,6 @@ class SessionController extends Controller
     {
         $this->middleware('admin');
     }
-    public function index()
-    {   
-        $current_year = Carbon::now()->year;
-        $previous_year = (int)$current_year-1;
-        $election_year = Session::orderBy('id', 'DESC')->get();
-        return view('admin.setup.index', compact('election_year', 'previous_year','current_year'));
-    }
     public function store(Request $request)
     {
         Session::where('status', 1)->update(['status'=> 0]);
@@ -30,9 +23,10 @@ class SessionController extends Controller
         $setup->save();
         return redirect('admin/setup')->with('message',"$request->year has been added and set!");
     }
-    public function edit(Session  $setup)
+    public function edit($id)
     {
-        return view("admin.setup.edit", compact('setup'));
+        $setup = Session::findorFail($id);
+        return view("admin.setup_edit", compact('setup'));
     }
     public function update(Request $request, Session  $setup)
     {
@@ -40,7 +34,7 @@ class SessionController extends Controller
         $setup->start_date = ($request->start_date);
         $setup->end_date = ($request->end_date);
         $setup->update();
-        return redirect("admin/setup/". $setup->id ."/edit")->with('message',"$request->year election date has been Updated!");; 
+        return redirect("admin/setup")->with('message',"$request->year session date has been Updated!");; 
     }
     
 }

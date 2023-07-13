@@ -1,6 +1,8 @@
-@extends('layouts.student')
+@extends('layouts.admin')
 
-@section('studentcontent')
+@section('title', 'Student Logs')
+
+@section('admincontent')
 
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -8,8 +10,8 @@
 
                 <div class="card-header border-warning bg-othe-color">
                     <div class="float-left blue-text">
-                        <h3 style="font-weight: 700;">LogBook</h3>
-                        <small>Fill in your daily activities after each day of training</small>
+                        <h3 style="font-weight: 700;">{{$student->user->name()}}'s LogBook</h3>
+                        {{-- <small>Fill in your daily activities after each day of training</small> --}}
                     </div>
                     <div class="float-right">
 
@@ -19,8 +21,8 @@
                 <div class="card-body border-warning m-4 p-2">
                     @if (!empty($student))
 
-                        <p class="text-center">Your duration of training at <b>{{$student->org->name}}</b> is <b>{{$student->duration_of_training}}</b> for <b>{{$student->year_of_training}}</b>.</p>
-                        <p class="text-center mb-4">You are to fill your Logbook with each day's activities.</p>
+                        <p class="">The duration of training at <b>{{$student->org->name}}</b> is <b>{{$student->duration_of_training}}</b> for <b>{{$student->year_of_training}}</b>.</p>
+                        {{-- <p class="mb-4">View Logbook  with each day's activities.</p> --}}
 
                         <div id="Records">
                             <div class="card border-primary">
@@ -33,11 +35,11 @@
                                         </div>
 
                                         <!-- Button trigger for Add Daily Activity modal -->
-                                        <div class="float-right pt-1">
+                                        {{-- <div class="float-right pt-1">
                                             <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#dailyactivityModal">
                                                 <i class="fa fa-calendar-day"></i> Add
                                             </button>
-                                        </div>
+                                        </div> --}}
                                     </h4>
                                 </div>
 
@@ -53,7 +55,7 @@
                                                             <small class="card-subtitle mb-2 text-muted">({{$rec->date}})</small>
                                                             <p class="card-text">{{$rec->description_of_work}}</p>
                                                         </div>
-                                                        <div class="card-footer clearfix">
+                                                        {{-- <div class="card-footer clearfix">
                                                             <a data-toggle="modal" data-target="#edit_daily_modal" onclick="get_dailyrecord({{$rec->id}})" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>Edit</a>
 
                                                             <div class="float-right">
@@ -62,7 +64,7 @@
                                                                     <i class="fas fa-trash-alt"></i>
                                                                 </a>
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
                                                     </div>
                                                 </div>
                                                 @endforeach
@@ -84,11 +86,11 @@
                                             </button>
                                         </div>
                                         <!-- Button trigger for Add Weekly Activity modal -->
-                                        <div class="float-right pt-1">
+                                        {{-- <div class="float-right pt-1">
                                             <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#weekactivityModal">
                                                 <i class="fa fa-calendar-week"></i> Add
                                             </button>
-                                        </div>
+                                        </div> --}}
                                     </h4>
                                 </div>
 
@@ -106,18 +108,18 @@
                                                         </div>
                                                         <div class="card-footer clearfix">
                                                             <div class="d-flex">
-                                                                <div class="">
+                                                                {{-- <div class="">
                                                                     <a data-toggle="modal" data-target="#edit_weekly_modal" onclick="get_weeklyrecord({{$weekrec->id}})" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>Edit</a>
-                                                                </div>
-                                                                <div class="px-2">
+                                                                </div> --}}
+                                                                <div class="">
                                                                     <a data-toggle="modal" data-target="#view_weekly_modal" onclick="get_weeklyrecord({{$weekrec->id}})" class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i>View</a>
                                                                 </div>
-                                                                <div class="ml-auto">
+                                                                {{-- <div class="ml-auto">
                                                                     <input class="delete_val" type="hidden" value="{{$weekrec->id}}">
                                                                     <a class="delete-week btn btn-sm btn-danger">
                                                                         <i class="fas fa-trash-alt"></i>
                                                                     </a>
-                                                                </div>
+                                                                </div> --}}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -142,11 +144,11 @@
                                         </div>
 
                                         <!-- Button trigger for Add Monthly Activity modal -->
-                                        <div class="float-right pt-1">
+                                        {{-- <div class="float-right pt-1">
                                             <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#monthlyactivityModal">
                                                 <i class="fa fa-calendar-alt"></i> Add
                                             </button>
-                                        </div>
+                                        </div> --}}
                                     </h4>
                                 </div>
 
@@ -164,18 +166,18 @@
                                                         </div>
                                                         <div class="card-footer clearfix">
                                                             <div class="d-flex">
-                                                                <div class="">
+                                                                {{-- <div class="">
                                                                     <a data-toggle="modal" data-target="#edit_monthly_modal" onclick="get_monthlyrecord({{$month->id}})" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>Edit</a>
-                                                                </div>
-                                                                <div class="px-2">
+                                                                </div> --}}
+                                                                <div class="">
                                                                     <a data-toggle="modal" data-target="#view_monthly_modal" onclick="get_monthlyrecord({{$month->id}})" class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i>View</a>
                                                                 </div>
-                                                                <div class="ml-auto">
+                                                                {{-- <div class="ml-auto">
                                                                     <input class="delete_val" type="hidden" value="{{$month->id}}">
                                                                     <a class="delete-week btn btn-sm btn-danger">
                                                                         <i class="fas fa-trash-alt"></i>
                                                                     </a>
-                                                                </div>
+                                                                </div> --}}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -194,8 +196,8 @@
 
 
                     @else
-                        <h5 class="text-center pb-3"><b>Add Organization to your profile</b></h5>
-                        <form method="POST" action="/student/org/add" enctype="multipart/form-data">
+                        <h5 class="text-center pb-3"><b>Student has NOT added an organization to their profile</b></h5>
+                        {{-- <form method="POST" action="/student/org/add" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group row">
@@ -269,12 +271,12 @@
                                     </button>
                                 </div>
                             </div>
-                        </form>
+                        </form> --}}
                     @endif
                 </div>
                         <!-- MODALS -->
                 <!-- Add Daily Activity Modal -->
-                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="dailyactivityModal" tabindex="-1" role="dialog" aria-labelledby="dailyModal" aria-hidden="true">
+                {{-- <div class="modal fade" data-keyboard="false" data-backdrop="static" id="dailyactivityModal" tabindex="-1" role="dialog" aria-labelledby="dailyModal" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
@@ -335,10 +337,10 @@
                         </form>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Edit Daily Activity Modal -->
-                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="edit_daily_modal" tabindex="-1" role="dialog" aria-labelledby="edit_dailyModal" aria-hidden="true">
+                {{-- <div class="modal fade" data-keyboard="false" data-backdrop="static" id="edit_daily_modal" tabindex="-1" role="dialog" aria-labelledby="edit_dailyModal" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
@@ -400,10 +402,10 @@
                         </form>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Add Weekly Activity Modal -->
-                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="weekactivityModal" tabindex="-1" role="dialog" aria-labelledby="weeklyModal" aria-hidden="true">
+                {{-- <div class="modal fade" data-keyboard="false" data-backdrop="static" id="weekactivityModal" tabindex="-1" role="dialog" aria-labelledby="weeklyModal" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
@@ -490,7 +492,7 @@
                         </form>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Edit Weekly Activity Modal -->
                 <div class="modal fade" data-keyboard="false" data-backdrop="static" id="edit_weekly_modal" tabindex="-1" role="dialog" aria-labelledby="edit_weeklyModal" aria-hidden="true">
@@ -631,7 +633,7 @@
                 </div>
 
                 <!-- Add Monthly Activity Modal -->
-                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="monthlyactivityModal" tabindex="-1" role="dialog" aria-labelledby="monthlyModal" aria-hidden="true">
+                {{-- <div class="modal fade" data-keyboard="false" data-backdrop="static" id="monthlyactivityModal" tabindex="-1" role="dialog" aria-labelledby="monthlyModal" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
@@ -712,10 +714,10 @@
                         </form>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Edit Monthly Activity Modal -->
-                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="edit_monthly_modal" tabindex="-1" role="dialog" aria-labelledby="edit_monthlyModal" aria-hidden="true">
+                {{-- <div class="modal fade" data-keyboard="false" data-backdrop="static" id="edit_monthly_modal" tabindex="-1" role="dialog" aria-labelledby="edit_monthlyModal" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
@@ -797,7 +799,7 @@
                         </form>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- View Monthly Activity Modal -->
                 <div class="modal fade" id="view_monthly_modal" tabindex="-1" role="dialog" aria-labelledby="view_monthly" aria-hidden="true">
@@ -949,10 +951,10 @@
             {
                 console.log('passed');
                 console.log(data);
-                $('#edit_w_id').val(data.record.id);
-                $('#edit_w_name').val(data.record.name);
-                $('#edit_w_department').val(data.record.department);
-                $('#edit_description_of_week').val(data.record.description_of_week);
+                // $('#edit_w_id').val(data.record.id);
+                // $('#edit_w_name').val(data.record.name);
+                // $('#edit_w_department').val(data.record.department);
+                // $('#edit_description_of_week').val(data.record.description_of_week);
                 $('#weekname').html(data.record.name);
                 $('#week_dept').html(data.record.department);
                 $('#week_dow').html(data.record.description_of_week);

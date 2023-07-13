@@ -37,7 +37,7 @@ class LoginController extends Controller
                 return $this->redirectTo;
                 break;
             case 1:
-                $this->redirectTo = '/itfagent';
+                $this->redirectTo = '/student';
                 return $this->redirectTo;
                 break;
             case 2:
@@ -49,7 +49,7 @@ class LoginController extends Controller
                 return $this->redirectTo;
                 break;
             case 4:
-                $this->redirectTo = '/student';
+                $this->redirectTo = '/itfagent';
                 return $this->redirectTo;
                 break;        
             default:

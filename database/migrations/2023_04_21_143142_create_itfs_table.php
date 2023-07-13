@@ -19,6 +19,7 @@ class CreateItfsTable extends Migration
             $table->string('state_location');
             $table->string('office_address');
             $table->string('signature')->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

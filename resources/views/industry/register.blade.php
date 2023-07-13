@@ -14,7 +14,7 @@
                     <form method="POST" action="/register/industry" enctype="multipart/form-data">
                         @csrf
 
-                        <input type="hidden" name="role_id" value="2">
+                        <input type="hidden" name="role_id" value="3">
                         
                         <div class="form-group row">
                             <div class="col-lg-7">

@@ -11,6 +11,7 @@ class Student extends Model
 {
     protected $guarded = ['id'];
     protected $timestamp = true;
+    protected $with = ['user'];
 
     public function org()
     {
@@ -20,11 +21,5 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
-//     public function name()
-//     {
-//         $id = Auth::user()->id;
-//         $stu =  User::where('user_id', $id)->first();
-//         $name = $stu->last_name . $stu->first_name;
-//         return $name;
-//     }
+
 }

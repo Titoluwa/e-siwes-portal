@@ -14,6 +14,9 @@
 
                 <div class="card-body p-3">
                     <h3 class="text-primary">Staffs</h3>
+                    <div class="float-right">
+                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="addstaffModal" disabled>Add</button>
+                    </div>
                     
                     @if(!empty($org))
                         <div class="table-responsive">

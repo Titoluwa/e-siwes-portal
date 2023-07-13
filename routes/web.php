@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LogbookController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,20 @@ Route::prefix('admin')->group(function ()
     Route::get('staffs', 'AdminController@staffs')->name('admin.staffs');
     Route::get('organizations', 'AdminController@organizations')->name('admin.orgs');
     Route::get('itf-agents', 'AdminController@itf_agents')->name('admin.itfagents');
+
+    // Session Setup
+    Route::post('setup/store', 'SessionController@store')->name('admin.setup.store');
+    Route::get('setup/edit/{id}', 'SessionController@edit')->name('admin.setup.edit'); // ADD EDIT STATUS OF SESSION
+    Route::put('setup/update', 'SessionController@update')->name('admin.setup.update');
+
+    // Students
+    Route::post('students/store', 'AdminController@store')->name('admin.setup.store');
+    Route::get('students/{id}', 'AdminController@view_student');
+    Route::get('students/log/{id}', 'AdminController@student_log');
+
+    // Organization
+    Route::get('organizations/{id}', 'AdminController@org_details');
+
 });
 
     // STUDENT Routes

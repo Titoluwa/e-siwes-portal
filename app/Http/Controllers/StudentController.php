@@ -51,29 +51,56 @@ class StudentController extends Controller
         // For storing the StudentUser registration form
     public function store(Request $request)
     {
-        $user = User::create($this->validateRequest());
-        $user->last_name = Str::ucfirst($request->last_name);
-        $user->first_name = Str::ucfirst($request->first_name);
-        $user->middle_name = Str::ucfirst($request->middle_name);
-        $user->password = Hash::make($request->password);
-        if ($request->hasFile('profile_pic')){
-            $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
+        try {
+            // DB::beginTransaction();
+            DB::commit();
+                // Adding New User 
+                // $user = User::create($this->validateRequest());
+                $user = new User();
+                $user->role_id = 1;
+                $user->email = $request->email;
+                $user->last_name = Str::ucfirst($request->last_name);
+                $user->first_name = Str::ucfirst($request->first_name);
+                $user->middle_name = Str::ucfirst($request->middle_name);
+                $user->contact_no = $request->contact_no;
+                $user->gender = $request->gender;
+                $user->password = Hash::make($request->password);
+                if ($request->hasFile('profile_pic')){
+                    $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
+                }
+
+                $user->save();
+
+                // Adding Student Details
+                $student = new Student();
+                $student->matric_no = $request->matric_no;
+                $student->user_id = $user->id;
+                $student->org_id = 1;
+                $student->faculty = $request->faculty;
+                $student->department = $request->department;
+                $student->course_of_study = $request->course_of_study;
+
+                $student->save();
+
+                if (Auth::user()->role_id == 0) {
+                   return redirect('/admin/students'); 
+                } else {
+                    return redirect('login');
+                }             
+            
+        } catch(\Exception $e){
+            DB::rollback();
+            return $e;
         }
-        $user->save();
-        return redirect('login');
     }
         // Validation for StudentUser Form
     private function validateRequest()
     {
         return request()->validate([
             'role_id'=> 'required|integer',
-            'matric_no' => 'required|string|max:12|min:12|unique:users',
             'email' => 'required|email|max:50|unique:users',
             'last_name' => 'required|string|max:100',
             'first_name' => 'required|string|max:100',
-            'faculty' => 'required|string|max:200',
-            'department' => 'required|string|max:200',
-            'course_of_study' => 'string|max:100',
             'contact_no'=> 'required|digits_between:9,16',
             'gender'=> 'required|string|max:100',
             'password' => 'required|string|min:8|confirmed',

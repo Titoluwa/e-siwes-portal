@@ -15,7 +15,7 @@ class CreateOrganizationsTable extends Migration
     {
         Schema::create('organizations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users'); 
+            $table->foreignId('user_id')->constrained('users')->nullable(); 
             $table->string('name');
             $table->string('full_address');
             $table->string('postal_address');
@@ -25,7 +25,7 @@ class CreateOrganizationsTable extends Migration
             $table->string('plant_capacity')->nullable();
             $table->string('other_info')->nullable();
             $table->string('logo');
-            $table->integer('status_id')->default(1);
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

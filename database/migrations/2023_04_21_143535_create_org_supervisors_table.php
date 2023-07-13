@@ -18,9 +18,10 @@ class CreateOrgSupervisorsTable extends Migration
             $table->string('staff_id');
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('org_id')->constrained('organizations');
-            $table->string('department');
-            $table->string('position');
+            $table->string('department')->nullable();
+            $table->string('position')->nullable();
             $table->string('signature')->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

@@ -21,7 +21,7 @@
                     @csrf                      
 
                     <div class="form-group row">
-                        <input type="hidden" id='staff_id' name="staff_id" value="{{Auth::user()->id}}">
+                        <input type="hidden" id='user_id' name="user_id" value="{{Auth::user()->id}}">
                         <label for="super_name" class="col-md-2 col-form-label">Supervisor Name</label>
 
                         <div class="col-md-4">

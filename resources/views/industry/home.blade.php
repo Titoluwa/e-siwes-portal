@@ -23,7 +23,7 @@
                 <div class="p-2 text-center">
                     @if (!empty($org))
                         <p>Employee at <b>{{$org->name}}</b> </p>
-                        <p>{{Auth::user()->department}} Department</p>
+                        <p>{{$orgsup->department}} Department</p>
                     @else
                         <p>Provide the information of your organization.</p>
                     @endif
@@ -71,7 +71,7 @@
 
                 <div class="card-header border-warning bg-transparent blue-text clearfix mt-2 ">
                     <div class="float-left">
-                        <h4 class=""><b>{{ __('Manage Student') }}</b> </h4>
+                        <h4 class=""><b>{{ __('Manage Student(s)') }}</b> </h4>
                     </div>
                     <div class="float-right">
                         <!-- <a class="h4" href="/industry"><i class="fas fa-eye"></i></a> -->
@@ -91,7 +91,7 @@
                                                 <th>Name</th>
                                                 <th>Matric Number</th>
                                                 <th>Email</th>
-                                                <th></th>
+                                                <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -99,7 +99,7 @@
                                                 <tr>
                                                     {{-- <td></td> --}}
                                                     <td><a href="/industry/student/{{$student->user_id}}">{{$student->user->last_name}} {{$student->user->first_name}}</a></td>
-                                                    <td>{{$student->user->matric_no}} </td>
+                                                    <td>{{$student->matric_no}} </td>
                                                     <td>{{$student->user->email}} </td>
                                                     <td>
                                                         <a href="/industry/student/log/{{$student->user->id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>

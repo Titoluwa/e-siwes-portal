@@ -6,7 +6,7 @@
         <div class="card border-warning">
 
             <div class="card-header border-warning ">
-                <h4 class="mt-2 text-center blue-text"><b>{{$student->user->last_name}} {{$student->user->first_name}}</b></h4>
+                <h4 class="mt-2 text-center blue-text"><b>{{$student->user->name()}}</b></h4>
             </div>
 
             <div class="card-body border-warning bg-light">
@@ -17,7 +17,7 @@
 
                     <div class="col-md-9">
                         <p>
-                            Registration Number: <b>{{$student->user->matric_no}}</b>
+                            Registration Number: <b>{{$student->matric_no}}</b>
                         </p>
                         <hr>
                         <p>
@@ -29,15 +29,15 @@
                         </p>
                         <hr>
                         <p>
-                            Faculty: <b>{{$student->user->faculty}}</b>
+                            Faculty: <b>{{$student->faculty}}</b>
                         </p>
                         <hr>
                         <p>
-                            Department: <b>{{$student->user->department}}</b>
+                            Department: <b>{{$student->department}}</b>
                         </p>
                         <hr>
                         <p>
-                            Course of study: <b>{{$student->user->course_of_study}}</b>
+                            Course of study: <b>{{$student->course_of_study}}</b>
                         </p>
                         <hr>
                         <p>

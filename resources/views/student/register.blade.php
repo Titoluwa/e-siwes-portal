@@ -15,7 +15,7 @@
                     <form method="POST" action="/register/student" enctype="multipart/form-data">
                         @csrf
 
-                        <input type="hidden" name="role_id" value="0">
+                        <input type="hidden" name="role_id" value="1">
 
                         <div class="form-group row">
                             <div class="col-lg-6">

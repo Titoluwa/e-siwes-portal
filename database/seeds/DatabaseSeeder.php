@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
             ItfAgentSeeder::class,
             DepartmentSeeder::class,
+            OrganizationSeeder::class,
         ]);
     }
 }
