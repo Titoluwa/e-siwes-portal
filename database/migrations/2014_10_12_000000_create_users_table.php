@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
 
             $table->integer('role_id')->default(0);
-            $table->integer('status_id')->default(1);
+            $table->boolean('status')->default(1);
             $table->string('email')->unique();            
             $table->string('last_name');
             $table->string('first_name');

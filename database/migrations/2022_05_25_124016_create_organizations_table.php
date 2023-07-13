@@ -19,13 +19,13 @@ class CreateOrganizationsTable extends Migration
             $table->string('name');
             $table->string('full_address');
             $table->string('postal_address');
-            $table->date('year_of_est');
-            $table->string('nature');
-            $table->string('specialization');
+            $table->date('year_of_est')->nullable();
+            $table->string('nature')->nullable();
+            $table->string('specialization')->nullable();
             $table->string('plant_capacity')->nullable();
             $table->string('other_info')->nullable();
-            $table->string('logo');
-            $table->integer('status')->default(1);
+            $table->string('logo')->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

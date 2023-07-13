@@ -15,7 +15,6 @@ class CreateMonthlyRecordsTable extends Migration
     {
         Schema::create('monthly_records', function (Blueprint $table) {
             $table->id();
-            
             $table->foreignId('user_id')->constrained('users');
             $table->string('name');
             $table->json('weekly_records');
@@ -23,7 +22,6 @@ class CreateMonthlyRecordsTable extends Migration
             $table->string('sketch')->nullable();
             $table->integer('sch_sup_approval')->default(0);
             $table->string('org_sup_comment')->nullable();
-            
             $table->timestamps();
         });
     }

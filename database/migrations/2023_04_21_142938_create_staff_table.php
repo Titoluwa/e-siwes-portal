@@ -17,8 +17,8 @@ class CreateStaffTable extends Migration
             $table->id();
             $table->string('staff_id');
             $table->foreignId('user_id')->constrained('users');
-            $table->string('faculty');
-            $table->string('department');
+            $table->string('faculty')->nullable();
+            $table->string('department')->nullable();
             $table->string('signature')->nullable();
             $table->timestamps();
         });

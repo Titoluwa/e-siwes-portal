@@ -17,8 +17,7 @@ class CreateStudentsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('org_id')->constrained('organizations')->nullable();
-            $table->integer('session_id');
-            $table->integer('status_id')->default(1);
+            $table->boolean('status')->default(1);
             $table->string('matric_no');
             $table->string('faculty');
             $table->string('department');
