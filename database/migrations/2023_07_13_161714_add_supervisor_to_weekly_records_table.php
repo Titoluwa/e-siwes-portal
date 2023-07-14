@@ -14,7 +14,8 @@ class AddSupervisorToWeeklyRecordsTable extends Migration
     public function up()
     {
         Schema::table('weekly_records', function (Blueprint $table) {
-            $table->foreignId('org_sup_id')->constrained('org_supervisors')->nullable();
+            // $table->foreignId('org_sup_id')->constrained('org_supervisors')->nullable();
+            $table->integer('org_sup_id')->nullable();
         });
     }
 

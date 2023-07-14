@@ -14,8 +14,10 @@ class AddSupervisorToMonthlyRecordsTable extends Migration
     public function up()
     {
         Schema::table('monthly_records', function (Blueprint $table) {
-            $table->foreignId('staff_id')->constrained('staff')->nullable();
-            $table->foreignId('org_sup_id')->constrained('org_supervisors')->nullable();
+            // $table->foreignId('staff_id')->constrained('staff')->nullable();
+            // $table->foreignId('org_sup_id')->constrained('org_supervisors')->nullable();
+            $table->integer('staff_id')->nullable();
+            $table->integer('org_sup_id')->nullable();
         });
     }
 

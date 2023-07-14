@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Session;
 use App\Student;
-use App\Organization;
 
+use App\Organization;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -70,19 +71,22 @@ class StudentController extends Controller
                 }
 
                 $user->save();
-
+                
+                $curernt_session = Session::where('status', 1)->first();
                 // Adding Student Details
                 $student = new Student();
                 $student->matric_no = $request->matric_no;
                 $student->user_id = $user->id;
-                $student->org_id = 1;
+                // $student->org_id = 1;
+                // $student->staff_id = ;
+                $student->session_id = $curernt_session->id;
                 $student->faculty = $request->faculty;
                 $student->department = $request->department;
                 $student->course_of_study = $request->course_of_study;
 
                 $student->save();
 
-                if (Auth::user()->role_id == 0) {
+                if (Auth::user()) {
                    return redirect('/admin/students'); 
                 } else {
                     return redirect('login');

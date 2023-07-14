@@ -63,7 +63,7 @@ class AdminController extends Controller
     public function organizations()
     {
         $orgs = Organization::first();
-        $organizations = Organization::all();
+        $organizations = Organization::where('status', 1)->get();
         $current_session = Session::where('status', 1)->first();
         // dd($orgs);
 

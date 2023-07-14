@@ -12,10 +12,12 @@ class OrganizationSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('organization')->insert([
+        DB::table('organizations')->insert([
             'name' => 'DEFAULT',
+            'user_id' => 1,
+            'full_address' => 'none',
+            'postal_address' => 'example@mail.com',
             'status' => 0,
-            '' => 'Computer Science with Economics',
         ]);
     }
 }

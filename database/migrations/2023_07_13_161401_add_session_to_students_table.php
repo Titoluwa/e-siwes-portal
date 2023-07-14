@@ -14,8 +14,10 @@ class AddSessionToStudentsTable extends Migration
     public function up()
     {
         Schema::table('students', function (Blueprint $table) {
-            $table->foreignId('session_id')->constrained('sessions');
-            $table->foreignId('staff_id')->constrained('staff')->nullable();
+            $table->integer('session_id');
+            $table->integer('staff_id')->nullable();
+            // $table->foreignId('session_id')->constrained('sessions');
+            // $table->foreignId('staff_id')->constrained('staff')->nullable();
         });
     }
 

@@ -15,7 +15,22 @@ class DepartmentSeeder extends Seeder
         DB::table('departments')->insert([
             'faculty' => 'Technology',
             'department' => 'Computer Science and Engineering',
+            'course_study' => 'Computer Engineering',
+        ]);
+        DB::table('departments')->insert([
+            'faculty' => 'Technology',
+            'department' => 'Computer Science and Engineering',
+            'course_study' => 'Computer Science with Mathematics',
+        ]);
+        DB::table('departments')->insert([
+            'faculty' => 'Technology',
+            'department' => 'Computer Science and Engineering',
             'course_study' => 'Computer Science with Economics',
+        ]);
+        DB::table('departments')->insert([
+            'faculty' => 'Technology',
+            'department' => 'Electrical and Electronic Engineering',
+            'course_study' => 'Electrical and Electronic Engineering',
         ]);
     }
 }
