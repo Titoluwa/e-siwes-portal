@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\IndustryController;
 use App\Http\Controllers\LogbookController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -38,7 +39,7 @@ Route::prefix('/register')->group(function()
     Route::post('school', 'SchoolController@store');
 });
 
-    // ADMIN Routes
+    // ADMIN Routes "0"
 Route::prefix('admin')->group(function ()
 {
     Route::get('', 'AdminController@index')->name('adminhome');
@@ -62,8 +63,7 @@ Route::prefix('admin')->group(function ()
     Route::get('organizations/{id}', 'AdminController@org_details');
 
 });
-
-    // STUDENT Routes
+    // STUDENT Routes "1"
 Route::prefix('student')->group(function ()
 {
     Route::get('', 'StudentController@index')->name('student');
@@ -98,13 +98,13 @@ Route::prefix('student')->group(function ()
     Route::delete('/log/monthly/{id}', 'LogbookController@destroy_monthly');
 });
 
-// SCHOOL Routes
+    // SCHOOL Routes "2"
 Route::prefix('school')->group(function ()
 {
     Route::get('', 'SchoolController@index')->name('school');
 });
 
-    //INDUSTRY Routes
+    //INDUSTRY Routes "3"
 Route::prefix('industry')->group(function ()
 {
     Route::get('', 'IndustryController@index')->name('industry');
@@ -120,9 +120,11 @@ Route::prefix('industry')->group(function ()
     Route::get('/student/{id}', 'IndustryController@student');
     Route::get('/student/log/{id}', 'IndustryController@student_log');
 
+    Route::post('/weekly/approve/{id}', 'IndustryController@approve_week');
+    Route::put('/log/monthly/update', 'IndustryController@comment_monthly');
 });
 
-    // ITF Routes
+    // ITF Routes "4"
 Route::prefix('itf')->group(function ()
 {
     Route::get('', 'ItfController@index')->name('itf');

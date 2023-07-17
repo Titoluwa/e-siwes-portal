@@ -13,7 +13,8 @@
                 <div class="card-body p-5">
                     <h3 class="text-center">Welcome, <b>{{Auth::user()->last_name}}!</b></h3>
                     <p class="text-center">You're logged in</p>
-                    @if (!empty($student))
+                    {{-- @if ($student->org_id != NULL) --}}
+                    @if (!empty($student->org_id))
                         <p class="text-center">Training at <b>{{$student->org->name}}</b></p>  
                     @else
                         <hr>

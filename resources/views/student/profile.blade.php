@@ -46,7 +46,8 @@
                             </p> 
                         </div>
                     </div>
-                    @if (!empty($student))
+                    {{-- @if (!empty($student)) --}}
+                    @if (!empty($student->org_id))
                         <hr>
                         <div class="float-left">
                             <h5><b> Other Information </b></h5>

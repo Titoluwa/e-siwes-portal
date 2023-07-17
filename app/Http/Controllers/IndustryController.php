@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Student;
+use Carbon\Carbon;
+use App\DailyRecord;
 use App\Organization;
+use App\WeeklyRecord;
+use App\MonthlyRecord;
+use Illuminate\Http\Response;
 use App\OrgSupervisor;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-// use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 // use Symfony\Component\HttpKernel\Event\ViewEvent;
@@ -53,11 +57,11 @@ class IndustryController extends Controller
                 $supervisor = new OrgSupervisor();
                 $supervisor->staff_id = $request->staff_id;
                 $supervisor->user_id = $user->id;
-                $supervisor->org_id = 1; //default organization
+                // $supervisor->org_id = 1; //default organization
                 $supervisor->department = $request->department;
                 
-                $supervisor->position = " "; //should be nullable
-                $supervisor->signature = " "; //should be nullable
+                $supervisor->position = $request->position; //should be nullable
+                $supervisor->signature = $request->signature; //should be nullable
 
                 $supervisor->save();
 
@@ -157,18 +161,47 @@ class IndustryController extends Controller
         // updates the industryuser's profile
     public function profile_update(Request $request)
     {
+        // $user = User::where('id', $request->id)->first();
+        // $user->last_name = Str::ucfirst($request->last_name);
+        // $user->first_name = Str::ucfirst($request->first_name);
+        // $user->middle_name = Str::ucfirst($request->middle_name);
+        // $user->staff_id = ($request->staff_id);
+        // $user->department = ($request->department);
+        // $user->contact_no = ($request->contact_no);
+        // if ($request->hasFile('profile_pic')){
+        //     $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
+        // }
+        // $user->update();
+
+        // return redirect("/industry");
+
         $user = User::where('id', $request->id)->first();
-        $user->last_name = Str::ucfirst($request->last_name);
-        $user->first_name = Str::ucfirst($request->first_name);
-        $user->middle_name = Str::ucfirst($request->middle_name);
-        $user->staff_id = ($request->staff_id);
-        $user->department = ($request->department);
-        $user->contact_no = ($request->contact_no);
-        if ($request->hasFile('profile_pic')){
-            $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
+        $supervisor = OrgSupervisor::where('user_id', $request->id)->first();
+        try {
+            // DB::beginTransaction();
+            DB::commit();
+                // Updating Industry User 
+            $user->last_name = Str::ucfirst($request->last_name);
+            $user->first_name = Str::ucfirst($request->first_name);
+            $user->middle_name = Str::ucfirst($request->middle_name);
+            $user->contact_no = $request->contact_no;
+            $user->gender = $request->gender;
+            $user->password = Hash::make($request->password);
+            if ($request->hasFile('profile_pic')){
+                $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
+            }
+            $user->update();
+
+            $supervisor->staff_id = $request->staff_id;
+            $supervisor->department = $request->department;
+            $supervisor->update();
+
+            return redirect("/industry");
+
+        } catch(\Exception $e){
+            DB::rollback();
+            return $e;
         }
-        $user->update();
-        return redirect("/industry");
     }
     public function student($id)
     {
@@ -179,6 +212,68 @@ class IndustryController extends Controller
     public function student_log($id)
     {
         $student = Student::where('user_id', $id)->first();
-        return view('industry.student_log', compact('student'));
+        $orgs = Organization::all();
+        $currentdate = Carbon::now()->format('Y-m-d');
+        $all_dailys = DailyRecord::where('user_id', $id)->orderBy('date', 'ASC')->first();
+        $all_weeks = WeeklyRecord::where('user_id', $id)->first();
+        $dailyrecords = DailyRecord::where('user_id', $id)->first();
+        $weeklyrecords = WeeklyRecord::where('user_id', $id)->first();
+        $monthlyrecords = MonthlyRecord::where('user_id', $id)->first();
+
+        if (!empty($all_dailys)){
+            $all_dailys = DailyRecord::where('user_id', $id)->orderBy('date', 'ASC')->get();
+        }else{
+            $all_dailys = null;
+        }
+
+        if (!empty($dailyrecords)){
+            $dailyrecords = DailyRecord::where('user_id', $id)->orderBy('date', 'ASC')->get();
+        }else{
+            $dailyrecords = null;
+        }
+        
+        if (!empty($weeklyrecords)){
+            $weeklyrecords = WeeklyRecord::where('user_id', $id)->orderBy('created_at', 'ASC')->get();
+        }else{
+            $weeklyrecords = null;
+        }
+        
+        if (!empty($all_weeks)){
+            $all_weeks = WeeklyRecord::where('user_id', $id)->get();
+        }else{
+            $all_weeks = null;
+        }
+
+        if (!empty($monthlyrecords)){
+            $monthlyrecords = MonthlyRecord::where('user_id', $id)->get();
+        }else{
+            $monthlyrecords = null;
+        }
+        return view('industry.student_log', compact('student', 'orgs', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks'));
+    }
+
+    public function approve_week($id)
+    {
+        $sup_id = Auth::user()->id;
+
+        $weeklyrecord = WeeklyRecord::where('id', $id)->first();
+        $weeklyrecord->org_sup_approval = 1;
+        $weeklyrecord->org_sup_id = $sup_id;
+        $weeklyrecord->update();
+
+        return response()->json(['status'=>"Marked As Seen!!"]);
+    }
+
+    public function comment_monthly(Request $request)
+    {
+
+        $sup_id = Auth::user()->id;
+
+        $monthlyrecord = MonthlyRecord::where('id', $request->id)->first();
+        $monthlyrecord->org_sup_comment = $request->org_sup_comment;
+        $monthlyrecord->org_sup_id = $sup_id;
+        $monthlyrecord->update();
+
+        return back();
     }
 }

@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="card-body">
-                    @if (!empty($student))
+                    @if (!empty($student->org_id))
                         <img class="rounded border-warning float-right img-thumbnail" src="{{asset('storage/'. $student->org->logo)}}" alt="organization logo" srcset="" width="150" height="150">
                         <div>
                             <p>

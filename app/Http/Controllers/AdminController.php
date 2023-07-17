@@ -96,9 +96,10 @@ class AdminController extends Controller
     public function view_student($id)
     {
         $current_session = Session::where('status', 1)->first();
-        // $student = Student::where('user_id', $id)->first()->where('session_id', $current_session->id)->first();
-        $student = Student::where('user_id', $id)->first();
+        $student = Student::where('user_id', $id)->where('session_id', $current_session->id)->first();
+        // $student = Student::where('user_id', $id)->first();
         $faculty = DB::table('departments')->selectRaw('faculty')->groupBy('faculty')->get();
+        // dd($current_session);
 
         return view('admin.view_student', compact('student', 'current_session', 'faculty'));
     }
@@ -111,8 +112,8 @@ class AdminController extends Controller
         $currentdate = Carbon::now()->format('Y-m-d');
         $all_dailys = DailyRecord::where('user_id', $id)->orderBy('date', 'ASC')->first();
         $all_weeks = WeeklyRecord::where('user_id', $id)->first();
-        $dailyrecords = DailyRecord::where('user_id', $id)->where('weeked', 0)->first();
-        $weeklyrecords = WeeklyRecord::where('user_id', $id)->where('monthed', 0)->first();
+        $dailyrecords = DailyRecord::where('user_id', $id)->first();
+        $weeklyrecords = WeeklyRecord::where('user_id', $id)->first();
         $monthlyrecords = MonthlyRecord::where('user_id', $id)->first();
 
         if (!empty($all_dailys)){
@@ -122,13 +123,13 @@ class AdminController extends Controller
         }
 
         if (!empty($dailyrecords)){
-            $dailyrecords = DailyRecord::where('user_id', $id)->where('weeked', 0)->orderBy('date', 'ASC')->get();
+            $dailyrecords = DailyRecord::where('user_id', $id)->orderBy('date', 'ASC')->get();
         }else{
             $dailyrecords = null;
         }
         
         if (!empty($weeklyrecords)){
-            $weeklyrecords = WeeklyRecord::where('user_id', $id)->where('monthed', 0)->orderBy('created_at', 'ASC')->get();
+            $weeklyrecords = WeeklyRecord::where('user_id', $id)->orderBy('created_at', 'ASC')->get();
         }else{
             $weeklyrecords = null;
         }

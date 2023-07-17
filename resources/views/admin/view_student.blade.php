@@ -57,22 +57,28 @@
                     <hr>
                     
                     <h5><b> Other Information </b></h5>
-                
-                    <div class="mt-3">
-                        <p>
-                            Address during of Industrial Training: <b> {{$student->org->full_address}}</b>
-                        </p>
-                        <p>
-                            Year of Industrial Training: <b> {{$student->year_of_training}}</b>
-                        </p>
-                        <p>
-                            Duration of Industrial Training: <b>{{$student->duration_of_training}}</b>
-                        </p> 
-                        <p>
-                            Signature:
-                            <img src="{{asset('storage/'. $student->signature)}}" alt="{{$student->signature}}" width="180" height="30">
-                        </p>
-                    </div>
+                    @if ($student->org_id == NULL)
+                        <div class="text-center blue-text">
+                            <h5>This student is not attached to any organization</h5>
+                        </div>
+                    @else
+                       <div class="mt-3">
+                            <p>
+                                Address during of Industrial Training: <b> {{$student->org->full_address}}</b>
+                            </p>
+                            <p>
+                                Year of Industrial Training: <b> {{$student->year_of_training}}</b>
+                            </p>
+                            <p>
+                                Duration of Industrial Training: <b>{{$student->duration_of_training}}</b>
+                            </p> 
+                            <p>
+                                Signature:
+                                <img src="{{asset('storage/'. $student->signature)}}" alt="{{$student->signature}}" width="180" height="30">
+                            </p>
+                        </div> 
+                    @endif
+                    
                 </div>
                 
             </div>

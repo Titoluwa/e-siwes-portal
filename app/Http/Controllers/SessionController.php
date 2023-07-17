@@ -26,14 +26,17 @@ class SessionController extends Controller
     public function edit($id)
     {
         $setup = Session::findorFail($id);
-        return view("admin.setup_edit", compact('setup'));
+        $current_session = Session::where('status', 1)->first();
+
+        return view("admin.setup_edit", compact('setup', 'current_session'));
     }
     public function update(Request $request, Session  $setup)
     {
-        $setup->year = ($request->year);
-        $setup->start_date = ($request->start_date);
-        $setup->end_date = ($request->end_date);
-        $setup->update();
+        $session = $setup->where('status', 1)->first();
+        $session->year = ($request->year);
+        $session->start_date = ($request->start_date);
+        $session->end_date = ($request->end_date);
+        $session->update();
         return redirect("admin/setup")->with('message',"$request->year session date has been Updated!");; 
     }
     

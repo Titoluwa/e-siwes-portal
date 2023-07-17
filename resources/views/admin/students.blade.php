@@ -28,6 +28,7 @@
                                         <th>Matric Number</th>
                                         <th>Email</th>
                                         <th>Status</th>
+                                        <th>Attachment</th>
                                         <th>Actions</th>
                                         
                                     </tr>
@@ -39,9 +40,23 @@
                                             <td><a href="/admin/students/{{$student->user_id}}">{{$student->user->name()}}</a></td> {{-- Link to View  --}}
                                             <td>{{$student->matric_no}} </td>
                                             <td>{{$student->user->email}} </td>
-                                            <td class="text-success">Active</td>
+                                            @if ($student->status == 1)
+                                                <td class="text-success">Active</td>
+                                            @else
+                                                <td class="text-danger">Inactive</td>
+                                            @endif
+                                            @if ($student->org_id == 0)
+                                                <td class="oth-color">not attached</td>
+                                            @else
+                                                <td >{{$student->org->name}}</td>
+                                            @endif
+                                            
                                             <td>
-                                                <a href="/admin/students/log/{{$student->user->id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
+                                                @if ($student->org_id == 0)
+                                                    <button href="/admin/students/log/{{$student->user->id}}" class='btn btn-sm btn-outline-primary' disabled><i class="fa fa-book"></i> Logbook</button>
+                                                @else
+                                                    <a href="/admin/students/log/{{$student->user->id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a> 
+                                                @endif
                                                 <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Forms</a>
                                                 <button type='button' class='btn btn-sm btn-outline-danger delete'><i class="fa fa-trash-alt"></i></button>
                                             </td>

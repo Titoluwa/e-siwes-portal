@@ -98,19 +98,19 @@ class StudentController extends Controller
         }
     }
         // Validation for StudentUser Form
-    private function validateRequest()
-    {
-        return request()->validate([
-            'role_id'=> 'required|integer',
-            'email' => 'required|email|max:50|unique:users',
-            'last_name' => 'required|string|max:100',
-            'first_name' => 'required|string|max:100',
-            'contact_no'=> 'required|digits_between:9,16',
-            'gender'=> 'required|string|max:100',
-            'password' => 'required|string|min:8|confirmed',
-            'profile_pic' => 'required',
-        ]);
-    }
+    // private function validateRequest()
+    // {
+    //     return request()->validate([
+    //         'role_id'=> 'required|integer',
+    //         'email' => 'required|email|max:50|unique:users',
+    //         'last_name' => 'required|string|max:100',
+    //         'first_name' => 'required|string|max:100',
+    //         'contact_no'=> 'required|digits_between:9,16',
+    //         'gender'=> 'required|string|max:100',
+    //         'password' => 'required|string|min:8|confirmed',
+    //         'profile_pic' => 'required',
+    //     ]);
+    // }
         // Show homepage of StudentUser
     public function index()
     {
@@ -186,15 +186,16 @@ class StudentController extends Controller
         // create Student and add organization to database
     public function org_add(Request $request)
     {
-        $student = new Student();
-        $student->user_id = Auth::user()->id;
+        // dd($request->all());
+        $id = Auth::user()->id;
+        $student = Student::where('user_id', $id)->first();        
         $student->org_id = $request->org_id;
         $student->year_of_training = $request->year_of_training;
         $student->duration_of_training = $request->duration_of_training;
         if ($request->hasFile('signature')){
             $student->signature = $request->file('signature')->store('signatures', 'public');
         }
-        $student->save();
+        $student->update();
 
         return back();
     }

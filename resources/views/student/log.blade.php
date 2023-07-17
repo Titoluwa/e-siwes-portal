@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="card-body border-warning m-4 p-2">
-                    @if (!empty($student))
+                    @if (!empty($student->org_id))
 
                         <p class="text-center">Your duration of training at <b>{{$student->org->name}}</b> is <b>{{$student->duration_of_training}}</b> for <b>{{$student->year_of_training}}</b>.</p>
                         <p class="text-center mb-4">You are to fill your Logbook with each day's activities.</p>
@@ -101,22 +101,30 @@
                                                     <div class="card h-100">
                                                         <div class="card-body">
                                                             <h6 class="card-title"><b>{{$weekrec->name}}</b></h6>
-                                                            <h6 class="card-subtitle mb-2 text-muted">{{$weekrec->department}}</h6>
+                                                            <h6 class="card-subtitle mb-2 text-muted">Department/Section: {{$weekrec->department}}</h6>
                                                             <p class="card-text">{{$weekrec->description_of_week}}</p>
                                                         </div>
                                                         <div class="card-footer clearfix">
                                                             <div class="d-flex">
                                                                 <div class="">
-                                                                    <a data-toggle="modal" data-target="#edit_weekly_modal" onclick="get_weeklyrecord({{$weekrec->id}})" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>Edit</a>
-                                                                </div>
+                                                                    @if ($weekrec->org_sup_approval == 0)
+                                                                        <a data-toggle="modal" data-target="#edit_weekly_modal" onclick="get_weeklyrecord({{$weekrec->id}})" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>Edit</a>
+                                                                    @endif
+                                                                    </div>
                                                                 <div class="px-2">
                                                                     <a data-toggle="modal" data-target="#view_weekly_modal" onclick="get_weeklyrecord({{$weekrec->id}})" class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i>View</a>
                                                                 </div>
                                                                 <div class="ml-auto">
-                                                                    <input class="delete_val" type="hidden" value="{{$weekrec->id}}">
-                                                                    <a class="delete-week btn btn-sm btn-danger">
-                                                                        <i class="fas fa-trash-alt"></i>
-                                                                    </a>
+                                                                    @if ($weekrec->org_sup_approval == 0)
+                                                                        <small class="oth-color">Pending</small>
+                                                                        <input class="delete_val" type="hidden" value="{{$weekrec->id}}">
+                                                                        <a class="delete-week btn btn-sm btn-danger">
+                                                                            <i class="fas fa-trash-alt"></i>
+                                                                        </a>
+                                                                    @else
+                                                                        <i class="text-success">Seen <i class="fas fa-check-circle"></i></i>
+                                                                    @endif
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -159,22 +167,30 @@
                                                     <div class="card h-100">
                                                         <div class="card-body">
                                                             <h5 class="card-title"><b>{{$month->name}}</b></h5>
-                                                            <!-- <h6 class="card-subtitle mb-2 text-muted">{{$month->department}}</h6> -->
+                                                            
                                                             <p class="card-text">{{$month->description_of_month}}</p>
                                                         </div>
                                                         <div class="card-footer clearfix">
                                                             <div class="d-flex">
                                                                 <div class="">
-                                                                    <a data-toggle="modal" data-target="#edit_monthly_modal" onclick="get_monthlyrecord({{$month->id}})" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>Edit</a>
+                                                                    @if (empty($month->org_sup_comment))
+                                                                        <a data-toggle="modal" data-target="#edit_monthly_modal" onclick="get_monthlyrecord({{$month->id}})" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>Edit</a>
+                                                                    @endif
                                                                 </div>
                                                                 <div class="px-2">
                                                                     <a data-toggle="modal" data-target="#view_monthly_modal" onclick="get_monthlyrecord({{$month->id}})" class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i>View</a>
                                                                 </div>
                                                                 <div class="ml-auto">
-                                                                    <input class="delete_val" type="hidden" value="{{$month->id}}">
-                                                                    <a class="delete-week btn btn-sm btn-danger">
-                                                                        <i class="fas fa-trash-alt"></i>
-                                                                    </a>
+                                                                    @if (empty($month->org_sup_comment))
+                                                                        <small class="oth-color">Pending</small>
+                                                                        <input class="delete_val" type="hidden" value="{{$month->id}}">
+                                                                        <a class="delete-month btn btn-sm btn-danger">
+                                                                            <i class="fas fa-trash-alt"></i>
+                                                                        </a>
+                                                                    @else
+                                                                        <i class="text-success">Assessed <i class="fas fa-check-circle"></i></i>
+                                                                    @endif
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -835,6 +851,12 @@
                                             </table>
                                         </div>
                                     </div>
+                                    <div class="p-2">
+                                        <h6>
+                                            <b>Industry-based Supervisor Assessment: </b> 
+                                            <p class="p-2" id="org_comment"></p>
+                                        </h6>
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -931,6 +953,40 @@
                 });
 
             });
+            $('.delete-month').click(function(e) {
+                e.preventDefault();
+                var delete_id = $(this).closest('div').find('.delete_val').val();
+                swal({
+                    title: "Delete Month Record?",
+                    text: "You will not be able to recover this month's record",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                        var data = {
+                            "_token": $('input[name=_token]').val(),
+                            "id": delete_id,
+                        }
+                        $.ajax({
+                            type: "DELETE",
+                            url: "/student/log/monthly/"+ delete_id,
+                            data: data,
+                            success: function (response){
+                                swal(response.status, {
+                                    icon: "success",
+                                })
+                                .then((result)=>{
+                                    location.reload();
+                                });
+                            }
+                        });
+                    }
+                });
+
+            });
         });
     </script>
 
@@ -947,7 +1003,6 @@
         function get_weeklyrecord(id){
             $.get('/student/log/weekly/'+id, function(data)
             {
-                console.log('passed');
                 console.log(data);
                 $('#edit_w_id').val(data.record.id);
                 $('#edit_w_name').val(data.record.name);
@@ -983,6 +1038,7 @@
 
                 $('#monthname').html(data.record.name);
                 $('#month_dow').html(data.record.description_of_month);
+                $('#org_comment').html(data.record.org_sup_comment);
                 $('#weeks').html(' ');
                 $('.wrecord').removeAttr('checked', 'checked');
 

@@ -21,7 +21,7 @@ class CreateMonthlyRecordsTable extends Migration
             $table->text('description_of_month');
             $table->string('sketch')->nullable();
             $table->integer('sch_sup_approval')->default(0);
-            $table->string('org_sup_comment')->nullable();
+            $table->text('org_sup_comment')->nullable();
             $table->timestamps();
         });
     }

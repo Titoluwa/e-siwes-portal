@@ -16,7 +16,7 @@ class LogbookController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('student');
+        $this->middleware('student')->except('show_week', 'show_month');
     }
         // Show initial view of logbook module : shows ALL Records 
     public function index()
