@@ -62,6 +62,10 @@ Route::prefix('admin')->group(function ()
     // Organization
     Route::get('organizations/{id}', 'AdminController@org_details');
 
+    Route::get('/staffs/{id}', 'AdminController@get_staff');
+    Route::get('/get_available_students', 'AdminController@get_students');
+    Route::post('/assign_student', 'AdminController@assign_student_to_staff');
+
 });
     // STUDENT Routes "1"
 Route::prefix('student')->group(function ()
@@ -102,6 +106,9 @@ Route::prefix('student')->group(function ()
 Route::prefix('school')->group(function ()
 {
     Route::get('', 'SchoolController@index')->name('school');
+
+    Route::get('/student/{id}', 'SchoolController@student');
+    Route::get('/student/log/{id}', 'SchoolController@student_log');
 });
 
     //INDUSTRY Routes "3"

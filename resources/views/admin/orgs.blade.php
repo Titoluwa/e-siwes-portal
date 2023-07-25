@@ -41,7 +41,7 @@
                                             <td>
                                                 <button onclick="get_orgdetails({{$org->id}})" class='btn btn-sm btn-outline-primary' data-toggle="modal" data-target="#viewOrgModal">Details</button>
                                                 {{-- <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Edit</a> --}}
-                                                <button type='button' class='btn btn-sm btn-outline-danger delete' disabled><i class="fa fa-trash-alt"></i> Deactivate</button>
+                                                <button type='button' class='btn btn-sm btn-outline-danger delete' disabled><i class="fa fa-unlink"></i> Deactivate</button>
                                             </td>
                                         </tr>
                                     @endforeach

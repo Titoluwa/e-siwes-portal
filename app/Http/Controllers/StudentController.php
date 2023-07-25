@@ -83,6 +83,9 @@ class StudentController extends Controller
                 $student->faculty = $request->faculty;
                 $student->department = $request->department;
                 $student->course_of_study = $request->course_of_study;
+                if ($request->hasFile('signature')){
+                    $student->signature = $request->file('signature')->store('signatures', 'public');
+                }
 
                 $student->save();
 

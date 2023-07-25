@@ -61,7 +61,9 @@ class IndustryController extends Controller
                 $supervisor->department = $request->department;
                 
                 $supervisor->position = $request->position; //should be nullable
-                $supervisor->signature = $request->signature; //should be nullable
+                if ($request->hasFile('signature')){
+                    $supervisor->signature = $request->file('signature')->store('signatures', 'public');
+                }
 
                 $supervisor->save();
 

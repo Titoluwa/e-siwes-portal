@@ -11,7 +11,7 @@ class Student extends Model
 {
     protected $guarded = ['id'];
     protected $timestamp = true;
-    protected $with = ['user'];
+    protected $with = ['user', 'org'];
 
     public function org()
     {

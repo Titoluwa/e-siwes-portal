@@ -22,7 +22,7 @@ class AdminController extends Controller
     // Middleware for ITCU ADMIN activites
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('admin')->except(['org_details']);
     }
 
     public function index()
@@ -57,8 +57,9 @@ class AdminController extends Controller
         $staff = Staff::first();
         $staffs = Staff::all();
         $current_session = Session::where('status', 1)->first();
+        $faculty = DB::table('departments')->selectRaw('faculty')->groupBy('faculty')->get(); 
 
-        return view('admin.staffs', compact('staff', 'staffs', 'current_session'));
+        return view('admin.staffs', compact('staff', 'staffs', 'current_session', 'faculty'));
     }
     public function organizations()
     {
@@ -148,4 +149,38 @@ class AdminController extends Controller
 
         return view('admin.student_log', compact('current_session', 'student', 'orgs', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks'));
     }
+    
+    public function get_staff($id)
+    {
+        $staff  = Staff::where('id', $id)->first();
+        $students = Student::where('staff_id', $id)->get();
+        $data = [
+            'staff' => $staff,
+            'students' => $students
+        ];
+        return Response::json($data, 200);
+    }
+
+    public function get_students()
+    {
+        // $staff  = Staff::where('id', $id)->first();
+        $students = Student::whereNull('staff_id')->whereNotNull('org_id')->get();
+        $data = [
+            // 'staff' => $staff,
+            'students' => $students
+        ];
+        return Response::json($data, 200);
+    }
+
+    public function assign_student_to_staff(Request $request)
+    {
+        foreach ($request->student_id as $student => $id) {
+            $student = Student::where('id', $id)->first();
+            $student->staff_id = $request->staff_id;
+            $student->update();
+        }
+        return response()->json(['status'=>"Student(s) Assigned!"]);
+
+    }
+    
 }

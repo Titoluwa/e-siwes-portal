@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'School Supervisor Registration')
+@section('title', 'Institution Supervisor Registration')
 
 @section('content')
 <div class="py-5 container">
@@ -8,13 +8,13 @@
         <div class="col-md-10">
             <div class="card border-warning">
                 <div class="card-header border-warning">
-                    <h3 class="nav-text-color text-center pt-2" style="font-weight: 700;">School Supervisor Registration</h3>
+                    <h3 class="nav-text-color text-center pt-2" style="font-weight: 700;">Institution Supervisor Registration</h3>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="/register/school" enctype="multipart/form-data">
                         @csrf
 
-                        <input type="hidden" name="role_id" value="1">
+                        <input type="hidden" name="role_id" value="2">
 
                         <div class="form-group row">
                             <div class="col-lg-6">

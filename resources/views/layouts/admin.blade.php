@@ -20,29 +20,29 @@
                     </li>
                     <li>
                         <a href="/admin/setup" class="nav-link">
-                        <i class="fa fa-id-badge"></i> Setup Session
+                        <i class="fa fa-cogs"></i> Session
                         </a>
                     </li>
                     <li>
                         <a href="/admin/students" class="nav-link">
-                        <i class="fa fa-building"></i> Students
+                        <i class="fas fa-users"></i> Students
                         </a>
                     </li>
                     <li>
                         <a href="/admin/staffs" class="nav-link">
-                        <i class="fa fa-book"></i> Staffs
+                        <i class="fas fa-user-friends"></i> Staffs
                         </a>
                     </li>
                     <li>
                         <a href="/admin/organizations" class="nav-link">
-                        <i class="fa fa-id-badge"></i> Organizations
+                        <i class="fas fa-industry"></i> Organizations
                         </a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a href="/admin/itf-agents" class="nav-link">
                         <i class="fa fa-user-tie"></i> ITF Agents
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
         </div>

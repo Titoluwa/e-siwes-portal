@@ -130,7 +130,7 @@
                                             Register as a Student
                                         </a>
                                         <a class="dropdown-item" href="{{ route('schoolform') }}">
-                                            Register as a School Supervisor
+                                            Register as a Institution Supervisor
                                         </a>
                                         <a class="dropdown-item" href="{{ route('industryform') }}">
                                             Register as an Industry based Supervisor
