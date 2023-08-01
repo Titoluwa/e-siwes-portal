@@ -3,7 +3,7 @@
 @section('homelink', '/school')
 
 @section('nav')
-    <a class="nav-link"> Institution Supervisor</a>
+    <a class="nav-link">Department Coodinator</a>
 @endsection
 
 @section('content')

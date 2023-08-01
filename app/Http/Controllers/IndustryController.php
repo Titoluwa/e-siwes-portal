@@ -37,41 +37,28 @@ class IndustryController extends Controller
             // DB::beginTransaction();
             DB::commit();
                 // Adding New User 
-                // $user = User::create($this->validateRequest());
-                $user = new User();
+                $user = User::create($this->validateRequest());
+                // $user = new User();
                 $user->role_id = 3;
-                $user->email = $request->email;
                 $user->last_name = Str::ucfirst($request->last_name);
                 $user->first_name = Str::ucfirst($request->first_name);
-                $user->middle_name = Str::ucfirst($request->middle_name);
-                $user->contact_no = $request->contact_no;
-                $user->gender = $request->gender;
                 $user->password = Hash::make($request->password);
                 if ($request->hasFile('profile_pic')){
                     $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
                 }
-
                 $user->save();
 
-                // Adding Student Details
-                $supervisor = new OrgSupervisor();
-                $supervisor->staff_id = $request->staff_id;
+                // Adding Institution Supervisor Details
+                // $supervisor = new OrgSupervisor();
+                $supervisor = OrgSupervisor::create($this->nextvalidateRequest());
                 $supervisor->user_id = $user->id;
-                // $supervisor->org_id = 1; //default organization
-                $supervisor->department = $request->department;
-                
-                $supervisor->position = $request->position; //should be nullable
                 if ($request->hasFile('signature')){
                     $supervisor->signature = $request->file('signature')->store('signatures', 'public');
                 }
-
                 $supervisor->save();
 
-                // if (Auth::user()->role_id == 0) {
-                //    return redirect('/admin/students'); 
-                // } else {
-                    return redirect('login');
-                // }             
+                return redirect('login');
+           
             
         } catch(\Exception $e){
             DB::rollback();
@@ -79,22 +66,30 @@ class IndustryController extends Controller
         }
     }
         // To validate the inputs
-    // private function validateRequest()
-    // {
-    //     return request()->validate([
-    //         'role_id'=> 'required|integer',
-    //         'staff_id' => 'required|string|max:30|unique:users',
-    //         'email' => 'required|email|max:50|unique:users',
-    //         'last_name' => 'required|string|max:100',
-    //         'first_name' => 'required|string|max:100',
-    //         // 'middle_name' => 'string|max:100',
-    //         'department' => 'required|string|max:200',
-    //         'contact_no'=> 'required|digits_between:9,16',
-    //         'gender'=> 'required|string|max:20',
-    //         'password' => 'required|string|min:8|confirmed',
-    //         'profile_pic' => 'required',
-    //     ]);
-    // }
+    private function validateRequest()
+    {
+        return request()->validate([
+            'role_id',
+            'email' => 'required|email|max:50|unique:users',
+            'last_name' => 'required|string|max:100',
+            'first_name' => 'required|string|max:100',
+            'middle_name',
+            'contact_no'=> 'required|digits_between:9,16',
+            'gender'=> 'required|string|max:100',
+            'password' => 'required|string|min:8|confirmed',
+            'profile_pic' => 'required',
+        ]);
+    }
+    private function nextvalidateRequest()
+    {
+        return request()->validate([
+            'staff_id' => 'required',
+            'org_id',
+            'department',
+            'position',
+            'signature',
+        ]);
+    }
         // Show IndustryUser dashboard - homepage
     public function index()
     {

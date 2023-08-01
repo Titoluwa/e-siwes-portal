@@ -9,7 +9,7 @@
             <div class="card border-warning">
                 
                 <div class="card-body p-3">
-                    <h3 class="text-primary">Staffs</h3>
+                    <h3 class="text-primary">Department Coodinators</h3>
                     <div class="float-right">
                         <button class="btn btn-outline-primary" data-toggle="modal" data-target="#addstaffModal"><i class="fas fa-user-plus"></i> Add</button>
                     </div>

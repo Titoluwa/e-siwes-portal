@@ -52,33 +52,30 @@ class StudentController extends Controller
         // For storing the StudentUser registration form
     public function store(Request $request)
     {
+        // dd($request->all());
         try {
             // DB::beginTransaction();
             DB::commit();
                 // Adding New User 
-                // $user = User::create($this->validateRequest());
-                $user = new User();
+                $user = User::create($this->validateRequest());
                 $user->role_id = 1;
                 $user->email = $request->email;
                 $user->last_name = Str::ucfirst($request->last_name);
                 $user->first_name = Str::ucfirst($request->first_name);
-                $user->middle_name = Str::ucfirst($request->middle_name);
                 $user->contact_no = $request->contact_no;
                 $user->gender = $request->gender;
                 $user->password = Hash::make($request->password);
                 if ($request->hasFile('profile_pic')){
                     $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
                 }
-
                 $user->save();
                 
                 $curernt_session = Session::where('status', 1)->first();
+
                 // Adding Student Details
                 $student = new Student();
-                $student->matric_no = $request->matric_no;
+                $student->matric_no = Str::upper($request->matric_no);
                 $student->user_id = $user->id;
-                // $student->org_id = 1;
-                // $student->staff_id = ;
                 $student->session_id = $curernt_session->id;
                 $student->faculty = $request->faculty;
                 $student->department = $request->department;
@@ -101,19 +98,20 @@ class StudentController extends Controller
         }
     }
         // Validation for StudentUser Form
-    // private function validateRequest()
-    // {
-    //     return request()->validate([
-    //         'role_id'=> 'required|integer',
-    //         'email' => 'required|email|max:50|unique:users',
-    //         'last_name' => 'required|string|max:100',
-    //         'first_name' => 'required|string|max:100',
-    //         'contact_no'=> 'required|digits_between:9,16',
-    //         'gender'=> 'required|string|max:100',
-    //         'password' => 'required|string|min:8|confirmed',
-    //         'profile_pic' => 'required',
-    //     ]);
-    // }
+    private function validateRequest()
+    {
+        return request()->validate([
+            'role_id',
+            'email' => 'required|email|max:50|unique:users',
+            'last_name' => 'required|string|max:100',
+            'first_name' => 'required|string|max:100',
+            'middle_name' => 'nullable',
+            'contact_no'=> 'required|digits_between:9,16',
+            'gender'=> 'required|string|max:100',
+            'password' => 'required|string|min:8|confirmed',
+            'profile_pic' => 'required',
+        ]);
+    }
         // Show homepage of StudentUser
     public function index()
     {

@@ -53,8 +53,8 @@ class SchoolController extends Controller
             // DB::beginTransaction();
             DB::commit();
                 // Adding New STAFF User 
-                $user = User::create($this->validateRequest());
-                // $user = new User();
+                // $user = User::create($this->validateRequest());
+                $user = new User();
                 $user->role_id = 2;
                 $user->email = $request->email;
                 $user->last_name = Str::ucfirst($request->last_name);

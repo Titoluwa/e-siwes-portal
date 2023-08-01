@@ -30,7 +30,7 @@
                     </li>
                     <li>
                         <a href="/admin/staffs" class="nav-link">
-                        <i class="fas fa-user-friends"></i> Staffs
+                        <i class="fas fa-user-friends"></i> Department Coodinators
                         </a>
                     </li>
                     <li>
@@ -38,11 +38,11 @@
                         <i class="fas fa-industry"></i> Organizations
                         </a>
                     </li>
-                    {{-- <li>
+                    <li>
                         <a href="/admin/itf-agents" class="nav-link">
                         <i class="fa fa-user-tie"></i> ITF Agents
                         </a>
-                    </li> --}}
+                    </li>
                 </ul>
             </div>
         </div>

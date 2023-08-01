@@ -53,11 +53,12 @@
                                             
                                             <td>
                                                 @if ($student->org_id == 0)
-                                                    <button href="/admin/students/log/{{$student->user->id}}" class='btn btn-sm btn-outline-primary' disabled><i class="fa fa-book"></i> Logbook</button>
+                                                    <button href="" class='btn btn-sm btn-outline-primary' disabled><i class="fa fa-book"></i> Logbook</button>
+                                                    <button href="" class='btn btn-sm btn-outline-primary' disabled><i class="fa fa-list"></i> Forms</button>
                                                 @else
-                                                    <a href="/admin/students/log/{{$student->user->id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a> 
+                                                    <a href="/admin/students/log/{{$student->user->id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
+                                                    <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Forms</a> 
                                                 @endif
-                                                <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Forms</a>
                                                 <button type='button' class='btn btn-sm btn-outline-danger delete'><i class="fa fa-trash-alt"></i></button>
                                             </td>
                                             
@@ -306,7 +307,7 @@
                                 </p> 
                                 <p>
                                     Signature:
-                                    <img src="{{asset('storage/'. $student->signature)}}" alt="{{$student->signature}}" width="180" height="30">
+                                    {{-- <img src="{{asset('storage/'. $student->signature)}}" alt="{{$student->signature}}" width="180" height="30"> --}}
                                 </p> 
                             </div>
                         </div>

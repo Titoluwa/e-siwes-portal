@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f520fffa1ceffdacdfcfb473bfbf14cb",
+    "content-hash": "384cc4e97b6c980b64b08b932a01571d",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4919,6 +4919,65 @@
     ],
     "packages-dev": [
         {
+            "name": "ajuchacko/sail-7.x",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ajuCubettech/sail-7.x.git",
+                "reference": "52a0c117cda7feb70ecff8959b346057c508a7a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ajuCubettech/sail-7.x/zipball/52a0c117cda7feb70ecff8959b346057c508a7a4",
+                "reference": "52a0c117cda7feb70ecff8959b346057c508a7a4",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^7.0",
+                "illuminate/support": "^7.0",
+                "php": "^7.2"
+            },
+            "default-branch": true,
+            "bin": [
+                "bin/sail"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Ajuchacko\\Sail\\SailServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ajuchacko\\Sail\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aju chacko"
+                }
+            ],
+            "description": "Docker files for running a basic Laravel 7 application.",
+            "keywords": [
+                "docker",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/ajuchacko91/sail/issues",
+                "source": "https://github.com/ajuchacko91/sail"
+            },
+            "time": "2020-12-13T11:02:34+00:00"
+        },
+        {
             "name": "doctrine/instantiator",
             "version": "1.5.0",
             "source": {
@@ -6874,5 +6933,5 @@
         "php": "^7.2.5"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }
