@@ -22,8 +22,9 @@
                         </a>
                     </div>
                     <br>
+                    @if('')
                     <div class="mt-3">
-                        <img class="rounded border-warning float-right img-thumbnail" src="{{asset('storage/'. $student->profile_pic)}}" alt="profile image" srcset="" width="150" height="150">
+                        {{-- ?\<img class="rounded border-warning float-right img-thumbnail" src="{{asset('storage/'. $student->profile_pic)}}" alt="profile image" srcset="" width="150" height="150"> --}}
                     
                         <div>
                             <p>

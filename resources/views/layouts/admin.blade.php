@@ -2,10 +2,17 @@
 
 @section('homelink', '/admin')
 
+@section('style')
+    <style>
+        body{
+            background-image: url('images/oau-view-3.webp') !important;
+        }
+    </style>
+@endsection
+
 @section('nav')
     <a class="nav-link"> Industrial Training Coordinating Unit ICTU</a>
 @endsection
-
 
 @section('content')
     

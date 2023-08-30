@@ -15,9 +15,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('style')
     <style>
         body {
-            background-image: url('images/E3.webp') !important;
+            background-image: url('images/oau-view-3.webp') !important;
             background-color: white;
             position: relative;
             background-position: center;
@@ -97,7 +98,7 @@
         <nav class="navbar navbar-expand-md navbar-dark nav-color">
             <div class="container navv">
                 <!-- <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'OAU e-SWIES') }}
                 </a> -->
                 <a class="navbar-brand" href="@yield('homelink','/')">
                     <img class="logo" width="50" height="50" src="{{ asset('images/OAU-Logo.png') }}" alt="">
@@ -140,7 +141,11 @@
                             @endif
                         @else
                             <li>
-                                <img class="logo" width="50" height="50" src="{{asset('storage/'. Auth::user()->profile_pic)}}" alt="">
+                                @if(Auth::user()->profile_pic == NULL)
+                                    <img class="logo" name="profile_picture" width="50" height="50" src="{{asset('images/user_default.png')}}" alt="profile_img">
+                                @else
+                                    <img class="logo" name="profile_picture" width="50" height="50" src="{{asset('storage/'. Auth::user()->profile_pic)}}" alt="">
+                                @endif
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -176,7 +181,6 @@
     <!-- Scripts -->
 
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="/js/all.min.js"></script>
     <script src="/js/sweetalert.min.js"></script>
     <script src="/js/jquery.min.js"></script>

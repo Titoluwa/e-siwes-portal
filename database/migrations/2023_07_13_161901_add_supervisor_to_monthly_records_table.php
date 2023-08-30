@@ -17,6 +17,7 @@ class AddSupervisorToMonthlyRecordsTable extends Migration
             // $table->foreignId('staff_id')->constrained('staff')->nullable();
             // $table->foreignId('org_sup_id')->constrained('org_supervisors')->nullable();
             $table->integer('staff_id')->nullable();
+            $table->text('sch_comment')->nullable();
             $table->integer('org_sup_id')->nullable();
         });
     }
@@ -30,6 +31,7 @@ class AddSupervisorToMonthlyRecordsTable extends Migration
     {
         Schema::table('monthly_records', function (Blueprint $table) {
             $table->dropColumn('staff_id');
+            $table->dropColumn('sch_comment');
             $table->dropColumn('org_sup_id');
         });
     }

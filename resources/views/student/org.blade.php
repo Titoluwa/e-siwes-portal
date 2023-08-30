@@ -23,7 +23,11 @@
 
                 <div class="card-body">
                     @if (!empty($student->org_id))
-                        <img class="rounded border-warning float-right img-thumbnail" src="{{asset('storage/'. $student->org->logo)}}" alt="organization logo" srcset="" width="150" height="150">
+                        @if($student->org->logo == NULL)
+                            <img class="rounded border-warning float-right img-thumbnail" src="{{asset('images/company_default.svg')}}" alt="organization logo" srcset="" width="150" height="150">
+                        @else
+                            <img class="rounded border-warning float-right img-thumbnail" src="{{asset('storage/'. $student->org->logo)}}" alt="organization logo" srcset="" width="150" height="150">
+                        @endif
                         <div>
                             <p>
                                 Student Name: <b>{{$student->user->last_name}}, {{$student->user->first_name}} {{$student->user->middle_name}}</b>

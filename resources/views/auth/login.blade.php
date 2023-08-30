@@ -28,7 +28,7 @@
                 padding: 0px;
             }
             .bg-imgg{
-                background-image: url('images/ES.webp');
+                background-image: url('images/view-oau.jpg');
                 position: relative;
                 background-position: center;
                 background-repeat: no-repeat;

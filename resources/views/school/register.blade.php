@@ -18,8 +18,8 @@
 
                         <div class="form-group row">
                             <div class="col-lg-6">
-                                <label for="email" class="col-form-label">E-Mail Address</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
+                                <label for="email" class="col-form-label">E-Mail Address <small class="text-danger">*</small></label>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required>
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -40,8 +40,8 @@
 
                         <div class="form-group row">
                             <div class="col-lg-4">
-                                <label for="last_name" class="col-form-label">Last Name</label>
-                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}">
+                                <label for="last_name" class="col-form-label">Last Name <small class="text-danger">*</small></label>
+                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required>
                                 @error('last_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -50,8 +50,8 @@
                             </div>
 
                             <div class="col-lg-4">
-                                <label for="first_name" class="col-form-label">First Name</label>
-                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}">
+                                <label for="first_name" class="col-form-label">First Name <small class="text-danger">*</small></label>
+                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required>
                                 @error('first_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -72,8 +72,8 @@
 
                         <div class="form-group row">
                             <div class="col-lg-6">
-                                <label for="faculty" class="col-form-label">{{ __('Faculty') }}</label>
-                                <select name="faculty" id="faculty" value="{{ old('faculty') }}" class="form-control @error('faculty') is-invalid @enderror" data-dependant='department' >
+                                <label for="faculty" class="col-form-label">{{ __('Faculty') }} <small class="text-danger">*</small></label>
+                                <select name="faculty" id="faculty" value="{{ old('faculty') }}" class="form-control @error('faculty') is-invalid @enderror" data-dependant='department' required>
                                     <option value="" disabled selected hidden>Select Faculty</option>
                                     @foreach($faculty as $f)
                                     <option value="{{ $f->faculty }}">{{ $f->faculty }}</option>
@@ -87,8 +87,8 @@
                             </div>
 
                             <div class="col-lg-6">
-                                <label for="department" class="col-form-label">{{ __('Department') }}</label>
-                                <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" value="{{ old('department') }}">
+                                <label for="department" class="col-form-label">{{ __('Department') }} <small class="text-danger">*</small></label>
+                                <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" value="{{ old('department') }}" required>
                                     <option value="" disabled selected hidden>Select Department</option>
                                 </select>
 
@@ -111,7 +111,7 @@
                                 @enderror
                             </div>
                             <div class="col-lg-4">
-                                <label for="gender" class="col-form-label">Gender</label>
+                                <label for="gender" class="col-form-label">Gender <small class="text-danger">*</small></label>
                                 <br>
                                 <div class="@error('gender') is-invalid @enderror">
                                     <div class="form-check form-check-inline">
@@ -131,8 +131,8 @@
                             </div>
 
                             <div class="col-lg-4">
-                                <label for="contact_no" class="col-form-label">Contact Number</label>
-                                <input id="contact_no" type="tel" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ old('contact_no') }}">
+                                <label for="contact_no" class="col-form-label">Contact Number <small class="text-danger">*</small></label>
+                                <input id="contact_no" type="tel" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ old('contact_no') }}" required>
                                 @error('contact_no')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -143,8 +143,8 @@
 
                         <div class="form-group row">
                             <div class="col-lg-6">
-                                <label for="password" class="col-form-label">Password</label>
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
+                                <label for="password" class="col-form-label">Password <small class="text-danger">*</small></label>
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -153,9 +153,13 @@
                             </div>
 
                             <div class="col-lg-6">
-                                <label for="password-confirm" class="col-form-label">Confirm Password</label>
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
+                                <label for="password-confirm" class="col-form-label">Confirm Password <small class="text-danger">*</small></label>
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
+                        </div>
+
+                        <div class="form-group row col-lg-6">
+                            <p class="text-danger">* Required</p>
                         </div>
 
                         <div class="clearfix">
