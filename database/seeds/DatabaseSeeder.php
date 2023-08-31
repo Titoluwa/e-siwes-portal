@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             OrganizationSeeder::class,
             SessionSeeder::class,
             StaffSeeder::class,
+            SiwesSeeder::class,
         ]);
     }
 }

@@ -22,10 +22,13 @@
                         </a>
                     </div>
                     <br>
-                    @if('')
+                   
                     <div class="mt-3">
-                        {{-- ?\<img class="rounded border-warning float-right img-thumbnail" src="{{asset('storage/'. $student->profile_pic)}}" alt="profile image" srcset="" width="150" height="150"> --}}
-                    
+                        @if ($student->user->profile_pic != null)
+                            <img class="rounded border-warning float-right img-thumbnail" src="{{asset('storage/'. $student->user->profile_pic)}}" alt="profile image" srcset="" width="150" height="150">
+                        @else
+                            <img class="rounded border-warning float-right img-thumbnail" src="{{asset('images/user_default.png')}}" alt="profile image" srcset="" width="150" height="150">
+                        @endif
                         <div>
                             <p>
                                 Registration Number: <b>{{$student->matric_no}}</b>

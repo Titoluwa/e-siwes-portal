@@ -150,7 +150,12 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-2" for="profile_pic">Profile Picture</label>
                             <div class="col-md-4">
-                                <img src="{{asset('storage/'. $student->user->profile_pic)}}" alt="" width="70" height="70">
+                                {{-- <img src="{{asset('storage/'. $student->user->profile_pic)}}" alt="" width="70" height="70"> --}}
+                                @if ($student->user->profile_pic != null)
+                                    <img src="{{asset('storage/'. $student->user->profile_pic)}}" alt="" width="70" height="70">
+                                @else
+                                    <img src="{{asset('images/user_default.png')}}" alt="" width="70" height="70">
+                                @endif
                                 
                                 <input type="file" class="@error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic">
                                 @error('profile_pic')
