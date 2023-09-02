@@ -79,12 +79,22 @@ Route::prefix('student')->group(function ()
     Route::put('/profile/other/update', 'StudentController@other_update');
 
     Route::get('/org', 'StudentController@org');
-    Route::post('/org/add', 'StudentController@org_add');
-    Route::get('/org/edit', 'StudentController@org_edit');
-    Route::put('/org/update', 'StudentController@org_update');
+
+    // Route::post('/org/add', 'StudentController@org_add');
+    Route::get('/siwes/{siwes_id}', 'StudentController@siwes_edit');
+    Route::put('/siwes/update', 'StudentController@siwes_update');
 
     // Student LogBook
-    Route::get('/log', 'LogbookController@index');
+
+    // Logbook for SIWES 400
+    Route::get('/log', 'LogbookController@index400');
+    Route::post('/log/initiate', 'LogbookController@initiate_logbook');
+
+    // Logbook for SWEP 200
+    Route::get('/log200', 'LogbookController@index200');
+
+    // Logbook for SIWES  300
+    Route::get('/log300', 'LogbookController@index300');
 
     Route::post('/log/daily', 'LogbookController@store_daily');
     Route::get('/log/daily/{id}', 'LogbookController@show_daily');

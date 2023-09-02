@@ -136,6 +136,17 @@
                                     </span>
                                 @enderror
                             </div>
+                        
+                            <div class="col-lg-4">
+                                <label for="contact_no" class="col-form-label">Contact Number <small class="text-danger">(must be 11 digits)*</small></label>
+                                <input id="contact_no" type="tel" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ old('contact_no') }}" required>
+                                @error('contact_no')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
                             <div class="col-lg-4">
                                 <label class="col-form-label"  for="profile_pic">Profile Picture</label>
 
@@ -146,18 +157,50 @@
                                     </span>
                                 @enderror
                             </div>
+                        </div>
+                        {{-- <div class="form-group row">
+                            <div class="col-lg-4">
+                                <label for="bank_name" class="col-form-label">Bank Name</label>
+                                <input id="bank_name" type="tel" class="form-control @error('bank_name') is-invalid @enderror" name="bank_name" value="{{ old('bank_name') }}" required>
+                                @error('bank_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
 
                             <div class="col-lg-4">
-                                <label for="contact_no" class="col-form-label">Contact Number <small class="text-danger">(must be 11 digits)*</small></label>
-                                <input id="contact_no" type="tel" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ old('contact_no') }}" required>
-                                @error('contact_no')
+                                <label for="account_no" class="col-form-label">Account Number</label>
+                                <input id="account_no" type="tel" class="form-control @error('account_no') is-invalid @enderror" name="account_no" value="{{ old('account_no') }}" required>
+                                @error('account_no')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-lg-4">
+                                <label for="sort_code" class="col-form-label">Bank Sort Code</label>
+                                <input id="sort_code" type="tel" class="form-control @error('sort_code') is-invalid @enderror" name="sort_code" value="{{ old('sort_code') }}" required>
+                                @error('sort_code')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div> --}}
+                        <div class="form-group row">
+                            <div class="col-lg-6">
+                                <label class="col-form-label"  for="signature">Signature</label>
+
+                                <input type="file" class="form-control-file @error('signature') is-invalid @enderror" id="signature" name="signature">
+                                @error('signature')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
                         </div>
-
                         <div class="form-group row">
                             <div class="col-lg-6">
                                 <label for="password" class="col-form-label">Password <small class="text-danger">*</small></label>

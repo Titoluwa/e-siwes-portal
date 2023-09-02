@@ -24,6 +24,7 @@
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
+            background-attachment: fixed;
             width:100%;
             height:100vh;
             font-family: 'Poppins', sans-serif;

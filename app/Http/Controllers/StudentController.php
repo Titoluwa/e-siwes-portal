@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Siwes;
 use App\Session;
-use App\Student;
 
+use App\Student;
 use App\Organization;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -118,7 +119,14 @@ class StudentController extends Controller
         $id = Auth::user()->id;
         $student = Student::where('user_id', $id)->first();
         $orgs = Organization::all();
-        return view('student.home', compact('student', 'orgs'));
+        $sessions = Session::all();
+
+        $siwes200 = Siwes::where('siwes_type_id', 1)->where('user_id', $id)->first();
+        $siwes300 = Siwes::where('siwes_type_id', 2)->where('user_id', $id)->first();
+        $siwes400 = Siwes::where('siwes_type_id', 3)->where('user_id', $id)->first();
+        // dd($siwes300);
+        
+        return view('student.home', compact('student', 'orgs', 'sessions', 'siwes200', 'siwes300', 'siwes400'));
     }
         // Show single StudentUser profile
     public function show()
@@ -138,20 +146,29 @@ class StudentController extends Controller
         // Update the information for StudentUser
     public function update(Request $request)
     {
+        // dd($request->all());
         $user = User::where('id', $request->id)->first();
+        $student = Student::where('user_id', $request->id)->first();
 
         $user->last_name = Str::ucfirst($request->last_name);
         $user->first_name = Str::ucfirst($request->first_name);
         $user->middle_name = Str::ucfirst($request->middle_name);
         $user->gender = ($request->gender);
-        $user->faculty = ($request->faculty);
-        $user->department = ($request->department);
-        $user->course_of_study = $request->course_of_study;
         $user->contact_no = ($request->contact_no);
         if ($request->hasFile('profile_pic')){
             $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
         }
+
+        $student->faculty = ($request->faculty);
+        $student->department = ($request->department);
+        $student->course_of_study = $request->course_of_study;
+        if ($request->hasFile('signature')){
+            $student->signature = $request->file('signature')->store('signatures', 'public');
+        }
+
         $user->update();
+        $student->update();
+
         return redirect("/student/profile");
     }
         // Show edit form for student other information.
@@ -181,40 +198,51 @@ class StudentController extends Controller
     {
         $id = Auth::user()->id;
         $student = Student::where('user_id', $id)->first();
+        $s_siwes = Siwes::where('user_id', $id)->whereNotNull('org_id')->first();
+        $siwes = Siwes::where('user_id', $id)->whereNotNull('org_id')->get();
+        // dd(count($siwes));
         $orgs = Organization::all();
-        return view('student.org', compact('student', 'orgs'));
+        return view('student.org', compact('student', 'orgs', 'siwes', 's_siwes'));
     }
         // create Student and add organization to database
-    public function org_add(Request $request)
-    {
-        // dd($request->all());
-        $id = Auth::user()->id;
-        $student = Student::where('user_id', $id)->first();        
-        $student->org_id = $request->org_id;
-        $student->year_of_training = $request->year_of_training;
-        $student->duration_of_training = $request->duration_of_training;
-        if ($request->hasFile('signature')){
-            $student->signature = $request->file('signature')->store('signatures', 'public');
-        }
-        $student->update();
+    // public function org_add(Request $request)
+    // {
+    //     // dd($request->all());
+    //     $id = Auth::user()->id;
+    //     $student = Student::where('user_id', $id)->first();        
+    //     $student->org_id = $request->org_id;
+    //     $student->year_of_training = $request->year_of_training;
+    //     $student->duration_of_training = $request->duration_of_training;
+    //     if ($request->hasFile('signature')){
+    //         $student->signature = $request->file('signature')->store('signatures', 'public');
+    //     }
+    //     $student->update();
 
-        return back();
-    }
+    //     return back();
+    // }
         // Show the edit form for Student org
-    public function org_edit()
+    public function siwes_edit($siwes_id)
     {
         $id = Auth::user()->id;
+        $siwes = Siwes::findOrFail($siwes_id);
         $student = Student::where('user_id', $id)->first();
         $orgs = Organization::all();
-        return view('student.org_edit', compact('orgs', 'student'));
+        $sessions = Session::all();
+
+        return view('student.siwes_edit', compact('orgs', 'student', 'siwes', 'sessions'));
     }
         // update the organization of the student
-    public function org_update(Request $request)
+    public function siwes_update(Request $request)
     {
-        // dd($request);
-        $student = Student::where('id', $request->id)->first();
-        $student->org_id = $request->org_name;
-        $student->update();
+        // dd($request->all());
+        $siwes = Siwes::findOrFail($request->siwes_id);
+        $siwes->org_id = $request->org_id;
+        $siwes->resumption_date = $request->resumption_date;
+        $siwes->ending_date = $request->ending_date;
+        $siwes->duration_of_training = $request->duration_of_training;
+        $siwes->year_of_training = $request->year_of_training;
+        $siwes->session_id = $request->session_id;
+        $siwes->update();
 
         return redirect('/student/org');
     }

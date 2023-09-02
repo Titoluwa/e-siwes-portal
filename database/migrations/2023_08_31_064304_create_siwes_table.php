@@ -18,8 +18,11 @@ class CreateSiwesTable extends Migration
             $table->foreignId('session_id')->constrained('sessions');
             $table->foreignId('siwes_type_id')->constrained('siwes_type');
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('assigned_staff_id')->constrained('staff')->nullable();
-            $table->foreignId('dept_coord')->constrained('staff')->nullable();
+            $table->integer('assigned_staff_id')->nullable();
+            $table->integer('dept_coord')->nullable();
+            $table->integer('org_id')->nullable();
+            $table->year('year_of_training')->nullable();
+            $table->string('duration_of_training')->nullable();
             $table->date('resumption_date')->nullable();
             $table->date('ending_date')->nullable();
             $table->timestamps();

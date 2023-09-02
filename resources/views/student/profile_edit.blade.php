@@ -8,7 +8,7 @@
                 <div class="card-header border-warning bg-transparent clearfix">
 
                     <div class="float-left mt-2">
-                        <h4 style="font-weight: 600;">{{ __("Edit Student Particular") }}</h4>
+                        <h4 style="font-weight: 600;">{{ __("Edit Student Profile") }}</h4>
                     </div>
                     <div class="float-right mt-1">
                         <a href="/student/profile" class="btn bg-oth-color nav-text-color">
@@ -74,7 +74,7 @@
                         <div class="form-group row">
                             <label for="middle_name" class="col-md-2 col-form-label">Middle Name</label>
                             <div class="col-md-4">
-                                <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{$student->user->middle_name}}" required>
+                                <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{$student->user->middle_name}}">
 
                                 @error('middle_name')
                                     <span class="invalid-feedback" role="alert">
@@ -163,12 +163,23 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>                   
+                            </div> 
+
+                            <label class="col-form-label col-md-2" for="signature">Signature</label>
+                            <div class="col-md-4">
+                                <img src="{{asset('storage/'. $student->signature)}}" alt="{{$student->signature}}" width="180" height="30">
+                                <input type="file" class="@error('signature') is-invalid @enderror" id="signature" name="signature">
+                                @error('signature')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>                  
                         </div>
                         <div class="row py-2">
                             <div class="offset-md-10">
                                 <button type="submit" class="btn bg-oth-color nav-text-color">
-                                <i class="fas fa-edit"></i>SAVE
+                                 Update
                                 </button>
                             </div>
                         </div>

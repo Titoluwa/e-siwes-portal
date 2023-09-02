@@ -8,8 +8,8 @@
 
                 <div class="card-header border-warning bg-othe-color">
                     <div class="float-left blue-text">
-                        <h3 style="font-weight: 700;">SIWES 400 LogBook</h3>
-                        <small>Fill in your daily activities after each day of training</small>
+                        <h3 style="font-weight: 700;">SWEP 200 LogBook</h3>
+                        <small>Fill in your daily activities after each day of your SWEP classes </small>
                     </div>
                     <div class="float-right">
 
@@ -17,9 +17,7 @@
                 </div>
 
                 <div class="card-body border-warning m-4 p-2">
-                    @if ($siwes400 != null)
-
-                        <p class="text-center">Your duration of training at <b>{{$siwes400->org->name}}</b> is <b>{{$siwes400->duration_of_training}}</b> in <b>{{$siwes400->year_of_training}}</b>.</p>
+                    @if ($siwes200 != null)
                         <p class="text-center mb-4">You are to fill your Logbook with each day's activities.</p>
 
                         <div id="Records">
@@ -214,17 +212,17 @@
 
 
                     @else
-                        <h5 class="text-center pb-3"><b>Fill this form to start your SIWES 400</b></h5>
+                        <h5 class="text-center pb-3"><b>Fill this form to start your SWEP 200 here</b></h5>
                         <form method="POST" action="/student/log/initiate" enctype="multipart/form-data">
                             @csrf
-                            <input type="hidden" name="siwes_type_id" value="3">
+                            <input type="hidden" name="siwes_type_id" value="1">
                             <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
 
                             <div class="form-group row">
-                                <label for="session_id" class="col-md-4 col-form-label">Session for SIWES 400</label>
+                                <label for="session_id" class="col-md-4 col-form-label">Session for SWEP 200</label>
                                 <div class="col-md-6">
                                     <select class="form-control  @error('session_id') is-invalid @enderror" name="session_id" id="session_id">
-                                        <option value="" disabled selected>Select Session</option>
+                                        <option value="" disabled selected>Select from  database</option>
                                         @foreach($sessions as $session)
                                             <option value="{{$session->id}}">{{$session->year}}</option>
                                         @endforeach
@@ -239,7 +237,7 @@
                             <div class="form-group row">
                                 <label for="resumption_date" class="col-md-4 col-form-label">Resumption Date</label>
                                 <div class="col-md-6">
-                                    <input class="form-control  @error('resumption_date') is-invalid @enderror" type="date" name="resumption_date" id="resumption_date" value="{{ old('resumption_date') }} ">
+                                    <input class="form-control  @error('resumption_date') is-invalid @enderror" type="date" name="resumption_date" id="resumption_date">
                                     @error('resumption_date')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -247,10 +245,10 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="form-group row">
+                             <div class="form-group row">
                                 <label for="ending_date" class="col-md-4 col-form-label">Ending Date</label>
                                 <div class="col-md-6">
-                                    <input class="form-control  @error('ending_date') is-invalid @enderror" type="date" name="ending_date" id="ending_date" value="{{old('ending_date')}}" >
+                                    <input class="form-control  @error('ending_date') is-invalid @enderror" type="date" name="ending_date" id="ending_date">
                                     @error('ending_date')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -258,59 +256,7 @@
                                     @enderror
                                 </div>
                             </div>
-
-                            <div class="form-group row">
-                                <label for="org_id" class="col-md-4 col-form-label">Organization Name</label>
-                                <div class="col-md-6">
-                                    <select class="form-control  @error('org_id') is-invalid @enderror" name="org_id" id="org_id">
-                                        <option value="" disabled selected>Select from  database</option>
-                                        @foreach($orgs as $org)
-                                            <option value="{{$org->id}}">{{$org->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('org_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="year_of_training" class="col-md-4 col-form-label">Year of IT</label>
-                                <div class="col-md-6">
-
-                                    <select class="form-control  @error('year_of_training') is-invalid @enderror" name="year_of_training" id="year_of_training">
-                                        <option value="" disabled selected>Select Year</option>
-                                        <option value="2021">2021</option>
-                                        <option value="2022">2022</option>
-                                        <option value="2023">2023</option>
-                                        <option value="2024">2024</option>
-                                    </select>
-                                    @error('year_of_training')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="duration_of_training" class="col-md-4 col-form-label">Duration of IT</label>
-                                <div class="col-md-6">
-                                    <select class="form-control  @error('duration_of_training') is-invalid @enderror" name="duration_of_training" id="duration_of_training">
-                                        <option value="" disabled selected>Select Duration</option>
-                                        <option value="3 weeks">3 weeks</option>
-                                        <option value="6 weeks">6 weeks</option>
-                                        <option value="3 months">3 months</option>
-                                        <option value="6 months">6 months</option>
-                                    </select>
-                                    @error('duration_of_training')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            {{-- <div class="form-group row">
+                            {{--<div class="form-group row">
                                 <label class="col-form-label col-md-4" for="signature">Signature</label>
                                 <div class="col-md-6">
                                     <!-- <img src="{{asset('storage/')}}" alt="" width="60" height="60"> -->
@@ -348,10 +294,9 @@
                             @csrf
                             <div class="modal-body">
                                 <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-                                @if ($siwes400 != null)
-                                    <input type="hidden" name="siwes_id" value="{{$siwes400->id}}">
+                                @if ($siwes200 != null)
+                                    <input type="hidden" name="siwes_id" value="{{$siwes200->id}}">
                                 @endif
-
                                 <div class="row form-group">
                                     <div class="col-md-6">
                                         <label for="day" class="col-form-label">Pick Day</label>
@@ -481,10 +426,10 @@
                             @csrf
                             <div class="modal-body">
                                 <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-                                @if ($siwes400 != null)
-                                    <input type="hidden" name="siwes_id" value="{{$siwes400->id}}">
+                                @if ($siwes200 != null)
+                                    <input type="hidden" name="siwes_id" value="{{$siwes200->id}}">
                                 @endif
-                                
+
                                 <div class="row form-group">
                                     <div class="col-md-12">
                                         <label for="name" class="col-form-label"><b>Name Week</b></label>
@@ -713,8 +658,8 @@
                             @csrf
                             <div class="modal-body">
                                 <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-                                @if ($siwes400 != null)
-                                    <input type="hidden" name="siwes_id" value="{{$siwes400->id}}">
+                                @if ($siwes200 != null)
+                                    <input type="hidden" name="siwes_id" value="{{$siwes200->id}}">
                                 @endif
 
                                 <div class="row form-group">
