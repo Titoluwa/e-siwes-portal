@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('homelink', '/student')
-@section('nav')
+@section('home', '(Student)')
+{{-- @section('nav')
     <a href="/student" class="nav-link">Student</a>
-@endsection
+@endsection --}}
 
 @section('style')
     <style>
@@ -19,7 +19,7 @@
     <div class="row">
         <div class="bg-othe-color othe-color shadow-sm sidebar" style="width: 20%;">
             <div class="m-2">
-                <h6 class="mt-3 text-center" style="font-size:17px; font-weight: 700;"><a href="/student" class="no-deco oth-color"> Home </a></h6>
+                <h6 class="mt-3 text-center" style="font-size:17px; font-weight: 700;"><a href="/student" class="no-deco oth-color"> <i class="fa fa-home"></i> Home</a></h6>
                 <hr>
                 <ul class="nav flex-column mb-auto">
                     <li>
@@ -42,7 +42,7 @@
                               <a class="dropdown-item" href="/student/log300">SIWES 300</a>
                               <a class="dropdown-item" href="/student/log">SIWES 400</a>
                             </div>
-                          </div>
+                        </div>
                     </li>
                     {{-- <li>
                         <a href="/student/log" class="nav-link">
@@ -66,7 +66,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Assessment</a>
                             </div>
-                          </div>
+                        </div>
                     </li>
                     <!-- <li>
                         <a href="" class="nav-link">

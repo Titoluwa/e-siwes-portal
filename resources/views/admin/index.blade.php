@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Industrial Training Coordinating Unit (ICTU)')
+@section('title', 'ITCU')
 
 @section('admincontent')
     
@@ -13,9 +13,10 @@
                 </div> -->
 
                 <div class="card-body p-5">
-                    <h1 class="text-center">Welcome!</h1>
-                    <h2 class="text-center">Admin Dashboard</h2>
+                    <h2 class="text-center">Welcome!</h2>
+                    {{-- <h2 class="text-center">Admin Dashboard</h2> --}}
                     <p class="text-center">You're logged in!</p>
+                    <p class="text-center">Current Session: <b>{{$current_session->year}}</b></p>
 
                 </div>
                 

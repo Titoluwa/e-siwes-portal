@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\IndustryController;
 use App\Http\Controllers\LogbookController;
+use App\Http\Middleware\School;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Auth::routes();
 
@@ -58,6 +60,10 @@ Route::prefix('admin')->group(function ()
     Route::post('students/store', 'AdminController@store')->name('admin.setup.store');
     Route::get('students/{id}', 'AdminController@view_student');
     Route::get('students/log/{id}', 'AdminController@student_log');
+
+    Route::get('/swep-200/{id}', 'AdminController@swep200');
+    Route::get('/siwes-300/{id}', 'AdminController@siwes300');
+    Route::get('/siwes-400/{id}', 'AdminController@siwes400');
 
     // Organization
     Route::get('organizations/{id}', 'AdminController@org_details');
@@ -118,7 +124,11 @@ Route::prefix('school')->group(function ()
     Route::get('', 'SchoolController@index')->name('school');
 
     Route::get('/student/{id}', 'SchoolController@student');
-    Route::get('/student/log/{id}', 'SchoolController@student_log');
+    // Route::get('/student/log/{id}', 'SchoolController@student_log');
+    Route::get('/student/siwes-400/{user_id}', 'SchoolController@siwes400');
+    Route::get('/student/swep-200/{user_id}', 'SchoolController@swep200');
+    Route::get('/student/siwes-300/{user_id}', 'SchoolController@siwes300');
+    Route::get('/students/{session_id}/{siwes_type_id}', 'SchoolController@students');
 });
 
     //INDUSTRY Routes "3"

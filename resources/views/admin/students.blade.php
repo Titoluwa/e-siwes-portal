@@ -11,11 +11,17 @@
                 <!-- <div class="card-header border-warning bg-othe-color">
                     <h5 class="mt-2">{{ __('Dashboard') }}</h5>
                 </div> -->
-
+ 
                 <div class="card-body p-3">
-                    <h3 class="text-primary">Students <small><i>({{$current_session->year}})</i></small></h3>
+                    <div class="mb-4" style="display: inline-flex">
+                        <h3 class="text-primary">All Students</h3>
+                        
+                        {{-- <button class="mx-4 btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#addStudentModal">Add</button> --}}
+                    </div>
+                    
                     <div class="float-right">
-                        <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#addStudentModal">Add</button>
+                        <a href="" style="display:" class="btn btn-sm btn-warning"><i class="fa fa-search"></i> Filter Students</a>
+                        <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#addStudentModal"><i class="fa fa-plus"></i> Add</button>
                     </div>
                     
                     @if(!empty($studs))
@@ -23,43 +29,65 @@
                             <table id="myTable" class="table " style="width:100%">
                                 <thead>
                                     <tr>
-                                        {{-- <th>Last Name</th> --}}
+                                        <th>S/N</th>
                                         <th>Name</th>
                                         <th>Matric Number</th>
-                                        <th>Email</th>
-                                        <th>Status</th>
-                                        <th>Attachment</th>
-                                        <th>Actions</th>
+                                        <th>Department</th>
+                                        {{-- <th>Status</th> --}}
+                                        {{-- <th>Attachment</th> --}}
+                                        <th></th>
                                         
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($students as $student)
                                         <tr>
-                                            {{-- <td></td> --}}
+                                            <td>{{$loop->index+1}}</td>
                                             <td><a href="/admin/students/{{$student->user_id}}">{{$student->user->name()}}</a></td> {{-- Link to View  --}}
                                             <td>{{$student->matric_no}} </td>
-                                            <td>{{$student->user->email}} </td>
-                                            @if ($student->status == 1)
+                                            <td>{{$student->department}} </td>
+                                            {{-- @if ($student->status == 1)
                                                 <td class="text-success">Active</td>
                                             @else
                                                 <td class="text-danger">Inactive</td>
-                                            @endif
-                                            @if ($student->org_id == 0)
+                                            @endif --}}
+                                            {{-- @if ($student->org_id == 0)
                                                 <td class="oth-color">not attached</td>
                                             @else
                                                 <td >{{$student->org->name}}</td>
-                                            @endif
+                                            @endif --}}
                                             
-                                            <td>
-                                                @if ($student->org_id == 0)
+                                            <td style="display: inline-flex">
+                                                <div class="dropdown m-1">
+                                                    <a class='btn btn-sm btn-outline-primary dropdown-toggle' id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-book"></i> Logbooks
+                                                    </a>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                      <a target="_blank" class="dropdown-item" href="/admin/swep-200/{{$student->user_id}}">SWEP 200</a>
+                                                      <a target="_blank" class="dropdown-item" href="/admin/siwes-300/{{$student->user_id}}">SIWES 300</a>
+                                                      <a target="_blank" class="dropdown-item" href="/admin/siwes-400/{{$student->user_id}}">SIWES 400</a>
+                                                    </div>
+                                                </div>
+                                                {{-- <div class="dropdown m-1">
+                                                    <a class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-file"></i> Forms
+                                                    </a>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="/student/sp3">SP. 3</a>
+                                                        <a class="dropdown-item" href="/student/form8">Form 8</a>
+                                                        <a class="dropdown-item" href="/student/scaf">SCAF</a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item" href="#">Assessment</a>
+                                                    </div>
+                                                </div> --}}
+                                                {{-- @if ($student->org_id == 0)
                                                     <button href="" class='btn btn-sm btn-outline-primary' disabled><i class="fa fa-book"></i> Logbook</button>
                                                     <button href="" class='btn btn-sm btn-outline-primary' disabled><i class="fa fa-list"></i> Forms</button>
                                                 @else
-                                                    <a href="/admin/students/log/{{$student->user->id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
-                                                    <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Forms</a> 
-                                                @endif
-                                                <button type='button' class='btn btn-sm btn-outline-danger delete'><i class="fa fa-trash-alt"></i></button>
+                                                    <a target="_blank" href="/admin/students/log/{{$student->user->id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
+                                                    <a target="_blank" href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Forms</a> 
+                                                @endif --}}
+                                                <button type='button' class='btn btn-sm btn-outline-danger delete m-1' disabled><i class="fa fa-trash-alt"></i></button>
                                             </td>
                                             
                                         </tr>

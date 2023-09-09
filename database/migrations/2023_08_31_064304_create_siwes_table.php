@@ -18,6 +18,7 @@ class CreateSiwesTable extends Migration
             $table->foreignId('session_id')->constrained('sessions');
             $table->foreignId('siwes_type_id')->constrained('siwes_type');
             $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('student_id')->constrained('students');
             $table->integer('assigned_staff_id')->nullable();
             $table->integer('dept_coord')->nullable();
             $table->integer('org_id')->nullable();

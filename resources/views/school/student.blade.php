@@ -1,5 +1,7 @@
 @extends('layouts.school')
 
+@section('title', 'Student Profile')
+
 @section('schoolcontent')
 
     <div class="col-md-12">

@@ -10,17 +10,30 @@
 
                 <div class="card-header border-warning bg-othe-color">
                     <div class="float-left blue-text">
-                        <h3 style="font-weight: 700;">{{$student->user->name()}}'s LogBook</h3>
+                        <h3 style="font-weight: 700;">{{$student->user->name()}}'s LogBook for {{$siwes_type->name}}</h3>
                     </div>
-                    <div class="float-right">
-
-                    </div>
+                    @if (!empty($siwes))
+                        <div class="float-right">
+                            <div class="dropdown">
+                                <a class="btn btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-file"></i> Forms
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="/student/sp3">SP. 3</a>
+                                    <a class="dropdown-item" href="/student/form8">Form 8</a>
+                                    <a class="dropdown-item" href="/student/scaf">SCAF</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Assessment</a>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
 
                 <div class="card-body border-warning m-4 p-2">
-                    @if (!empty($student))
+                    @if (!empty($siwes))
 
-                        <p class="">The duration of training at <b>{{$student->org->name}}</b> is <b>{{$student->duration_of_training}}</b> for <b>{{$student->year_of_training}}</b>.</p>
+                        <p class="">The duration of training at <b>{{$siwes->org->name}}</b> is <b>{{$siwes->duration_of_training}}</b> for <b>{{$siwes->year_of_training}}</b>.</p>
 
                         <div id="Records">
                             <div class="card border-primary">
@@ -161,7 +174,7 @@
 
 
                     @else
-                        <h5 class="text-center pb-3"><b>Student has NOT added an organization to their profile</b></h5>
+                        <h5 class="text-center pb-3"><b>Student has NOT registered for {{$siwes_type->name}}</b></h5>
                         
                     @endif
                 </div>
@@ -283,7 +296,7 @@
                     var id = val.id;
                     if(id){
                         $('#'+id).attr('checked', 'checked');
-                    }
+                    }  
                     $('#week_days').append(`
                         <tr>
                             <td>${val.day}</td>

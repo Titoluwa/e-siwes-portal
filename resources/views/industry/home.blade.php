@@ -91,7 +91,7 @@
                                                 <th>Name</th>
                                                 <th>Matric Number</th>
                                                 <th>Email</th>
-                                                <th>Actions</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>

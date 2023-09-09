@@ -1,12 +1,14 @@
 @extends('layouts.school')
 
+@section('title', 'Logbook')
+
 @section('schoolcontent')
 
     <div class="col-md-12">
         <div class="card border-warning">
 
             <div class="card-header border-warning ">
-                <h4 class="mt-2 blue-text"><b>{{$student->user->name()}}</b></h4>
+                <h4 class="mt-2 blue-text"><b>{{$student->user->name()}}'s</b> logbook for <span>{{$siwes->siwes_type->name}}</span></h4>
             </div>
 
             <div class="card-body border-warning bg-light">

@@ -98,11 +98,12 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark nav-color">
             <div class="container navv">
-                <!-- <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'OAU e-SWIES') }}
-                </a> -->
-                <a class="navbar-brand" href="@yield('homelink','/')">
-                    <img class="logo" width="50" height="50" src="{{ asset('images/OAU-Logo.png') }}" alt="">
+                {{-- @yield('homelink') --}}
+                <a class="navbar-brand" href="/">
+                    <img class="logo" width="50" height="50"src="{{ asset('images/OAU-Logo.png') }}" alt="">
+                </a>
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    OAU e-SIWES @yield('home','')
                 </a>
                 @yield('nav')
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

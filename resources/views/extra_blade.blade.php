@@ -139,3 +139,31 @@
                             @enderror
                         </div>
                     </div>
+@section('scripts')
+<script>
+    $.get('/school/students/'+session_id+'/'+siwes_type_id, function(data)
+            {
+                console.log(data);
+                $('#siwes-name').html(data.siwes_type.name);
+                $('#session-name').html(data.session.year);
+
+                $('#result-table-body').html(" ");
+                $.each(data.siwes, function(index, val)
+                {
+                    $('#result-table-body').append(`
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${val.user.last_name}`+ " " +` ${val.user.first_name}</td>
+                            <td>${val.student.matric_no}</td>
+                            <td>${val.org.name}</td>
+                            <td>${val.resumption_date}</td>
+                            <td>${val.ending_date}</td>
+                            <td>
+                                <a target="_blank" href="/school/student/${data.siwes_type.code_name}/${val.user_id}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
+                            </td>
+                        </tr>
+                    `);
+                });
+            })
+</script>
+@endsection

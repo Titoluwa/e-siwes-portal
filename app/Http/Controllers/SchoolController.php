@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Staff;
+use App\Siwes;
 
+use App\Staff;
+use App\Session;
 use App\Student;
+use App\SiwesType;
 use Carbon\Carbon;
 use App\DailyRecord;
 use App\Organization;
@@ -29,16 +32,18 @@ class SchoolController extends Controller
     }
     public function index(){
 
-        $id = Auth::user()->id;
-        $staff = Staff::where('user_id', $id)->first();
-        if (!empty($staff)){
-            $studs = Student::where('staff_id', $staff->id)->first();
-            $students = Student::where('staff_id', $staff->id)->get();
-        }else{
-            $students = $studs = null;
-        }
+        $user_id = Auth::user()->id;
+        $current_session = Session::where('status', 1)->first();
+        $staff = Staff::where('user_id', $user_id)->first();
+        $siwes = Siwes::where('session_id', $current_session->id)->where('assigned_staff_id', $staff->id)->get();
+        $single_siwes = Siwes::where('session_id', $current_session->id)->where('assigned_staff_id', $staff->id)->first();
+        // $swep200 = Siwes::where('siwes_type_id', 1)->where('session_id', $current_session->id)->where('assigned_staff_id', $staff->id)->get();
+        // $siwes300 = Siwes::where('siwes_type_id', 2)->where('session_id', $current_session->id)->where('assigned_staff_id', $staff->id)->get();
+        // $siwes400 = Siwes::where('siwes_type_id', 3)->where('session_id', $current_session->id)->where('assigned_staff_id', $staff->id)->get();
+        $sessions = Session::all();
+        $siwes_types = SiwesType::all();
         
-        return view('school.home', compact('staff', 'students', 'studs'));
+        return view('school.home', compact('staff', 'single_siwes','siwes', 'sessions', 'siwes_types', 'current_session'));
     }
     // Show the registraton form for the student user
     public function create(){
@@ -105,7 +110,7 @@ class SchoolController extends Controller
     public function student_log($id)
     {
         $student = Student::where('user_id', $id)->first();
-        $orgs = Organization::all();
+        // $siwes = Siwes::where('siwes_type_id', $siwes)->where('user_id', $id)->first();
         $currentdate = Carbon::now()->format('Y-m-d');
         $all_dailys = DailyRecord::where('user_id', $id)->orderBy('date', 'ASC')->first();
         $all_weeks = WeeklyRecord::where('user_id', $id)->first();
@@ -142,8 +147,137 @@ class SchoolController extends Controller
         }else{
             $monthlyrecords = null;
         }
-        return view('school.student_log', compact('student', 'orgs', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks'));
+        return view('school.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks'));
     }
+    public function siwes400($id)
+    {
+        $student = Student::where('user_id', $id)->first();
+        $siwes = Siwes::where('siwes_type_id', 3)->where('user_id', $id)->first();
+        $currentdate = Carbon::now()->format('Y-m-d');
+        
+        $all_dailys = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->first();
+        $all_weeks = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+        $dailyrecords = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+        $weeklyrecords = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+        $monthlyrecords = MonthlyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+
+        if (!empty($all_dailys)){
+            $all_dailys = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->get();
+        }else{
+            $all_dailys = null;
+        }
+
+        if (!empty($dailyrecords)){
+            $dailyrecords = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->get();
+        }else{
+            $dailyrecords = null;
+        }
+        
+        if (!empty($weeklyrecords)){
+            $weeklyrecords = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('created_at', 'ASC')->get();
+        }else{
+            $weeklyrecords = null;
+        }
+        
+        if (!empty($all_weeks)){
+            $all_weeks = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->get();
+        }else{
+            $all_weeks = null;
+        }
+
+        if (!empty($monthlyrecords)){
+            $monthlyrecords = MonthlyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->get();
+        }else{
+            $monthlyrecords = null;
+        }
+        return view('school.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes'));
+    }
+    public function siwes300($id)
+    {
+        $student = Student::where('user_id', $id)->first();
+        $siwes = Siwes::where('siwes_type_id', 2)->where('user_id', $id)->first();
+        $currentdate = Carbon::now()->format('Y-m-d');
+        $all_dailys = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->first();
+        $all_weeks = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+        $dailyrecords = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+        $weeklyrecords = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+        $monthlyrecords = MonthlyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+
+        if (!empty($all_dailys)){
+            $all_dailys = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->get();
+        }else{
+            $all_dailys = null;
+        }
+
+        if (!empty($dailyrecords)){
+            $dailyrecords = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->get();
+        }else{
+            $dailyrecords = null;
+        }
+        
+        if (!empty($weeklyrecords)){
+            $weeklyrecords = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('created_at', 'ASC')->get();
+        }else{
+            $weeklyrecords = null;
+        }
+        
+        if (!empty($all_weeks)){
+            $all_weeks = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->get();
+        }else{
+            $all_weeks = null;
+        }
+
+        if (!empty($monthlyrecords)){
+            $monthlyrecords = MonthlyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->get();
+        }else{
+            $monthlyrecords = null;
+        }
+        return view('school.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes'));
+    }
+
+    public function swep200($id)
+    {
+        $student = Student::where('user_id', $id)->first();
+        $siwes = Siwes::where('siwes_type_id', 1)->where('user_id', $id)->first();
+        $currentdate = Carbon::now()->format('Y-m-d');
+        $all_dailys = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->first();
+        $all_weeks = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+        $dailyrecords = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+        $weeklyrecords = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+        $monthlyrecords = MonthlyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+
+        if (!empty($all_dailys)){
+            $all_dailys = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->get();
+        }else{
+            $all_dailys = null;
+        }
+
+        if (!empty($dailyrecords)){
+            $dailyrecords = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->get();
+        }else{
+            $dailyrecords = null;
+        }
+        
+        if (!empty($weeklyrecords)){
+            $weeklyrecords = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('created_at', 'ASC')->get();
+        }else{
+            $weeklyrecords = null;
+        }
+        
+        if (!empty($all_weeks)){
+            $all_weeks = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->get();
+        }else{
+            $all_weeks = null;
+        }
+
+        if (!empty($monthlyrecords)){
+            $monthlyrecords = MonthlyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->get();
+        }else{
+            $monthlyrecords = null;
+        }
+        return view('school.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes'));
+    }
+
 
     public function student($id)
     {
@@ -152,17 +286,40 @@ class SchoolController extends Controller
         return view('school.student', compact('student'));
     }
 
-    // To validate the inputs
-    private function validateRequest(){
-        return request()->validate([
-            'role_id'=> 'required|integer',
-            'email' => 'required|email|max:50|unique:users',
-            'last_name' => 'required|string|max:100',
-            'first_name' => 'required|string|max:100',
-            'contact_no'=> 'required|digits_between:9,16',
-            'gender'=> 'required|string|max:20',
-            'password' => 'required|string|min:8|confirmed',
-            'profile_pic' => 'required',
-        ]);
+    public function students($session_id, $siwes_type_id)
+    {
+        $staff = Staff::where('user_id', Auth::user()->id)->first();
+        // $students = Student::where('department', $staff->department)->get();
+        
+        $session = Session::where('id', $session_id)->first();
+        $siwes_type = SiwesType::where('id', $siwes_type_id)->first();
+        $siwes = Siwes::where('session_id', $session_id)->where('siwes_type_id', $siwes_type_id)->with('user', 'student', 'org')->get();
+        $filtered = $siwes->reject(function ($value, $key) {
+            $staff = Staff::where('user_id', Auth::user()->id)->first();
+            return $value->student->department != $staff->department;
+        });
+
+       
+        return view('school.all_students', compact('staff', 'session', 'siwes_type', 'filtered'));
     }
+    // To validate the inputs
+    // private function validateRequest(){
+    //     return request()->validate([
+    //         'role_id'=> 'required|integer',
+    //         'email' => 'required|email|max:50|unique:users',
+    //         'last_name' => 'required|string|max:100',
+    //         'first_name' => 'required|string|max:100',
+    //         'contact_no'=> 'required|digits_between:9,16',
+    //         'gender'=> 'required|string|max:20',
+    //         'password' => 'required|string|min:8|confirmed',
+    //         'profile_pic' => 'required',
+    //     ]);
+    // }
+    // $data = [
+    //     'session' => $session,
+    //     'siwes_type' => $siwes_type,
+    //     // 'students' => $students,
+    //     'siwes' => $filtered
+    // ];
+    // return Response::json($data, 200);
 }

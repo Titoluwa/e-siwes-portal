@@ -10,17 +10,14 @@
 
                 
                 <div class="card-header border-warning bg-othe-color clearfix">
-
                     <div class="float-left mt-2 blue-text">
-                        <h3 style="font-weight: 700;">{{ $student->user->name() }}</h3> <small><i>({{$current_session->year}})</i></small>
+                        <h4 style="font-weight: 700;">{{ $student->user->name() }}</h4>
                     </div>
-                
-                    <div class="float-right">
-                        <a href="" data-toggle="modal" data-target="#editStudentModal">
-                            <i class="fas fa-edit"></i>EDIT
+                    <div class="float-right mt-1" style="display: inline-flex">
+                        <a class="mr-2" href="" data-toggle="modal" data-target="#editStudentModal">
+                            <i class="fas fa-edit"></i> Edit
                         </a>
-                        <br>
-                        <div class="m-2"><a href="/admin/students" class="btn btn-sm btn-warning">Back</a></div>
+                        <a href="/admin/students" class="btn btn-sm btn-warning ml-2">Back</a>
                     </div>
                                       
                 </div>
@@ -60,8 +57,125 @@
                     
                     <hr>
                     
-                    <h5><b> Other Information </b></h5>
-                    @if ($student->org_id == NULL)
+                    <h5 class="mb-3"><b> Organization Information </b></h5>
+                    
+                    @if(empty($s_siwes))
+                        <p class="pt-2 text-center">No SIWES has been initiated for this student.</p>
+                    @elseif (count($siwes) != 2)
+                            <div class="text-center row">
+                                <div class="col-6">
+                                    <button type="button" class="btn btn-sm bg-oth-color nav-text-color" onclick="siwes300Display()">
+                                        Organization for SIWES 300
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button type="button" class="btn btn-sm bg-oth-color nav-text-color" onclick="siwes400Display()">
+                                        Organization for SIWES 400
+                                    </button>
+                                </div>
+                            </div>
+                            @if ($s_siwes->siwes_type_id == 3)
+                                <div id="siwes-300" style="display: none" class="m-2">
+                                    <p class="pt-2 text-center">SIWES 300 has NOT been initiated.</p>
+                                </div>
+                            @elseif ($s_siwes->siwes_type_id == 2)
+                                <div id="siwes-400" style="display: none" class="m-2">
+                                    <p class="pt-2 text-center">SIWES 400 has NOT been initiated.</p>
+                                </div>
+                            @endif
+                            @foreach ($siwes as $siwes)
+                                <div id="{{$siwes->siwes_type->code_name}}" style="display: none" class="mt-2">
+                                    <br>
+                                    {{-- <div class="text-center">
+                                        <h5 class=""><b>{{$siwes->org->name}}</b></h5>
+                                    </div> --}}
+                                    @if($siwes->org->logo == NULL)
+                                        <img class="rounded border-warning float-right img-thumbnail" src="{{asset('images/company_default.svg')}}" alt="organization logo" srcset="" width="150" height="150">
+                                    @else
+                                        <img class="rounded border-warning float-right img-thumbnail" src="{{asset('storage/'. $siwes->org->logo)}}" alt="organization logo" srcset="" width="150" height="150">
+                                    @endif
+                                    <div>
+                                        {{-- <p>
+                                            Student Name: <b>{{$student->user->name()}} {{$student->user->middle_name}}</b>
+                                        </p> --}}
+                                        <p>
+                                            Organization Name: <b>{{$siwes->org->name}}</b>
+                                        </p>
+                                        <p>
+                                            Year of establishment: <b>{{$siwes->org->year_of_est}}</b>
+                                        </p>
+                                        <p>
+                                            Postal Address: <b>{{$siwes->org->postal_address}}</b>
+                                        </p>
+                                        <p>
+                                            Area of Specialization: <b>{{$siwes->org->specialization}}</b>
+                                        </p>
+                                        <p>
+                                            Address During Industrial Training: <b>{{$siwes->org->full_address}}</b>
+                                        </p>
+                                        <p>
+                                            Year of Industrial Training: <b>{{$siwes->year_of_training}}</b>
+                                        </p>
+                                        <p>
+                                            Duration of Industrial Training: <b>{{$siwes->duration_of_training}}</b>
+                                        </p>
+                                    </div>
+                                </div>
+                            @endforeach
+                    @else
+                        <div class="text-center row">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-sm bg-oth-color nav-text-color" onclick="siwes300Display()">
+                                    Organization for SIWES 300
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-sm bg-oth-color nav-text-color" onclick="siwes400Display()">
+                                    Organization for SIWES 400
+                                </button>
+                            </div>
+                        </div>
+                        @foreach ($siwes as $siwes)
+                            <div id="{{$siwes->siwes_type->code_name}}" style="display: none" class="mt-2">
+                                <br>
+                                {{-- <div class="text-center">
+                                    <h5 class=""><b>{{$siwes->org->name}}</b></h5>
+                                </div> --}}
+                                @if($siwes->org->logo == NULL)
+                                    <img class="rounded border-warning float-right img-thumbnail" src="{{asset('images/company_default.svg')}}" alt="organization logo" srcset="" width="150" height="150">
+                                @else
+                                    <img class="rounded border-warning float-right img-thumbnail" src="{{asset('storage/'. $siwes->org->logo)}}" alt="organization logo" srcset="" width="150" height="150">
+                                @endif
+                                <div>
+                                    {{-- <p>
+                                        Student Name: <b>{{$student->user->name()}} {$student->user->middle_name}}</b>
+                                    </p> --}}
+                                    <p>
+                                        Organization Name: <b>{{$siwes->org->name}}</b>
+                                    </p>
+                                    <p>
+                                        Year of establishment: <b>{{$siwes->org->year_of_est}}</b>
+                                    </p>
+                                    <p>
+                                        Postal Address: <b>{{$siwes->org->postal_address}}</b>
+                                    </p>
+                                    <p>
+                                        Area of Specialization: <b>{{$siwes->org->specialization}}</b>
+                                    </p>
+                                    <p>
+                                        Address During Industrial Training: <b>{{$siwes->org->full_address}}</b>
+                                    </p>
+                                    <p>
+                                        Year of Industrial Training: <b>{{$siwes->year_of_training}}</b>
+                                    </p>
+                                    <p>
+                                        Duration of Industrial Training: <b>{{$siwes->duration_of_training}}</b>
+                                    </p>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                    {{-- @if ($student->org_id == NULL)
                         <div class="text-center blue-text">
                             <h5>This student is not attached to any organization</h5>
                         </div>
@@ -81,7 +195,7 @@
                                 <img src="{{asset('storage/'. $student->signature)}}" alt="{{$student->signature}}" width="180" height="30">
                             </p>
                         </div> 
-                    @endif
+                    @endif --}}
                     
                 </div>
                 
@@ -278,6 +392,16 @@
 @endsection
 
 @section('scripts')
+    <script>
+        function siwes300Display() {
+            document.getElementById("siwes-300").style.display = "block";
+            document.getElementById("siwes-400").style.display = "none";
+        }
+        function siwes400Display() {
+            document.getElementById("siwes-300").style.display = "none";
+            document.getElementById("siwes-400").style.display = "block";
+        }
+    </script>
     <script  type="text/javascript">
         $(document).ready(function(){
             $.ajaxSetup({

@@ -20,29 +20,26 @@
                             <table id="myTable" class="table " style="width:100%">
                                 <thead>
                                     <tr>
+                                        <th>S/N</th>
                                         <th>Name</th>
-                                        <th>Contact</th>
-                                        <th>ID</th>
                                         <th>Faculty</th>
                                         <th>Department</th>
                                         {{-- <th>Assigned Students</th> --}}
-                                        <th>Actions</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($staffs as $staff)
                                         <tr>
+                                            <td>{{$loop->index + 1}}</td>
                                             <td><a href="mailto:{{$staff->user->email}}">{{$staff->user->name()}}</a></td>
-                                            <td>{{$staff->user->contact_no}}</td>
-                                            <td>{{$staff->staff_id}}</td>
                                             <td>{{$staff->faculty}}</td>
                                             <td>{{$staff->department}}</td>
-                                            {{-- <td>0</td> --}}
-                                            <td>
-                                                <a class='btn btn-sm btn-primary' data-toggle="modal" data-target="#viewstaffModal" onclick="get_staff({{$staff->id}})"><i class="far fa-eye"></i> View</a>
-                                                <a class='btn btn-sm btn-outline-primary' data-toggle="modal" data-target="#assignstudentModal" onclick="get_valid_students({{$staff->id}})"><i class="fas fa-link"></i> Assign</a>
-                                                <a class='btn btn-sm btn-outline-primary' data-toggle="modal" data-target="#editstaffModal" onclick="get_staff({{$staff->id}})"><i class="far fa-edit"></i> Edit</a>
-                                                <button type='button' class='btn btn-sm btn-outline-danger delete' disabled><i class="fa fa-unlink"></i> Deactivate</button>
+                                            <td style="display: inline-flex">
+                                                <a class='m-1 btn btn-sm btn-primary' data-toggle="modal" data-target="#viewstaffModal" onclick="get_staff({{$staff->id}})"><i class="far fa-eye"></i> View</a>
+                                                {{-- <a class='m-1 btn btn-sm btn-outline-primary' data-toggle="modal" data-target="#assignstudentModal" onclick="get_valid_students({{$staff->id}})"><i class="fas fa-link"></i> Assign</a> --}}
+                                                <a class='m-1 btn btn-sm btn-outline-primary' data-toggle="modal" data-target="#editstaffModal" onclick="get_staff({{$staff->id}})"><i class="far fa-edit"></i> Edit</a>
+                                                <button type='button' class='m-1 btn btn-sm btn-outline-danger delete' disabled><i class="fa fa-unlink"></i></button>
                                             </td>
                                         </tr>
                                     @endforeach

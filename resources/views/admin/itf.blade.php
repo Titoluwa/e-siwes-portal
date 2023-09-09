@@ -24,7 +24,7 @@
                                         {{-- <th>Last Name</th> --}}
                                         <th>Name</th>
                                         <th>Location</th>
-                                        <th>Actions</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>

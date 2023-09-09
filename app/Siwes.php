@@ -23,4 +23,12 @@ class Siwes extends Model
     {
         return $this->belongsTo(SiwesType::class);
     }
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+    public function department()
+    {
+        return $this->student->department;
+    }
 }

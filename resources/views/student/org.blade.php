@@ -16,12 +16,12 @@
                 <div class="card-body">
                     <div class="text-center m-2 row">
                         <div class="col-6">
-                            <button type="submit" class="btn bg-oth-color nav-text-color" onclick="siwes300Display()">
+                            <button type="button" class="btn bg-oth-color nav-text-color" onclick="siwes300Display()">
                                 Organization for SIWES 300
                             </button>
                         </div>
                         <div class="col-6">
-                            <button type="submit" class="btn bg-oth-color nav-text-color" onclick="siwes400Display()">
+                            <button type="button" class="btn bg-oth-color nav-text-color" onclick="siwes400Display()">
                                 Organization for SIWES 400
                             </button>
                         </div>

@@ -23,25 +23,26 @@
                             <table id="myTable" class="table " style="width:100%">
                                 <thead>
                                     <tr>
-                                        {{-- <th>Last Name</th> --}}
+                                        <th>S/N</th>
                                         <th>Name</th>
                                         <th>Staff Name</th>
                                         <th>Location</th>
                                         <th>Office Email</th>
-                                        <th>Actions</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($organizations as $org)
                                         <tr>
+                                            <td>{{$loop->index + 1}}</td>
                                             <td>{{$org->name}}</td>
                                             <td><a href="mailto:{{$org->user->email}}">{{$org->user->name()}}</a></td>
                                             <td>{{$org->full_address}}</td>
                                             <td><a href="mailto:{{$org->postal_address}}">{{$org->postal_address}}</a></td>
-                                            <td>
-                                                <button onclick="get_orgdetails({{$org->id}})" class='btn btn-sm btn-outline-primary' data-toggle="modal" data-target="#viewOrgModal">Details</button>
+                                            <td style="display: inline-flex">
+                                                <button onclick="get_orgdetails({{$org->id}})" class='m-1 btn btn-sm btn-outline-primary' data-toggle="modal" data-target="#viewOrgModal">Details</button>
                                                 {{-- <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Edit</a> --}}
-                                                <button type='button' class='btn btn-sm btn-outline-danger delete' disabled><i class="fa fa-unlink"></i> Deactivate</button>
+                                                <button type='button' class='m-1 btn btn-sm btn-outline-danger delete' disabled><i class="fa fa-unlink"></i></button>
                                             </td>
                                         </tr>
                                     @endforeach

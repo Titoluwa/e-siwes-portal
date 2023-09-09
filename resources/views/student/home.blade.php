@@ -42,6 +42,7 @@
                                 @csrf
                                 <input type="hidden" name="siwes_type_id" value="1">
                                 <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                                <input type="hidden" name="student_id" value="{{$student->id}}">
 
                                 <div class="form-group row">
                                     <label for="session_id" class="col-md-4 col-form-label">Session for SWEP 200</label>
@@ -107,6 +108,8 @@
                                 @csrf                      
                                 <input type="hidden" name="siwes_type_id" value="2">
                                 <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                                <input type="hidden" name="student_id" value="{{$student->id}}">
+
 
                                 <div class="form-group row">
                                     <label for="session_id" class="col-md-4 col-form-label">Session for SIWES 300</label>
@@ -236,6 +239,7 @@
                                 @csrf                      
                                 <input type="hidden" name="siwes_type_id" value="3">
                                 <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                                <input type="hidden" name="student_id" value="{{$student->id}}">
 
                                 <div class="form-group row">
                                     <label for="session_id" class="col-md-4 col-form-label">Session for SIWES 400</label>

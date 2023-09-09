@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('homelink', '/industry')
+@section('home', '(Industry Supervisor)')
+{{-- @section('nav')
+    <a href="" class="nav-link">ITCU</a>
+@endsection --}}
 
 @section('nav')
     <a class="nav-link">Industry Supervisor Dashboard</a>
