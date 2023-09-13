@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Itf;
+use App\User;
 use App\Siwes;
 use App\Staff;
 use App\Session;
 use App\Student;
+use App\SiwesType;
 use Carbon\Carbon;
 use App\DailyRecord;
 use App\Organization;
 use App\WeeklyRecord;
 use App\MonthlyRecord;
 use App\OrgSupervisor;
-use App\SiwesType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -30,77 +30,92 @@ class AdminController extends Controller
     public function index()
     {
         $current_session = Session::where('status', 1)->first();
+        $sessions = Session::orderBy('id', 'DESC')->get();
 
-        return view('admin.index', compact('current_session'));
+        return view('admin.index', compact('current_session', 'sessions'));
     }
     public function setup()
     {
-        $id = Auth::user()->id;
-        // $current_year = Carbon::now()->year;
-        // $previous_year = (int)$current_year-1; 
+        $id = Auth::user()->id; 
         $sessions = Session::orderBy('id', 'DESC')->get();
         $current_session = Session::where('status', 1)->first();
 
         return view('admin.setup', compact('sessions', 'current_session'));
     }
+    public function siwes400Students()
+    {
+        $current_session = Session::where('status', 1)->first();
+        $sessions = Session::orderBy('id', 'DESC')->get();
+        $s_siwes = Siwes::where('session_id', $current_session->id)->where('siwes_type_id',3)->first();
+        if (!empty($s_siwes)) {
+            $siwes = Siwes::where('session_id', $current_session->id)->where('siwes_type_id',3)->get();
+        }
+        else{
+            $siwes = null;
+        }
+        $staffs = Staff::all();
+        
+        return view('admin.assign_student', compact('staffs', 's_siwes', 'siwes', 'current_session', 'sessions'));
+    }
     public function students()
     {
         $current_session = Session::where('status', 1)->first();
+        $sessions = Session::orderBy('id', 'DESC')->get();
         $studs = Student::first();
         $students = Student::all();
 
         $faculty = DB::table('departments')->selectRaw('faculty')->groupBy('faculty')->get();
 
-        return view('admin.students', compact('students', 'studs', 'faculty', 'current_session'));
+        return view('admin.students', compact('students', 'studs', 'faculty', 'current_session', 'sessions'));
     }
-    // public function get_students($session_id)
-    // {
-
-    // }
+    
     public function staffs()
     {
+        $sessions = Session::orderBy('id', 'DESC')->get();
         $staff = Staff::first();
         $staffs = Staff::all();
         $current_session = Session::where('status', 1)->first();
         $faculty = DB::table('departments')->selectRaw('faculty')->groupBy('faculty')->get(); 
 
-        return view('admin.staffs', compact('staff', 'staffs', 'current_session', 'faculty'));
+        return view('admin.staffs', compact('staff', 'staffs', 'current_session', 'faculty','sessions'));
     }
     public function organizations()
     {
+        $sessions = Session::orderBy('id', 'DESC')->get();
         $orgs = Organization::first();
         $organizations = Organization::where('status', 1)->get();
         $current_session = Session::where('status', 1)->first();
-        // dd($orgs);
 
-        return view('admin.orgs', compact('orgs', 'organizations', 'current_session'));
+        return view('admin.orgs', compact('orgs', 'organizations', 'current_session', 'sessions'));
     }
     public function org_details($id)
     {
+        $current_session = Session::where('status', 1)->first();
         $org = Organization::where('id', $id)->first();
         $staff = OrgSupervisor::where('org_id', $id)->get();
-        $students = Student::where('org_id', $id)->get();
+        $siwes = Siwes::where('session_id', $current_session->id)->where('org_id', $id)->with('user', 'student', 'siwes_type')->get();
         
         $data = [
             'org' => $org,
             'staff' => $staff,
-            'students' => $students
+            'students' => $siwes
         ];
         return Response::json($data, 200);
     }
 
-    public function itf_agents()
-    {
-        $itf = Itf::first();
-        $itfs = Itf::all();
-        $current_session = Session::where('status', 1)->first();
-
-        return view('admin.itf', compact('itf', 'itfs', 'current_session'));
-    }
+    // public function itf_agents()
+    // {
+    //     $sessions = Session::orderBy('id', 'DESC')->get();
+    //     $itf = Itf::first();
+    //     $itfs = Itf::all();
+    //     $current_session = Session::where('status', 1)->first();
+    //     return view('admin.itf', compact('itf', 'itfs', 'current_session', 'sessions'));
+    // }
 
     //Students
     public function view_student($id)
     {
+        $sessions = Session::orderBy('id', 'DESC')->get();
         $current_session = Session::where('status', 1)->first();
         // $student = Student::where('user_id', $id)->where('session_id', $current_session->id)->first();
         $student = Student::where('user_id', $id)->first();
@@ -110,11 +125,38 @@ class AdminController extends Controller
 
         // dd($current_session);
 
-        return view('admin.view_student', compact('student', 'current_session', 'faculty', 's_siwes', 'siwes'));
+        return view('admin.view_student', compact('student', 'current_session', 'faculty', 's_siwes', 'siwes', 'sessions'));
+    }
+    
+    public function placement300perSession($session_id)
+    {
+        // $current_session = Session::where('id', $session_id)->first();
+        // $siwes = Siwes::where('session_id', $current_session->id)->where('siwes_type_id', 2)->whereNotNull('org_id')->with('user','student', 'org')->get();
+        // $data = [
+        //     'session' => $current_session,
+        //     'siwes' => $siwes
+        // ];
+        // return Response::json($data, 200);
+        $sessions = Session::orderBy('id', 'DESC')->get();
+        $current_session = Session::where('id', $session_id)->first();
+        $s_siwes = Siwes::where('session_id', $session_id)->where('siwes_type_id', 2)->whereNotNull('org_id')->first();
+        $siwes = Siwes::where('session_id', $session_id)->where('siwes_type_id', 2)->whereNotNull('org_id')->get();
+
+        return view('admin.placement', compact('current_session', 'sessions', 's_siwes', 'siwes'));
+    }
+    public function placement400perSession($session_id)
+    {
+        $sessions = Session::orderBy('id', 'DESC')->get();
+        $current_session = Session::where('id', $session_id)->first();
+        $s_siwes = Siwes::where('session_id', $session_id)->where('siwes_type_id', 3)->whereNotNull('org_id')->first();
+        $siwes = Siwes::where('session_id', $session_id)->where('siwes_type_id', 3)->whereNotNull('org_id')->get();
+
+        return view('admin.placement', compact('current_session', 'sessions', 's_siwes', 'siwes'));
     }
 
     public function student_log($id)
     {
+        $sessions = Session::orderBy('id', 'DESC')->get();
         $current_session = Session::where('status', 1)->first();
         $student = Student::where('user_id', $id)->first();
         $orgs = Organization::all();
@@ -155,10 +197,11 @@ class AdminController extends Controller
             $monthlyrecords = null;
         }
 
-        return view('admin.student_log', compact('current_session', 'student', 'orgs', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks'));
+        return view('admin.student_log', compact('current_session', 'student', 'orgs', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'sessions'));
     }
     public function siwes400($id)
     {
+        $sessions = Session::orderBy('id', 'DESC')->get();
         $student = Student::where('user_id', $id)->first();
         $siwes_type = SiwesType::where('id', 3)->first();
         $siwes = Siwes::where('siwes_type_id', 3)->where('user_id', $id)->first();
@@ -207,10 +250,11 @@ class AdminController extends Controller
         }else{
             $monthlyrecords = null;
         }
-        return view('admin.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes', 'siwes_type'));
+        return view('admin.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes', 'siwes_type', 'sessions'));
     }
     public function siwes300($id)
     {
+        $sessions = Session::orderBy('id', 'DESC')->get();
         $student = Student::where('user_id', $id)->first();
         $siwes_type = SiwesType::where('id', 2)->first();
         $siwes = Siwes::where('siwes_type_id', 2)->where('user_id', $id)->first();
@@ -258,11 +302,11 @@ class AdminController extends Controller
         }else{
             $monthlyrecords = null;
         }
-        return view('admin.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes', 'siwes_type'));
+        return view('admin.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes', 'siwes_type', 'sessions'));
     }
-
     public function swep200($id)
     {
+        $sessions = Session::orderBy('id', 'DESC')->get();
         $student = Student::where('user_id', $id)->first();
         $siwes_type = SiwesType::where('id', 1)->first();
         $siwes = Siwes::where('siwes_type_id', 1)->where('user_id', $id)->first();
@@ -310,7 +354,7 @@ class AdminController extends Controller
         }else{
             $monthlyrecords = null;
         }
-        return view('admin.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes', 'siwes_type'));
+        return view('admin.student_log', compact('sessions', 'student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes', 'siwes_type'));
     }
     public function get_staff($id)
     {
@@ -323,26 +367,21 @@ class AdminController extends Controller
         return Response::json($data, 200);
     }
 
-    public function get_students()
-    {
-        // $staff  = Staff::where('id', $id)->first();
-        $students = Student::whereNull('staff_id')->whereNotNull('org_id')->get();
-        $data = [
-            // 'staff' => $staff,
-            'students' => $students
-        ];
-        return Response::json($data, 200);
-    }
-
     public function assign_student_to_staff(Request $request)
     {
-        foreach ($request->student_id as $student => $id) {
-            $student = Student::where('id', $id)->first();
-            $student->staff_id = $request->staff_id;
-            $student->update();
+        foreach ($request->siwes_id as $siwes => $id) 
+        {
+            $siwes = Siwes::where('id', $id)->first();
+            $siwes->assigned_staff_id = $request->staff_id;
+            $siwes->update();
         }
         return response()->json(['status'=>"Student(s) Assigned!"]);
-
     }
-    
+    public function contacts()
+    {
+        $sessions = Session::orderBy('id', 'DESC')->get();
+        $users = User::whereNotIn('role_id', [0,4])->get();
+
+        return view('admin.contacts', compact('sessions', 'users'));
+    }
 }

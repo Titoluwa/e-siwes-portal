@@ -31,4 +31,8 @@ class Siwes extends Model
     {
         return $this->student->department;
     }
+    public function assigned_staff()
+    {
+        return $this->belongsTo(Staff::class);
+    }
 }

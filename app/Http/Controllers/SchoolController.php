@@ -298,8 +298,7 @@ class SchoolController extends Controller
             $staff = Staff::where('user_id', Auth::user()->id)->first();
             return $value->student->department != $staff->department;
         });
-
-       
+        // dd($filtered);
         return view('school.all_students', compact('staff', 'session', 'siwes_type', 'filtered'));
     }
     // To validate the inputs

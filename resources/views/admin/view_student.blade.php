@@ -27,7 +27,6 @@
                     </div>
                     <br>
                     <div class="mt-2">
-                        {{-- <img class="rounded border-warning float-right img-thumbnail" src="{{asset('storage/'. $student->user->profile_pic)}}" alt="profile image" srcset="" width="150" height="150"> --}}
                         @if ($student->user->profile_pic != null)
                             <img class="rounded border-warning float-right img-thumbnail" src="{{asset('storage/'. $student->user->profile_pic)}}" alt="profile image" srcset="" width="150" height="150">
                         @else
@@ -37,6 +36,9 @@
                             <p>
                                 Registration Number: <b>{{$student->matric_no}}</b>
                             </p>
+                            <p>
+                                Email: <b>{{$student->user->email}}</b>
+                            </p> 
                             <p>
                                 Surname: <b>{{$student->user->last_name}}</b>
                             </p>  
@@ -51,6 +53,10 @@
                             </p>
                             <p>
                                 Course of study: <b>{{$student->course_of_study}}</b>
+                            </p>
+                            <p>
+                                Signature:
+                                <img src="{{asset('storage/'. $student->signature)}}" alt="{{$student->signature}}" width="180" height="30">
                             </p> 
                         </div>
                     </div>
@@ -175,28 +181,6 @@
                             </div>
                         @endforeach
                     @endif
-                    {{-- @if ($student->org_id == NULL)
-                        <div class="text-center blue-text">
-                            <h5>This student is not attached to any organization</h5>
-                        </div>
-                    @else
-                       <div class="mt-3">
-                            <p>
-                                Address during of Industrial Training: <b> {{$student->org->full_address}}</b>
-                            </p>
-                            <p>
-                                Year of Industrial Training: <b> {{$student->year_of_training}}</b>
-                            </p>
-                            <p>
-                                Duration of Industrial Training: <b>{{$student->duration_of_training}}</b>
-                            </p> 
-                            <p>
-                                Signature:
-                                <img src="{{asset('storage/'. $student->signature)}}" alt="{{$student->signature}}" width="180" height="30">
-                            </p>
-                        </div> 
-                    @endif --}}
-                    
                 </div>
                 
             </div>
@@ -357,24 +341,6 @@
                                     @enderror
                                 </div>
                             </div>
-
-                            {{-- <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label for="password" class="col-form-label">Password</label>
-                                    <input id="password" value="{{$student->user->password}}" type="password" class="form-control @error('password') is-invalid @enderror" name="password" disabled>
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-lg-6">
-                                <label for="password-confirm" class="col-form-label">Confirm Password</label>
-                                    <input id="password-confirm" value="{{$student->user->password}}" type="password" class="form-control" name="password_confirmation" disabled>
-                                </div>
-                            </div> --}}
-
                             <div class="clearfix">
                                 <div class="float-right">
                                     <button type="submit" class="btn bg-oth-color nav-text-color">

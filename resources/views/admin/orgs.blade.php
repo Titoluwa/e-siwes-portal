@@ -5,28 +5,25 @@
 @section('admincontent')
     
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card border-warning">
-
-                <!-- <div class="card-header border-warning bg-othe-color">
-                    <h5 class="mt-2">Dashboard</h5>
-                </div> -->
 
                 <div class="card-body p-3">
                     <h3 class="text-primary">Organizations</h3>
-                    <div class="float-right">
-                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="addindustryModal" disabled>Add</button>
-                    </div>
+
+                    {{-- <h3 class="text-primary">Organizations &nbsp; <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="addindustryModal" disabled><i class="fa fa-plus"></i> Add</button></h3> --}}
+                    <br>
 
                     @if(!empty($orgs))
                         <div class="table-responsive">
-                            <table id="myTable" class="table " style="width:100%">
+                            <table id="orgTable" class="table table-hover" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>S/N</th>
+                                        {{-- <th>S/N</th> --}}
                                         <th>Name</th>
                                         <th>Staff Name</th>
                                         <th>Location</th>
+                                        <th>State</th>
                                         <th>Office Email</th>
                                         <th></th>
                                     </tr>
@@ -34,10 +31,11 @@
                                 <tbody>
                                     @foreach($organizations as $org)
                                         <tr>
-                                            <td>{{$loop->index + 1}}</td>
+                                            {{-- <td>{{$loop->index + 1}}</td> --}}
                                             <td>{{$org->name}}</td>
                                             <td><a href="mailto:{{$org->user->email}}">{{$org->user->name()}}</a></td>
                                             <td>{{$org->full_address}}</td>
+                                            <td>{{$org->state}}</td>
                                             <td><a href="mailto:{{$org->postal_address}}">{{$org->postal_address}}</a></td>
                                             <td style="display: inline-flex">
                                                 <button onclick="get_orgdetails({{$org->id}})" class='m-1 btn btn-sm btn-outline-primary' data-toggle="modal" data-target="#viewOrgModal">Details</button>
@@ -65,14 +63,14 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="vieworgmodalLabel"><b><i class="far fa-building"></i> Organisation Details</b></h5>
+                    <h5 class="modal-title" id="vieworgmodalLabel" class="blue-text" ><b><i class="far fa-building"></i> <span id="org_name" style="font-weight: 900"></span></b></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><b>&times;</b></span>
                     </button>
                 </div>
                                         
                 <div class="m-3 p-2">
-                    <h4 class="text-primary" id="org_name" style="font-weight: 900"></h4>
+                    {{-- <h4 class="text-primary" id="org_name" style="font-weight: 900"></h4> --}}
                     <p>
                         Year of establishment: <b id="year_of_est"></b>
                     </p>
@@ -96,7 +94,7 @@
                     </p>
                 
                     <hr>
-                    <h5><b> Staff(s)</b></h5>
+                        {{-- <h5><b> Staff(s)</b></h5>
                         <div class="table-responsive">
                             <table id="myTable" class="table table-borderless" style="width:100%">
                                 <thead>
@@ -111,9 +109,9 @@
 
                                 </tbody>
                             </table>
-                        </div>
+                        </div> --}}
                     <hr>
-                    <h5><b> Student(s) </b></h5>
+                        <h5><b> Student(s) </b></h5>
                         <div class="table-responsive">
                             <table id="myTable" class="table table-dark" style="width:100%">
                                 <thead>
@@ -121,6 +119,7 @@
                                         <th>Name</th>
                                         <th>Registration Number</th>
                                         <th>Department</th>
+                                        <th>Program</th>
                                     </tr>
                                 </thead>
                                 <tbody id="student_body">
@@ -139,6 +138,7 @@
 
 @section('scripts')
     <script>
+        new DataTable('#orgTable');
         function get_orgdetails(id){
             $.get('/admin/organizations/'+id, function(data)
             {
@@ -168,12 +168,13 @@
 
                 $.each(data.students, function(index, val)
                 {
-                    
+                    console.log(data);
                     $('#student_body').append(`
                         <tr>
                             <td>${val.user.last_name}`+ " " +` ${val.user.first_name}</td>
-                            <td>${val.matric_no}</td>
-                            <td>${val.department}</td>
+                            <td>${val.student.matric_no}</td>
+                            <td>${val.student.department}</td>
+                            <td>${val.siwes_type.name}</td>
                         </tr>
                     `);
                 });

@@ -82,28 +82,28 @@
                     <div class="p-2">
                         @if (!empty($org))
                             <!-- <h5 class="pt-2">Students under your organisation</h5> -->
-                            @if(!empty($studs))
+                            @if(!empty($s_siwes))
                                 <div class="table-responsive">
                                     <table id="myTable" class="table " style="width:100%">
                                         <thead>
                                             <tr>
-                                                {{-- <th>Last Name</th> --}}
+                                                <th>S/N</th>
                                                 <th>Name</th>
-                                                <th>Matric Number</th>
+                                                <th>Department</th>
                                                 <th>Email</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($students as $student)
+                                            @foreach($siwes as $student)
                                                 <tr>
-                                                    {{-- <td></td> --}}
-                                                    <td><a href="/industry/student/{{$student->user_id}}">{{$student->user->last_name}} {{$student->user->first_name}}</a></td>
-                                                    <td>{{$student->matric_no}} </td>
-                                                    <td>{{$student->user->email}} </td>
+                                                    <td>{{$loop->index + 1}}</td>
+                                                    <td><a href="/industry/student/{{$student->user_id}}">{{$student->user->name()}} ({{$student->siwes_type->name}})</a></td>
+                                                    <td>{{$student->student->matric_no}} </td>
+                                                    <td>{{$student->student->department}} </td>
                                                     <td>
-                                                        <a href="/industry/student/log/{{$student->user->id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
-                                                        <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Forms</a>
+                                                        <a href="/industry/logbook/{{$student->id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
+                                                        {{-- <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Forms</a> --}}
                                                         <button type='button' class='btn btn-sm btn-outline-danger delete'><i class="fa fa-trash-alt"></i></button>
                                                     </td>
                                                 </tr>

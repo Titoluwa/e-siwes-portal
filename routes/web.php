@@ -60,17 +60,20 @@ Route::prefix('admin')->group(function ()
     Route::post('students/store', 'AdminController@store')->name('admin.setup.store');
     Route::get('students/{id}', 'AdminController@view_student');
     Route::get('students/log/{id}', 'AdminController@student_log');
-
+    Route::get('assign-students/siwes-400', 'AdminController@siwes400Students');
+    Route::get('/placement/siwes-300/{session_id}', 'AdminController@placement300perSession');
+    Route::get('/placement/siwes-400/{session_id}', 'AdminController@placement400perSession');
     Route::get('/swep-200/{id}', 'AdminController@swep200');
     Route::get('/siwes-300/{id}', 'AdminController@siwes300');
     Route::get('/siwes-400/{id}', 'AdminController@siwes400');
 
     // Organization
     Route::get('organizations/{id}', 'AdminController@org_details');
+    Route::get('/contacts', 'AdminController@contacts');
 
+    //Staff
     Route::get('/staffs/{id}', 'AdminController@get_staff');
-    Route::get('/get_available_students', 'AdminController@get_students');
-    Route::post('/assign_student', 'AdminController@assign_student_to_staff');
+    Route::post('/assign-student', 'AdminController@assign_student_to_staff');
 
 });
     // STUDENT Routes "1"
@@ -124,7 +127,6 @@ Route::prefix('school')->group(function ()
     Route::get('', 'SchoolController@index')->name('school');
 
     Route::get('/student/{id}', 'SchoolController@student');
-    // Route::get('/student/log/{id}', 'SchoolController@student_log');
     Route::get('/student/siwes-400/{user_id}', 'SchoolController@siwes400');
     Route::get('/student/swep-200/{user_id}', 'SchoolController@swep200');
     Route::get('/student/siwes-300/{user_id}', 'SchoolController@siwes300');
@@ -145,7 +147,8 @@ Route::prefix('industry')->group(function ()
     Route::put('/profile/update', 'IndustryController@profile_update');
 
     Route::get('/student/{id}', 'IndustryController@student');
-    Route::get('/student/log/{id}', 'IndustryController@student_log');
+    Route::get('/logbook/{siwes_id}', 'IndustryController@siwes_log');
+
 
     Route::post('/weekly/approve/{id}', 'IndustryController@approve_week');
     Route::put('/log/monthly/update', 'IndustryController@comment_monthly');

@@ -139,6 +139,16 @@
                             @enderror
                         </div>
                     </div>
+
+
+<!-- @if (!empty($org))
+        <a class="nav-link" href="/industry/org/edit">Edit Organisation</a>
+    @else
+        <a class="nav-link" href="/industry/org">Register Organisation</a>
+    @endif
+    <a class="nav-link" href="/industry/student">Manage Students</a>
+    <a class="nav-link" href="">Edit Profile</a> -->
+
 @section('scripts')
 <script>
     $.get('/school/students/'+session_id+'/'+siwes_type_id, function(data)

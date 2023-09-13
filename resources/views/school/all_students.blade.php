@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.school')
 
 @section('title', 'Students')
 
@@ -39,10 +39,10 @@
                                                 <td>{{$loop->index + 1}}</td>
                                                 <td>{{$siwes->user->name()}}</td>
                                                 <td>{{$siwes->student->matric_no}}</td>
-                                                @if($siwes->org_id == null)
-                                                @else
-                                                <td>{{$siwes->org->name}}</td>
-                                                @endif
+                                                    @if($siwes->org_id == null)
+                                                    @else
+                                                    <td>{{$siwes->org->name}}</td>
+                                                    @endif
                                                 <td>{{$siwes->resumption_date}}</td>
                                                 <td>{{$siwes->ending_date}}</td>
                                                 <td>

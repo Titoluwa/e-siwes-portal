@@ -5,15 +5,40 @@
     <div class="col-md-12">
         <div class="card border-warning">
 
-            <div class="card-header border-warning ">
-                <h4 class="mt-2 blue-text"><b>{{$student->user->name()}}</b></h4>
+            {{-- <div class="card-header border-warning" style="display: inline-flex">
+                <div class="float-left"></div>
+            </div> --}}
+            <div class="card-header border-warning clearfix mt-2 ">
+                <div class="float-left">
+                    <h4 class="mt-2 blue-text"><b>{{$siwes->user->name()}}'s LogBook for {{$siwes->siwes_type->name}}</b></h4>
+                </div>
+                <div class="float-right">
+                    <a class="btn btn-warning" href="/industry"><i class="fas fa-arrow-left"></i> Back</a>
+                </div>
             </div>
 
             <div class="card-body border-warning bg-light">
-
-                <p class="text-center blue-text mb-4">
-                    You are to View and Assess this student weekly and monthly activitites at your Organization
-                </p>
+                <div class="clearfix mt-1 ">
+                    <div class="float-left">
+                        <p class="blue-text mb-2">
+                            You are to View and Assess this student weekly and monthly activitites at your Organization
+                        </p>
+                    </div>
+                    <div class="float-right">
+                        <div class="dropdown mb-4">
+                            <a class="btn btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-file"></i> Forms
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="/student/sp3">SP. 3</a>
+                                <a class="dropdown-item" href="/student/form8">Form 8</a>
+                                <a class="dropdown-item" href="/student/scaf">SCAF</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Assessment</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div id="Records">
                     <div class="card border-primary">

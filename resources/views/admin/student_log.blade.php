@@ -5,7 +5,7 @@
 @section('admincontent')
 
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card border-warning">
 
                 <div class="card-header border-warning bg-othe-color">
@@ -13,10 +13,26 @@
                         <h3 style="font-weight: 700;">{{$student->user->name()}}'s LogBook for {{$siwes_type->name}}</h3>
                     </div>
                     @if (!empty($siwes))
+                        @if ($siwes->siwes_type_id == 2 OR 3)
+                            <div class="float-right">
+                                <div class="dropdown">
+                                    <a class="btn btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-file"></i> Forms
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="/student/sp3">SP. 3</a>
+                                        <a class="dropdown-item" href="/student/form8">Form 8</a>
+                                        <a class="dropdown-item" href="/student/scaf">SCAF</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Assessment</a>
+                                    </div>
+                                </div>
+                            </div>
+                        @elseif($siwes->siwes_type_id == 1)
                         <div class="float-right">
                             <div class="dropdown">
                                 <a class="btn btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-file"></i> Forms
+                                    SWEP 200
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="/student/sp3">SP. 3</a>
@@ -27,13 +43,17 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                     @endif
                 </div>
 
                 <div class="card-body border-warning m-4 p-2">
                     @if (!empty($siwes))
-
-                        <p class="">The duration of training at <b>{{$siwes->org->name}}</b> is <b>{{$siwes->duration_of_training}}</b> for <b>{{$siwes->year_of_training}}</b>.</p>
+                        @if ($siwes->siwes_type_id == 1)
+                            <p>Details of activties done at SWEP classes</p>
+                        @else
+                            <p class="">The duration of training at <b>{{$siwes->org->name}}</b> is <b>{{$siwes->duration_of_training}}</b> for <b>{{$siwes->year_of_training}}</b>.</p>
+                        @endif
 
                         <div id="Records">
                             <div class="card border-primary">

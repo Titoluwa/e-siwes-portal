@@ -5,59 +5,42 @@
 @section('admincontent')
     
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card border-warning">
-
-                <!-- <div class="card-header border-warning bg-othe-color">
-                    <h5 class="mt-2">{{ __('Dashboard') }}</h5>
-                </div> -->
  
                 <div class="card-body p-3">
                     <div class="mb-4" style="display: inline-flex">
                         <h3 class="text-primary">All Students</h3>
-                        
-                        {{-- <button class="mx-4 btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#addStudentModal">Add</button> --}}
                     </div>
                     
                     <div class="float-right">
-                        <a href="" style="display:" class="btn btn-sm btn-warning"><i class="fa fa-search"></i> Filter Students</a>
                         <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#addStudentModal"><i class="fa fa-plus"></i> Add</button>
                     </div>
                     
                     @if(!empty($studs))
                         <div class="table-responsive">
-                            <table id="myTable" class="table " style="width:100%">
+                            <table id="studentsTable" class="table table-striped table-bordered" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>S/N</th>
+                                        {{-- <th>S/N</th> --}}
                                         <th>Name</th>
                                         <th>Matric Number</th>
                                         <th>Department</th>
-                                        {{-- <th>Status</th> --}}
+                                        {{-- <th>Phone Number</th> --}}
                                         {{-- <th>Attachment</th> --}}
-                                        <th></th>
+                                        <th>Actions</th>
                                         
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($students as $student)
                                         <tr>
-                                            <td>{{$loop->index+1}}</td>
-                                            <td><a href="/admin/students/{{$student->user_id}}">{{$student->user->name()}}</a></td> {{-- Link to View  --}}
+                                            {{-- <td>{{$loop->index + 1}}</td> --}}
+                                            <td><a target="_blank" href="/admin/students/{{$student->user_id}}">{{$student->user->name()}}</a></td> {{-- Link to View  --}}
                                             <td>{{$student->matric_no}} </td>
                                             <td>{{$student->department}} </td>
-                                            {{-- @if ($student->status == 1)
-                                                <td class="text-success">Active</td>
-                                            @else
-                                                <td class="text-danger">Inactive</td>
-                                            @endif --}}
-                                            {{-- @if ($student->org_id == 0)
-                                                <td class="oth-color">not attached</td>
-                                            @else
-                                                <td >{{$student->org->name}}</td>
-                                            @endif --}}
-                                            
-                                            <td style="display: inline-flex">
+                                            {{-- <td>{{$student->user->contact_no}}</td> --}}
+                                            <td style="display: inline-flex; width: 100%;">
                                                 <div class="dropdown m-1">
                                                     <a class='btn btn-sm btn-outline-primary dropdown-toggle' id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-book"></i> Logbooks
@@ -68,25 +51,6 @@
                                                       <a target="_blank" class="dropdown-item" href="/admin/siwes-400/{{$student->user_id}}">SIWES 400</a>
                                                     </div>
                                                 </div>
-                                                {{-- <div class="dropdown m-1">
-                                                    <a class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fa fa-file"></i> Forms
-                                                    </a>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <a class="dropdown-item" href="/student/sp3">SP. 3</a>
-                                                        <a class="dropdown-item" href="/student/form8">Form 8</a>
-                                                        <a class="dropdown-item" href="/student/scaf">SCAF</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">Assessment</a>
-                                                    </div>
-                                                </div> --}}
-                                                {{-- @if ($student->org_id == 0)
-                                                    <button href="" class='btn btn-sm btn-outline-primary' disabled><i class="fa fa-book"></i> Logbook</button>
-                                                    <button href="" class='btn btn-sm btn-outline-primary' disabled><i class="fa fa-list"></i> Forms</button>
-                                                @else
-                                                    <a target="_blank" href="/admin/students/log/{{$student->user->id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
-                                                    <a target="_blank" href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Forms</a> 
-                                                @endif --}}
                                                 <button type='button' class='btn btn-sm btn-outline-danger delete m-1' disabled><i class="fa fa-trash-alt"></i></button>
                                             </td>
                                             
@@ -349,6 +313,29 @@
 
 @section('scripts')
     <script  type="text/javascript">
+        $('#studentsTable').DataTable( {
+            dom: 'Bfrtip',
+            stateSave: true,
+            buttons: [
+                {
+                    extend:    'copyHtml5',
+                    text:      '<i class="far fa-copy"></i> Copy',
+                    titleAttr: 'Copy'
+                },
+                {
+                    extend:    'excelHtml5',
+                    text:      '<i class="far fa-file-excel"></i> Excel',
+                    titleAttr: 'Excel'
+                },
+                {
+                    extend:    'pdfHtml5',
+                    text:      '<i class="far fa-file-pdf"></i> PDF',
+                    titleAttr: 'PDF'
+                },
+                'colvis'
+            ]
+        } );
+
         $(document).ready(function(){
             $.ajaxSetup({
                 headers: {

@@ -15,7 +15,9 @@
         "itsgoingd/clockwork": "^5.1",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "2.4"
+        "laravel/ui": "2.4",
+        "yajra/laravel-datatables-buttons": "^4.13",
+        "yajra/laravel-datatables-oracle": "^9.21"
     },
     "require-dev": {
         "ajuchacko/sail-7.x": "^1.0@dev",

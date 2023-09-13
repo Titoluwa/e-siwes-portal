@@ -18,7 +18,9 @@ class CreateOrganizationsTable extends Migration
             $table->foreignId('user_id')->constrained('users')->nullable(); 
             $table->string('name');
             $table->string('full_address');
-            $table->string('postal_address');
+            $table->string('postal_address')->nullable();
+            $table->string('state');
+            $table->string('area');
             $table->date('year_of_est')->nullable();
             $table->string('nature')->nullable();
             $table->string('specialization')->nullable();

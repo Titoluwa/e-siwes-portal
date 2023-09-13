@@ -13,7 +13,7 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
 
-    <!-- Styles -->
+    <link href="/DataTables/datatables.min.css" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('style')
     <style>
@@ -90,7 +90,12 @@
         }
         .no-deco:hover{
             text-decoration: none;
+        }
 
+        footer{
+            background-color: #F4F0E8;
+            color: black;
+            font-weight: 900;
         }
     </style>
 </head>
@@ -178,6 +183,11 @@
         <main class="container-fluid">
             @yield('content')
         </main>
+
+        <footer class="fixed-bottom text-center p-1">
+            <p>&copy; <a href="mailto:titoluwaranti@gmail.com" style="color:black; text-decoration: none;">Toluwani&#8482;</a></p>
+            {{-- <small>(2023)</small> --}}
+        </footer>
     </div>
 
     <!-- Scripts -->
@@ -186,6 +196,9 @@
     <script src="/js/all.min.js"></script>
     <script src="/js/sweetalert.min.js"></script>
     <script src="/js/jquery.min.js"></script>
+    
+    <script src="/DataTables/datatables.min.js"></script>
+
     @yield('scripts')
 </body>
 </html>

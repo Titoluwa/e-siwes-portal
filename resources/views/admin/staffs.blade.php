@@ -5,7 +5,7 @@
 @section('admincontent')
     
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card border-warning">
                 
                 <div class="card-body p-3">
@@ -17,27 +17,27 @@
                     <br>
                     @if(!empty($staff))
                         <div class="table-responsive">
-                            <table id="myTable" class="table " style="width:100%">
+                            <table id="staffTable" class="table table-hover" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>S/N</th>
+                                        {{-- <th>S/N</th> --}}
                                         <th>Name</th>
-                                        <th>Faculty</th>
+                                        {{-- <th>Faculty</th> --}}
                                         <th>Department</th>
-                                        {{-- <th>Assigned Students</th> --}}
+                                        {{-- <th>Phone Number</th> --}}
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($staffs as $staff)
                                         <tr>
-                                            <td>{{$loop->index + 1}}</td>
+                                            {{-- <td>{{$loop->index + 1}}</td> --}}
                                             <td><a href="mailto:{{$staff->user->email}}">{{$staff->user->name()}}</a></td>
-                                            <td>{{$staff->faculty}}</td>
+                                            {{-- <td>{{$staff->faculty}}</td> --}}
                                             <td>{{$staff->department}}</td>
+                                            {{-- <td>{{$staff->user->contact_no}}</td> --}}
                                             <td style="display: inline-flex">
-                                                <a class='m-1 btn btn-sm btn-primary' data-toggle="modal" data-target="#viewstaffModal" onclick="get_staff({{$staff->id}})"><i class="far fa-eye"></i> View</a>
-                                                {{-- <a class='m-1 btn btn-sm btn-outline-primary' data-toggle="modal" data-target="#assignstudentModal" onclick="get_valid_students({{$staff->id}})"><i class="fas fa-link"></i> Assign</a> --}}
+                                                {{-- <a class='m-1 btn btn-sm btn-primary' data-toggle="modal" data-target="#viewstaffModal" onclick="get_staff({{$staff->id}})"><i class="far fa-eye"></i> View</a> --}}
                                                 <a class='m-1 btn btn-sm btn-outline-primary' data-toggle="modal" data-target="#editstaffModal" onclick="get_staff({{$staff->id}})"><i class="far fa-edit"></i> Edit</a>
                                                 <button type='button' class='m-1 btn btn-sm btn-outline-danger delete' disabled><i class="fa fa-unlink"></i></button>
                                             </td>
@@ -56,49 +56,6 @@
     </div>
 
 {{-- MODALS --}}
-{{-- Assign students to staff --}}
-    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="assignstudentModal" tabindex="-1" role="dialog" aria-labelledby="assignstudentmodal" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="assignstudentmodalLabel"><b><i class="fas fa-user-plus"></i> Assign student(s) to Institution based supervisor </b></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><b>&times;</b></span>
-                    </button>
-                </div>
-                                        
-                <div class="m-3 p-2">
-                    <form id="assignForm" method="POST" action="/admin/assign_student" enctype="multipart/form-data">
-                        @csrf                    
-                        <div class="form-group row">
-                            <div class="col-lg-6">
-                                <label class="col-form-label"  for="profile_pic">Students Available</label>
-                                <input type="hidden" id="assign_id" name="staff_id" value="">
-                                <div id="avail_students_body">
-                                    
-                                </div>
-                                {{-- <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="student_id[]" value="student_id" id="student_id">
-                                    <label class="form-check-label" for="student_id">
-                                        <b>Student_name</b> (matric no)
-                                    </label>
-                                </div> --}}
-                            </div>
-                            
-                        </div>
-                        <div class="clearfix">
-                            <div class="float-right">
-                                <button type="button" id="submit_assign" class="btn bg-oth-color nav-text-color">
-                                Assign
-                                </button>
-                            </div>
-                        </div>
-                    </form> 
-                </div>
-                
-            </div>
-        </div>
-    </div>
     
 {{-- Add STAFF User Modal --}}
     <div class="modal fade" data-keyboard="false" data-backdrop="static" id="addstaffModal" tabindex="-1" role="dialog" aria-labelledby="addstaffmodal" aria-hidden="true">
@@ -413,23 +370,6 @@
                             </div>
                         </div>
 
-                        {{-- <div class="form-group row">
-                            <div class="col-lg-6">
-                                <label for="password" class="col-form-label">Password</label>
-                                <input id="edit_password" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="col-lg-6">
-                                <label for="password-confirm" class="col-form-label">Confirm Password</label>
-                                <input id="edit_password-confirm" type="password" class="form-control" name="password_confirmation">
-                            </div>
-                        </div> --}}
-
                         <div class="clearfix">
                             <div class="float-right">
                                 <button type="submit" class="btn bg-oth-color nav-text-color">
@@ -488,6 +428,7 @@
 
 @section('scripts')
     <script  type="text/javascript">
+        new DataTable('#staffTable');
         $(document).ready(function(){
             $.ajaxSetup({
                 headers: {
@@ -589,25 +530,6 @@
                             <td>${val.matric_no}</td>
                             <td>${val.department}</td>
                         </tr>
-                    `);
-                });
-            })
-        };
-        function get_valid_students(id)
-        {
-            $.get('/admin/get_available_students', function(data){
-
-                $('#assign_id').val(id);
-                $('#avail_students_body').html(" ");
-                $.each(data.students, function(index, val)
-                {
-                    $('#avail_students_body').append(`
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="student_id[]" value="${val.id}" id="${val.id}">
-                            <label class="form-check-label" for="student_id">
-                               ${val.user.last_name}`+ " " +` ${val.user.first_name}  <b>(${val.matric_no})</b>
-                            </label>
-                        </div>
                     `);
                 });
             })

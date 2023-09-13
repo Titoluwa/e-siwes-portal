@@ -35,6 +35,30 @@
                         </a>
                     </li>
                     <li>
+                        <div class="dropdown">
+                            <a class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-list"></i> SIWES 300 List
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                @foreach ($sessions as $session)
+                                    <a class="dropdown-item" href="/admin/placement/siwes-300/{{$session->id}}">{{$session->year}}</a>
+                                @endforeach
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <a class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-list"></i> SIWES 400 List
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                @foreach ($sessions as $session)
+                                    <a class="dropdown-item" href="/admin/placement/siwes-400/{{$session->id}}">{{$session->year}}</a>
+                                @endforeach
+                            </div>
+                        </div>
+                    </li>
+                    <li>
                         <a href="/admin/assign-students/siwes-400" class="nav-link">
                         <i class="fas fa-link"></i> Assign Students (SIWES 400)
                         </a>
@@ -60,6 +84,11 @@
                         <i class="fas fa-industry"></i> Organizations
                         </a>
                     </li>
+                    <li>
+                        <a href="/admin/contacts" class="nav-link">
+                            <i class="fa fa-phone"></i> Contacts
+                        </a>
+                    </li>
                     {{-- <li>
                         <a href="/admin/itf-agents" class="nav-link">
                         <i class="fa fa-user-tie"></i> ITF Agents
@@ -72,4 +101,8 @@
             @yield('admincontent') 
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    
 @endsection

@@ -8,9 +8,6 @@
         <div class="col-md-10">
             <div class="card border-warning">
 
-                <!-- <div class="card-header border-warning bg-othe-color">
-                    <h5 class="mt-2">{{ __('Dashboard') }}</h5>
-                </div> -->
                 @if(session()->has("message"))
                     <div class="alert alert-warning" role='alert'>
                         <strong> {{session()->get('message')}} </strong>
@@ -81,8 +78,7 @@
                             </table>
                         </div>
                     </div>
-                </div>
-                
+                </div>               
             </div>
         </div>
     </div>

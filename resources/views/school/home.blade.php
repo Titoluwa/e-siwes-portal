@@ -2,9 +2,6 @@
 
 @section('title', 'Department Coordinator')
 
-{{-- @section('nav')
-    <a href="/school" class="nav-link"> Department Coordinator</a>
-@endsection --}}
 
 @section('schoolcontent')
 <div class="container">
