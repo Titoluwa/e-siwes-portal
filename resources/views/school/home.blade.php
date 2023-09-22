@@ -9,78 +9,125 @@
         <div class="col-md-12">
             <div class="card mt-5">
                 <div class="card-header bg-oth-color">
-                    <a class="blue-text" style="text-decoration-line: none" onclick="show_assigned()"><i class="fas fa-clipboard"></i> Dashboard</a>
+                    <a class="blue-text" style="text-decoration-line: none" onclick="dashboard()"><i class="fas fa-clipboard"></i> Dashboard</a>
+                    <a class="blue-text ml-2" style="text-decoration-line: none" onclick="materials()"><i class="fa fa-copy"></i> Lecture Notes</a>
                     <div class="float-right">
                         <a href="" data-toggle="modal" data-target="#getStudentModal" class="blue-text" style="text-decoration-line: none"><i class="fas fa-user-friends"></i> All Students</a>
                     </div>
                 </div>
 
                 <div class="card-body my-5">
-                    <div id="dashboard" class="text-center">
-                       <b><h3>Welcome, {{Auth::user()->name()}}</h3></b>
-                        {{ __('You are logged in!') }}
+                    <div id="dashboard" style="display: block;">
+                        <div class="text-center">
+                            <b><h3>Welcome, {{Auth::user()->name()}}</h3></b>
+                            'You are logged in!
+                        </div>
+                        <div class="m-3">
+                            @if(!empty($single_siwes))
+                                <div class="m-3">
+                                    <h5 class="blue-text mt-1">Assigned Students <small>({{$current_session->year}})</small></h5>
+                                    {{-- <small class="col-2">
+                                        <select id="session_id" value="{{ old('session') }}" required class="form-control @error('session') is-invalid @enderror">
+                                            <option value="" disabled selected>Select Session</option>
+                                            @foreach($sessions as $s)
+                                                <option value="{{ $s->id }}">{{ $s->year }}</option>
+                                            @endforeach
+                                        </select>
+                                    </small> --}}
+                                </div>
+                                <div class="table-responsive">
+                                    <table id="myTable" class="table " style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>S/N</th>
+                                                <th>Name</th>
+                                                <th>Matric Number</th>
+                                                <th>Department</th>
+                                                <th>Attachement</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($siwes as $siwes)
+                                                <tr>
+                                                    <td>{{$loop->index + 1}}</td>
+                                                    <td><a href="" data-toggle="modal" data-target="#viewstudentModal" onclick="get_student({{$siwes->user_id}})">{{$siwes->user->name()}} <small>({{$siwes->siwes_type->name}})</small></a></td>
+                                                    {{-- <td><a href="/school/student/{{$siwes->user_id}}">{{$siwes->user->name()}} <small>({{$siwes->siwes_type->name}})</small></a></td> --}}
+                                                    <td>{{$siwes->student->matric_no}} </td>
+                                                    <td>{{$siwes->student->department}} </td>
+                                                    <td><a href="" data-toggle="modal" data-target="#vieworgModal" onclick="get_orgdetails({{$siwes->org_id}})">{{$siwes->org->name}}</a></td>
+                                                    <td>
+                                                        <a href="/school/siwes/{{$siwes->siwes_type->code_name}}/{{$siwes->user_id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
+                                                        {{-- <button href="" class='btn btn-sm btn-outline-primary' disabled><i class="fa fa-list"></i> Forms</button> --}}
+                                                        {{-- <button type='button' class='btn btn-sm btn-outline-danger delete'><i class="fa fa-trash-alt"></i></button> --}}
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @else
+                                <p class="h5 m-3">No Assigned Student Yet! <small>({{$current_session->year}})</small></p>
+                            @endif
+                        </div>
                     </div>
 
-                    {{-- <div id="assigned_students" class="m-3" style="display: none;"> --}}
-                    <div class="m-3">
-                        @if(!empty($single_siwes))
-                            <div class="m-3">
-                                <h5 class="blue-text mt-1">Assigned Students <small>({{$current_session->year}})</small></h5>
-                                {{-- <small class="col-2">
-                                    <select id="session_id" value="{{ old('session') }}" required class="form-control @error('session') is-invalid @enderror">
-                                        <option value="" disabled selected>Select Session</option>
-                                        @foreach($sessions as $s)
-                                            <option value="{{ $s->id }}">{{ $s->year }}</option>
-                                        @endforeach
-                                    </select>
-                                </small> --}}
-                            </div>
-                            <div class="table-responsive">
-                                <table id="myTable" class="table " style="width:100%">
-                                    <thead>
+                    <div id="materials" style="display: none;">
+                        <div class="text-center">
+                            <h4 class="text-primary"><i class="fa fa-copy"></i> Department Lecture Notes</h4>
+                            <button data-toggle="modal" data-target="#addMaterialModal" class="m-2 btn btn-sm btn-outline-primary"><i class="fa fa-upload"></i> Upload New Material</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="materialsTable" class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>SIWES type</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($materials as $material)
                                         <tr>
-                                            <th>S/N</th>
-                                            <th>Name</th>
-                                            <th>Matric Number</th>
-                                            <th>Department</th>
-                                            <th>Attachement</th>
-                                            <th></th>
+                                            <td>{{$material->name}}</td>
+                                            <td>{{$material->description}}</td>
+                                            
+                                            <td>
+                                                @if ($material->siwes_type_id == 0)
+                                                    All
+                                                @else
+                                                    {{$material->siwes_type->name}}
+                                                @endif
+                                                
+                                            </td>
+                                            <td style="display: inline-flex; width: 100%;">
+                                                <a href="/download/{{$material->id}}" class="m-1" ><i class="fa fa-download"></i> </a>
+                                                @if ($material->uploaded_by == Auth()->user()->id)
+                                                    <a href="/admin/material/delete/{{$material->id}}" class="m-1 btn btn-sm btn-outline-danger"><i class="far fa-trash-alt"></i></a>
+                                                @endif
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($siwes as $siwes)
-                                            <tr>
-                                                <td>{{$loop->index + 1}}</td>
-                                                <td><a href="/school/student/{{$siwes->user_id}}">{{$siwes->user->name()}} <small>({{$siwes->siwes_type->name}})</small></a></td>
-                                                <td>{{$siwes->student->matric_no}} </td>
-                                                <td>{{$siwes->student->department}} </td>
-                                                <td><a href="" data-toggle="modal" data-target="#vieworgModal" onclick="get_orgdetails({{$siwes->org_id}})">{{$siwes->org->name}}</a></td>
-                                                <td>
-                                                    <a href="/school/siwes/{{$siwes->siwes_type->code_name}}/{{$siwes->user_id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
-                                                    {{-- <button href="" class='btn btn-sm btn-outline-primary' disabled><i class="fa fa-list"></i> Forms</button> --}}
-                                                    {{-- <button type='button' class='btn btn-sm btn-outline-danger delete'><i class="fa fa-trash-alt"></i></button> --}}
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        @else
-                            <p class="h5 m-3">No Assigned Student Yet! <small>({{$current_session->year}})</small></p>
-                        @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+                    
                 </div>
 
             </div>
         </div>
     </div>
 </div>
+{{-- MODALS --}}
 <div>
+
     <div class="modal fade" data-keyboard="false" data-backdrop="static" id="vieworgModal" tabindex="-1" role="dialog" aria-labelledby="vieworgmodal" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title blue-text" id="vieworgmodalLabel"><b><i class="fas fa-building"></i> <span id="org_name"> </span></b></h5>
+                    <h5 class="modal-title blue-text" id="vieworgmodalLabel"><b> <i class="fas fa-building"></i>  <span id="org_name"> </span></b></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><b>&times;</b></span>
                     </button>
@@ -110,7 +157,7 @@
                         Other Information: <b id="others"></b>
                     </p>
                 
-                    <hr>
+                    {{-- <hr>
                     <h5><b> Staff(s)</b></h5>
                     <div class="table-responsive">
                         <table id="myTable" class="table table-borderless" style="width:100%">
@@ -126,12 +173,89 @@
 
                             </tbody>
                         </table>
+                    </div> --}}
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="viewstudentModal" tabindex="-1" role="dialog" aria-labelledby="viewstudentmodal" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title blue-text" id="viewstudentmodalLabel"><b><i class="fa fa-user"></i>  <span id="student_name"> </span></b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><b>&times;</b></span>
+                    </button>
+                </div>
+                                        
+                <div class="mt-3">
+                    <div class="col-md-3 float-right">
+                        {{-- <img class="rounded border-warning img-thumbnail float-right" src="{{asset('storage/'. $student->user->profile_pic)}}" alt="profile image" srcset="" width="150" height="150"> --}}
+                        <span id="profile_pic">
+
+                        </span>
+                        {{-- @if ($student->user->profile_pic != null)
+                        <span id="profile_pic">
+                            <img class="rounded border-warning float-right img-thumbnail" src="{{asset('storage/'. $student->user->profile_pic)}}" alt="profile image" srcset="" width="150" height="150">
+                        </span>
+                        @else
+                            <img class="rounded border-warning float-right img-thumbnail" src="{{asset('images/user_default.png')}}" alt="profile image" srcset="" width="150" height="150">
+                        @endif --}}
+                    </div>
+
+                    <div class="col-md-9">
+                        <p>
+                            Registration Number: <b id="matric_no"></b>
+                        </p>
+                        <hr>
+                        <p>
+                            Surname: <b id="last_name"></b>
+                        </p>
+                        <hr>
+                        <p>
+                            Other Names: <b id='other_names'></b>
+                        </p>
+                        <hr>
+                        <p>
+                            Faculty: <b id="s_faculty"></b>
+                        </p>
+                        <hr>
+                        <p>
+                            Department: <b id="s_department"></b>
+                        </p>
+                        <hr>
+                        <p>
+                            Course of study: <b id="s_course"></b>
+                        </p>
+                        <hr>
+                        <p>
+                            Address during of Industrial Training: <b id="org_address"> </b>
+                        </p>
+                        <hr>
+                        <p>
+                            Year of Industrial Training: <b id="training_y"> </b>
+                        </p>
+                        <hr>
+                        <p>
+                            Duration of Industrial Training: <b id="training_d"></b>
+                        </p>
+                        <hr>
+                        <p>
+                            Signature:
+                            <span id="signature">
+
+                            </span>
+                            {{-- <img src="{{asset('storage/'. $student->signature)}}" alt="{{$student->signature}}" width="180" height="30"> --}}
+                        </p>
                     </div>
                 </div>
                 
             </div>
         </div>
     </div>
+
     <div class="modal fade" data-keyboard="false" data-backdrop="static" id="getStudentModal" tabindex="-1" role="dialog" aria-labelledby="getStudentModal" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -186,19 +310,65 @@
             </div>
         </div>
     </div>
+    <!-- Add New Material Modal -->
+    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="addMaterialModal" tabindex="-1" role="dialog" aria-labelledby="addMaterialModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addMaterialModalLabel"><b><i class="fa fa-upload"></i> Upload New Material</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><b>&times;</b></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form row" action="/school/material/store" method="POST" enctype="multipart/form-data">
+                        @csrf
+                    
+                        <div class="form-group col-lg-4">
+                            <label class="form-label" for="file">File: </label>
+                            <input class="col-lg-12 form-control-file" type="file" name="file" id="file_name" required>
+                            <input type="hidden" name="name" value="Document 1">
+                        </div>
+                
+                        <div class="form-group col-lg-4">
+                            <label class="form-label" for="description">Description: </label>
+                            <input class="col-lg-12 form-control" type="text" name="description" id="description">
+                        </div>
+                
+                        <div class="form-group col-lg-4">
+                            <label class="form-label" for="end_date">SIWES type</label>
+                            <select class="col-lg-12 form-control" name="siwes_type_id" id="siwes_type_id" required>
+                                <option value="0" selected>All</option>
+                                @foreach ($siwes_types as $siwes )
+                                    <option value="{{$siwes->id}}">{{$siwes->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <input type="hidden" name="uploaded_by" value="{{Auth::user()->id}}">
+                        <input type="hidden" name="department" value="{{$staff->department}}">
+                        <div class="col-lg-12 text-center">
+                            <button type="submit" class="btn btn-outline-primary">
+                                Upload
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 @section('scripts')
-    {{-- <script>
-        let url = "www.someurl.com?";
-        let length = url.length;
-        if(url.charAt(length-1)==='?')
-        url=url.slice(0,length-1);
-        console.log(url);
-    </script> --}}
     <script>
-        function show_assigned(){
-            document.getElementById("assigned_students").style.display = "block";
+        new DataTable('#materialsTable');
+        function dashboard(){
+            document.getElementById("dashboard").style.display = "block";
+            document.getElementById("materials").style.display = "none";
+        }
+        function materials(){
+            document.getElementById("dashboard").style.display = "none";
+            document.getElementById("materials").style.display = "block";
         }
         function filter_student() {
             // document.getElementById("all_students").style.display = "block";
@@ -233,6 +403,28 @@
                         </tr>
                     `);
                 });
+            })
+        };
+        function get_student(id){
+            $.get('/school/student/'+id, function(data)
+            {
+                console.log(data);
+                $('#student_name').html(`${data.user.last_name}`+ " " +` ${data.user.first_name}`);
+                if (data.user.profile_pic == null) {
+                    $('#profile_pic').html(` <img class="rounded border-warning float-right img-thumbnail" src="/images/user_default.png" alt="profile image" srcset="" width="150" height="150">`);
+                } else {
+                    $('#profile_pic').html(`<img class="rounded border-warning float-right img-thumbnail" src="/storage/${data.user.profile_pic}" alt="profile image" srcset="" width="150" height="150"> `);
+                };
+                $('#matric_no').html(data.student.matric_no);
+                $('#last_name').html(data.user.last_name);
+                $('#other_names').html(`${data.user.first_name}`+ " " +` ${data.user.middle_name}`);
+                $('#s_faculty').html(data.student.faculty);
+                $('#s_department').html(data.student.department);
+                $('#s_course').html(data.student.course_of_study);
+                $('#org_address').html(data.org.full_address);
+                $('#training_y').html(data.year_of_training);
+                $('#training_d').html(data.duration_of_training);
+                $('#signature').html(`<img src="/storage/${data.student.signature}" alt="signature" width="180" height="30">`);
             })
         };
     </script>

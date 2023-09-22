@@ -133,7 +133,7 @@
                         <label class="col-form-label col-md-2" for="logo">Logo</label>
                         <div class="col-md-4">
                         <img src="{{asset('storage/'. $org->logo)}}" alt="" width="60" height="60">
-                            <input type="file" class="@error('logo') is-invalid @enderror" id="logo" name="logo">
+                            <input type="file" class="form-control-file @error('logo') is-invalid @enderror" id="logo" name="logo">
                             @error('logo')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

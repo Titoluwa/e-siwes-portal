@@ -25,6 +25,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/download/{file}', 'AdminController@material_download');
+
     // REGISTRATION Routes
 Route::prefix('/register')->group(function()
 {
@@ -50,6 +52,8 @@ Route::prefix('admin')->group(function ()
     Route::get('staffs', 'AdminController@staffs')->name('admin.staffs');
     Route::get('organizations', 'AdminController@organizations')->name('admin.orgs');
     Route::get('itf-agents', 'AdminController@itf_agents')->name('admin.itfagents');
+    Route::get('/materials', 'AdminController@materials');
+    Route::post('/material/store', 'AdminController@store_material');
 
     // Session Setup
     Route::post('setup/store', 'SessionController@store')->name('admin.setup.store');
@@ -63,9 +67,12 @@ Route::prefix('admin')->group(function ()
     Route::get('assign-students/siwes-400', 'AdminController@siwes400Students');
     Route::get('/placement/siwes-300/{session_id}', 'AdminController@placement300perSession');
     Route::get('/placement/siwes-400/{session_id}', 'AdminController@placement400perSession');
+    Route::get('/swep-200/{session_id}', 'AdminController@swep200perSession');
     Route::get('/swep-200/{id}', 'AdminController@swep200');
     Route::get('/siwes-300/{id}', 'AdminController@siwes300');
     Route::get('/siwes-400/{id}', 'AdminController@siwes400');
+    Route::get('/student-200/{id}', 'AdminController@student200');
+    Route::post('/student/edit-itcu-score', 'AdminController@edit_itcu_score');
 
     // Organization
     Route::get('organizations/{id}', 'AdminController@org_details');
@@ -125,12 +132,17 @@ Route::prefix('student')->group(function ()
 Route::prefix('school')->group(function ()
 {
     Route::get('', 'SchoolController@index')->name('school');
+    Route::post('/material/store', 'SchoolController@store_material');
 
     Route::get('/student/{id}', 'SchoolController@student');
     Route::get('/student/siwes-400/{user_id}', 'SchoolController@siwes400');
     Route::get('/student/swep-200/{user_id}', 'SchoolController@swep200');
     Route::get('/student/siwes-300/{user_id}', 'SchoolController@siwes300');
     Route::get('/students/{session_id}/{siwes_type_id}', 'SchoolController@students');
+    Route::post('/swep_attendance/{siwes_id}', 'SchoolController@swep_attendance');
+    Route::get('/swep-200/{id}', 'SchoolController@swep200student');
+    Route::post('/student/edit-swep-score', 'SchoolController@edit_swep_score');
+    
 });
 
     //INDUSTRY Routes "3"

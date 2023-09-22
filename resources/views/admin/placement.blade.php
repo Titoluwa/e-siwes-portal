@@ -24,8 +24,14 @@
                                         <th>Name</th>
                                         <th>Matric Number</th>
                                         <th>Department</th>
-                                        <th>Organization</th>
-                                        <th>Address</th>
+                                        @if ($s_siwes->siwes_type_id != 1)
+                                            <th>Organization</th>
+                                            <th>Address</th>
+                                        @else
+                                            <th>Dept Score (/50)</th>
+                                            <th>ITCU Score (/50)</th>
+                                            <th>Total Score (/100)</th>
+                                        @endif
                                         
                                     </tr>
                                 </thead>
@@ -36,9 +42,18 @@
                                             <td>{{$student->user->name()}}</td>
                                             <td>{{$student->student->matric_no}} </td>
                                             <td>{{$student->student->department}} </td>
-                                            <td>{{$student->org->name}}</td>
-                                            <td>{{$student->org->full_address}}</td>
-                                            
+                                            @if ($student->org_id != null)
+                                                <td>{{$student->org->name}}</td>
+                                                <td>{{$student->org->full_address}}</td>
+                                            @else
+                                                <td>{{$student->swep_score}}</td>
+                                                <td>
+                                                    {{$student->itcu_score}}
+                                                    <input class="score_id" type="hidden" value="{{$student->id}}">
+                                                    <a href="" data-toggle="modal" data-target="#editScoreModal" class="editscore blue-text" style="text-decoration-line: none"><i class="fa fa-edit"></i></a>
+                                                </td>
+                                                <td>{{$student->total_score()}}</td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -108,12 +123,64 @@
                     </div>
                 </div>
             </div>
+            {{-- Edit Score Modals --}}
+            <div class="modal fade" data-keyboard="false" data-backdrop="static" id="editScoreModal" tabindex="-1" role="dialog" aria-labelledby="editScoreModal" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="text-center">
+                                <h5 class="modal-title blue-text" id="editScoreModalLabel"><b> Edit <span id="score_name">name</span>'s score</b></h5>
+                            </div>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><b>&times;</b></span>
+                            </button>
+                        </div>
+                                                
+                        <div class="m-3">
+                            <form class="form" method="POST" action="/admin/student/edit-itcu-score">
+                                @csrf
+                                <div id="score_bar" class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-4">
+                                        <input type="hidden" name="swep_id" id='swep_id'>
+                                        <input type="number" name="score" id="edit_score" value="{{ old('score') }}" required class="form-control @error('score') is-invalid @enderror">
+                                        @error('score')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-2 mt-1">
+                                        <button type="submit" class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i> save</button>
+                                    </div>
+                                    <div class="col-md-5"></div>
+
+                                </div>
+                            </form>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
 
 @section('scripts')
     <script>
+        $('.editscore').click(function(e) {
+            e.preventDefault();
+            var id = $(this).closest('td').find('.score_id').val();
+            // alert(id);
+            $.get('/admin/student-200/'+id, function(data)
+            {
+                // alert(data);
+                $('#score_name').html(data.user.last_name + " " + data.user.first_name);
+                $('#edit_score').val(data.itcu_score);
+                $('#swep_id').val(data.id);
+            })
+        });
         // new DataTable('#placementTable');
         $('#placementTable').DataTable( {
             dom: 'Bfrtip',
@@ -160,7 +227,6 @@
                             <td>${val.student.department}</td>
                             <td>${val.org.name}</td>
                             <td>${val.org.full_address}</td>
-
                         </tr>
                     `);
                 }); 

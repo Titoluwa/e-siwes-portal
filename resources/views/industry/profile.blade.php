@@ -124,7 +124,7 @@
                         <label class="col-form-label col-md-2" for="profile_pic">Profile Picture</label>
                         <div class="col-md-4">
                             <img src="{{asset('storage/'. Auth::user()->profile_pic)}}" alt="" width="60" height="60">
-                            <input type="file" class="@error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic">
+                            <input type="file" class="form-control-file @error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic">
                             @error('profile_pic')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

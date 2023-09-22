@@ -126,7 +126,7 @@
                             <label class="col-form-label col-md-3" for="signature">Signature</label>
                             <div class="col-md-5">
                             <img src="{{asset('storage/'. $student->signature)}}" alt="{{$student->signature}}" width="180" height="30">
-                                <input type="file" class="@error('signature') is-invalid @enderror" id="signature" name="signature">
+                                <input type="file" class="form-control-file @error('signature') is-invalid @enderror" id="signature" name="signature">
                                 @error('signature')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

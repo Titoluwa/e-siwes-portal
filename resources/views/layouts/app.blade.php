@@ -184,8 +184,8 @@
             @yield('content')
         </main>
 
-        <footer class="fixed-bottom text-center p-1">
-            <p>&copy; <a href="mailto:titoluwaranti@gmail.com" style="color:black; text-decoration: none;">Toluwani&#8482;</a></p>
+        <footer class="fixed-bottom text-center p-2">
+            <b>Copyright &copy; 2023 <a href="mailto:titoluwaranti@gmail.com" style="text-decoration: none;">Toluwani&#8482;.</a> All rights reserved.</b>
             {{-- <small>(2023)</small> --}}
         </footer>
     </div>

@@ -8,6 +8,7 @@ use App\Siwes;
 use App\Staff;
 use App\Session;
 use App\Student;
+use App\Material;
 use App\SiwesType;
 use Carbon\Carbon;
 use App\DailyRecord;
@@ -37,13 +38,12 @@ class SchoolController extends Controller
         $staff = Staff::where('user_id', $user_id)->first();
         $siwes = Siwes::where('session_id', $current_session->id)->where('assigned_staff_id', $staff->id)->get();
         $single_siwes = Siwes::where('session_id', $current_session->id)->where('assigned_staff_id', $staff->id)->first();
-        // $swep200 = Siwes::where('siwes_type_id', 1)->where('session_id', $current_session->id)->where('assigned_staff_id', $staff->id)->get();
-        // $siwes300 = Siwes::where('siwes_type_id', 2)->where('session_id', $current_session->id)->where('assigned_staff_id', $staff->id)->get();
-        // $siwes400 = Siwes::where('siwes_type_id', 3)->where('session_id', $current_session->id)->where('assigned_staff_id', $staff->id)->get();
         $sessions = Session::all();
         $siwes_types = SiwesType::all();
+        $material = Material::where('uploaded_by', $user_id)->orderBy('id', 'DESC')->first();
+        $materials = Material::where('uploaded_by', $user_id)->get();
         
-        return view('school.home', compact('staff', 'single_siwes','siwes', 'sessions', 'siwes_types', 'current_session'));
+        return view('school.home', compact('staff', 'single_siwes','siwes', 'sessions', 'siwes_types', 'current_session', 'material', 'materials'));
     }
     // Show the registraton form for the student user
     public function create(){
@@ -281,16 +281,26 @@ class SchoolController extends Controller
 
     public function student($id)
     {
-        $student = Student::where('user_id', $id)->first();
+        $data = Siwes::where('user_id', $id)->with('user', 'student', 'org')->first();
         // $org = Organization::where('user_id', $id)->first();
-        return view('school.student', compact('student'));
+        // $data = [
+        //     $siwes
+        // ];
+        return Response::json($data, 200);
+        // return view('school.student', compact('student'));
     }
-
+    public function swep200student($id)
+    {
+        $data = Siwes::where('id', $id)->with('user')->first();
+        
+        return Response::json($data, 200);
+    }
+    
     public function students($session_id, $siwes_type_id)
     {
         $staff = Staff::where('user_id', Auth::user()->id)->first();
-        // $students = Student::where('department', $staff->department)->get();
-        
+        $today = Carbon::today()->toDateString();
+
         $session = Session::where('id', $session_id)->first();
         $siwes_type = SiwesType::where('id', $siwes_type_id)->first();
         $siwes = Siwes::where('session_id', $session_id)->where('siwes_type_id', $siwes_type_id)->with('user', 'student', 'org')->get();
@@ -298,9 +308,37 @@ class SchoolController extends Controller
             $staff = Staff::where('user_id', Auth::user()->id)->first();
             return $value->student->department != $staff->department;
         });
-        // dd($filtered);
-        return view('school.all_students', compact('staff', 'session', 'siwes_type', 'filtered'));
+      
+        return view('school.all_students', compact('staff', 'session', 'siwes_type', 'filtered', 'today'));
     }
+    public function swep_attendance($siwes_id)
+    {
+        $today = Carbon::today()->toDateString();
+        $siwes = Siwes::where('id', $siwes_id)->first();
+        $newarr = $siwes->swep_attendance;
+        array_push($newarr, $today);
+        $siwes->swep_attendance = $newarr;
+        $siwes->update();
+
+        return response()->json(['status'=>"Marked as Present!!"]);
+    }
+    public function edit_swep_score(Request $request)
+    {
+        Siwes::where('id', $request->swep_id)->update(['swep_score'=> $request->score]);
+
+        return back();
+    }
+    public function store_material(Request $request)
+    {
+        // dd($request->all());
+        $material = Material::create($request->all());
+        $material->file = $request->file('file')->store('materials', 'public');
+        $material->name = $request->file('file')->getClientOriginalName();
+        $material->save();
+
+        return back()->with('Material has been uploaded!!');
+    }
+
     // To validate the inputs
     // private function validateRequest(){
     //     return request()->validate([

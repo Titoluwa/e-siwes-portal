@@ -37,6 +37,18 @@
                     <li>
                         <div class="dropdown">
                             <a class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-list"></i> SWEP 200 List
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                @foreach ($sessions as $session)
+                                    <a class="dropdown-item" href="/admin/swep-200/{{$session->id}}">{{$session->year}}</a>
+                                @endforeach
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <a class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-list"></i> SIWES 300 List
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -82,6 +94,11 @@
                     <li>
                         <a href="/admin/organizations" class="nav-link">
                         <i class="fas fa-industry"></i> Organizations
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/materials" class="nav-link">
+                            <i class="fa fa-copy"></i> Materials
                         </a>
                     </li>
                     <li>

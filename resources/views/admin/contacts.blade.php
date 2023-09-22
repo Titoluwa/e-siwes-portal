@@ -17,8 +17,8 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Phone Number</th>
                                     <th>Email Address</th>
+                                    <th>Phone Number</th>
                                     <th>Role</th>
                                 </tr>
                             </thead>
@@ -27,7 +27,7 @@
                                     <tr>
                                         <td>{{$user->name()}}</td>
                                         <td>{{$user->email}}</td>
-                                        <td>{{$user->contact_no}}</td>
+                                        <td>0{{$user->contact_no}}</td>
                                         <td>
                                             @if ($user->role_id == 1)
                                                 Student

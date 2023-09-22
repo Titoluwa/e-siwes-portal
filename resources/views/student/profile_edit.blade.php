@@ -157,7 +157,7 @@
                                     <img src="{{asset('images/user_default.png')}}" alt="" width="70" height="70">
                                 @endif
                                 
-                                <input type="file" class="@error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic">
+                                <input type="file" class="form-control-file @error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic">
                                 @error('profile_pic')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -168,7 +168,7 @@
                             <label class="col-form-label col-md-2" for="signature">Signature</label>
                             <div class="col-md-4">
                                 <img src="{{asset('storage/'. $student->signature)}}" alt="{{$student->signature}}" width="180" height="30">
-                                <input type="file" class="@error('signature') is-invalid @enderror" id="signature" name="signature">
+                                <input type="file" class="form-control-file @error('signature') is-invalid @enderror" id="signature" name="signature">
                                 @error('signature')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

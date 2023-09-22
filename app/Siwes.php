@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Siwes extends Model
 {
     protected $table = 'siwes';
-    
+    protected $casts = [
+        'swep_attendance' => 'array'
+    ];
     protected $guarded = ['id'];
     protected $timestamp = true;
     
@@ -34,5 +36,10 @@ class Siwes extends Model
     public function assigned_staff()
     {
         return $this->belongsTo(Staff::class);
+    }
+
+    public function total_score()
+    {
+        return $this->swep_score + $this->itcu_score;
     }
 }

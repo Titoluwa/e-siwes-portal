@@ -24,7 +24,7 @@
 
                     <div class="col-md-9">
                         <p>
-                            Registration Number: <b>{{$student->matric_no}}</b>
+                            Registration Number: <b>{{$student->student->matric_no}}</b>
                         </p>
                         <hr>
                         <p>
@@ -36,15 +36,15 @@
                         </p>
                         <hr>
                         <p>
-                            Faculty: <b>{{$student->faculty}}</b>
+                            Faculty: <b>{{$student->student->faculty}}</b>
                         </p>
                         <hr>
                         <p>
-                            Department: <b>{{$student->department}}</b>
+                            Department: <b>{{$student->student->department}}</b>
                         </p>
                         <hr>
                         <p>
-                            Course of study: <b>{{$student->course_of_study}}</b>
+                            Course of study: <b>{{$student->student->course_of_study}}</b>
                         </p>
                         <hr>
                         <p>

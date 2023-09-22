@@ -7,6 +7,7 @@ use App\Siwes;
 use App\Staff;
 use App\Session;
 use App\Student;
+use App\Material;
 use App\SiwesType;
 use Carbon\Carbon;
 use App\DailyRecord;
@@ -17,6 +18,7 @@ use App\OrgSupervisor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 
 class AdminController extends Controller
@@ -24,7 +26,7 @@ class AdminController extends Controller
     // Middleware for ITCU ADMIN activites
     public function __construct()
     {
-        $this->middleware('admin')->except(['org_details']);
+        $this->middleware('admin')->except(['org_details', 'material_download']);
     }
 
     public function index()
@@ -150,6 +152,15 @@ class AdminController extends Controller
         $current_session = Session::where('id', $session_id)->first();
         $s_siwes = Siwes::where('session_id', $session_id)->where('siwes_type_id', 3)->whereNotNull('org_id')->first();
         $siwes = Siwes::where('session_id', $session_id)->where('siwes_type_id', 3)->whereNotNull('org_id')->get();
+
+        return view('admin.placement', compact('current_session', 'sessions', 's_siwes', 'siwes'));
+    }
+    public function swep200perSession($session_id)
+    {
+        $sessions = Session::orderBy('id', 'DESC')->get();
+        $current_session = Session::where('id', $session_id)->first();
+        $s_siwes = Siwes::where('session_id', $session_id)->where('siwes_type_id', 1)->first();
+        $siwes = Siwes::where('session_id', $session_id)->where('siwes_type_id', 1)->get();
 
         return view('admin.placement', compact('current_session', 'sessions', 's_siwes', 'siwes'));
     }
@@ -384,4 +395,60 @@ class AdminController extends Controller
 
         return view('admin.contacts', compact('sessions', 'users'));
     }
+    public function student200($id)
+    {
+        $data = Siwes::where('id', $id)->with('user')->first();
+        
+        return Response::json($data, 200);
+    }
+    public function edit_itcu_score(Request $request)
+    {
+        Siwes::where('id', $request->swep_id)->update(['itcu_score'=> $request->score]);
+
+        return back();
+    }
+    public function materials()
+    {
+        $sessions = Session::orderBy('id', 'DESC')->get();
+        $siwes_types = SiwesType::all();
+        $material = Material::orderBy('id', 'DESC')->first();
+        $materials = Material::all();
+
+        return view('admin.materials', compact('sessions', 'siwes_types', 'material', 'materials'));
+    }
+    public function store_material(Request $request)
+    {
+        // dd($request->all());
+        // $material = new Material();
+        $material = Material::create($request->all());
+        $material->file = $request->file('file')->store('materials', 'public');
+        $material->name = $request->file('file')->getClientOriginalName();
+        $material->save();
+
+        return back()->with('Material has been uploaded!!');
+    }
+
+    public function material_download($file)
+    {
+        $material = Material::where('id', $file)->first();
+        if ($material == null)
+        {
+            $exists = false;
+        }else
+        {
+            $exists = Storage::disk('public')->exists($material->file);
+        }
+        if ($exists) {
+            // $path = Storage::disk('public')->path($material->file);
+            return Storage::disk('public')->download($material->file, $material->name);
+        } else {
+            return redirect('/404');
+        } 
+    }
 }
+// $exists = Storage::disk('public')->dow($material->file);
+// return Storage::download($material->file);
+// dd('filename');
+// $path = public_path($material->file);
+// dd($exists);
+// return response()->download($path);

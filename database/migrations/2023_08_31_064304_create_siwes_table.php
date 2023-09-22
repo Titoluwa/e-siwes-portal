@@ -26,6 +26,9 @@ class CreateSiwesTable extends Migration
             $table->string('duration_of_training')->nullable();
             $table->date('resumption_date')->nullable();
             $table->date('ending_date')->nullable();
+            $table->json('swep_attendance')->nullable();
+            $table->integer('swep_score')->default(0);
+            $table->integer('itcu_score')->default(0);
             $table->timestamps();
         });
     }
