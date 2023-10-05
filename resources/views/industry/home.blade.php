@@ -98,11 +98,12 @@
                                             @foreach($siwes as $student)
                                                 <tr>
                                                     <td>{{$loop->index + 1}}</td>
-                                                    <td><a href="/industry/student/{{$student->user_id}}">{{$student->user->name()}} ({{$student->siwes_type->name}})</a></td>
+                                                    <td><a onclick="studentDetails({{$student->id}})" href="" data-toggle="modal" data-target="#viewStudent">{{$student->user->name()}} ({{$student->siwes_type->name}})</a></td>
+                                                    {{-- <td><a href="/industry/student/{{$student->user_id}}">{{$student->user->name()}} ({{$student->siwes_type->name}})</a></td> --}}
                                                     <td>{{$student->student->matric_no}} </td>
                                                     <td>{{$student->student->department}} </td>
                                                     <td>
-                                                        <a href="/industry/logbook/{{$student->id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
+                                                        <a target="_blank" href="/industry/logbook/{{$student->id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
                                                         {{-- <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Forms</a> --}}
                                                         <button type='button' class='btn btn-sm btn-outline-danger delete'><i class="fa fa-trash-alt"></i></button>
                                                     </td>
@@ -124,4 +125,88 @@
         </div>
     </div>
 
+    {{-- Modals --}}
+    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="viewStudent" tabindex="-1" role="dialog" aria-labelledby="viewStudentModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewStudentModal"><b><i class="fa fa-id-badge"></i> <span id="student_name"></span></b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"><b>&times;</b></span>
+                </button>
+            </div>
+            <div class="card-body border-warning bg-light">
+                <div class="mt-3">
+                    <div class="col-md-3 float-right">
+                        <span id="profile_pic">
+                            <img class="rounded border-warning img-thumbnail float-right" src="{{asset('images/user_default.png')}}" alt="profile image" srcset="" width="150" height="150">
+                        </span>
+                        
+                    </div>
+
+                    <div class="col-md-9">
+                        <p>
+                            Registration Number: <b id="matric_no"></b>
+                        </p>
+                        <p>
+                            Surname: <b id="last_name"></b>
+                        </p>
+                        <p>
+                            Other Names: <b id="other_names"></b>
+                        </p>
+                        <p>
+                            Faculty: <b id="faculty"></b>
+                        </p>
+                        <p>
+                            Department: <b id="department"></b>
+                        </p>
+                        <p>
+                            Course of study: <b id="course"></b>
+                        </p>
+                        <hr>
+                        <p>
+                            Address during of Industrial Training: <b id="address"></b>
+                        </p>
+                        <p>
+                            Year of Industrial Training: <b id="y_training"> </b>
+                        </p>
+                        <p>
+                            Duration of Industrial Training: <b id="d_training"></b>
+                        </p>
+                        <p>
+                            Signature: <span id="signature"> </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+@endsection
+
+@section('scripts')
+    <script>
+        function studentDetails(id)
+        {
+            $.get('/industry/siwes_student/'+id, function(data)
+            {
+                $('#student_name').html(`${data.user.last_name} ${data.user.first_name}`);
+                if (data.user.profile_pic == null) {
+                    $('#profile_pic').html(` <img class="rounded border-warning img-thumbnail float-right" src="images/user_default.png" alt="profile image" srcset="" width="150" height="150">`);
+                } else {
+                    $('#profile_pic').html(`<img class="rounded border-warning img-thumbnail float-right" src="storage/${data.user.profile_pic}" alt="profile image" srcset="" width="150" height="150">`);
+                }
+                $('#matric_no').html(data.student.matric_no);
+                $('#last_name').html(data.user.last_name);
+                $('#other_names').html(`${data.user.first_name} ${data.user.middle_name}`);
+                $('#faculty').html(data.student.faculty);
+                $('#department').html(data.student.department);
+                $('#course').html(data.student.course_of_study);
+                $('#y_training').html(data.year_of_training);
+                $('#d_training').html(data.duration_of_training);
+                $('#signature').html(`<img src="storage/${data.student.signature}" alt="signature" width="180" height="30">`);                
+            })
+        }; 
+    </script>
 @endsection

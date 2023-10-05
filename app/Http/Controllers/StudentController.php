@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Siwes;
 use App\Session;
-
 use App\Student;
+use App\Material;
+use App\Announcement;
 use App\Organization;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -124,9 +125,12 @@ class StudentController extends Controller
         $siwes200 = Siwes::where('siwes_type_id', 1)->where('user_id', $id)->first();
         $siwes300 = Siwes::where('siwes_type_id', 2)->where('user_id', $id)->first();
         $siwes400 = Siwes::where('siwes_type_id', 3)->where('user_id', $id)->first();
+        $materials = Material::where('department', $student->department)->orWhere('siwes_type_id', 0)->get();
+        $announcement = Announcement::whereIn('department', [$student->department, 'All'])->orderBy('id', 'DESC')->first();
+        $announcements = Announcement::whereIn('department', [$student->department, 'All'])->orderBy('updated_at', 'DESC')->get();
         // dd($siwes300);
         
-        return view('student.home', compact('student', 'orgs', 'sessions', 'siwes200', 'siwes300', 'siwes400'));
+        return view('student.home', compact('student', 'orgs', 'sessions', 'siwes200', 'siwes300', 'siwes400', 'materials', 'announcement', 'announcements'));
     }
         // Show single StudentUser profile
     public function show()

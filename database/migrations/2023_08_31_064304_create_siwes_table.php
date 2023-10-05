@@ -21,7 +21,9 @@ class CreateSiwesTable extends Migration
             $table->foreignId('student_id')->constrained('students');
             $table->integer('assigned_staff_id')->nullable();
             $table->integer('dept_coord')->nullable();
+            $table->integer('org_sup_id')->nullable();
             $table->integer('org_id')->nullable();
+            $table->string('level')->nullable();
             $table->year('year_of_training')->nullable();
             $table->string('duration_of_training')->nullable();
             $table->date('resumption_date')->nullable();

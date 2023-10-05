@@ -1,5 +1,5 @@
 @extends('layouts.industry')
-
+@section('title', 'Student Logbook')
 @section('industrycontent')
 
     <div class="col-md-12">
@@ -13,7 +13,7 @@
                     <h4 class="mt-2 blue-text"><b>{{$siwes->user->name()}}'s LogBook for {{$siwes->siwes_type->name}}</b></h4>
                 </div>
                 <div class="float-right">
-                    <a class="btn btn-warning" href="/industry"><i class="fas fa-arrow-left"></i> Back</a>
+                    {{-- <a class="btn btn-warning" href="/industry"><i class="fas fa-arrow-left"></i> Back</a> --}}
                 </div>
             </div>
 

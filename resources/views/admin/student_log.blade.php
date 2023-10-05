@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Student Logs')
+@section('title', 'Student Logbook')
 
 @section('admincontent')
 
@@ -13,26 +13,26 @@
                         <h3 style="font-weight: 700;">{{$student->user->name()}}'s LogBook for {{$siwes_type->name}}</h3>
                     </div>
                     @if (!empty($siwes))
-                        @if ($siwes->siwes_type_id == 2 OR 3)
+                        @if ($siwes->siwes_type_id == 1)
                             <div class="float-right">
                                 <div class="dropdown">
                                     <a class="btn btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-file"></i> Forms
+                                        <i class="fa fa-file"></i> SWEP 200
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="/student/sp3">SP. 3</a>
+                                        {{-- <a class="dropdown-item" href="/student/sp3">SP. 3</a>
                                         <a class="dropdown-item" href="/student/form8">Form 8</a>
-                                        <a class="dropdown-item" href="/student/scaf">SCAF</a>
+                                        <a class="dropdown-item" href="/student/scaf">SCAF</a> --}}
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">Assessment</a>
                                     </div>
                                 </div>
                             </div>
-                        @elseif($siwes->siwes_type_id == 1)
+                        @else
                         <div class="float-right">
                             <div class="dropdown">
                                 <a class="btn btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    SWEP 200
+                                    <i class="fa fa-file"></i> Form
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="/student/sp3">SP. 3</a>

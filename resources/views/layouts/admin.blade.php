@@ -41,7 +41,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 @foreach ($sessions as $session)
-                                    <a class="dropdown-item" href="/admin/swep-200/{{$session->id}}">{{$session->year}}</a>
+                                    <a class="dropdown-item" href="/admin/placement/swep-200/{{$session->id}}">{{$session->year}}</a>
                                 @endforeach
                             </div>
                         </div>
@@ -99,6 +99,11 @@
                     <li>
                         <a href="/admin/materials" class="nav-link">
                             <i class="fa fa-copy"></i> Materials
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/announce" class="nav-link">
+                            <i class="fa fa-chalkboard"></i> Notice Board
                         </a>
                     </li>
                     <li>

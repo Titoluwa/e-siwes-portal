@@ -63,7 +63,7 @@
                                                     </td>
                                                 @endif
                                                 <td>
-                                                    <a target="_blank" href="/school/student/{{$siwes->siwes_type->code_name}}/{{$siwes->user_id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
+                                                    <a target="_blank" href="/school/{{$siwes->siwes_type->code_name}}/{{$siwes->user_id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
                                                 </td>
                                             </tr>
                                         @endforeach

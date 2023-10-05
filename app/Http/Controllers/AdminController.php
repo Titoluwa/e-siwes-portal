@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Announcement;
 use App\User;
 use App\Siwes;
 use App\Staff;
@@ -26,7 +27,7 @@ class AdminController extends Controller
     // Middleware for ITCU ADMIN activites
     public function __construct()
     {
-        $this->middleware('admin')->except(['org_details', 'material_download']);
+        $this->middleware('admin')->except(['org_details', 'material_download', 'post_announcement']);
     }
 
     public function index()
@@ -416,10 +417,24 @@ class AdminController extends Controller
 
         return view('admin.materials', compact('sessions', 'siwes_types', 'material', 'materials'));
     }
+    public function announce()
+    {
+        $sessions = Session::orderBy('id', 'DESC')->get();
+        $departments = DB::table('departments')->select('department')->groupBy('department')->get();
+        $announcement = Announcement::orderBy('id', 'DESC')->first();
+        $announcements = Announcement::orderBy('updated_at', 'DESC')->get();
+
+        return view('admin.announce', compact('sessions', 'departments', 'announcement', 'announcements'));
+    }
+    public function post_announcement(Request $request)
+    {
+        $announce = Announcement::create($request->all());
+        $announce->save();
+
+        return back()->with('New Notice has been posted!');
+    }
     public function store_material(Request $request)
     {
-        // dd($request->all());
-        // $material = new Material();
         $material = Material::create($request->all());
         $material->file = $request->file('file')->store('materials', 'public');
         $material->name = $request->file('file')->getClientOriginalName();

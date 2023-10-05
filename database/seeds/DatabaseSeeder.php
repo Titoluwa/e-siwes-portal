@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AdminUserSeeder::class,
-            ItfAgentSeeder::class,
+            // ItfAgentSeeder::class,
             DepartmentSeeder::class,
             OrganizationSeeder::class,
             SessionSeeder::class,

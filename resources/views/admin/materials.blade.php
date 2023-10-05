@@ -52,8 +52,8 @@
                                         <td style="display: inline-flex; width: 100%;">
                                             <a href="/download/{{$material->id}}" class="m-1" ><i class="fa fa-download"></i> </a>
                                             @if ($material->uploaded_by == Auth()->user()->id)
-                                                    <a href="/admin/material/delete/{{$material->id}}" class="m-1 btn btn-sm btn-outline-danger"><i class="far fa-trash-alt"></i></a>
-                                                @endif
+                                                <a href="/admin/material/delete/{{$material->id}}" class="m-1 btn btn-sm btn-outline-danger"><i class="far fa-trash-alt"></i></a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

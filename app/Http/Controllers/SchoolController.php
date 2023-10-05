@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\SiwesAssessment;
 use App\User;
 use App\Siwes;
 
@@ -12,6 +13,7 @@ use App\Material;
 use App\SiwesType;
 use Carbon\Carbon;
 use App\DailyRecord;
+use App\Announcement;
 use App\Organization;
 use App\WeeklyRecord;
 use App\MonthlyRecord;
@@ -42,8 +44,10 @@ class SchoolController extends Controller
         $siwes_types = SiwesType::all();
         $material = Material::where('uploaded_by', $user_id)->orderBy('id', 'DESC')->first();
         $materials = Material::where('uploaded_by', $user_id)->get();
+        $announcement = Announcement::whereIn('department', [$staff->department, 'All Students', 'Department Coordinator'])->orderBy('id', 'DESC')->first();
+        $announcements = Announcement::whereIn('department', [$staff->department, 'All Students', 'Department Coordinator'])->orderBy('updated_at', 'DESC')->get();
         
-        return view('school.home', compact('staff', 'single_siwes','siwes', 'sessions', 'siwes_types', 'current_session', 'material', 'materials'));
+        return view('school.home', compact('staff', 'single_siwes','siwes', 'sessions', 'siwes_types', 'current_session', 'material', 'materials', 'announcement', 'announcements'));
     }
     // Show the registraton form for the student user
     public function create(){
@@ -147,14 +151,16 @@ class SchoolController extends Controller
         }else{
             $monthlyrecords = null;
         }
-        return view('school.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks'));
+        $assessment = SiwesAssessment::where('siwes_id', $student->id)->first();
+
+        return view('school.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'assessment'));
     }
     public function siwes400($id)
     {
         $student = Student::where('user_id', $id)->first();
         $siwes = Siwes::where('siwes_type_id', 3)->where('user_id', $id)->first();
         $currentdate = Carbon::now()->format('Y-m-d');
-        
+        $assessment = SiwesAssessment::where('siwes_id', $siwes->id)->first();
         $all_dailys = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->first();
         $all_weeks = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
         $dailyrecords = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
@@ -190,13 +196,14 @@ class SchoolController extends Controller
         }else{
             $monthlyrecords = null;
         }
-        return view('school.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes'));
+        return view('school.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes', 'assessment'));
     }
     public function siwes300($id)
     {
         $student = Student::where('user_id', $id)->first();
         $siwes = Siwes::where('siwes_type_id', 2)->where('user_id', $id)->first();
         $currentdate = Carbon::now()->format('Y-m-d');
+        $assessment = SiwesAssessment::where('siwes_id', $siwes->id)->first();
         $all_dailys = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->first();
         $all_weeks = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
         $dailyrecords = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
@@ -232,7 +239,7 @@ class SchoolController extends Controller
         }else{
             $monthlyrecords = null;
         }
-        return view('school.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes'));
+        return view('school.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes', 'assessment'));
     }
 
     public function swep200($id)
@@ -240,6 +247,7 @@ class SchoolController extends Controller
         $student = Student::where('user_id', $id)->first();
         $siwes = Siwes::where('siwes_type_id', 1)->where('user_id', $id)->first();
         $currentdate = Carbon::now()->format('Y-m-d');
+        $assessment = SiwesAssessment::where('siwes_id', $siwes->id)->first();
         $all_dailys = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->first();
         $all_weeks = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
         $dailyrecords = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
@@ -275,7 +283,7 @@ class SchoolController extends Controller
         }else{
             $monthlyrecords = null;
         }
-        return view('school.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes'));
+        return view('school.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes', 'assessment'));
     }
 
 
@@ -337,6 +345,14 @@ class SchoolController extends Controller
         $material->save();
 
         return back()->with('Material has been uploaded!!');
+    }
+    public function store_supervisionform(Request $request)
+    {
+        // dd($request->all());
+        $assessment = SiwesAssessment::create($request->all());
+        $assessment->save();
+
+        return back()->with('Assessment Submitted');
     }
 
     // To validate the inputs

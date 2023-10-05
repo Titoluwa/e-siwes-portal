@@ -3,25 +3,37 @@
 @section('studentcontent')
 
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-lg-8 mb-4">
             <div class="card border-warning">
 
                 <div class="card-body p-5">
                     <h3 class="text-center">Welcome, <b>{{Auth::user()->last_name}}!</b></h3>
                     <p class="text-center">You're logged in</p>
 
-                    <div class="text-center p-3 m-4 row">
-                        <div class="col-4">
+                    <div class="text-center p-3 row">
+                        <div class="col-lg-3 mb-2">
+                            <div class="dropdown">
+                                <a class="nav-link dropdown-toggle btn btn-sm bg-oth-color nav-text-color" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-book"></i> Materials
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    @foreach ($materials as $material)
+                                        <a class="dropdown-item" href="/download/{{$material->id}}">{{$material->name}}</a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mb-2">
                             <button type="submit" class="btn bg-oth-color nav-text-color" onclick="swep200Display()">
                                 SWEP 200
                             </button>
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-3 mb-2">
                             <button type="submit" class="btn bg-oth-color nav-text-color" onclick="siwes300Display()">
                                 SIWES 300
                             </button>
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-3 mb-2">
                             <button type="submit" class="btn bg-oth-color nav-text-color" onclick="siwes400Display()">
                                 SIWES 400
                             </button>
@@ -357,7 +369,36 @@
                     
 
                 </div>
-                
+             
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card border-warning">
+                <div class="card-header border-warning blue-text bg-othe-color">
+                   <h5 class="text-center mt-2"><i class="fa fa-chalkboard"></i> <b>Notice Board</b></h5>
+                </div>
+                <div class="card-body p-3">
+                    @if (empty($announcement))
+                        <h5 class="text-center">NO Notice has been posted!</h5>
+                    @endif
+                    @foreach ($announcements as $announce)
+                        <div class="col-12 card border-warning mb-3 bg-othe-color">
+                            <div class="card-body">
+                                <div style="display: inline-flex">
+                                    <img class="logo rounded" src="{{ asset('images/OAU-Logo.png') }}" width="30" height="30" alt="" srcset="">
+                                    <p class="card-title"><b> &nbsp;{{$announce->title}}</b></p>
+                                </div>
+                                <p class="card-text">{{$announce->content}}</p>
+                                <div style="align-text: left" class="float-right text-muted">
+                                    <small class=""><i>For {{$announce->department}}</i></small>
+                                    <br>
+                                    <small class=""><i>Posted by: {{$announce->user->last_name}}</i></small>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>

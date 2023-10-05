@@ -216,6 +216,12 @@ class IndustryController extends Controller
         
         return view('industry.student', compact('student'));
     }
+    public function siwes_student($id)
+    {
+        $student = Siwes::where('id', $id)->with('user', 'student')->first();
+
+        return response()->json($student);
+    }
     public function siwes_log($siwes_id)
     {
         $siwes = Siwes::where('id', $siwes_id)->first();

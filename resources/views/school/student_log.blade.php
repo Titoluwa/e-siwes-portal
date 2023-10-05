@@ -1,23 +1,35 @@
 @extends('layouts.school')
 
-@section('title', 'Logbook')
+@section('title', 'Student Logbook')
 
 @section('schoolcontent')
 
-    <div class="col-md-12">
+    <div class="col-md-12 m-4">
         <div class="card border-warning">
 
             <div class="card-header border-warning ">
-                <h4 class="mt-2 blue-text"><b>{{$student->user->name()}}'s</b> logbook for <span>{{$siwes->siwes_type->name}}</span></h4>
+                <div class="float-left blue-text">
+                    <h4 class="m-2 blue-text"><b>{{$student->user->name()}}</b>'s logbook for <span>{{$siwes->siwes_type->name}}</span></h4>
+                </div>
+                
+                <div class="float-right">
+                    @if (empty($assessment))
+                        <button class=" m-2 btn btn-sm btn-secondary" data-toggle="modal" data-target="#supervisionForm" >Supervision Form</button>
+                    @endif
+                </div>
             </div>
 
             <div class="card-body border-warning bg-light">
 
-                <p class="text-center blue-text mb-4">
+                <p class="text-center blue-text mb-2">
                     View and Assess on this student's weekly and monthly activitites at their Organization of attachment
                 </p>
-
-                <div id="Records">
+                @if (!empty($assessment))
+                    <p class="text-center">
+                        <b class="text-success">Visitation Supervision Assessment has been submitted. </b> <a href="" data-toggle="modal" data-target="#edit_supervisionForm" ><i class="fa fa-edit"></i> Edit</a>
+                    </p>
+                @endif
+                <div id="Records" class="mt-4">
                     <div class="card border-primary">
                         <div class="card-header border-primary bg-othe-color " id="Daily_heading">
                             <h4 class="mb-0 clearfix">
@@ -165,10 +177,10 @@
                 </div>
 
             </div> 
-                
+        </div>       
         <!-- MODALS -->
 
-{{-- WEEKLY --}}
+    {{-- WEEKLY --}}
             <!-- Edit Weekly Activity Modal -->
             <div class="modal fade" data-keyboard="false" data-backdrop="static" id="edit_weekly_modal" tabindex="-1" role="dialog" aria-labelledby="edit_weeklyModal" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -419,14 +431,313 @@
                 </div>
             </div>
 
-        </div>
+            {{-- Supervision Form --}}
+            <div class="modal fade" data-keyboard="false" data-backdrop="static" id="supervisionForm" tabindex="-1" role="dialog" aria-labelledby="supervisionFormModal" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center blue-text" id="supervisionFormModalLabel"><b style="font-weight:900"> SIWES Supervision Form </b></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><b>&times;</b></span>
+                        </button>
+                    </div>
+                    <form action="/school/supervision/store" method="POST">
+                        @csrf
+                        <input type="hidden" name="siwes_id" value="{{$siwes->id}}">
+                        <input type="hidden" name="user_id" value="{{$siwes->user_id}}">
+                        <input type="hidden" name="student_id" value="{{$siwes->student_id}}">
+                        <div class="modal-body">
+                            <div class="row m-2">
+                                <div class="col-6 p-2">
+                                    <label class="col-form-label" for="student">Name of Student: </label>
+                                    <input class="form-control" type="text" name="student" id="student" disabled value="{{$student->user->name()}}">
+                                </div>
+                                <div class="col-6 p-2">
+                                    <label class="col-form-label" for="reg_no">Registration Number: </label>
+                                    <input class="form-control" type="text" name="reg_no" id="reg_no" disabled value="{{$student->matric_no}}">
+                                </div>
+                                <div class="col-8 p-2">
+                                    <label class="col-form-label" for="course">Course: </label>
+                                    <input class="form-control" type="text" name="course" id="course" disabled value="{{$student->course_of_study}}">
+                                </div>
+                                <div class="col-4 p-2">
+                                    <label class="col-form-label" for="level">Level: </label>
+                                    <select class="form-control" name="level" id="level">
+                                        <option value="100">100</option>
+                                        <option value="200">200</option>
+                                        <option value="300">300</option>
+                                        <option value="400">400</option>
+                                        <option value="500">500</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6 p-2">
+                                    <label class="col-form-label" for="industry_supervisor">Name of Industry based supervisor</label>
+                                    <input class="form-control" type="text" name="industry_supervisor" id="industry_supervisor" disabled value="{{$siwes->org->name}}">
+                                </div>
+                                <div class="col-6 p-2">
+                                    <label class="col-form-label" for="org_name">Name of Industry</label>
+                                    <input class="form-control" type="text" name="org_name" id="org_name" disabled value="{{$siwes->org->name}}">
+                                </div>
+                                <div class="col-12 p-2">
+                                    <label class="col-form-label" for="org_address">Address of Industry</label>
+                                    <input class="form-control" type="text" name="org_address" id="org_address" disabled value="{{$siwes->org->full_address}}">
+                                </div>
+                                {{-- <hr> --}}
+                                <div class="col-lg-4 p-2">
+                                    <label class="col-form-label" for="visitation_date">Date of Visit:</label>
+                                    <input class="form-control" type="date" name="visitation_date" id="visitation_date" value="{{ old('visistation_date') }}">
+                                </div>
+                                <div class="col-8 p-2">
+                                    
+                                </div>
+                                <div class="col-6 p-2">
+                                    <label for="available_at_visit" class="col-form-label @error('available_at_visit') is-invalid @enderror">Is the student in the industry at the time of the visit <small class="text-danger">*</small></label>
+                                    <br>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="available_at_visit" id="yes" value="1" >
+                                        <label class="form-check-label" for="yes">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="available_at_visit" id="no" value="0">
+                                        <label class="form-check-label" for="no">No</label>
+                                    </div>
+                                </div>
+                                <div class="col-6 p-2" id="not_avail" style="display: none">
+                                    <label class="col-form-label" for="why_not_available">If No, Why? </label>
+                                    <input class="form-control" type="text" name="why_not_available" id="why_not_available" value="{{ old('why_not_available') }}"> 
+                                </div>
+                                <div class="col-6 p-2">
+                
+                                    <label for="logbook_seen" class="col-form-label @error('logbook_seen') is-invalid @enderror">Is the Logbook sighted during the visit <small class="text-danger">*</small></label>
+                                    <br>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="logbook_seen" id="yes" value="1">
+                                        <label class="form-check-label" for="yes">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="logbook_seen" id="no" value="0">
+                                        <label class="form-check-label" for="no">No</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-6 p-2">
+                                    <label for="logbook_completed" class="col-form-label @error('logbook_completed') is-invalid @enderror">Is the Logbook up-to-date at the time of the visit <small class="text-danger">*</small></label>
+                                    <br>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="logbook_completed" id="yes" value="1">
+                                        <label class="form-check-label" for="yes">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="logbook_completed" id="no" value="0">
+                                        <label class="form-check-label" for="no">No</label>
+                                    </div>
+                                </div>
+                                <div class="col-6 p-2">
+                                    <label for="logbook_appropriate" class="col-form-label @error('logbook_appropriate') is-invalid @enderror">Is the Logbook appropriately completed <small class="text-danger">*</small></label>
+                                    <br>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="logbook_appropriate" id="yes" value="1">
+                                        <label class="form-check-label" for="yes">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="logbook_appropriate" id="no" value="0">
+                                        <label class="form-check-label" for="no">No</label>
+                                    </div>
+                                </div>
+                                <div class="col-6 p-2" id="not_app" style="display: none">
+                                    <label class="col-form-label" for="why_not_appropriate">If No, state the deficiencies? </label>
+                                    <textarea class="form-control" name="why_not_appropriate" id="why_not_appropriate" rows="2">{{ old('why_not_appropriate') }}</textarea>
+                                </div>
+                                <div class="col-12 p-2">
+                                    <label class="col-form-label" for="attitude_student"> Attitude of the student to training</label>
+                                    <input class="form-control" type="text" name="attitude_student" id="attitude_student" value="{{ old('attitude_student') }}">
+                                </div>
+                                <div class="col-12 p-2">
+                                    <label class="col-form-label" for="challenges"> Any major challenge(s) requiring immediate attetion of the SIWES office ? Please specify</label>
+                                    <textarea class="form-control" name="challenges" id="challenges" rows="2">{{ old('challenges') }}</textarea>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-warning">Submit</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Edit Supervision Form --}}
+            @if (!empty($assessment))
+                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="edit_supervisionForm" tabindex="-1" role="dialog" aria-labelledby="edit_supervisionFormModal" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center blue-text" id="edit_supervisionFormModalLabel"><b style="font-weight:900">Edit SIWES Supervision Form </b></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><b>&times;</b></span>
+                            </button>
+                        </div>
+                        <form action="/school/supervision/store" method="POST">
+                            @csrf
+                            <input type="hidden" name="siwes_id" value="{{$siwes->id}}">
+                            <input type="hidden" name="user_id" value="{{$siwes->user_id}}">
+                            <input type="hidden" name="student_id" value="{{$siwes->student_id}}">
+                            <div class="modal-body">
+                                <div class="row m-2">
+                                    <div class="col-6 p-2">
+                                        <label class="col-form-label" for="student">Name of Student: </label>
+                                        <input class="form-control" type="text" name="student" id="student" disabled value="{{$student->user->name()}}">
+                                    </div>
+                                    <div class="col-6 p-2">
+                                        <label class="col-form-label" for="reg_no">Registration Number: </label>
+                                        <input class="form-control" type="text" name="reg_no" id="reg_no" disabled value="{{$student->matric_no}}">
+                                    </div>
+                                    <div class="col-8 p-2">
+                                        <label class="col-form-label" for="course">Course: </label>
+                                        <input class="form-control" type="text" name="course" id="course" disabled value="{{$student->course_of_study}}">
+                                    </div>
+                                    <div class="col-4 p-2">
+                                        <label class="col-form-label" for="level">Level: </label>
+                                        <select class="form-control" name="level" id="level">
+                                            <option value="100">100</option>
+                                            <option value="200">200</option>
+                                            <option value="300">300</option>
+                                            <option value="400">400</option>
+                                            <option value="500">500</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6 p-2">
+                                        <label class="col-form-label" for="industry_supervisor">Name of Industry based supervisor</label>
+                                        <input class="form-control" type="text" name="industry_supervisor" id="industry_supervisor" disabled value="{{$siwes->org->name}}">
+                                    </div>
+                                    <div class="col-6 p-2">
+                                        <label class="col-form-label" for="org_name">Name of Industry</label>
+                                        <input class="form-control" type="text" name="org_name" id="org_name" disabled value="{{$siwes->org->name}}">
+                                    </div>
+                                    <div class="col-12 p-2">
+                                        <label class="col-form-label" for="org_address">Address of Industry</label>
+                                        <input class="form-control" type="text" name="org_address" id="org_address" disabled value="{{$siwes->org->full_address}}">
+                                    </div>
+                                    {{-- <hr> --}}
+                                    <div class="col-lg-4 p-2">
+                                        <label class="col-form-label" for="visitation_date">Date of Visit:</label>
+                                        <input class="form-control" type="date" name="visitation_date" id="visitation_date" value="{{$assessment->visitation_date }}">
+                                    </div>
+                                    <div class="col-8 p-2">
+                                        
+                                    </div>
+                                    <div class="col-6 p-2">
+                                        <label for="available_at_visit" class="col-form-label @error('available_at_visit') is-invalid @enderror">Is the student in the industry at the time of the visit <small class="text-danger">*</small></label>
+                                        <br>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="available_at_visit" id="yes" value="1" >
+                                            <label class="form-check-label" for="yes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="available_at_visit" id="no" value="0">
+                                            <label class="form-check-label" for="no">No</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 p-2">
+                                        <label class="col-form-label" for="why_not_available">If No, Why? </label>
+                                        <input class="form-control" type="text" name="why_not_available" id="why_not_available" value="{{ $assessment->why_not_available }}"> 
+                                    </div>
+                                    <div class="col-6 p-2">
+                    
+                                        <label for="logbook_seen" class="col-form-label @error('logbook_seen') is-invalid @enderror">Is the Logbook sighted during the visit <small class="text-danger">*</small></label>
+                                        <br>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="logbook_seen" id="yes" value="1">
+                                            <label class="form-check-label" for="yes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="logbook_seen" id="no" value="0">
+                                            <label class="form-check-label" for="no">No</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-6 p-2">
+                                        <label for="logbook_completed" class="col-form-label @error('logbook_completed') is-invalid @enderror">Is the Logbook up-to-date at the time of the visit <small class="text-danger">*</small></label>
+                                        <br>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="logbook_completed" id="yes" value="1">
+                                            <label class="form-check-label" for="yes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="logbook_completed" id="no" value="0">
+                                            <label class="form-check-label" for="no">No</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 p-2">
+                                        <label for="logbook_appropriate" class="col-form-label @error('logbook_appropriate') is-invalid @enderror">Is the Logbook appropriately completed <small class="text-danger">*</small></label>
+                                        <br>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="logbook_appropriate" id="yes" value="1">
+                                            <label class="form-check-label" for="yes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="logbook_appropriate" id="no" value="0">
+                                            <label class="form-check-label" for="no">No</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 p-2">
+                                        <label class="col-form-label" for="why_not_appropriate">If No, state the deficiencies? </label>
+                                        <textarea class="form-control" name="why_not_appropriate" id="why_not_appropriate" rows="2">{{ $assessment->why_not_appropriate }}</textarea>
+                                    </div>
+                                    <div class="col-12 p-2">
+                                        <label class="col-form-label" for="attitude_student"> Attitude of the student to training</label>
+                                        <input class="form-control" type="text" name="attitude_student" id="attitude_student" value="{{ $assessment->attitude_student }}">
+                                    </div>
+                                    <div class="col-12 p-2">
+                                        <label class="col-form-label" for="challenges"> Any major challenge(s) requiring immediate attetion of the SIWES office ? Please specify</label>
+                                        <textarea class="form-control" name="challenges" id="challenges" rows="2">{{ $assessment->challenges }}</textarea>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-warning">Update</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            
+
+        {{-- </div> --}}
     </div>
 
 @endsection
 
 @section('scripts')
 
-    
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('input[name="available_at_visit"]').click(function() {
+                var inputValue = $(this).attr("value");
+                if (inputValue == 0) {
+                    $("#not_avail").show();
+                }else{
+                    $("#not_avail").hide();
+                }
+            });
+        });
+        $(document).ready(function() {
+            $('input[name="logbook_appropriate"]').click(function() {
+                var inputValue = $(this).attr("value");
+                if (inputValue == 0) {
+                    $("#not_app").show();
+                }else{
+                    $("#not_app").hide();
+                }
+            });
+        });
+
+    </script>
     <script  type="text/javascript">
         //  Get Scripts
         function get_weeklyrecord(id)
@@ -464,7 +775,6 @@
                 $('#e_month_name').val(data.record.name);
                 $('#e_description_of_month').val(data.record.description_of_month);
                 $('#e_org_sup_comment').val(data.record.org_sup_comment);
-                
 
                 $('#monthname').html(data.record.name);
                 $('#month_dow').html(data.record.description_of_month);
@@ -537,4 +847,5 @@
         });
 
     </script>
+
 @endsection

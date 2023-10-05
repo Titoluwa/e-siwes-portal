@@ -16,7 +16,7 @@ class CreateSiwesAssessmentTable extends Migration
         Schema::create('siwes_assessment', function (Blueprint $table) {
             $table->id();
             $table->foreignId('siwes_id')->constrained('siwes');
-            $table->foreignId('user_id')->constrained('users');
+            $table->integer('student_id');
             $table->date('visitation_date');
             $table->boolean('available_at_visit');
             $table->string('why_not_available')->nullable();
@@ -26,8 +26,8 @@ class CreateSiwesAssessmentTable extends Migration
             $table->string('why_not_appropriate')->nullable();
             $table->string('attitude_student');
             $table->string('challenges')->nullable();
-            $table->string('qualitative');
-            $table->integer('qualitative_score');
+            $table->string('qualitative')->nullable();
+            $table->integer('qualitative_score')->default(0);
             $table->timestamps();
         });
     }
