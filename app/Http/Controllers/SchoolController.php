@@ -348,11 +348,27 @@ class SchoolController extends Controller
     }
     public function store_supervisionform(Request $request)
     {
-        // dd($request->all());
         $assessment = SiwesAssessment::create($request->all());
         $assessment->save();
 
         return back()->with('Assessment Submitted');
+    }
+    public function update_supervisionform(Request $request, $id)
+    {
+        // dd($request->all());
+        $assessment = SiwesAssessment::where('id', $id)->first();
+        // $assessment->visitation_date = $request->visitation_date;
+        $assessment->available_at_visit = $request->available_at_visit;
+        $assessment->why_not_available = $request->why_not_available;
+        $assessment->logbook_seen = $request->logbook_seen;
+        $assessment->logbook_completed = $request->logbook_completed;
+        $assessment->logbook_appropriate = $request->logbook_appropriate;
+        $assessment->why_not_appropriate = $request->why_not_appropriate;
+        $assessment->attitude_student = $request->attitude_student;
+        $assessment->challenges = $request->challenges;
+        $assessment->update();
+
+        return back()->with('Assessment Updated');
     }
 
     // To validate the inputs

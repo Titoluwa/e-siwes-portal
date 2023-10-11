@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\PrintDoc;
 use App\Student;
 use Carbon\Carbon;
 use App\DailyRecord;
@@ -190,6 +191,9 @@ class LogbookController extends Controller
         $siwes = Siwes::create($request->all());
         $siwes->user_id = $user_id;
         $siwes->save();
+        $print = new PrintDoc();
+        $print->siwes_id = $siwes->id;
+        $print->save();
 
         return back();
     }

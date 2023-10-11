@@ -17,6 +17,7 @@ class AdminUserSeeder extends Seeder
         $admin->last_name = 'ITCU';
         $admin->email = 'itcu@oauife.edu.ng';
         $admin->contact_no = '08115776482';
+        $admin->profile_pic = 'images/oau-view-2.webp';
         $admin->password = bcrypt('adminitcu');
         $admin->save();
     }

@@ -1,13 +1,35 @@
 @extends('layouts.industry')
+
 @section('title', 'Student Logbook')
+
+@section('style')
+    <style>
+    datalist {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        writing-mode: horizontal-tb;
+        width: 100%;
+    }
+/* 
+    option {
+        padding: 0;
+    }
+
+    input[type="range"] {
+        width: 200px;
+        margin: 0;
+    } */
+
+    </style>
+
+@endsection
+
 @section('industrycontent')
 
     <div class="col-md-12">
         <div class="card border-warning">
 
-            {{-- <div class="card-header border-warning" style="display: inline-flex">
-                <div class="float-left"></div>
-            </div> --}}
             <div class="card-header border-warning clearfix mt-2 ">
                 <div class="float-left">
                     <h4 class="mt-2 blue-text"><b>{{$siwes->user->name()}}'s LogBook for {{$siwes->siwes_type->name}}</b></h4>
@@ -25,7 +47,12 @@
                         </p>
                     </div>
                     <div class="float-right">
-                        <div class="dropdown mb-4">
+                        @if (!empty($org_assessment))
+                            <button class="mb-4 btn btn-outline-secondary" data-toggle="modal" data-target="#supervisionForm">Edit Assessment</button>
+                        @else
+                            <button class="mb-4 btn btn-outline-secondary" data-toggle="modal" data-target="#supervisionForm">Assessment</button>
+                        @endif
+                        {{-- <div class="dropdown mb-4">
                             <a class="btn btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-file"></i> Forms
                             </a>
@@ -36,7 +63,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Assessment</a>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
@@ -189,7 +216,7 @@
 
             </div> 
                 
-        <!-- MODALS -->
+<!-- MODALS -->
 
 {{-- WEEKLY --}}
             <!-- Edit Weekly Activity Modal -->
@@ -211,13 +238,6 @@
                             <div class="row form-group">
                                 <div class="col-md-12">
                                     <label for="name" class="col-form-label"><b>Name Week</b></label>
-                                    <!-- <select class="form-control  @error('name') is-invalid @enderror" name="name" id="edit_w_name">
-                                        <option value="" disabled selected>Week</option>
-                                        <option value="Week 1">Week 1</option>
-                                        <option value="Week 2">Week 2</option>
-                                        <option value="Week 3">Week 3</option>
-                                        <option value="Week 4">Week 4</option>
-                                    </select>     -->
                                     <input id="edit_w_name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="">
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -441,7 +461,238 @@
                     </div>
                 </div>
             </div>
+{{-- ASSESSMENT --}}
+            {{-- Supervision Form --}}
+                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="supervisionForm" tabindex="-1" role="dialog" aria-labelledby="supervisionFormModal" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center blue-text" id="supervisionFormModalLabel"><b style="font-weight:900"> @if (!empty($org_assessment)) <i class="fa fa-edit"></i> Edit @endif SIWES Assessment Report </b></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><b>&times;</b></span>
+                                </button>
+                            </div>
+                            @if (!empty($org_assessment))
+                                <form action="/industry/supervision/update/{{$org_assessment->id}}" method="POST">
+                                    @method('PUT')
+                            @else
+                                <form action="/industry/supervision/store" method="POST">
+                            @endif
+                                @csrf
+                                <input type="hidden" name="siwes_id" value="{{$siwes->id}}">
+                                <input type="hidden" name="supervisor_id" value="{{Auth::user()->id}}">
+                                <input type="hidden" name="student_id" value="{{$siwes->student_id}}">
+                                <div class="modal-body">
+                                    <div class="row m-2">
+                                        <div class="col-6 p-2">
+                                            <label class="col-form-label" for="student">Name of Student: </label>
+                                            <input class="form-control" type="text" name="student" id="student" disabled value="{{$siwes->user->name()}}">
+                                        </div>
+                                        <div class="col-6 p-2">
+                                            <label class="col-form-label" for="reg_no">Registration Number: </label>
+                                            <input class="form-control" type="text" name="reg_no" id="reg_no" disabled value="{{$siwes->student->matric_no}}">
+                                        </div>
+                                        <div class="col-6 p-2">
+                                            <label class="col-form-label" for="org_name">Name of Industry: </label>
+                                            <input class="form-control" type="text" name="org_name" id="org_name" disabled value="{{$siwes->org->name}}">
+                                        </div>
+                                        <div class="col-6 p-2">
+                                            <label class="col-form-label" for="sup_name">Industry Supervisor </label>
+                                            <input class="form-control" type="text" name="sup_name" id="sup_name" disabled value="{{Auth::user()->name()}}">
+                                        </div>
+                                        <div class="col-6 p-2">
+                                            <label class="col-form-label" for="date_resumption">Date of Resumption: </label>
+                                            <input class="form-control" type="text" name="date_resumption" id="date_resumption" disabled value="{{$siwes->resumption_date}}">
+                                        </div>
+                                        <div class="col-6 p-2">
 
+                                        </div>
+                                        <div class="col-6 p-2">
+                                            <label class="col-form-label" for="qualitative"> General Qualitative Assessment:</label>
+                                            <select name="qualitative" id="qualitative" class="form-control">
+                                                @if (!empty($org_assessment))
+                                                    <option value="" disabled>Select</option>
+                                                    <option value="Poor" {{ ($org_assessment->qualitative == "Poor")? "selected" : "" }}>Poor</option>
+                                                    <option value="Fair" {{ ($org_assessment->qualitative == "Fair")? "selected" : "" }}>Fair</option>
+                                                    <option value="Good" {{ ($org_assessment->qualitative == "Good")? "selected" : "" }}>Good</option>
+                                                    <option value="Very Good" {{ ($org_assessment->qualitative == "Very Good")? "selected" : "" }}>Very Good</option>
+                                                    <option value="Excellent" {{ ($org_assessment->qualitative == "Excellent")? "selected" : "" }}>Excellent</option>
+                                                @else
+                                                    <option value="" selected disabled>Select</option>
+                                                    <option value="Poor">Poor</option>
+                                                    <option value="Fair">Fair</option>
+                                                    <option value="Good">Good</option>
+                                                    <option value="Very Good">Very Good</option>
+                                                    <option value="Excellent">Excellent</option>
+                                                @endif
+                                                
+                                            </select>
+                                            {{-- <input class="form-control-range" type="range" id="qualitative" name="qualitative" list="values">
+                                            <datalist id="values">
+                                                <option value="Poor" label="Poor"></option>
+                                                <option value="Fair" label="Fair"></option>
+                                                <option value="Good" label="Good"></option>
+                                                <option value="Very Good" label="Very Good"></option>
+                                                <option value="Excellent" label="Excellent"></option>
+                                            </datalist> --}}
+                                        </div>
+                                        <div class="col-lg-6 p-2">
+                                            <label class="col-form-label" for="qualitative_score">Score <b>(/20)</b></label>
+                                            @if ($org_assessment)
+                                                <input class="form-control" type="number" name="qualitative_score" id="qualitative_score" min="0" max="20" value="{{$org_assessment->qualitative_score}}">
+                                            @else
+                                                <input class="form-control" type="number" name="qualitative_score" id="qualitative_score" min="0" max="20" value="{{old('qualitative_score')}}">
+                                            @endif
+                                        </div>                                
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-warning">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {{-- @endif --}}
+            {{-- Edit Supervision Form --}}
+            {{-- @if (!empty($assessment))
+                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="edit_supervisionForm" tabindex="-1" role="dialog" aria-labelledby="edit_supervisionFormModal" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center blue-text" id="edit_supervisionFormModalLabel"><b style="font-weight:900">Edit SIWES Supervision Form </b></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><b>&times;</b></span>
+                            </button>
+                        </div>
+                        <form action="/school/supervision/update/{{$assessment->id}}" method="POST">
+                            @method('PUT')
+                            @csrf
+                            <input type="hidden" name="siwes_id" value="{{$siwes->id}}">
+                            <input type="hidden" name="user_id" value="{{$siwes->user_id}}">
+                            <input type="hidden" name="student_id" value="{{$siwes->student_id}}">
+                            <div class="modal-body">
+                                <div class="row m-2">
+                                    <div class="col-6 p-2">
+                                        <label class="col-form-label" for="student">Name of Student: </label>
+                                        <input class="form-control" type="text" name="student" id="student" disabled value="{{$student->user->name()}}">
+                                    </div>
+                                    <div class="col-6 p-2">
+                                        <label class="col-form-label" for="reg_no">Registration Number: </label>
+                                        <input class="form-control" type="text" name="reg_no" id="reg_no" disabled value="{{$student->matric_no}}">
+                                    </div>
+                                    <div class="col-8 p-2">
+                                        <label class="col-form-label" for="course">Course: </label>
+                                        <input class="form-control" type="text" name="course" id="course" disabled value="{{$student->course_of_study}}">
+                                    </div>
+                                    <div class="col-4 p-2">
+                                        <label class="col-form-label" for="level">Level: </label>
+                                        <select class="form-control" name="level" id="level" disabled>
+                                            <option value="100" {{ ($siwes->level == "100")? "selected" : "" }}>100</option>
+                                            <option value="200" {{ ($siwes->level == "200")? "selected" : "" }}>200</option>
+                                            <option value="300" {{ ($siwes->level == "300")? "selected" : "" }}>300</option>
+                                            <option value="400" {{ ($siwes->level == "400")? "selected" : "" }}>400</option>
+                                            <option value="500" {{ ($siwes->level == "500")? "selected" : "" }}>500</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6 p-2">
+                                        <label class="col-form-label" for="industry_supervisor">Name of Industry based supervisor</label>
+                                        <input class="form-control" type="text" name="industry_supervisor" id="industry_supervisor" disabled value="{{$siwes->org->name}}">
+                                    </div>
+                                    <div class="col-6 p-2">
+                                        <label class="col-form-label" for="org_name">Name of Industry</label>
+                                        <input class="form-control" type="text" name="org_name" id="org_name" disabled value="{{$siwes->org->name}}">
+                                    </div>
+                                    <div class="col-12 p-2">
+                                        <label class="col-form-label" for="org_address">Address of Industry</label>
+                                        <input class="form-control" type="text" name="org_address" id="org_address" disabled value="{{$siwes->org->full_address}}">
+                                    </div>
+                                    <div class="col-lg-4 p-2">
+                                        <label class="col-form-label" for="visitation_date">Date of Visit:</label>
+                                        <input class="form-control" type="date" name="visitation_date" id="visitation_date" value="{{$assessment->visitation_date }}" disabled>
+                                    </div>
+                                    <div class="col-8 p-2">
+                                        
+                                    </div>
+                                    <div class="col-6 p-2">
+                                        <label for="available_at_visit" class="col-form-label @error('available_at_visit') is-invalid @enderror">Is the student in the industry at the time of the visit <small class="text-danger">*</small></label>
+                                        <br>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="available_at_visit" id="yes" value="1" {{ ($assessment->available_at_visit == "1")? "checked" : "" }}>
+                                            <label class="form-check-label" for="yes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="available_at_visit" id="no" value="0" {{ ($assessment->available_at_visit == "0")? "checked" : "" }}>
+                                            <label class="form-check-label" for="no">No</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 p-2">
+                                        <label class="col-form-label" for="why_not_available">If No, Why? </label>
+                                        <input class="form-control" type="text" name="why_not_available" id="why_not_available" value="{{ $assessment->why_not_available }}"> 
+                                    </div>
+                                    <div class="col-6 p-2">
+                    
+                                        <label for="logbook_seen" class="col-form-label @error('logbook_seen') is-invalid @enderror">Is the Logbook sighted during the visit <small class="text-danger">*</small></label>
+                                        <br>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="logbook_seen" id="yes" value="1" {{ ($assessment->logbook_seen == "1")? "checked" : "" }}>
+                                            <label class="form-check-label" for="yes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="logbook_seen" id="no" value="0" {{ ($assessment->logbook_seen == "0")? "checked" : "" }}>
+                                            <label class="form-check-label" for="no">No</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-6 p-2">
+                                        <label for="logbook_completed" class="col-form-label @error('logbook_completed') is-invalid @enderror">Is the Logbook up-to-date at the time of the visit <small class="text-danger">*</small></label>
+                                        <br>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="logbook_completed" id="yes" value="1" {{ ($assessment->logbook_completed == "1")? "checked" : "" }}>
+                                            <label class="form-check-label" for="yes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="logbook_completed" id="no" value="0" {{ ($assessment->logbook_completed == "0")? "checked" : "" }}>
+                                            <label class="form-check-label" for="no">No</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 p-2">
+                                        <label for="logbook_appropriate" class="col-form-label @error('logbook_appropriate') is-invalid @enderror">Is the Logbook appropriately completed <small class="text-danger">*</small></label>
+                                        <br>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="logbook_appropriate" id="yes" value="1" {{ ($assessment->logbook_appropriate == "1")? "checked" : "" }}>
+                                            <label class="form-check-label" for="yes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="logbook_appropriate" id="no" value="0" {{ ($assessment->logbook_appropriate == "0")? "checked" : "" }}>
+                                            <label class="form-check-label" for="no">No</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 p-2">
+                                        <label class="col-form-label" for="why_not_appropriate">If No, state the deficiencies? </label>
+                                        <textarea class="form-control" name="why_not_appropriate" id="why_not_appropriate" rows="2">{{ $assessment->why_not_appropriate }}</textarea>
+                                    </div>
+                                    <div class="col-12 p-2">
+                                        <label class="col-form-label" for="attitude_student"> Attitude of the student to training</label>
+                                        <input class="form-control" type="text" name="attitude_student" id="attitude_student" value="{{ $assessment->attitude_student }}">
+                                    </div>
+                                    <div class="col-12 p-2">
+                                        <label class="col-form-label" for="challenges"> Any major challenge(s) requiring immediate attetion of the SIWES office ? Please specify</label>
+                                        <textarea class="form-control" name="challenges" id="challenges" rows="2">{{ $assessment->challenges }}</textarea>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-warning">Update</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            @endif --}}
         </div>
     </div>
 
@@ -449,7 +700,6 @@
 
 @section('scripts')
 
-    
     <script  type="text/javascript">
         //  Get Scripts
         function get_weeklyrecord(id)
@@ -560,4 +810,5 @@
         });
 
     </script>
+
 @endsection

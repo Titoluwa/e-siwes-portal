@@ -9,42 +9,44 @@
             <div class="card border-warning">
 
                 <div class="card-header border-warning bg-othe-color">
-                    <div class="float-left blue-text">
+                    <div class="blue-text">
                         <h3 style="font-weight: 700;">{{$student->user->name()}}'s LogBook for {{$siwes_type->name}}</h3>
                     </div>
-                    @if (!empty($siwes))
-                        @if ($siwes->siwes_type_id == 1)
-                            <div class="float-right">
+                    <div class="">
+                        @if (!empty($siwes))
+                            @if ($siwes->siwes_type_id == 1)
+
+                                    <div class="dropdown">
+                                        <a class="btn btn-sm btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-file"></i> SWEP 200
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            {{-- <a class="dropdown-item" href="/student/sp3">SP. 3</a>
+                                            <a class="dropdown-item" href="/student/form8">Form 8</a>
+                                            <a class="dropdown-item" href="/student/scaf">SCAF</a> --}}
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Assessment</a>
+                                        </div>
+                                    </div>
+                            @else
                                 <div class="dropdown">
-                                    <a class="btn btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-file"></i> SWEP 200
+                                    <a class="btn btn-sm btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-file"></i> Form
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        {{-- <a class="dropdown-item" href="/student/sp3">SP. 3</a>
-                                        <a class="dropdown-item" href="/student/form8">Form 8</a>
-                                        <a class="dropdown-item" href="/student/scaf">SCAF</a> --}}
+                                        <a target="_blank" class="dropdown-item" href="/form/download-sp3/{{$siwes->id}}">SP.3</a>
+                                        <a target="_blank" class="dropdown-item" href="/form/download-scaf/{{$siwes->id}}">SCAF</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Assessment</a>
+                                        <a target="_blank" class="dropdown-item" href="/form/download-ssf/{{$siwes->id}}">Supervision Form</a>
+                                        <a target="_blank" class="dropdown-item" href="/form/download-siar/{{$siwes->id}}">Industry Assessment Report</a>
+                                        <a target="_blank" class="dropdown-item" href="/form/download-form8/{{$siwes->id}}">Form 8</a>
+                                        {{-- <a class="dropdown-item" href="#">Assessment</a> --}}
                                     </div>
                                 </div>
-                            </div>
-                        @else
-                        <div class="float-right">
-                            <div class="dropdown">
-                                <a class="btn btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-file"></i> Form
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="/student/sp3">SP. 3</a>
-                                    <a class="dropdown-item" href="/student/form8">Form 8</a>
-                                    <a class="dropdown-item" href="/student/scaf">SCAF</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Assessment</a>
-                                </div>
-                            </div>
-                        </div>
+                            @endif
                         @endif
-                    @endif
+                    </div>
+                    
                 </div>
 
                 <div class="card-body border-warning m-4 p-2">

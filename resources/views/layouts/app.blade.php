@@ -18,7 +18,7 @@
     @yield('style')
     <style>
         body {
-            background-image: url('images/oau-view-3.webp') !important;
+            background-image: url('/images/oau-view-3.webp') !important;
             background-color: white;
             position: relative;
             background-position: center;

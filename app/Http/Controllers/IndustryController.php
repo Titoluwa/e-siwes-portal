@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\OrgAssessment;
+use App\SiwesAssessment;
 use App\User;
 use App\Siwes;
 use App\Session;
@@ -59,7 +61,6 @@ class IndustryController extends Controller
                 // $supervisor = OrgSupervisor::create($this->nextvalidateRequest());
                 $supervisor->user_id = $user->id;
                 $supervisor->staff_id = $request->staff_id;
-                $supervisor->org_id = $request->org_id;
                 $supervisor->department = $request->department;
                 if ($request->hasFile('signature')){
                     $supervisor->signature = $request->file('signature')->store('signatures', 'public');
@@ -129,6 +130,11 @@ class IndustryController extends Controller
             $org->logo = $request->file('logo')->store('logos', 'public');
         }
         $org->save();
+        
+        $org_supervisor = OrgSupervisor::where('id', Auth::user()->id)->first();
+        $org_supervisor->org_id = $org->id;
+        $org_supervisor->update();
+
         return redirect('industry');
     }
         // Shows the edit form for organization.
@@ -225,6 +231,7 @@ class IndustryController extends Controller
     public function siwes_log($siwes_id)
     {
         $siwes = Siwes::where('id', $siwes_id)->first();
+        $org_assessment = OrgAssessment::where('siwes_id', $siwes_id)->first();
         if (!empty($siwes)){
             $all_dailys = DailyRecord::where('siwes_id', $siwes_id)->where('user_id', $siwes->user_id)->orderBy('date', 'ASC')->first();
             $all_weeks = WeeklyRecord::where('siwes_id', $siwes_id)->where('user_id', $siwes->user_id)->first();
@@ -276,7 +283,7 @@ class IndustryController extends Controller
         }else{
             $monthlyrecords = null;
         }
-        return view('industry.student_log', compact('siwes', 'orgs', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks'));
+        return view('industry.student_log', compact('siwes', 'orgs', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'org_assessment'));
     }
 
     public function approve_week($id)
@@ -302,5 +309,24 @@ class IndustryController extends Controller
         $monthlyrecord->update();
 
         return back();
+    }
+
+    public function store_assessment(Request $request)
+    {
+        // dd($request->all());
+        $assessment = OrgAssessment::create($request->all());
+        $assessment->save();
+
+        return back()->with('Assessment Report Submitted');
+    }
+    public function update_assessment(Request $request, $id)
+    {
+        // dd($request->all());
+        $assessment = OrgAssessment::where('id', $id)->first();
+        $assessment->qualitative = $request->qualitative;
+        $assessment->qualitative_score = $request->qualitative_score;
+        $assessment->update();
+
+        return back()->with('Assessment Report Submitted');
     }
 }

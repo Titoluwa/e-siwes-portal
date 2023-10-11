@@ -462,12 +462,12 @@
                                 </div>
                                 <div class="col-4 p-2">
                                     <label class="col-form-label" for="level">Level: </label>
-                                    <select class="form-control" name="level" id="level">
-                                        <option value="100">100</option>
-                                        <option value="200">200</option>
-                                        <option value="300">300</option>
-                                        <option value="400">400</option>
-                                        <option value="500">500</option>
+                                    <select class="form-control" name="level" id="level" disabled>
+                                        <option value="100" {{ ($siwes->level == "100")? "selected" : "" }}>100</option>
+                                        <option value="200" {{ ($siwes->level == "200")? "selected" : "" }}>200</option>
+                                        <option value="300" {{ ($siwes->level == "300")? "selected" : "" }}>300</option>
+                                        <option value="400" {{ ($siwes->level == "400")? "selected" : "" }}>400</option>
+                                        <option value="500" {{ ($siwes->level == "500")? "selected" : "" }}>500</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-6 p-2">
@@ -579,7 +579,8 @@
                             <span aria-hidden="true"><b>&times;</b></span>
                             </button>
                         </div>
-                        <form action="/school/supervision/store" method="POST">
+                        <form action="/school/supervision/update/{{$assessment->id}}" method="POST">
+                            @method('PUT')
                             @csrf
                             <input type="hidden" name="siwes_id" value="{{$siwes->id}}">
                             <input type="hidden" name="user_id" value="{{$siwes->user_id}}">
@@ -600,12 +601,12 @@
                                     </div>
                                     <div class="col-4 p-2">
                                         <label class="col-form-label" for="level">Level: </label>
-                                        <select class="form-control" name="level" id="level">
-                                            <option value="100">100</option>
-                                            <option value="200">200</option>
-                                            <option value="300">300</option>
-                                            <option value="400">400</option>
-                                            <option value="500">500</option>
+                                        <select class="form-control" name="level" id="level" disabled>
+                                            <option value="100" {{ ($siwes->level == "100")? "selected" : "" }}>100</option>
+                                            <option value="200" {{ ($siwes->level == "200")? "selected" : "" }}>200</option>
+                                            <option value="300" {{ ($siwes->level == "300")? "selected" : "" }}>300</option>
+                                            <option value="400" {{ ($siwes->level == "400")? "selected" : "" }}>400</option>
+                                            <option value="500" {{ ($siwes->level == "500")? "selected" : "" }}>500</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-6 p-2">
@@ -623,7 +624,7 @@
                                     {{-- <hr> --}}
                                     <div class="col-lg-4 p-2">
                                         <label class="col-form-label" for="visitation_date">Date of Visit:</label>
-                                        <input class="form-control" type="date" name="visitation_date" id="visitation_date" value="{{$assessment->visitation_date }}">
+                                        <input class="form-control" type="date" name="visitation_date" id="visitation_date" value="{{$assessment->visitation_date }}" disabled>
                                     </div>
                                     <div class="col-8 p-2">
                                         
@@ -632,11 +633,11 @@
                                         <label for="available_at_visit" class="col-form-label @error('available_at_visit') is-invalid @enderror">Is the student in the industry at the time of the visit <small class="text-danger">*</small></label>
                                         <br>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="available_at_visit" id="yes" value="1" >
+                                            <input class="form-check-input" type="radio" name="available_at_visit" id="yes" value="1" {{ ($assessment->available_at_visit == "1")? "checked" : "" }}>
                                             <label class="form-check-label" for="yes">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="available_at_visit" id="no" value="0">
+                                            <input class="form-check-input" type="radio" name="available_at_visit" id="no" value="0" {{ ($assessment->available_at_visit == "0")? "checked" : "" }}>
                                             <label class="form-check-label" for="no">No</label>
                                         </div>
                                     </div>
@@ -649,11 +650,11 @@
                                         <label for="logbook_seen" class="col-form-label @error('logbook_seen') is-invalid @enderror">Is the Logbook sighted during the visit <small class="text-danger">*</small></label>
                                         <br>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="logbook_seen" id="yes" value="1">
+                                            <input class="form-check-input" type="radio" name="logbook_seen" id="yes" value="1" {{ ($assessment->logbook_seen == "1")? "checked" : "" }}>
                                             <label class="form-check-label" for="yes">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="logbook_seen" id="no" value="0">
+                                            <input class="form-check-input" type="radio" name="logbook_seen" id="no" value="0" {{ ($assessment->logbook_seen == "0")? "checked" : "" }}>
                                             <label class="form-check-label" for="no">No</label>
                                         </div>
                                     </div>
@@ -662,11 +663,11 @@
                                         <label for="logbook_completed" class="col-form-label @error('logbook_completed') is-invalid @enderror">Is the Logbook up-to-date at the time of the visit <small class="text-danger">*</small></label>
                                         <br>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="logbook_completed" id="yes" value="1">
+                                            <input class="form-check-input" type="radio" name="logbook_completed" id="yes" value="1" {{ ($assessment->logbook_completed == "1")? "checked" : "" }}>
                                             <label class="form-check-label" for="yes">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="logbook_completed" id="no" value="0">
+                                            <input class="form-check-input" type="radio" name="logbook_completed" id="no" value="0" {{ ($assessment->logbook_completed == "0")? "checked" : "" }}>
                                             <label class="form-check-label" for="no">No</label>
                                         </div>
                                     </div>
@@ -674,11 +675,11 @@
                                         <label for="logbook_appropriate" class="col-form-label @error('logbook_appropriate') is-invalid @enderror">Is the Logbook appropriately completed <small class="text-danger">*</small></label>
                                         <br>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="logbook_appropriate" id="yes" value="1">
+                                            <input class="form-check-input" type="radio" name="logbook_appropriate" id="yes" value="1" {{ ($assessment->logbook_appropriate == "1")? "checked" : "" }}>
                                             <label class="form-check-label" for="yes">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="logbook_appropriate" id="no" value="0">
+                                            <input class="form-check-input" type="radio" name="logbook_appropriate" id="no" value="0" {{ ($assessment->logbook_appropriate == "0")? "checked" : "" }}>
                                             <label class="form-check-label" for="no">No</label>
                                         </div>
                                     </div>
@@ -706,9 +707,7 @@
                     </div>
                 </div>
             @endif
-            
 
-        {{-- </div> --}}
     </div>
 
 @endsection

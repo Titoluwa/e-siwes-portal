@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\FormController;
+use App\Http\Controllers\IndustryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -140,13 +142,14 @@ Route::prefix('school')->group(function ()
     Route::get('/swep-200/{user_id}', 'SchoolController@swep200');
     Route::get('/siwes-300/{user_id}', 'SchoolController@siwes300');
 
-    Route::post('/swep_attendance/{siwes_id}', 'SchoolController@swep_attendance');
+    Route::post('/swep-attendance/{siwes_id}', 'SchoolController@swep_attendance');
 
     Route::get('/swep-200/{id}', 'SchoolController@swep200student');
     
     Route::post('/student/edit-swep-score', 'SchoolController@edit_swep_score');
 
     Route::post('/supervision/store', 'SchoolController@store_supervisionform');
+    Route::put('/supervision/update/{id}', 'SchoolController@update_supervisionform');
     
 });
 
@@ -164,12 +167,28 @@ Route::prefix('industry')->group(function ()
     Route::put('/profile/update', 'IndustryController@profile_update');
 
     Route::get('/student/{id}', 'IndustryController@student');
-    Route::get('/siwes_student/{id}', 'IndustryController@siwes_student');
+    Route::get('/siwes-student/{id}', 'IndustryController@siwes_student');
     Route::get('/logbook/{siwes_id}', 'IndustryController@siwes_log');
 
 
     Route::post('/weekly/approve/{id}', 'IndustryController@approve_week');
     Route::put('/log/monthly/update', 'IndustryController@comment_monthly');
+
+    Route::post('/supervision/store', [IndustryController::class, 'store_assessment']);
+    Route::put('/supervision/update/{id}', [IndustryController::class, 'update_assessment']);
+});
+Route::prefix('form')->group(function ()
+{
+    Route::get('/scaf/{id}', [FormController::class, 'viewdocumentSCAF']);
+    Route::get('/sp3/{id}', [FormController::class, 'viewdocumentSP3']);
+    Route::get('/siar/{id}', [FormController::class, 'viewdocumentSIAR']);
+    Route::get('/ssf/{id}', [FormController::class, 'viewdocumentSSF']);
+
+    Route::get('/download-scaf/{id}', [FormController::class, 'downloadSCAF']);
+    Route::get('/download-sp3/{id}', [FormController::class, 'downloadSP3']);
+    Route::get('/download-siar/{id}', [FormController::class, 'downloadSIAR']);
+    Route::get('/download-ssf/{id}', [FormController::class, 'downloadSSF']);
+
 });
 
     // ITF Routes "4"

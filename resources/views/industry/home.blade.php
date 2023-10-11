@@ -189,7 +189,7 @@
     <script>
         function studentDetails(id)
         {
-            $.get('/industry/siwes_student/'+id, function(data)
+            $.get('/industry/siwes-student/'+id, function(data)
             {
                 $('#student_name').html(`${data.user.last_name} ${data.user.first_name}`);
                 if (data.user.profile_pic == null) {

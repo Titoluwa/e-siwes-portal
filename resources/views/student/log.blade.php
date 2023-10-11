@@ -18,10 +18,27 @@
 
                 <div class="card-body border-warning m-4 p-2">
                     @if ($siwes400 != null)
-
-                        <p class="text-center">Your duration of training at <b>{{$siwes400->org->name}}</b> is <b>{{$siwes400->duration_of_training}}</b> in <b>{{$siwes400->year_of_training}}</b>.</p>
-                        <p class="text-center mb-4">You are to fill your Logbook with each day's activities.</p>
-
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <p class="">Your duration of training at <b>{{$siwes400->org->name}}</b> is <b>{{$siwes400->duration_of_training}}</b> in <b>{{$siwes400->year_of_training}}</b>.</p>
+                                <p class="mb-4">You are to fill your Logbook with each day's activities.</p>
+                            </div>
+                            <div class="col-lg-3 mb-4">
+                                <div class="dropdown">
+                                    <a class="btn btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-file"></i> SIWES 400
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a target="_blank" class="dropdown-item" href="/form/sp3/{{$siwes400->id}}">SP.3</a>
+                                        <a target="_blank" class="dropdown-item" href="/form/scaf/{{$siwes400->id}}">SCAF</a>
+                                        <a target="_blank" class="dropdown-item" href="/form/form8/{{$siwes400->id}}">Form 8</a>
+                                        {{-- <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Assessment</a> --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                       
                         <div id="Records">
                             <div class="card border-primary">
                                 <div class="card-header border-primary bg-othe-color " id="Daily_heading">

@@ -33,9 +33,13 @@ class Siwes extends Model
     {
         return $this->student->department;
     }
+    public function department_coord()
+    {
+        return $this->belongsTo(Staff::class, 'dept_coord');
+    }
     public function assigned_staff()
     {
-        return $this->belongsTo(Staff::class);
+        return $this->belongsTo(Staff::class, 'assigned_staff_id');
     }
 
     public function total_score()

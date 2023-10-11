@@ -178,7 +178,7 @@
                     }
                     $.ajax({
                         type: "POST",
-                        url: "/school/swep_attendance/"+ siwes_id,
+                        url: "/school/swep-attendance/"+ siwes_id,
                         data: data,
                         success: function (response){
                             swal(response.status, {
