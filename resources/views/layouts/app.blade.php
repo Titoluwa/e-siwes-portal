@@ -31,6 +31,12 @@
             font-weight: 200;
             margin: 0;
         }
+        .show{
+            display: inline;
+        }
+        .hide{
+            display: none;
+        }
         .sidebar-color{
             background-color: #3EA5DB;
         }
@@ -138,7 +144,7 @@
                                             Register as a Student
                                         </a>
                                         <a class="dropdown-item" href="{{ route('schoolform') }}">
-                                            Register as a Institution Supervisor
+                                            Register as a Department Coordinator
                                         </a>
                                         <a class="dropdown-item" href="{{ route('industryform') }}">
                                             Register as an Industry based Supervisor
@@ -149,9 +155,9 @@
                         @else
                             <li>
                                 @if(Auth::user()->profile_pic == NULL)
-                                    <img class="logo" name="profile_picture" width="50" height="50" src="{{asset('images/user_default.png')}}" alt="profile_img">
+                                    <img class="logo" name="profile_picture" height="50" src="{{asset('images/user_default.png')}}" alt="profile_img">
                                 @else
-                                    <img class="logo" name="profile_picture" width="50" height="50" src="{{asset('storage/'. Auth::user()->profile_pic)}}" alt="">
+                                    <img class="logo" name="profile_picture" height="50" src="{{asset('storage/'. Auth::user()->profile_pic)}}" alt="">
                                 @endif
                             </li>
                             <li class="nav-item dropdown">
@@ -160,20 +166,25 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    {{-- <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        Logout
+                                    </a> --}}
+                                    <a class="dropdown-item" href="/logging-out"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logging-out-form').submit();">
+                                        Logout
                                     </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <form id="logging-out-form" action="/logging-out" method="POST" class="d-none">
                                         @csrf
                                     </form>
+                                    {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form> --}}
                                 </div>
                             </li>
-                            <!-- <li class="nav-item">
-                                <a class="nav-link" href="@yield('title','/')">{{ __('Home') }}"</a>
-                            </li> -->
+                            
                         @endguest
                     </ul>
                 </div>
@@ -198,6 +209,11 @@
     <script src="/js/jquery.min.js"></script>
     
     <script src="/DataTables/datatables.min.js"></script>
+    <script>
+        function hide_alert(){
+            $('.alert').addClass('hide');
+        }
+    </script>
 
     @yield('scripts')
 </body>

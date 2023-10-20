@@ -23,7 +23,7 @@ class CreateWeeklyRecordsTable extends Migration
             $table->string('department');
             $table->text('description_of_week');
             $table->integer('org_sup_approval')->default(0);
-            
+            $table->softDeletes();
             $table->timestamps();
         });
     }

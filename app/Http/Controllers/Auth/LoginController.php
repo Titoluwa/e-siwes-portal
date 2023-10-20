@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\User;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -29,7 +32,29 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+// THIS IS IN THE "trait AuthenticatesUsers" in the vendor file, under the sendLoginResponse function protected function
+
+        // $this->clearLoginAttempts($request);
+        // // ************************************************************************************************
+        // if (Auth::user()->logged == 1) {
+        //     $this->logout($request);
+        //     return back()->with('error','Already Logged In!!');
+        // // **************************************************************************************************
+        // }
+        // elseif (Auth::user()->verified_token == null) {
+        //     $this->logout($request);
+        //     return back()->with('error','Account not Verified');
+        // }
+        // // **************************************************************************************************
+        // elseif ($response = $this->authenticated($request, $this->guard()->user())) {
+        //     return $response;
+        // }
+        //     return $request->wantsJson()
+        //                 ? new JsonResponse([], 204)
+        //                 : redirect()->intended($this->redirectPath());
     public function redirectTo(){
+        User::where('id', Auth::user()->id)->update(['logged'=> 1]);
+        
         switch(Auth::user()->role_id)
         {
             case 0:
@@ -82,6 +107,12 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except(['logout','loggingOut']);
+    }
+    public function loggingOut(Request $request)
+    {
+        User::where('id', Auth::user()->id)->update(['logged'=> 0]);
+        User::where('id', Auth::user()->id)->update(['last_login'=> Carbon::now()]);
+        return $this->logout($request);
     }
 }

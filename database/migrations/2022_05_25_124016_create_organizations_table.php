@@ -21,6 +21,7 @@ class CreateOrganizationsTable extends Migration
             $table->string('postal_address')->nullable();
             $table->string('state');
             $table->string('area');
+            $table->string('stamp')->nullable();
             $table->date('year_of_est')->nullable();
             $table->string('nature')->nullable();
             $table->string('specialization')->nullable();
@@ -28,6 +29,7 @@ class CreateOrganizationsTable extends Migration
             $table->string('other_info')->nullable();
             $table->string('logo')->nullable();
             $table->boolean('status')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -26,6 +26,7 @@ class CreateStudentsTable extends Migration
             // $table->year('year_of_training')->nullable();
             // $table->string('duration_of_training')->nullable();
             $table->string('signature')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

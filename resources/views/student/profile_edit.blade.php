@@ -50,7 +50,7 @@
                         <div class="form-group row">
                             <label for="last_name" class="col-md-2 col-form-label">Last Name</label>
                             <div class="col-md-4">
-                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{$student->user->last_name}}" required >
+                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{$student->user->last_name}}" required disabled>
 
                                 @error('last_name')
                                     <span class="invalid-feedback" role="alert">
@@ -61,7 +61,7 @@
 
                             <label for="first_name" class="col-md-2 col-form-label">First Name</label>
                             <div class="col-md-4">
-                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{$student->user->first_name}}" required>
+                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{$student->user->first_name}}" required disabled>
 
                                 @error('first_name')
                                     <span class="invalid-feedback" role="alert">
@@ -74,7 +74,7 @@
                         <div class="form-group row">
                             <label for="middle_name" class="col-md-2 col-form-label">Middle Name</label>
                             <div class="col-md-4">
-                                <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{$student->user->middle_name}}">
+                                <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{$student->user->middle_name}}" disabled>
 
                                 @error('middle_name')
                                     <span class="invalid-feedback" role="alert">
@@ -85,11 +85,11 @@
 
                             <label for="gender" class="col-md-2 col-form-label @error('gender') is-invalid @enderror">Gender</label>
                                 <div class="pl-3 form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" id="female" value="Female" {{ ($student->user->gender=="Female")? "checked" : "" }}>
+                                    <input class="form-check-input" type="radio" name="gender" id="female" value="Female" {{ ($student->user->gender=="Female")? "checked" : "" }} disabled>
                                     <label class="form-check-label" for="female">Female</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" id="male" value="Male" {{ ($student->user->gender=="Male")? "checked" : "" }}>
+                                    <input class="form-check-input" type="radio" name="gender" id="male" value="Male" {{ ($student->user->gender=="Male")? "checked" : "" }} disabled>
                                     <label class="form-check-label" for="male">Male</label>
                                 </div>
                             @error('gender')
@@ -103,7 +103,7 @@
                         <div class="form-group row">
                             <label for="faculty" class="col-md-2 col-form-label">Faculty</label>
                             <div class="col-md-4">
-                                <input id="faculty" type="text" class="form-control @error('faculty') is-invalid @enderror" name="faculty" value="{{$student->faculty}}" required>
+                                <input id="faculty" type="text" class="form-control @error('faculty') is-invalid @enderror" name="faculty" value="{{$student->faculty}}" required disabled> 
 
                                 @error('faculty')
                                     <span class="invalid-feedback" role="alert">
@@ -114,7 +114,7 @@
 
                             <label for="department" class="col-md-2 col-form-label">Department</label>
                             <div class="col-md-4">
-                                <input id="department" type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{$student->department}}" required >
+                                <input id="department" type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{$student->department}}" required disabled>
 
                                 @error('department')
                                     <span class="invalid-feedback" role="alert">
@@ -127,7 +127,7 @@
                         <div class="form-group row">
                             <label for="course_of_study" class="col-md-2 col-form-label">Course of Study</label>
                             <div class="col-md-4">
-                                <input id="course_of_study" type="text" class="form-control @error('course_of_study') is-invalid @enderror" name="course_of_study" value="{{$student->course_of_study}}" required>
+                                <input id="course_of_study" type="text" class="form-control @error('course_of_study') is-invalid @enderror" name="course_of_study" value="{{$student->course_of_study}}" required disabled>
 
                                 @error('course_of_study')
                                     <span class="invalid-feedback" role="alert">
@@ -138,7 +138,7 @@
 
                             <label for="contact_no" class="col-md-2 col-form-label">Contact Number</label>
                             <div class="col-md-4">
-                                <input id="contact_no" type="number" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{$student->user->contact_no}}" required>
+                                <input id="contact_no" type="text" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="0{{$student->user->contact_no}}" required disabled>
 
                                 @error('contact_no')
                                     <span class="invalid-feedback" role="alert">
@@ -150,14 +150,13 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-2" for="profile_pic">Profile Picture</label>
                             <div class="col-md-4">
-                                {{-- <img src="{{asset('storage/'. $student->user->profile_pic)}}" alt="" width="70" height="70"> --}}
                                 @if ($student->user->profile_pic != null)
-                                    <img src="{{asset('storage/'. $student->user->profile_pic)}}" alt="" width="70" height="70">
+                                    <img src="{{asset('storage/'. $student->user->profile_pic)}}" alt="" width="100">
                                 @else
-                                    <img src="{{asset('images/user_default.png')}}" alt="" width="70" height="70">
+                                    <img src="{{asset('images/user_default.png')}}" alt="" width="100">
                                 @endif
                                 
-                                <input type="file" class="form-control-file @error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic">
+                                <input type="file" class="form-control-file @error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic" disabled>
                                 @error('profile_pic')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -167,8 +166,8 @@
 
                             <label class="col-form-label col-md-2" for="signature">Signature</label>
                             <div class="col-md-4">
-                                <img src="{{asset('storage/'. $student->signature)}}" alt="{{$student->signature}}" width="180" height="30">
-                                <input type="file" class="form-control-file @error('signature') is-invalid @enderror" id="signature" name="signature">
+                                <img src="{{asset('storage/'. $student->signature)}}" alt="{{$student->signature}}" width="100">
+                                <input type="file" class="form-control-file @error('signature') is-invalid @enderror" id="signature" name="signature" disabled>
                                 @error('signature')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -176,6 +175,7 @@
                                 @enderror
                             </div>                  
                         </div>
+                         
                         <div class="row py-2">
                             <div class="offset-md-10">
                                 <button type="submit" class="btn bg-oth-color nav-text-color">

@@ -25,10 +25,14 @@ class CreateUsersTable extends Migration
             $table->bigInteger('contact_no');       
             $table->string('profile_pic')->nullable();          
             $table->string('gender')->nullable();
+            $table->string('signature')->nullable();
             $table->string('password');
-            
+            $table->boolean('logged')->default(0);
+            $table->timestamp('last_login')->nullable();
+            $table->string('verified_token')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

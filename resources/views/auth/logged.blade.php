@@ -61,36 +61,16 @@
                             <img class="logo" src="{{ asset('images/OAU-Logo.png') }}" alt="">
                         </a>
                     </div>
-                    <div class="text-center pb-2">
+                    <div class="text-center">
                         <h4 class="pt-3 font-weight-bolder" style="color:#0B2D78;">OBAFEMI AWOLOWO UNIVERSITY</h4>
                         <h5 class="font-weight-bold" style="color:#F9C920;">e-SIWES Portal</h5>
                     </div>
-                    {{-- @if (\Session::has('error'))
-                        <div class="alert alert-danger" role="alert">
-                            <strong>
-                                {!! \Session::get('error') !!}
-                                <a class="float-right text-danger" onclick="hide_alert()" style="text-decoration: none; cursor: default; justify-content:center;">&times;</a>
-                            </strong>
+                    <div class="text-center p-3">
+                        <div class="alert alert-danger" role='alert'>
+                            <b class=""> Already Logged in!! </b>
                         </div>
-                    @endif --}}
-                    @if(session()->has("error"))
-                        <div class="text-center p-3">
-                            <div class="alert alert-danger" role='alert'>
-                                <strong> {{session()->get('error')}} </strong>
-                                <a class="float-right text-danger" onclick="hide_alert()" style="text-decoration: none; cursor: default; justify-content:center;">&times;</a>
-                            </div>
-                        </div>
-                    @endif
-                    @if(session()->has("success"))
-                        <div class="text-center p-3">
-                            <div id="success-alert" class="alert alert-success" role='alert'>
-                                <strong> {{session()->get('success')}} </strong>
-                                {{-- <b class=""> Already Logged in!! </b> --}}
-                                <a class="float-right text-success" onclick="hide_alert()" style="text-decoration: none; cursor: default; justify-content:center;">&times;</a>
-                            </div>
-                        </div>
-                    @endif
-                    <div class="pt-4 text-center">
+                    </div>
+                    <div class="pt-3 text-center">
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                                 <div class="form-group row">
@@ -135,10 +115,6 @@
                                             <a class="btn btn-link" href="{{ route('password.request') }}">
                                                <em>Forgot Your Password?</em>
                                             </a>
-                                            <br>
-                                            <a class="btn btn-link" href="/verification">
-                                                <em>Verify Account?</em>
-                                             </a>
                                         @endif
                                     </div>
                                 </div>
@@ -147,10 +123,5 @@
                 </div>
             </div>
         </div>
-        <script>
-            function hide_alert(){
-                document.getElementById("success-alert").style.display = "none";
-            }
-        </script>
     </body>
 </html>

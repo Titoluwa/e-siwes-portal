@@ -114,7 +114,9 @@
             <td>{{$siwes->resumption_date}}</td>
             <td>{{$siwes->ending_date}}</td>
             <td>
-                {{-- <img src="data:image/png;base64, <?php echo base64_encode(file_get_contents(base_path('/storage/'.$siwes->student->signature))); ?>" width="100%"> --}}
+                {{-- <img src="data:image/png;base64, <?php echo base64_encode(file_get_contents(base_path('/storage/'.$siwes->student->signature))); ?>" width="100%">
+                src="{{ storage_path('app/public/images/codeanddeploy.jpg') }}"
+                <img src="{{ storage_path('app/public/'.$siwes->student->signature) }}" alt=""> --}}
                 <img src="/storage/{{$siwes->student->signature}}" alt="signature" width="100%">
             </td> 
         </tr>

@@ -31,6 +31,7 @@ class CreateSiwesTable extends Migration
             $table->json('swep_attendance')->nullable();
             $table->integer('swep_score')->default(0);
             $table->integer('itcu_score')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

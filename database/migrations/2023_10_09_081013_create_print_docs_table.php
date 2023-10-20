@@ -21,6 +21,7 @@ class CreatePrintDocsTable extends Migration
             $table->boolean('siar')->default(0);
             $table->boolean('ssf')->default(0);
             $table->boolean('form8')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

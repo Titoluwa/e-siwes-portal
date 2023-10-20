@@ -195,7 +195,11 @@ class LogbookController extends Controller
         $print->siwes_id = $siwes->id;
         $print->save();
 
-        return back();
+        if($siwes){
+            return back()->with('success', "Your SIWES has been registered. Check your Logbook");
+        }else{
+            return back()->with('deleted', "<b>ERROR!</b> loading Logbook");
+        }
     }
     
     // stores the daily activity of each student

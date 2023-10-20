@@ -28,7 +28,7 @@
                     @else
                     <div class="p-4">
                         <a class="px-2 h5 othe-color" href="{{ route('studentform') }}">STUDENT</a>
-                        <a class="px-2 h5 othe-color" href="{{ route('schoolform') }}">INSTITUTION SUPERVISOR</a>
+                        <a class="px-2 h5 othe-color" href="{{ route('schoolform') }}">DEPARTMENT COORDINATOR</a>
                         <a class="px-2 h5 othe-color" href="{{ route('industryform') }}">INDUSTRY BASED SUPERVISOR</a>
                     </div>
                     @endif

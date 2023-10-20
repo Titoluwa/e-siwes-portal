@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSessionsTable extends Migration
+class CreateVerifyTokensTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateSessionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sessions', function (Blueprint $table) {
+        Schema::create('verify_tokens', function (Blueprint $table) {
             $table->id();
-            $table->string('year');
-            $table->integer('status')->default(1);
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->integer('user_id');
+            $table->string('token');
+            $table->string('email');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -31,6 +30,6 @@ class CreateSessionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sessions');
+        Schema::dropIfExists('verify_tokens');
     }
 }

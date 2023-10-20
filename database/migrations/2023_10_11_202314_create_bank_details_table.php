@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSessionsTable extends Migration
+class CreateBankDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateSessionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sessions', function (Blueprint $table) {
+        Schema::create('bank_details', function (Blueprint $table) {
             $table->id();
-            $table->string('year');
-            $table->integer('status')->default(1);
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->integer('user_id');
+            $table->string('bank_name');
+            $table->string('account_number');
+            $table->string('sort_code');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ class CreateSessionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sessions');
+        Schema::dropIfExists('bank_details');
     }
 }

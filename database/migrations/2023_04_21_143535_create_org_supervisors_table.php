@@ -23,6 +23,7 @@ class CreateOrgSupervisorsTable extends Migration
             $table->string('position')->nullable();
             $table->string('signature')->nullable();
             $table->boolean('status')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\IndustryController;
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
+Route::post('/logging-out', 'Auth\LoginController@loggingOut');
 Auth::routes();
 
 Route::get('/download/{file}', 'AdminController@material_download');
@@ -95,6 +96,7 @@ Route::prefix('student')->group(function ()
     Route::put('/profile/update', 'StudentController@update');
     Route::get('/profile/other/edit', 'StudentController@other_edit');
     Route::put('/profile/other/update', 'StudentController@other_update');
+    Route::post('/bank-details/store', 'StudentController@store_bank');
 
     Route::get('/org', 'StudentController@org');
 
@@ -177,12 +179,15 @@ Route::prefix('industry')->group(function ()
     Route::post('/supervision/store', [IndustryController::class, 'store_assessment']);
     Route::put('/supervision/update/{id}', [IndustryController::class, 'update_assessment']);
 });
+
+// PDF Form downloads
 Route::prefix('form')->group(function ()
 {
     Route::get('/scaf/{id}', [FormController::class, 'viewdocumentSCAF']);
     Route::get('/sp3/{id}', [FormController::class, 'viewdocumentSP3']);
     Route::get('/siar/{id}', [FormController::class, 'viewdocumentSIAR']);
     Route::get('/ssf/{id}', [FormController::class, 'viewdocumentSSF']);
+    Route::get('/form8/{id}', [FormController::class, 'viewdocumentForm8']);
 
     Route::get('/download-scaf/{id}', [FormController::class, 'downloadSCAF']);
     Route::get('/download-sp3/{id}', [FormController::class, 'downloadSP3']);
@@ -190,6 +195,9 @@ Route::prefix('form')->group(function ()
     Route::get('/download-ssf/{id}', [FormController::class, 'downloadSSF']);
 
 });
+Route::get('/verification', [PageController::class, 'verify']);
+Route::post('/verification', [PageController::class, 'post_verify']);
+Route::post('/resend-verification', [PageController::class, 'resend_verify']);
 
     // ITF Routes "4"
 // Route::prefix('itf')->group(function ()

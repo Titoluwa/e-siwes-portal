@@ -20,6 +20,7 @@ class CreateStaffTable extends Migration
             $table->string('faculty')->nullable();
             $table->string('department')->nullable();
             $table->string('signature')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -77,6 +77,23 @@
             </div>
         </div>
         <div class="p-5" style="width: 80%;">
+            @if (\Session::has('success'))
+                <div class="alert alert-success" role="alert">
+                    <strong>
+                        {!! \Session::get('success') !!}
+                        <a class="float-right text-success" onclick="hide_alert()" style="text-decoration: none; cursor: default; justify-content:center;">&times;</a>
+                    </strong>
+                </div>
+            @endif
+            @if (\Session::has('deleted'))
+                <div class="alert alert-danger" role="alert">
+                    <strong>
+                        {!! \Session::get('deleted') !!}
+                        {{-- Deletion Done!! --}}
+                        <a class="float-right text-danger" onclick="hide_alert()" style="text-decoration: none; cursor: default; justify-content:center;">&times;</a>
+                    </strong>
+                </div>
+            @endif
             @yield('studentcontent') 
         </div>
     </div>

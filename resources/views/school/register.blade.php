@@ -8,7 +8,7 @@
         <div class="col-md-10">
             <div class="card border-warning">
                 <div class="card-header border-warning">
-                    <h3 class="nav-text-color text-center pt-2" style="font-weight: 700;">Institution Supervisor Registration</h3>
+                    <h3 class="nav-text-color text-center pt-2" style="font-weight: 700;">Department Coordinator Registration</h3>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="/register/school" enctype="multipart/form-data">
@@ -131,8 +131,8 @@
                             </div>
 
                             <div class="col-lg-4">
-                                <label for="contact_no" class="col-form-label">Contact Number <small class="text-danger">*</small></label>
-                                <input id="contact_no" type="tel" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ old('contact_no') }}" required>
+                                <label for="contact_no" class="col-form-label">Contact Number <small class="text-danger">(must be 11 digits)*</small></label>
+                                <input id="contact_no" type="tel" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ old('contact_no') }}" required placeholder="08012345678">
                                 @error('contact_no')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -140,7 +140,18 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <div class="col-lg-6">
+                                <label class="col-form-label"  for="signature">Signature</label>
 
+                                <input type="file" class="form-control-file @error('signature') is-invalid @enderror" id="signature" name="signature">
+                                @error('signature')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <div class="col-lg-6">
                                 <label for="password" class="col-form-label">Password <small class="text-danger">*</small></label>

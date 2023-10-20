@@ -7,16 +7,17 @@ use App\Siwes;
 use App\Session;
 use App\Student;
 use App\Material;
+use App\BankDetail;
+use App\VerifyToken;
 use App\Announcement;
 use App\Organization;
+use App\Mail\Registration;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
-// use App\Mail\UserRegMail;
-// use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Mail;
 
 class StudentController extends Controller
 {
@@ -67,6 +68,9 @@ class StudentController extends Controller
                 $user->contact_no = $request->contact_no;
                 $user->gender = $request->gender;
                 $user->password = Hash::make($request->password);
+                if ($request->hasFile('signature')){
+                    $user->signature = $request->file('signature')->store('signatures', 'public');
+                }
                 if ($request->hasFile('profile_pic')){
                     $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
                 }
@@ -85,13 +89,22 @@ class StudentController extends Controller
                 if ($request->hasFile('signature')){
                     $student->signature = $request->file('signature')->store('signatures', 'public');
                 }
-
                 $student->save();
+
+                $token = 'ESP-'.(rand(100000, 999999));
+                $verification = new VerifyToken();
+                $verification->user_id = $user->id;
+                $verification->token = $token;
+                $verification->email = $user->email;
+                $verification->save();
+
+                Mail::to($user->email)->send(new Registration($user, $token));
 
                 if (Auth::user()) {
                    return redirect('/admin/students'); 
                 } else {
-                    return redirect('login');
+                    return redirect('/verification')->with('success', 'Successfully Registered! Verify your account to log in');
+                    // return redirect('login')->with('success', 'Verify your email before login. Go check your inbox!');
                 }             
             
         } catch(\Exception $e){
@@ -138,13 +151,17 @@ class StudentController extends Controller
         $id = Auth::user()->id;
         $student = Student::where('user_id', $id)->first();
         $orgs = Organization::all();
-        return view('student.profile', compact('student', 'orgs'));
+        $bank = BankDetail::where('user_id', $id)->first();
+
+        return view('student.profile', compact('student', 'orgs', 'bank'));
     }
         // Show StudentUser edit form
     public function edit()
     {
         $id = Auth::user()->id;
         $student = Student::where('user_id', $id)->first();
+        // $banks = {{baseurl}}v2/api/identity/ng/bank-account-number/bank-list;
+        // dd($banks);
         return view('student.profile_edit', compact('student'));
     }
         // Update the information for StudentUser
@@ -249,5 +266,12 @@ class StudentController extends Controller
         $siwes->update();
 
         return redirect('/student/org');
+    }
+    public function store_bank(Request $request)
+    {
+        $bank = BankDetail::create($request->all());
+        $bank->save();
+
+        return back()->with('Bank Details Stored');
     }
 }

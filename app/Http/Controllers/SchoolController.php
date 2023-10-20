@@ -2,26 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\SiwesAssessment;
 use App\User;
 use App\Siwes;
-
 use App\Staff;
+
 use App\Session;
 use App\Student;
 use App\Material;
 use App\SiwesType;
 use Carbon\Carbon;
 use App\DailyRecord;
+use App\VerifyToken;
 use App\Announcement;
 use App\Organization;
 use App\WeeklyRecord;
 use App\MonthlyRecord;
+use App\SiwesAssessment;
+use App\Mail\Registration;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
 
 // use App\Mail\UserRegMail;
@@ -72,6 +75,9 @@ class SchoolController extends Controller
                 $user->contact_no = $request->contact_no;
                 $user->gender = $request->gender;
                 $user->password = Hash::make($request->password);
+                if ($request->hasFile('signature')){
+                    $user->signature = $request->file('signature')->store('signatures', 'public');
+                }
                 if ($request->hasFile('profile_pic')){
                     $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
                 }
@@ -88,11 +94,20 @@ class SchoolController extends Controller
                 }
 
                 $staff->save();
+                
+                $token = 'ESP-'.(rand(100000, 999999));
+                $verification = new VerifyToken();
+                $verification->user_id = $user->id;
+                $verification->token = $token;
+                $verification->email = $user->email;
+                $verification->save();
+
+                Mail::to($user->email)->send(new Registration($user, $token));
 
                 if (Auth::user()) {
                    return redirect('/admin/staffs'); 
                 } else {
-                    return redirect('login');
+                    return redirect('/verification')->with('success', 'Successfully Registered! Verify your account to log in');
                 }             
             
         } catch(\Exception $e){

@@ -22,6 +22,7 @@ class CreateDailyRecordsTable extends Migration
             $table->date('date');
             $table->text('description_of_work');
             
+            $table->softDeletes();
             $table->timestamps();
         });
     }

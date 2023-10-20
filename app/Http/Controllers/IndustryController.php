@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\OrgAssessment;
-use App\SiwesAssessment;
 use App\User;
 use App\Siwes;
 use App\Session;
@@ -11,16 +9,21 @@ use App\Student;
 use App\SiwesType;
 use Carbon\Carbon;
 use App\DailyRecord;
+use App\VerifyToken;
 use App\Organization;
 use App\WeeklyRecord;
 use App\MonthlyRecord;
+use App\OrgAssessment;
 use App\OrgSupervisor;
+use App\SiwesAssessment;
+use App\Mail\Registration;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 // use Symfony\Component\HttpKernel\Event\ViewEvent;
 
 class IndustryController extends Controller
@@ -50,6 +53,9 @@ class IndustryController extends Controller
                 $user->middle_name = Str::ucfirst($request->middle_name);
                 $user->contact_no = $request->contact_no;
                 $user->gender = $request->gender;
+                if ($request->hasFile('signature')){
+                    $user->signature = $request->file('signature')->store('signatures', 'public');
+                }
                 $user->password = Hash::make($request->password);
                 if ($request->hasFile('profile_pic')){
                     $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
@@ -66,8 +72,24 @@ class IndustryController extends Controller
                     $supervisor->signature = $request->file('signature')->store('signatures', 'public');
                 }
                 $supervisor->save();
+                
+                $token = 'ESP-'.(rand(100000, 999999));
+                $verification = new VerifyToken();
+                $verification->user_id = $user->id;
+                $verification->token = $token;
+                $verification->email = $user->email;
+                $verification->save();
 
-                return redirect('login');
+                Mail::to($user->email)->send(new Registration($user, $token));
+
+                if (Auth::user()) {
+                    return redirect('/admin/industry'); 
+                } else {
+                    return redirect('/verification')->with('success', 'Successfully Registered! Verify your account to log in');
+                    // return redirect('login')->with('success', 'Verify your email before login. Go check your inbox!');
+                } 
+
+                // return redirect('login');
            
             
         } catch(\Exception $e){

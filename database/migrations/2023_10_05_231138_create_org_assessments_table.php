@@ -20,6 +20,7 @@ class CreateOrgAssessmentsTable extends Migration
             $table->integer('supervisor_id');
             $table->string('qualitative')->nullable();
             $table->integer('qualitative_score')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

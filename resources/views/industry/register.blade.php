@@ -96,7 +96,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-lg-7">
+                            <div class="col-lg-4">
                                 <label class="col-form-label" for="profile_pic">Profile Picture </label>
                                 <input type="file" class="form-control-file @error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic">
                                 @error('profile_pic')
@@ -105,10 +105,20 @@
                                     </span>
                                 @enderror
                             </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label"  for="signature">Signature</label>
 
-                            <div class="col-lg-5">
-                                <label for="contact_no" class="col-form-label">Contact Number <small class="text-danger">*</small></label>
-                                <input id="contact_no" type="tel" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ old('contact_no') }}" required>
+                                <input type="file" class="form-control-file @error('signature') is-invalid @enderror" id="signature" name="signature">
+                                @error('signature')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-lg-4">
+                                <label for="contact_no" class="col-form-label">Contact Number <small class="text-danger">(must be 11 digits)*</small></label>
+                                <input id="contact_no" type="tel" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ old('contact_no') }}" required placeholder="09012345678">
                                 @error('contact_no')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

@@ -18,6 +18,7 @@ class CreateDepartmentsTable extends Migration
             $table->string('faculty');
             $table->string('department');
             $table->string('course_study');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

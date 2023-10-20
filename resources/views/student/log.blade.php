@@ -254,6 +254,24 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-md-4 col-form-label" for="level">Level: </label>
+                                <div class="col-md-6">
+                                    <select class="form-control  @error('level') is-invalid @enderror" name="level" id="level">
+                                        <option value="100">100</option>
+                                        <option value="200">200</option>
+                                        <option value="300">300</option>
+                                        <option value="400" selected>400</option>
+                                        <option value="500">500</option>
+                                        <option value="extra">Extra</option>
+                                    </select>
+                                    @error('level')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="resumption_date" class="col-md-4 col-form-label">Resumption Date</label>
                                 <div class="col-md-6">
                                     <input class="form-control  @error('resumption_date') is-invalid @enderror" type="date" name="resumption_date" id="resumption_date" value="{{ old('resumption_date') }} ">

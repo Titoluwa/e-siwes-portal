@@ -26,6 +26,7 @@ class CreateSiwesAssessmentTable extends Migration
             $table->string('why_not_appropriate')->nullable();
             $table->string('attitude_student');
             $table->string('challenges')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

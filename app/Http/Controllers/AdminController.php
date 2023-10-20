@@ -421,8 +421,8 @@ class AdminController extends Controller
     {
         $sessions = Session::orderBy('id', 'DESC')->get();
         $departments = DB::table('departments')->select('department')->groupBy('department')->get();
-        $announcement = Announcement::orderBy('id', 'DESC')->first();
-        $announcements = Announcement::orderBy('updated_at', 'DESC')->get();
+        $announcement = Announcement::where('uploaded_by', Auth::user()->id)->orderBy('id', 'DESC')->first();
+        $announcements = Announcement::where('uploaded_by', Auth::user()->id)->orderBy('updated_at', 'DESC')->get();
 
         return view('admin.announce', compact('sessions', 'departments', 'announcement', 'announcements'));
     }
@@ -431,7 +431,7 @@ class AdminController extends Controller
         $announce = Announcement::create($request->all());
         $announce->save();
 
-        return back()->with('New Notice has been posted!');
+        return back()->with('success', 'New Notice Posted Successfully!!');
     }
     public function store_material(Request $request)
     {
@@ -440,7 +440,7 @@ class AdminController extends Controller
         $material->name = $request->file('file')->getClientOriginalName();
         $material->save();
 
-        return back()->with('Material has been uploaded!!');
+        return back()->with('success', 'New Document Uploaded Successfully!!');
     }
 
     public function material_download($file)
@@ -455,9 +455,11 @@ class AdminController extends Controller
         }
         if ($exists) {
             // $path = Storage::disk('public')->path($material->file);
-            return Storage::disk('public')->download($material->file, $material->name);
+           return Storage::disk('public')->download($material->file, $material->name);
+        //    return back()->with('success', 'Download Successfully!!');
         } else {
-            return redirect('/404');
+            // return redirect('/404');
+            return back()->with('deleted', 'Document Not Found');
         } 
     }
 }
