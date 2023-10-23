@@ -29,8 +29,23 @@
                         </a>
                     </li>
                     <li>
+                        <a href="/admin/departments" class="nav-link">
+                        <i class="fa fa-university"></i> Departments
+                        </a>
+                    </li>
+                    <li>
                         <a href="/admin/students" class="nav-link">
                         <i class="fas fa-users"></i> Students
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/staffs" class="nav-link">
+                        <i class="fas fa-user-friends"></i> Department Coodinators
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/organizations" class="nav-link">
+                        <i class="fas fa-industry"></i> Industry 
                         </a>
                     </li>
                     <li>
@@ -86,16 +101,6 @@
                         </div>
                     </li> --}}
                     <li>
-                        <a href="/admin/staffs" class="nav-link">
-                        <i class="fas fa-user-friends"></i> Department Coodinators
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/admin/organizations" class="nav-link">
-                        <i class="fas fa-industry"></i> Organizations
-                        </a>
-                    </li>
-                    <li>
                         <a href="/admin/materials" class="nav-link">
                             <i class="fa fa-copy"></i> Materials
                         </a>
@@ -107,7 +112,7 @@
                     </li>
                     <li>
                         <a href="/admin/contacts" class="nav-link">
-                            <i class="fa fa-phone"></i> Contacts
+                            <i class="fa fa-users"></i> All Users
                         </a>
                     </li>
                     {{-- <li>

@@ -78,27 +78,27 @@
                             <span aria-hidden="true"><b>&times;</b></span>
                             </button>
                         </div>
-                        <form method="POST" action="/register/student" enctype="multipart/form-data" class="m-4">
+                        <form method="POST" action="/register/student" enctype="multipart/form-data" class="form m-4">
                             @csrf
-           
+    
                             <input type="hidden" name="role_id" value="1">
-
-                            <div class="row form-group">
+    
+                            <div class="form-group row">
                                 <div class="col-lg-6">
-                                    <label for="email" class="col-form-label">E-Mail Address</label>
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
-
+                                    <label for="email" class="col-form-label">E-Mail Address <small class="text-danger">(your institution email)*</small></label>
+                                    <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" pattern="[a-z]+@student\.oauife\.edu\.ng" title="use your school email address *@student.oauife.edu.ng" required>
+    
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
-
+    
                                 <div class="col-lg-6">
-                                <label for="matric_no" class="col-form-label">Matric Number</label>
-                                    <input id="matric_no" type="text" class="form-control @error('matric_no') is-invalid @enderror" name="matric_no" value="{{ old('matric_no') }}">
-
+                                <label for="matric_no" class="col-form-label">Matric Number <small class="text-danger">*</small> </label>
+                                    <input id="matric_no" type="text" class="form-control @error('matric_no') is-invalid @enderror" name="matric_no" pattern="[A-Za-z]{3}\/[0-9]{4}\/[0-9]{3}" title="must be 12 characters *AAA/YYYY/000*" value="{{ old('matric_no') }}" required>
+    
                                     @error('matric_no')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -106,30 +106,30 @@
                                     @enderror
                                 </div>
                             </div>
-
+    
                             <div class="form-group row">
                                 <div class="col-lg-4">
-                                    <label for="last_name" class="col-form-label">Last Name</label>
-
-                                    <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}">
-
+                                    <label for="last_name" class="col-form-label">Last Name <small class="text-danger">*</small></label>
+    
+                                    <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required>
+    
                                     @error('last_name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
-
+    
                                 <div class="col-lg-4">
-                                    <label for="first_name" class="col-form-label">First Name</label>
-                                    <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}">
+                                    <label for="first_name" class="col-form-label">First Name <small class="text-danger">*</small></label>
+                                    <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required>
                                     @error('first_name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
-
+    
                                 <div class="col-lg-4">
                                     <label for="middle_name" class="col-form-label">Middle Name</label>
                                     <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{ old('middle_name') }}">
@@ -140,11 +140,11 @@
                                     @enderror
                                 </div>
                             </div>
-
+    
                             <div class="form-group row">
                                 <div class="col-lg-4">
-                                    <label for="faculty" class="col-form-label">{{ __('Faculty') }}</label>
-                                    <select name="faculty" id="faculty" value="{{ old('faculty') }}" class="form-control @error('faculty') is-invalid @enderror" data-dependant='department' >
+                                    <label for="faculty" class="col-form-label">{{ __('Faculty') }} <small class="text-danger">*</small></label>
+                                    <select name="faculty" id="faculty" value="{{ old('faculty') }}" class="form-control @error('faculty') is-invalid @enderror" data-dependant='department' required>
                                         <option value="" disabled selected hidden>Select Faculty</option>
                                         @foreach($faculty as $f)
                                         <option value="{{ $f->faculty }}">{{ $f->faculty }}</option>
@@ -156,26 +156,26 @@
                                         </span>
                                     @enderror
                                 </div>
-
+    
                                 <div class="col-lg-4">
-                                    <label for="department" class="col-form-label">{{ __('Department') }}</label>
-                                    <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" data-dependant='course_of_study' value="{{ old('department') }}">
+                                    <label for="department" class="col-form-label">{{ __('Department') }} <small class="text-danger">*</small></label>
+                                    <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" data-dependant='course_of_study' value="{{ old('department') }}" required>
                                         <option value="" disabled selected hidden>Select Department</option>
                                     </select>
-
+    
                                     @error('department')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
-
+    
                                 <div class="col-lg-4">
-                                    <label for="course_of_study" class="col-form-label">Course of Study</label>
-                                    <select  id="course_of_study" value="{{ old('course_of_study') }}" class="form-control @error('course_of_study') is-invalid @enderror" name="course_of_study" value="{{ old('course_of_study') }}">
+                                    <label for="course_of_study" class="col-form-label">Course of Study <small class="text-danger">*</small></label>
+                                    <select  id="course_of_study" value="{{ old('course_of_study') }}" class="form-control @error('course_of_study') is-invalid @enderror" name="course_of_study" value="{{ old('course_of_study') }}" required>
                                         <option value="" disabled selected hidden>Select Course</option>
                                     </select>
-
+    
                                     @error('course_of_study')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -183,10 +183,21 @@
                                     @enderror
                                 </div>
                             </div>
-
+    
                             <div class="form-group row">
                                 <div class="col-lg-4">
-                                    <label for="gender" class="col-form-label @error('gender') is-invalid @enderror">Gender</label>
+                                    <label class="col-form-label"  for="profile_pic">Profile Picture</label>
+    
+                                    <input type="file" class="form-control-file @error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic">
+                                    @error('profile_pic')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                
+                                <div class="col-lg-4">
+                                    <label for="gender" class="col-form-label @error('gender') is-invalid @enderror">Gender <small class="text-danger">*</small></label>
                                     <br>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
@@ -202,20 +213,10 @@
                                         </span>
                                     @enderror
                                 </div>
+                            
                                 <div class="col-lg-4">
-                                    <label class="col-form-label"  for="profile_pic">Profile Picture</label>
-
-                                    <input type="file" class="form-control-file @error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic">
-                                    @error('profile_pic')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <label for="contact_no" class="col-form-label">Contact Number</label>
-                                    <input id="contact_no" type="tel" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ old('contact_no') }}">
+                                    <label for="contact_no" class="col-form-label">Contact Number <small class="text-danger">(must be 11 digits)*</small></label>
+                                    <input id="contact_no" type="tel" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ old('contact_no') }}" required placeholder="08012345678">
                                     @error('contact_no')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -223,28 +224,41 @@
                                     @enderror
                                 </div>
                             </div>
-
                             <div class="form-group row">
                                 <div class="col-lg-6">
-                                    <label for="password" class="col-form-label">Password</label>
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
+                                    <label class="col-form-label"  for="signature">Signature</label>
+    
+                                    <input type="file" class="form-control-file @error('signature') is-invalid @enderror" id="signature" name="signature">
+                                    @error('signature')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-6">
+                                    <label for="password" class="col-form-label">Password <small class="text-danger">*</small></label>
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
-
+    
                                 <div class="col-lg-6">
-                                <label for="password-confirm" class="col-form-label">Confirm Password</label>
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
+                                <label for="password-confirm" class="col-form-label">Confirm Password <small class="text-danger">*</small></label>
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                                 </div>
                             </div>
-
+                            <div class="form-group row col-lg-6">
+                                <p class="text-danger">* Required</p>
+                            </div>
                             <div class="clearfix">
                                 <div class="float-right">
                                     <button type="submit" class="btn bg-oth-color nav-text-color">
-                                    Register
+                                       Register
                                     </button>
                                 </div>
                             </div>

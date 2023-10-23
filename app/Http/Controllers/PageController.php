@@ -20,7 +20,7 @@ class PageController extends Controller
         $user = User::where('email', $request->email)->first();
        
         if($user == null){
-            return back()->with('error', 'Email not found. User has not registered');
+            return back()->with('error', "<b>$request->email</b> not found. User has not registered");
         }
         elseif ($verification == null) {
             return back()->with('error', 'Token Not Found!! Request for a new token.');
@@ -31,7 +31,7 @@ class PageController extends Controller
 
             return redirect('login')->with('success', 'Email Verified!!! Proceed to login');
         } else{
-            return back()->with('error', 'Token Invalid!! Check your inbox.');
+            return back()->with('error', "Token Invalid!! Check your inbox. <b>(@$request->email)</b>");
         }
         
     }
@@ -57,11 +57,11 @@ class PageController extends Controller
         
             Mail::to($user->email)->send(new Registration($user, $token));
 
-            return back()->with('success', 'Token resent to email. Check your inbox');
+            return back()->with('success', "Token resent to <b>$request->email</b>. Check your inbox");
 
         } else {
-
-            return back()->with('error', 'Email not found. User has not registered');
+            return back()->with('error', "<b>$request->email</b> not found. User has not registered");
+            // return back()->with('error', 'Email not found. User has not registered');
         }
     }    
        

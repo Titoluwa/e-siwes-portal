@@ -60,7 +60,8 @@ class StudentController extends Controller
             // DB::beginTransaction();
             DB::commit();
                 // Adding New User 
-                $user = User::create($this->validateRequest());
+                // $user = User::create($this->validateRequest());
+                $user = User::create($request->all());
                 $user->role_id = 1;
                 $user->email = $request->email;
                 $user->last_name = Str::ucfirst($request->last_name);
@@ -101,9 +102,10 @@ class StudentController extends Controller
                 Mail::to($user->email)->send(new Registration($user, $token));
 
                 if (Auth::user()) {
-                   return redirect('/admin/students'); 
+                   return redirect('/admin/students')->with('success',"Successfully Registered! Verification token sent to <b>$request->email</b>"); 
                 } else {
-                    return redirect('/verification')->with('success', 'Successfully Registered! Verify your account to log in');
+                    // return redirect('/verification')->with('success', "Successfully Registered! Verify your account to log in");
+                    return redirect('/verification')->with('success', "Successfully Registered! Verification token sent to <b>$request->email</b>");
                     // return redirect('login')->with('success', 'Verify your email before login. Go check your inbox!');
                 }             
             
@@ -190,7 +192,7 @@ class StudentController extends Controller
         $user->update();
         $student->update();
 
-        return redirect("/student/profile");
+        return redirect("/student/profile")->with('success', "$user->name() profile updated successfully!!");
     }
         // Show edit form for student other information.
     public function other_edit()
@@ -212,7 +214,7 @@ class StudentController extends Controller
         }
         $student->update();
 
-        return redirect('/student/profile');
+        return redirect('/student/profile')->with('success', "Update Successful!!");
     }
         // Show StudentUser Organization profile
     public function org()
@@ -265,13 +267,13 @@ class StudentController extends Controller
         $siwes->session_id = $request->session_id;
         $siwes->update();
 
-        return redirect('/student/org');
+        return redirect('/student/org')->with('success', "SIWES updated Succesfully!!");
     }
     public function store_bank(Request $request)
     {
         $bank = BankDetail::create($request->all());
         $bank->save();
 
-        return back()->with('Bank Details Stored');
+        return back()->with('success', 'Bank Details Stored Successfully!!');
     }
 }

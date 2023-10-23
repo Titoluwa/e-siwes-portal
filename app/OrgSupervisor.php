@@ -8,11 +8,11 @@ class OrgSupervisor extends Model
 {
     protected $guarded = ['id'];
     protected $timestamp = true;
-    protected $with = ['user'];
+    protected $with = ['user', 'org'];
 
     public function org()
     {
-        return $this->belongsTo(Organization::class);
+        return $this->belongsTo(Organization::class, 'org_id');
     }
     public function user()
     {

@@ -107,7 +107,7 @@ class SchoolController extends Controller
                 if (Auth::user()) {
                    return redirect('/admin/staffs'); 
                 } else {
-                    return redirect('/verification')->with('success', 'Successfully Registered! Verify your account to log in');
+                    return redirect('/verification')->with('success', "Successfully Registered! Verification token sent to <b>$request->email</b>");
                 }             
             
         } catch(\Exception $e){
@@ -349,7 +349,7 @@ class SchoolController extends Controller
     {
         Siwes::where('id', $request->swep_id)->update(['swep_score'=> $request->score]);
 
-        return back();
+        return back()->with('success', "Score Upadated Successfully");
     }
     public function store_material(Request $request)
     {
@@ -359,14 +359,14 @@ class SchoolController extends Controller
         $material->name = $request->file('file')->getClientOriginalName();
         $material->save();
 
-        return back()->with('Material has been uploaded!!');
+        return back()->with('success', "<b>$material->name</b> Uploaded Successfully");
     }
     public function store_supervisionform(Request $request)
     {
         $assessment = SiwesAssessment::create($request->all());
         $assessment->save();
 
-        return back()->with('Assessment Submitted');
+        return back()->with('success', 'Assessment Submitted Successfully!');
     }
     public function update_supervisionform(Request $request, $id)
     {
@@ -383,7 +383,7 @@ class SchoolController extends Controller
         $assessment->challenges = $request->challenges;
         $assessment->update();
 
-        return back()->with('Assessment Updated');
+        return back()->with('success', 'Assessment Updated Successfully!');
     }
 
     // To validate the inputs

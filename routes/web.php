@@ -52,6 +52,9 @@ Route::prefix('admin')->group(function ()
     Route::get('organizations', 'AdminController@organizations')->name('admin.orgs');
     Route::get('itf-agents', 'AdminController@itf_agents')->name('admin.itfagents');
 
+    Route::get('departments', 'AdminController@dept_create');
+    Route::post('departments/store', 'AdminController@dept_store')->name('dept.store');
+
     Route::get('announce', 'AdminController@announce');
     Route::post('announce/store', 'AdminController@post_announcement');
 
@@ -64,7 +67,7 @@ Route::prefix('admin')->group(function ()
     Route::put('setup/update', 'SessionController@update')->name('admin.setup.update');
 
     // Students
-    Route::post('students/store', 'AdminController@store')->name('admin.setup.store');
+    // Route::post('students/store', 'AdminController@store')->name('admin.setup.store');
     Route::get('students/{id}', 'AdminController@view_student');
     Route::get('students/log/{id}', 'AdminController@student_log');
     Route::get('assign-students/siwes-400', 'AdminController@siwes400Students');

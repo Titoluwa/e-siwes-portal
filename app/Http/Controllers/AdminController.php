@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Announcement;
 use App\User;
 use App\Siwes;
 use App\Staff;
@@ -11,7 +10,9 @@ use App\Student;
 use App\Material;
 use App\SiwesType;
 use Carbon\Carbon;
+use App\Department;
 use App\DailyRecord;
+use App\Announcement;
 use App\Organization;
 use App\WeeklyRecord;
 use App\MonthlyRecord;
@@ -65,6 +66,7 @@ class AdminController extends Controller
         $current_session = Session::where('status', 1)->first();
         $sessions = Session::orderBy('id', 'DESC')->get();
         $studs = Student::first();
+        // $students = User::where('role_id', 2)->get();
         $students = Student::all();
 
         $faculty = DB::table('departments')->selectRaw('faculty')->groupBy('faculty')->get();
@@ -85,11 +87,12 @@ class AdminController extends Controller
     public function organizations()
     {
         $sessions = Session::orderBy('id', 'DESC')->get();
+        $supervisors = OrgSupervisor::all();
         $orgs = Organization::first();
         $organizations = Organization::where('status', 1)->get();
         $current_session = Session::where('status', 1)->first();
 
-        return view('admin.orgs', compact('orgs', 'organizations', 'current_session', 'sessions'));
+        return view('admin.orgs', compact('orgs', 'organizations', 'current_session', 'sessions', 'supervisors'));
     }
     public function org_details($id)
     {
@@ -406,7 +409,7 @@ class AdminController extends Controller
     {
         Siwes::where('id', $request->swep_id)->update(['itcu_score'=> $request->score]);
 
-        return back();
+        return back()->with('success', "Score Updated Successfully!");
     }
     public function materials()
     {
@@ -431,7 +434,7 @@ class AdminController extends Controller
         $announce = Announcement::create($request->all());
         $announce->save();
 
-        return back()->with('success', 'New Notice Posted Successfully!!');
+        return back()->with('success', "<b>$announce->title</b> Posted Successfully!!");
     }
     public function store_material(Request $request)
     {
@@ -440,7 +443,7 @@ class AdminController extends Controller
         $material->name = $request->file('file')->getClientOriginalName();
         $material->save();
 
-        return back()->with('success', 'New Document Uploaded Successfully!!');
+        return back()->with('success', "<b>$material->name</b>  Uploaded Successfully!!");
     }
 
     public function material_download($file)
@@ -461,6 +464,22 @@ class AdminController extends Controller
             // return redirect('/404');
             return back()->with('deleted', 'Document Not Found');
         } 
+    }
+    public function dept_create()
+    {
+        $dept = Department::all();
+        $sessions = Session::orderBy('id', 'DESC')->get();
+        return view('admin.department', compact('dept', 'sessions'));
+    }
+    public function dept_store(Request $request)
+    {
+        $dept = new Department();
+        $dept->course_study = $request->course_study;
+        $dept->faculty = $request->faculty;
+        $dept->department = $request->department;
+        $dept->save();
+
+        return back()->with('success',"<b>$request->course_study</b> has been added!");
     }
 }
 // $exists = Storage::disk('public')->dow($material->file);

@@ -68,8 +68,9 @@
                                             <td class="text-success">
                                                 <b>Current year: </b>
                                                 Starts: {{ $session->start_date }}, Ends: {{ $session->end_date}} 
-                                            &nbsp;<a class="btn btn-sm btn-outline-dark" href="/admin/setup/edit/{{$session->id}}"><i class="fa fa-edit"></i></a>
-                                            
+                                                &nbsp;
+                                                {{-- <a class="btn btn-sm btn-outline-dark" href="/admin/setup/edit/{{$session->id}}"><i class="fa fa-edit"></i></a> --}}
+                                                <a class="btn btn-sm btn-outline-dark" onclick="get_session({{$session->id}})" data-toggle="modal" data-target="#editSession"><i class="fa fa-edit"></i></a>
                                             </td>
                                         @endif
                                     </tr>
@@ -82,5 +83,60 @@
             </div>
         </div>
     </div>
+
+    <!-- MODALS -->
+        <!-- Edit Session Modal -->
+        <div class="modal fade" data-keyboard="false" data-backdrop="static" id="editSession" tabindex="-1" role="dialog" aria-labelledby="editSession" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="editSessionLabel">Edit <span id="year_name"></span> Session</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><b>&times;</b></span>
+                    </button>
+                </div>
+                    <form class="form m-3" action="/admin/setup/update" method="POST">
+                        @method("PUT")
+                        @csrf
+                        <div class="form-group">
+                            <label class="form-label" for="year">Year: </label>
+                            <input class="col-md-12 form-control" type="text" name="year" id="edit_year" value="" required>
+                        </div>
     
+                        <div class="form-group">
+                            <label class="form-label" for="start_date">Session's Start Date </label>
+                            <input class="col-md-12 form-control" type="date" name="start_date" id="edit_start_date" value="" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label class="form-label" for="end_date">Session's End Date </label>
+                            <input class="col-md-12 form-control" type="date" name="end_date" id="edit_end_date"  value="" required>
+                        </div>
+                        
+                        <div class="float-right">
+                        <button type="submit" class="btn btn-outline-primary">
+                            {{ __('Update') }}
+                        </button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    
+@endsection
+
+@section('scripts')
+    <script>
+        function get_session(id){
+            $.get('/admin/setup/edit/'+id, function(data)
+            {
+                console.log(data);
+                $('#year_name').html(data.year);
+                $('#edit_year').val(data.year);
+                $('#edit_start_date').val(data.start_date);
+                $('#edit_end_date').val(data.end_date);
+            });
+        }
+    </script>        
 @endsection

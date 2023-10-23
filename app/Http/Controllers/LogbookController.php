@@ -207,7 +207,7 @@ class LogbookController extends Controller
     {
         $record = DailyRecord::create($request->all());
         $record->save();
-        return back();
+        return back()->with('success', "<b>$record->date</b> Record Added Successfully");
     }
         // gets a single reord for edit
     public function show_daily($id)
@@ -224,14 +224,14 @@ class LogbookController extends Controller
         $record->date = $request->date;
         $record->description_of_work = $request->description_of_work;
         $record->update();
-        return back();
+        return back()->with('success', "<b>$record->date</b> Record Updated Successfully");
     }
         // Deletes a daily_record
     public function destroy_daily($id)
     {
         $record = DailyRecord::findOrFail($id);
         $record->delete();
-        return response()->json(['status'=>"Daily Record Deleted Successfully!"]);
+        return response()->json(['status'=>"Day Record Deleted Successfully!"]);
     }
         // store the weekly record
     public function store_weekly(Request $request)
@@ -242,7 +242,7 @@ class LogbookController extends Controller
             DailyRecord::where('id', $day)->update(['weeked'=> 1]);
         }
         $record->save();
-        return back();
+        return back()->with('success', "<b>$record->name</b> Record Added Successfully");;
     }
         // show a weekly record
     public function show_week($id)
@@ -278,7 +278,7 @@ class LogbookController extends Controller
             DailyRecord::where('id', $day)->update(['weeked'=> 1]);
         };
         $record->update();
-        return back();
+        return back()->with('success', "<b>$record->name</b> Record Updated Successfully");
     }
         // Deletes a weekly_record
     public function destroy_weekly($id)
@@ -289,7 +289,7 @@ class LogbookController extends Controller
             DailyRecord::where('id', $day)->update(['weeked'=> 0]);
         };
         $record->delete();
-        return response()->json(['status'=>"Week Record Deleted Successfully!"]);
+        return response()->json(['status'=>"Record Deleted Successfully!"]);
     }
     public function store_monthly(Request $request)
     {
@@ -302,7 +302,7 @@ class LogbookController extends Controller
             WeeklyRecord::where('id', $week)->update(['monthed'=> 1]);
         }
         $record->save();
-        return back();
+        return back()->with('success', "<b>$record->name</b>'s Record Added Successfully");;
     }
     public function show_month($id)
     {
@@ -337,7 +337,7 @@ class LogbookController extends Controller
             WeeklyRecord::where('id', $week)->update(['monthed'=> 1]);
         };
         $record->update();
-        return back();
+        return back()->with('success', "<b>$record->name</b>'s Record Updated Successfully");;
     }
         // Deletes a monthly_record
     public function destroy_monthly($id)
@@ -348,6 +348,6 @@ class LogbookController extends Controller
             WeeklyRecord::where('id', $week)->update(['monthed'=> 0]);
         };
         $record->delete();
-        return response()->json(['status'=>"Month Record Deleted Successfully!"]);
+        return response()->json(['status'=>"Record Deleted Successfully!"]);
     }
 }

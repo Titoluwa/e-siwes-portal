@@ -21,14 +21,16 @@ class SessionController extends Controller
         $setup->start_date = ($request->start_date);
         $setup->end_date = ($request->end_date);
         $setup->save();
-        return redirect('admin/setup')->with('message',"$request->year has been added and set!");
+        return redirect('admin/setup')->with('success',"<b>$request->year</b> has been added and set!");
     }
     public function edit($id)
     {
         $setup = Session::findorFail($id);
-        $current_session = Session::where('status', 1)->first();
+        // $current_session = Session::where('status', 1)->first();
+        // $sessions = Session::orderBy('id', 'DESC')->get();
 
-        return view("admin.setup_edit", compact('setup', 'current_session'));
+        return response()->json($setup, 200);
+        // return view("admin.setup_edit", compact('setup', 'current_session', 'sessions'));
     }
     public function update(Request $request, Session  $setup)
     {
@@ -37,7 +39,7 @@ class SessionController extends Controller
         $session->start_date = ($request->start_date);
         $session->end_date = ($request->end_date);
         $session->update();
-        return redirect("admin/setup")->with('message',"$request->year session date has been Updated!");; 
+        return redirect("admin/setup")->with('success',"<b>$request->year</b> session date has been Updated!");; 
     }
     
 }

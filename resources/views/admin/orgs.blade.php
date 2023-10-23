@@ -29,6 +29,50 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {{-- @foreach($supervisors as $sup)
+                                        <tr>
+                                            <td>{{$loop->index + 1}}</td>
+                                            <td>
+                                                @if ($sup->org_id == null)
+                                                    <span class="text-danger">not registered</span>
+                                                @else
+                                                    {{$sup->org->name}}
+                                                @endif
+                                            </td>
+                                            <td><a href="mailto:{{$sup->user->email}}">{{$sup->user->name()}}</a></td>
+                                            <td>
+                                                @if ($sup->org_id == null)
+                                                    <span class="text-danger">nil</span>
+                                                @else
+                                                    {{$sup->org->full_address}}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($sup->org_id == null)
+                                                    <span class="text-danger">nil</span>
+                                                @else
+                                                    {{$sup->org->state}}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($sup->org_id == null)
+                                                    <span class="text-danger">nil</span>
+                                                @else
+                                                    <a href="mailto:{{$sup->org->postal_address}}">{{$sup->org->postal_address}}</a>
+                                                @endif
+                                              
+                                            </td>
+                                            <td style="display: inline-flex">
+                                                @if ($sup->org_id == null)
+                                                    <span class="text-danger">nil</span>
+                                                @else
+                                                    <button onclick="get_orgdetails({{$sup->org->id}})" class='m-1 btn btn-sm btn-outline-primary' data-toggle="modal" data-target="#viewOrgModal">Details</button>
+                                                    <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Edit</a>
+                                                    <button type='button' class='m-1 btn btn-sm btn-outline-danger delete' disabled><i class="fa fa-unlink"></i></button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach --}}
                                     @foreach($organizations as $org)
                                         <tr>
                                             {{-- <td>{{$loop->index + 1}}</td> --}}
@@ -110,7 +154,7 @@
                                 </tbody>
                             </table>
                         </div> --}}
-                    <hr>
+                    {{-- <hr> --}}
                         <h5><b> Student(s) </b></h5>
                         <div class="table-responsive">
                             <table id="myTable" class="table table-dark" style="width:100%">

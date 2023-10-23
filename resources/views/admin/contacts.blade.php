@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Staffs')
+@section('title', 'All Contacts')
 
 @section('admincontent')
     
@@ -9,7 +9,7 @@
             <div class="card border-warning">
                 
                 <div class="card-body p-3">
-                    <h4 class="text-primary"><i class="fa fa-phone"></i> All Users' Contact</h4>
+                    <h4 class="text-primary"><i class="fa fa-users"></i> All Users</h4>
                     
                     <br>
                     <div class="table-responsive">
@@ -20,6 +20,8 @@
                                     <th>Email Address</th>
                                     <th>Phone Number</th>
                                     <th>Role</th>
+                                    <th>Active</th>
+                                    <th>Verified</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -36,7 +38,29 @@
                                             @elseif ($user->role_id == 3)
                                                 Industry Supervisor
                                             @endif
-                                            
+                                        </td>
+                                        <td>
+                                            @if ($user->logged == 1)
+                                                <span class="text-success">Active</span>
+                                                <br>
+                                                {{-- <a class="" href="/logging-out"
+                                                onclick="event.preventDefault();
+                                                                document.getElementById('logging-out-form').submit();" @disabled(true)>
+                                                    Logout
+                                                </a>
+                                                <form id="logging-out-form" action="/logging-out" method="POST" class="d-none">
+                                                    @csrf
+                                                </form> --}}
+                                            @else
+                                                <span class="text-danger">Inactive</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($user->verified_token != null)
+                                            <span class="text-success">Verifed</span>
+                                            @else
+                                                <span class="text-danger">Unverified</span>
+                                            @endif 
                                         </td>
                                     </tr>
                                 @endforeach

@@ -85,7 +85,8 @@ class IndustryController extends Controller
                 if (Auth::user()) {
                     return redirect('/admin/industry'); 
                 } else {
-                    return redirect('/verification')->with('success', 'Successfully Registered! Verify your account to log in');
+                    // return redirect('/verification')->with('success', 'Successfully Registered! Verify your account to log in');
+                    return redirect('/verification')->with('success', "Successfully Registered! Verification token sent to <b>$request->email</b>");
                     // return redirect('login')->with('success', 'Verify your email before login. Go check your inbox!');
                 } 
 
@@ -157,7 +158,7 @@ class IndustryController extends Controller
         $org_supervisor->org_id = $org->id;
         $org_supervisor->update();
 
-        return redirect('industry');
+        return redirect('industry')->with('success', "Ypur Organizationhas been registered Successfully!");
     }
         // Shows the edit form for organization.
     public function org_edit()
@@ -183,7 +184,7 @@ class IndustryController extends Controller
         }
         $org->update();
 
-        return redirect('industry');
+        return redirect('industry')->with('success', "<b>$request->name</b> profile updated succesfully");
     }
         // Show the edit form for Industry Supervisor user
     public function profile()
@@ -232,6 +233,7 @@ class IndustryController extends Controller
             $supervisor->update();
 
             return redirect("/industry");
+            // ->with('success', "<b>$request->name</b> profile updated succesfully");
 
         } catch(\Exception $e){
             DB::rollback();
@@ -330,7 +332,7 @@ class IndustryController extends Controller
         $monthlyrecord->org_sup_id = $sup_id;
         $monthlyrecord->update();
 
-        return back();
+        return back()->with('success', "Assessment added succesfully");;
     }
 
     public function store_assessment(Request $request)
@@ -339,7 +341,7 @@ class IndustryController extends Controller
         $assessment = OrgAssessment::create($request->all());
         $assessment->save();
 
-        return back()->with('Assessment Report Submitted');
+        return back()->with('success', 'Assessment Report Submitted');
     }
     public function update_assessment(Request $request, $id)
     {
@@ -349,6 +351,6 @@ class IndustryController extends Controller
         $assessment->qualitative_score = $request->qualitative_score;
         $assessment->update();
 
-        return back()->with('Assessment Report Submitted');
+        return back()->with('success', 'Assessment Report Submitted');
     }
 }
