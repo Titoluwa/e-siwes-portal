@@ -20,8 +20,9 @@
                                     <th>Email Address</th>
                                     <th>Phone Number</th>
                                     <th>Role</th>
-                                    <th>Active</th>
                                     <th>Verified</th>
+                                    <th>Log</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,26 +41,27 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if ($user->logged == 1)
-                                                <span class="text-success">Active</span>
-                                                <br>
-                                                {{-- <a class="" href="/logging-out"
-                                                onclick="event.preventDefault();
-                                                                document.getElementById('logging-out-form').submit();" @disabled(true)>
-                                                    Logout
-                                                </a>
-                                                <form id="logging-out-form" action="/logging-out" method="POST" class="d-none">
-                                                    @csrf
-                                                </form> --}}
-                                            @else
-                                                <span class="text-danger">Inactive</span>
-                                            @endif
-                                        </td>
-                                        <td>
                                             @if ($user->verified_token != null)
                                             <span class="text-success">Verifed</span>
                                             @else
                                                 <span class="text-danger">Unverified</span>
+                                            @endif 
+                                        </td>
+                                        <td>
+                                            @if ($user->logged == 1)
+                                                <input class="logout_val" type="hidden" value="{{$user->id}}">
+                                                <span class="text-success logout"><a href="">IN</a></span>
+                                            @else
+                                                <span class="text-danger">Out</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($user->status == 1)
+                                                <input class="deactivate_val" type="hidden" value="{{$user->id}}">
+                                                <button type='button' class='m-1 btn btn-sm btn-outline-danger deactivate'><i class="fa fa-unlink"></i></button>
+                                            @else
+                                                <input class="activate_val" type="hidden" value="{{$user->id}}">
+                                                <button type='button' class='m-1 btn btn-sm btn-outline-success activate'><i class="fa fa-link"></i></button>
                                             @endif 
                                         </td>
                                     </tr>
@@ -75,6 +77,121 @@
 @endsection
 
 @section('scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('.deactivate').click(function(e) {
+                e.preventDefault();
+                var deactivate_id = $(this).closest('td').find('.deactivate_val').val();
+                // alert(deactivate_id);
+                swal({
+                    title: "Deactivate User?",
+                    text: "The user will not be able to login into the portal anymore",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                        var data = {
+                            "_token": $('input[name=_token]').val(),
+                            "id": deactivate_id,
+                        }
+                        $.ajax({
+                            type: "DELETE",
+                            url: "/admin/user/deactivate/"+ deactivate_id,
+                            data: data,
+                            success: function (response){
+                                swal(response.status, {
+                                    icon: "success",
+                                })
+                                .then((result)=>{
+                                    location.reload();
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+            $('.activate').click(function(e) {
+                e.preventDefault();
+                var activate_id = $(this).closest('td').find('.activate_val').val();
+                // alert(activate_id);
+                swal({
+                    title: "Activate User?",
+                    text: "Are you sure you want to activate this user",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                        var data = {
+                            "_token": $('input[name=_token]').val(),
+                            "id": activate_id,
+                        }
+                        $.ajax({
+                            type: "DELETE",
+                            url: "/admin/user/activate/"+ activate_id,
+                            data: data,
+                            success: function (response){
+                                swal(response.status, {
+                                    icon: "success",
+                                })
+                                .then((result)=>{
+                                    location.reload();
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+            $('.logout').click(function(e) {
+                e.preventDefault();
+                var logout_id = $(this).closest('td').find('.logout_val').val();
+                // alert(logout_id);
+                swal({
+                    title: "Logout User?",
+                    text: "Are you sure you want to logout this user",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                        var data = {
+                            "_token": $('input[name=_token]').val(),
+                            "id": logout_id,
+                        }
+                        $.ajax({
+                            type: "DELETE",
+                            url: "/admin/user/logout/"+ logout_id,
+                            data: data,
+                            success: function (response){
+                                swal(response.status, {
+                                    icon: "success",
+                                })
+                                .then((result)=>{
+                                    location.reload();
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
     <script  type="text/javascript">
         // new DataTable('#usersTable');
         $('#usersTable').DataTable( {

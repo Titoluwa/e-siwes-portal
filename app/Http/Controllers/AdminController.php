@@ -17,6 +17,7 @@ use App\Organization;
 use App\WeeklyRecord;
 use App\MonthlyRecord;
 use App\OrgSupervisor;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -80,9 +81,10 @@ class AdminController extends Controller
         $staff = Staff::first();
         $staffs = Staff::all();
         $current_session = Session::where('status', 1)->first();
-        $faculty = DB::table('departments')->selectRaw('faculty')->groupBy('faculty')->get(); 
+        $faculty = DB::table('departments')->selectRaw('faculty')->groupBy('faculty')->get();
+        $depts = DB::table('departments')->selectRaw('department')->groupBy('department')->get(); 
 
-        return view('admin.staffs', compact('staff', 'staffs', 'current_session', 'faculty','sessions'));
+        return view('admin.staffs', compact('staff', 'staffs', 'current_session', 'faculty','sessions', 'depts'));
     }
     public function organizations()
     {
@@ -128,12 +130,67 @@ class AdminController extends Controller
         $faculty = DB::table('departments')->selectRaw('faculty')->groupBy('faculty')->get();
         $s_siwes = Siwes::where('user_id', $id)->whereNotNull('org_id')->first();
         $siwes = Siwes::where('user_id', $id)->whereNotNull('org_id')->get();
+        $depts = DB::table('departments')->selectRaw('department')->groupBy('department')->get();
+        $courses = DB::table('departments')->selectRaw('course_study')->get();
 
         // dd($current_session);
 
-        return view('admin.view_student', compact('student', 'current_session', 'faculty', 's_siwes', 'siwes', 'sessions'));
+        return view('admin.view_student', compact('student', 'current_session', 'faculty', 's_siwes', 'siwes', 'sessions', 'depts', 'courses'));
     }
     
+    public function updateStaff(Request $request)
+    {
+            // dd($request->all());
+            $user = User::where('id', $request->id)->first();
+            $staff = Staff::where('user_id', $request->id)->first();
+    
+            $user->last_name = Str::ucfirst($request->last_name);
+            $user->first_name = Str::ucfirst($request->first_name);
+            $user->middle_name = Str::ucfirst($request->middle_name);
+            $user->gender = ($request->gender);
+            // $user->contact_no = ($request->contact_no);
+            if ($request->hasFile('profile_pic')){
+                $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
+            }
+    
+            $staff->faculty = ($request->faculty);
+            $staff->department = ($request->department);
+            if ($request->hasFile('signature')){
+                $staff->signature = $request->file('signature')->store('signatures', 'public');
+            }
+    
+            $user->update();
+            $staff->update();
+    
+            return back()->with('success', "<b>$user->last_name</b> Profile Updated Successfully");
+    }
+    public function studentProfileUpdate(Request $request)
+    {
+        // dd($request->all());
+        $user = User::where('id', $request->id)->first();
+        $student = Student::where('user_id', $request->id)->first();
+
+        $user->last_name = Str::ucfirst($request->last_name);
+        $user->first_name = Str::ucfirst($request->first_name);
+        $user->middle_name = Str::ucfirst($request->middle_name);
+        $user->gender = ($request->gender);
+        // $user->contact_no = ($request->contact_no);
+        if ($request->hasFile('profile_pic')){
+            $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
+        }
+
+        $student->faculty = ($request->faculty);
+        $student->department = ($request->department);
+        $student->course_of_study = $request->course_of_study;
+        if ($request->hasFile('signature')){
+            $student->signature = $request->file('signature')->store('signatures', 'public');
+        }
+
+        $user->update();
+        $student->update();
+
+        return back()->with('success', "<b>$user->last_name</b> Profile Updated Successfully");
+    }
     public function placement300perSession($session_id)
     {
         // $current_session = Session::where('id', $session_id)->first();
@@ -373,8 +430,9 @@ class AdminController extends Controller
     }
     public function get_staff($id)
     {
+        $current_session = Session::where('status', 1)->first();
         $staff  = Staff::where('id', $id)->first();
-        $students = Student::where('staff_id', $id)->get();
+        $students = Siwes:: where('session_id', $current_session->id)->where('assigned_staff_id', $id)->with('student', 'user', 'org')->get();
         $data = [
             'staff' => $staff,
             'students' => $students
@@ -436,6 +494,29 @@ class AdminController extends Controller
 
         return back()->with('success', "<b>$announce->title</b> Posted Successfully!!");
     }
+    public function get_notice($id)
+    {
+        $notice = Announcement::where('id', $id)->first();
+
+        return response()->json($notice);
+    }
+    public function edit_notice(Request $request)
+    {
+        $notice = Announcement::where('id', $request->id)->first();
+        $notice->title = $request->title;
+        $notice->department = $request->department;
+        $notice->content = $request->content;
+        $notice->update();
+
+        return back()->with('success', "<b>$notice->title</b> Updated Successfully!!");
+    }
+    public function delete_notice($id)
+    {
+        $notice = Announcement::findorFail($id);
+        $notice->delete();
+        
+        return response()->json(['status'=>"Notice Deleted Successfully!"]);
+    }
     public function store_material(Request $request)
     {
         $material = Material::create($request->all());
@@ -444,6 +525,14 @@ class AdminController extends Controller
         $material->save();
 
         return back()->with('success', "<b>$material->name</b>  Uploaded Successfully!!");
+    }
+
+    public function delete_material($id)
+    {
+        $notice = Material::findorFail($id);
+        $notice->delete();
+        
+        return response()->json(['status'=>"Material Deleted Successfully!"]);
     }
 
     public function material_download($file)
@@ -480,6 +569,24 @@ class AdminController extends Controller
         $dept->save();
 
         return back()->with('success',"<b>$request->course_study</b> has been added!");
+    }
+    public function deactivateUser($id)
+    {
+        User::where('id', $id)->update(['status'=> 0]);
+
+        return response()->json(['status'=>"User DEACTIVATED Successfully!"]);
+    }
+    public function activateUser($id)
+    {
+        User::where('id', $id)->update(['status'=> 1]);
+
+        return response()->json(['status'=>"User ACTIVATED Successfully!"]);
+    }
+    public function logoutUser($id)
+    {
+        User::where('id', $id)->update(['logged'=> 0, 'last_login'=> Carbon::now()]);
+
+        return response()->json(['status'=>"User LOGGED OUT Successfully!"]);
     }
 }
 // $exists = Storage::disk('public')->dow($material->file);

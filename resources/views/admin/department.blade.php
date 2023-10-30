@@ -20,7 +20,7 @@
                                 <th>Course</th>
                                 <th>Department</th>
                                 <th>Faculty</th>
-                                <th></th>
+                                {{-- <th></th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -29,9 +29,9 @@
                                 <td>{{$d->course_study}}</td>
                                 <td>{{$d->department}}</td>
                                 <td>{{$d->faculty}}</td>
-                                <td>
+                                {{-- <td>
                                     <button type="button" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#editDepartment"><i class="fa fa-edit"></i></button>
-                                </td>
+                                </td> --}}
                             </tr>
                             @endforeach
                         </tbody>

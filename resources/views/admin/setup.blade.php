@@ -62,7 +62,8 @@
                                         @if ($session->status == 0)
                                             <td class="text-danger">
                                                 <b>Session year is closed!</b>
-                                                Started: {{ $session->start_date }}, Ended: {{ $session->end_date }}   
+                                                Started: {{ $session->start_date }}, Ended: {{ $session->end_date }}  
+                                                {{-- <button class="btn btn-sm btn-outline-success">Activivate</button>  --}}
                                             </td>
                                         @else
                                             <td class="text-success">

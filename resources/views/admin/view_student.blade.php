@@ -196,15 +196,16 @@
                             <span aria-hidden="true"><b>&times;</b></span>
                             </button>
                         </div>
-                        <form method="POST" action="" enctype="multipart/form-data" class="m-4">
+                        <form method="POST" action="/admin/students/update" enctype="multipart/form-data" class="m-4">
+                            @method('PUT')
                             @csrf
            
-                            <input type="hidden" name="role_id" value="1">
+                            <input type="hidden" name="id" value="{{$student->user_id}}">
 
                             <div class="row form-group">
                                 <div class="col-lg-6">
                                     <label for="email" class="col-form-label">E-Mail Address</label>
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{$student->user->email }}">
+                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{$student->user->email }}" disabled>
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -265,7 +266,7 @@
                                     <select name="faculty" id="faculty" value="{{ $student->faculty }}" class="form-control @error('faculty') is-invalid @enderror" data-dependant='department' >
                                         <option value="" disabled selected hidden>Select Faculty</option>
                                         @foreach($faculty as $f)
-                                        <option value="{{ $f->faculty }}">{{ $f->faculty }}</option>
+                                        <option value="{{ $f->faculty }}" {{ ($student->faculty == $f->faculty)? "selected" : "" }}>{{ $f->faculty }}</option>
                                         @endforeach
                                     </select>
                                     @error('faculty')
@@ -279,6 +280,9 @@
                                     <label for="department" class="col-form-label">{{ __('Department') }}</label>
                                     <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" data-dependant='course_of_study' value="{{ old('department') }}">
                                         <option value="{{$student->department}}" disabled selected hidden>Select Department</option>
+                                        @foreach($depts as $dept)
+                                        <option value="{{ $dept->department }}" {{ ($student->department == $dept->department)? "selected" : "" }}>{{ $dept->department }}</option>
+                                        @endforeach
                                     </select>
 
                                     @error('department')
@@ -292,6 +296,9 @@
                                     <label for="course_of_study" class="col-form-label">Course of Study</label>
                                     <select  id="course_of_study" value="{{$student->course_of_study}}" class="form-control @error('course_of_study') is-invalid @enderror" name="course_of_study" value="{{ old('course_of_study') }}">
                                         <option value="" disabled selected hidden>Select Course</option>
+                                        @foreach($courses as $course)
+                                        <option value="{{ $course->course_study }}" {{ ($student->course_of_study == $course->course_study)? "selected" : "" }}>{{ $course->course_study }}</option>
+                                        @endforeach
                                     </select>
 
                                     @error('course_of_study')
@@ -307,11 +314,11 @@
                                     <label for="gender" class="col-form-label @error('gender') is-invalid @enderror">Gender</label>
                                     <br>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" id="female" value="Female" selected>
+                                        <input class="form-check-input" type="radio" name="gender" id="female" value="Female" {{ ($student->user->gender=="Female")? "checked" : "" }}>
                                         <label class="form-check-label" for="female">Female</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" id="male" value="Male">
+                                        <input class="form-check-input" type="radio" name="gender" id="male" value="Male" {{ ($student->user->gender=="Male")? "checked" : "" }}>
                                         <label class="form-check-label" for="male">Male</label>
                                     </div>
                                     @error('gender')
@@ -333,7 +340,7 @@
 
                                 <div class="col-lg-4">
                                     <label for="contact_no" class="col-form-label">Contact Number</label>
-                                    <input id="contact_no" type="tel" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ $student->user->contact_no }}">
+                                    <input id="contact_no" type="tel" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="0{{ $student->user->contact_no }}" disabled>
                                     @error('contact_no')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

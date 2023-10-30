@@ -52,7 +52,8 @@
                                         <td style="display: inline-flex; width: 100%;">
                                             <a href="/download/{{$material->id}}" class="m-1" ><i class="fa fa-download"></i> </a>
                                             @if ($material->uploaded_by == Auth()->user()->id)
-                                                <a href="/admin/material/delete/{{$material->id}}" class="m-1 btn btn-sm btn-outline-danger"><i class="far fa-trash-alt"></i></a>
+                                                <input type="hidden" name="delete_id" class="delete_id" value="{{$material->id}}">
+                                                <a class="m-1 btn btn-sm btn-outline-danger delete"><i class="far fa-trash-alt"></i></a>
                                             @endif
                                         </td>
                                     </tr>
@@ -95,7 +96,7 @@
                                     <label class="form-label" for="end_date">SIWES type</label>
                                     <select class="col-lg-12 form-control" name="siwes_type_id" id="siwes_type_id" required>
                                         <option value="0" selected>All</option>
-                                        @foreach ($siwes_types as $siwes )
+                                        @foreach ($siwes_types as $siwes)
                                             <option value="{{$siwes->id}}">{{$siwes->name}}</option>
                                         @endforeach
                                     </select>
@@ -134,5 +135,49 @@
         //         'colvis'
         //     ]
         // } );
+        $(document).ready(function() {
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+$('.delete').click(function(e) {
+    e.preventDefault();
+    var delete_id = $(this).closest('td').find('.delete_id').val();
+    // alert(delete_id);
+    swal({
+        title: "Delete Material?",
+        text: "You will NOT be able to recover this material",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+
+            var data = {
+                "_token": $('input[name=_token]').val(),
+                "id": delete_id,
+            }
+            $.ajax({
+                type: "DELETE",
+                url: "/admin/material/"+ delete_id,
+                data: data,
+                success: function (response){
+                    swal(response.status, {
+                        icon: "success",
+                    })
+                    .then((result)=>{
+                        location.reload();
+                    });
+                }
+            });
+        }
+    });
+
+});
+});
     </script>
 @endsection

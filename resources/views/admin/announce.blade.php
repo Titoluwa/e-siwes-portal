@@ -35,8 +35,9 @@
                                     <p class="card-text">{{$announce->content}}</p>
                                     @if ($announce->uploaded_by == Auth::user()->id)
                                         <div class="float-left">
-                                            <button class="btn btn-sm btn-outline-secondary"><i class="fa fa-edit"></i> Edit</button>
-                                            <button class="ml-2 btn btn-sm btn-outline-danger"><i class="fa fa-trash-alt"></i> Delete </button>
+                                            <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#editNoticeModal" onclick="get_notice({{$announce->id}})"><i class="fa fa-edit"></i> Edit</button>
+                                            <input type="hidden" name="delete_id" class="delete_id" value="{{$announce->id}}">
+                                            <button class="ml-2 btn btn-sm btn-outline-danger delete"><i class="fa fa-trash-alt"></i> Delete </button>
                                         </div>
                                     @endif
                                     <p class="float-right text-muted"><i>{{$announce->user->last_name}}</i></p>
@@ -52,7 +53,7 @@
         </div>
     </div>
        <!-- MODALS -->
-        <!-- Add New Annnounce Modal -->
+        <!-- Add New Notice Modal -->
             <div class="modal fade" data-keyboard="false" data-backdrop="static" id="addAnnouncementModal" tabindex="-1" role="dialog" aria-labelledby="addAnnouncementModal" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -84,7 +85,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="content">Content: </label>
-                                    <textarea class="col-lg-12 form-control" name="content" id="" cols="50" rows="1"></textarea>
+                                    <textarea class="col-lg-12 form-control" name="content" rows="3"></textarea>
                                 </div>
                                 <input type="hidden" name="uploaded_by" value="{{Auth::user()->id}}">
 
@@ -99,9 +100,115 @@
                     </div>
                 </div>
             </div>
+        <!-- Edit Notice Modal -->
+        <div class="modal fade" data-keyboard="false" data-backdrop="static" id="editNoticeModal" tabindex="-1" role="dialog" aria-labelledby="editNoticeModal" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editNoticeModalLabel"><b> <i class="fa fa-edit"></i> Edit Notice</b></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><b>&times;</b></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form" action="/admin/announce/update" method="POST" enctype="multipart/form-data">
+                            @method('PUT')
+                            @csrf
+                            <input type="hidden" name="id" id="notice_id">
+                            <div class="row">
+                                <div class="form-group col-lg-6">
+                                    <label class="form-label" for="file">Title: </label>
+                                    <input class="col-lg-12 form-control" type="text" name="title" id="edit_title">
+                                    
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label class="form-label" for="department">Department: </label>
+                                    <select class="col-lg-12 form-control" name="department" id="edit_department" required>
+                                        <option value="All Students" selected>All Students</option>
+                                        <option value="Department Coordinator">Department Coordinators</option>
+                                        @foreach ($departments as $d )
+                                            <option value="{{$d->department}}">{{$d->department}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="content">Content: </label>
+                                <textarea class="col-lg-12 form-control" name="content" id="edit_content" rows="3"></textarea>
+                            </div>
+
+                            <div class="col-lg-12 text-center">
+                                <button type="submit" class="btn btn-outline-warning">
+                                   <i class="far fa-paper-plane"></i> Update
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>    
 @endsection
 
 @section('scripts')
     <script  type="text/javascript">
+        function get_notice(id)
+        {
+            $.get('/admin/announce/'+id, function(data)
+            {
+                $('#notice_id').val(data.id);
+                $('#edit_title').val(data.title);
+                $('#edit_department').val(data.department);
+                $('#edit_content').html(data.content);
+            });    
+        };
+
+    </script>
+// <!-- Delete Scripts  -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('.delete').click(function(e) {
+                e.preventDefault();
+                var delete_id = $(this).closest('div').find('.delete_id').val();
+                // alert(delete_id);
+                swal({
+                    title: "Delete Notice?",
+                    text: "You will NOT be able to recover this Notice",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                        var data = {
+                            "_token": $('input[name=_token]').val(),
+                            "id": delete_id,
+                        }
+                        $.ajax({
+                            type: "DELETE",
+                            url: "/admin/announce/"+ delete_id,
+                            data: data,
+                            success: function (response){
+                                swal(response.status, {
+                                    icon: "success",
+                                })
+                                .then((result)=>{
+                                    location.reload();
+                                });
+                            }
+                        });
+                    }
+                });
+
+            });
+        });
     </script>
 @endsection

@@ -122,7 +122,7 @@
                             <div class="col-lg-4">
                                 <label class="col-form-label"  for="profile_pic">Profile Picture</label>
 
-                                <input type="file" class="form-control-file @error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic">
+                                <input type="file" class="form-control-file @error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic" accept="image/png, image/jpeg">
                                 @error('profile_pic')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -150,7 +150,7 @@
                         
                             <div class="col-lg-4">
                                 <label for="contact_no" class="col-form-label">Contact Number <small class="text-danger">(must be 11 digits)*</small></label>
-                                <input id="contact_no" type="tel" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ old('contact_no') }}" required placeholder="08012345678">
+                                <input id="contact_no" type="tel" class="form-control @error('contact_no') is-invalid @enderror" name="contact_no" value="{{ old('contact_no') }}" required placeholder="08012345678" pattern="[0-9]{11}" title="must be 11 digits">
                                 @error('contact_no')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -162,7 +162,7 @@
                             <div class="col-lg-6">
                                 <label class="col-form-label"  for="signature">Signature</label>
 
-                                <input type="file" class="form-control-file @error('signature') is-invalid @enderror" id="signature" name="signature">
+                                <input type="file" class="form-control-file @error('signature') is-invalid @enderror" id="signature" name="signature" accept="image/png, image/jpeg">
                                 @error('signature')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -173,7 +173,7 @@
                         <div class="form-group row">
                             <div class="col-lg-6">
                                 <label for="password" class="col-form-label">Password <small class="text-danger">*</small></label>
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

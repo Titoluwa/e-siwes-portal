@@ -83,8 +83,7 @@
                                             <td><a href="mailto:{{$org->postal_address}}">{{$org->postal_address}}</a></td>
                                             <td style="display: inline-flex">
                                                 <button onclick="get_orgdetails({{$org->id}})" class='m-1 btn btn-sm btn-outline-primary' data-toggle="modal" data-target="#viewOrgModal">Details</button>
-                                                {{-- <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Edit</a> --}}
-                                                <button type='button' class='m-1 btn btn-sm btn-outline-danger delete' disabled><i class="fa fa-unlink"></i></button>
+                                                {{-- <button type='button' class='m-1 btn btn-sm btn-outline-danger delete' disabled><i class="fa fa-unlink"></i></button> --}}
                                             </td>
                                         </tr>
                                     @endforeach

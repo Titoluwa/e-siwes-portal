@@ -105,7 +105,7 @@ class SchoolController extends Controller
                 Mail::to($user->email)->send(new Registration($user, $token));
 
                 if (Auth::user()) {
-                   return redirect('/admin/staffs'); 
+                   return redirect('/admin/staffs')->with('success', "Successfully Registered! Verification token sent to <b>$request->email</b>");
                 } else {
                     return redirect('/verification')->with('success', "Successfully Registered! Verification token sent to <b>$request->email</b>");
                 }             

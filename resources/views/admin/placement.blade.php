@@ -13,6 +13,14 @@
                         @if(!empty($s_siwes))
                             <h4 class="text-primary">Placement List for {{$s_siwes->siwes_type->name}} <span id="session_name" >({{$current_session->year}})</span></h4>
                         @endif
+                        @if ($s_siwes->siwes_type->name == "SWEP 200")
+
+                        <form class="float-right" action="" method="post">
+                            <p>Upload ITCU result</p>
+                            <input type="file" name="result" id="result_file" class="form-control-file" accept=".csv, application/excel">
+                            <button type="submit" class="float-right btn btn-sm btn-warning">Submit</button>
+                        </form>
+                    @endif
                     </div>
                     
                     @if(!empty($s_siwes))
@@ -39,7 +47,8 @@
                                     @foreach($siwes as $student)
                                         <tr>
                                             {{-- <td>{{$loop->index+1}}</td> --}}
-                                            <td>{{$student->user->name()}}</td>
+                                            {{-- <td>{{$student->user->name()}}</td> --}}
+                                            <td><a target="_blank" href="/admin/students/{{$student->user_id}}">{{$student->user->name()}}</a></td> {{-- Link to View  --}}
                                             <td>{{$student->student->matric_no}} </td>
                                             <td>{{$student->student->department}} </td>
                                             @if ($student->org_id != null)

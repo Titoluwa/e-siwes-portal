@@ -83,7 +83,7 @@ class IndustryController extends Controller
                 Mail::to($user->email)->send(new Registration($user, $token));
 
                 if (Auth::user()) {
-                    return redirect('/admin/industry'); 
+                    return redirect('/admin/industry')->with('success', "Successfully Registered! Verification token sent to <b>$request->email</b>"); 
                 } else {
                     // return redirect('/verification')->with('success', 'Successfully Registered! Verify your account to log in');
                     return redirect('/verification')->with('success', "Successfully Registered! Verification token sent to <b>$request->email</b>");

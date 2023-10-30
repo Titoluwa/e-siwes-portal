@@ -15,4 +15,13 @@ class Staff extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+    public function assignedStudentCount()
+    {
+        $current_session = Session::where('status', 1)->first();
+        $staff  = Staff::where('id', $this->id)->first();
+        $students = Siwes:: where('session_id', $current_session->id)->where('assigned_staff_id', $staff->id)->get();
+        
+        return $students->count();
+    }
 }

@@ -24,6 +24,14 @@ Route::get('/', function () {
 Route::post('/logging-out', 'Auth\LoginController@loggingOut');
 Auth::routes();
 
+Route::get('/verification', [PageController::class, 'verify']);
+Route::post('/verification', [PageController::class, 'post_verify']);
+Route::post('/resend-verification', [PageController::class, 'resend_verify']);
+
+Route::post('/password/token', 'PageController@password_verify');
+Route::get('/password/change', 'PageController@password_change');
+Route::put('/password/confirm', 'PageController@password_confirm');
+
 Route::get('/download/{file}', 'AdminController@material_download');
 
     // REGISTRATION Routes
@@ -57,9 +65,13 @@ Route::prefix('admin')->group(function ()
 
     Route::get('announce', 'AdminController@announce');
     Route::post('announce/store', 'AdminController@post_announcement');
+    Route::get('announce/{id}', 'AdminController@get_notice');
+    Route::put('announce/update', 'AdminController@edit_notice');
+    Route::delete('announce/{id}', 'AdminController@delete_notice');
 
     Route::get('materials', 'AdminController@materials');
     Route::post('material/store', 'AdminController@store_material');
+    Route::delete('material/{id}', 'AdminController@delete_material');
 
     // Session Setup
     Route::post('setup/store', 'SessionController@store')->name('admin.setup.store');
@@ -70,15 +82,25 @@ Route::prefix('admin')->group(function ()
     // Route::post('students/store', 'AdminController@store')->name('admin.setup.store');
     Route::get('students/{id}', 'AdminController@view_student');
     Route::get('students/log/{id}', 'AdminController@student_log');
+    Route::put('students/update', 'AdminController@studentProfileUpdate');
+
     Route::get('assign-students/siwes-400', 'AdminController@siwes400Students');
+
     Route::get('/placement/siwes-300/{session_id}', 'AdminController@placement300perSession');
     Route::get('/placement/siwes-400/{session_id}', 'AdminController@placement400perSession');
     Route::get('/placement/swep-200/{session_id}', 'AdminController@swep200perSession');
+
     Route::get('/swep-200/{id}', 'AdminController@swep200');
     Route::get('/siwes-300/{id}', 'AdminController@siwes300');
     Route::get('/siwes-400/{id}', 'AdminController@siwes400');
+
     Route::get('/student-200/{id}', 'AdminController@student200');
+
     Route::post('/student/edit-itcu-score', 'AdminController@edit_itcu_score');
+
+    Route::delete('/user/deactivate/{id}', 'AdminController@deactivateUser');
+    Route::delete('/user/activate/{id}', 'AdminController@activateUser');
+    Route::delete('/user/logout/{id}', 'AdminController@logoutUser');
 
     // Organization
     Route::get('organizations/{id}', 'AdminController@org_details');
@@ -86,6 +108,7 @@ Route::prefix('admin')->group(function ()
 
     //Staff
     Route::get('/staffs/{id}', 'AdminController@get_staff');
+    Route::put('staff/update', 'AdminController@updateStaff');
     Route::post('/assign-student', 'AdminController@assign_student_to_staff');
 
 });
@@ -198,9 +221,6 @@ Route::prefix('form')->group(function ()
     Route::get('/download-ssf/{id}', [FormController::class, 'downloadSSF']);
 
 });
-Route::get('/verification', [PageController::class, 'verify']);
-Route::post('/verification', [PageController::class, 'post_verify']);
-Route::post('/resend-verification', [PageController::class, 'resend_verify']);
 
     // ITF Routes "4"
 // Route::prefix('itf')->group(function ()
