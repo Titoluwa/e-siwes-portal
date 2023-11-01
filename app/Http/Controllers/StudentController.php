@@ -158,15 +158,6 @@ class StudentController extends Controller
         $bank = BankDetail::where('user_id', $id)->first();
 
         $banks = Flutterwave::banks()->nigeria();
-        // $one_bank = $banks['data'][109];        
-        // dd($one_bank);
-
-
-        // $response = Http::get('https://quizapi.io/api/v1/questions', [
-        //     'apiKey' => 'JKW9hO0ayY6MKNjaNfOnu8cB3m2De815UuB4VA2r',
-        //     'limit' => 10,
-        // ]);
-        // $quizzes = json_decode($response->body());
 
         return view('student.profile', compact('student', 'orgs', 'bank', 'banks'));
     }
