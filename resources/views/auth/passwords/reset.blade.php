@@ -21,7 +21,7 @@
                         </div>
                     @endif
                     {{-- <form method="POST" action="{{ route('password.update') }}"> --}}
-                    <form action="/password/update" method="POST">
+                    <form action="/password/confirm" method="POST">
                         @method('PUT')
                         @csrf
 

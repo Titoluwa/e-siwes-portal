@@ -22,7 +22,7 @@
                     @endif
 
                     {{-- <form method="POST" action="{{ route('password.email') }}"> --}}
-                    <form action="/password/token" method="POST"></form>
+                    <form action="/password/token" method="POST">
                         @csrf
 
                         <div class="form-group row">

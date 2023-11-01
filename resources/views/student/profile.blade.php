@@ -101,12 +101,11 @@
                                 <label for="bank_name" class="col-form-label">Bank Name</label>
                                 <select class="form-control  @error('bank_name') is-invalid @enderror" name="bank_name" id="bank_name" required>
                                     <option value="" disabled selected>Bank Name</option>
-                                    <option value="United Bank of Africa">United Bank of Africa</option>
-                                    <option value="GtBank">GtBank</option>
-                                    <option value="Access Bank">Access Bank</option>
-                                    <option value="Kuda Microfiance Bank">Kuda Microfiance Bank</option>
-                                    <option value="First Bank">First Bank</option>
-                                    <option value="Polaris Bank">Polaris Bank</option>
+
+                                    @foreach($banks['data'] as $bank)
+                                        <option value="{{$bank['name']}}" id="{{$bank['code']}}">{{$bank['name']}}</option>
+                                    @endforeach
+                    
                                 </select>
                                 @error('bank_name')
                                     <span class="invalid-feedback" role="alert">
@@ -116,7 +115,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="sort_code" class="col-form-label">Sort Code</label>
-                                <input type="sort_code" name="sort_code" id="sort_code" value="" class="form-control @error('sort_code') is-invalid @enderror" required>
+                                <input type="sort_code" name="sort_code" id="sort_code" value="" class="form-control @error('sort_code') is-invalid @enderror" data-dependant='bank_name' required>
                                 @error('sort_code')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -154,5 +153,22 @@
             $('#view_sortcode').toggleClass('hide');
             $('#view_account').toggleClass('hide');
         }
+        $(document).ready(function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('#bank_name').change(function(){
+                if($(this).val()!= ''){
+                    var value = $(this).val();
+                    var sortCode = $(this).attr('id');
+                    // var _token = $('input[name="_token"]').val();
+                    console.log(sortCode);
+                    console.log(value);
+                    $('#sort_code').val(sortCode);
+                }
+            });
+        });
     </script>
 @endsection

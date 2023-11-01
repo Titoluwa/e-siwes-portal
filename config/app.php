@@ -183,6 +183,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        KingFlamez\Rave\RaveServiceProvider::class,
         // Yajra\Datatables\DatatablesServiceProvider::class,
         // Yajra\DataTables\ButtonsServiceProvider::class,
 
@@ -251,6 +252,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Rave' =>  KingFlamez\Rave\RaveServiceProvider::class,
     ],
 
 ];

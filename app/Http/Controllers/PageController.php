@@ -89,7 +89,7 @@ class PageController extends Controller
         
             Mail::to($user->email)->send(new ForgetPassword($user, $token));
 
-            return redirect('/password/change')->with('success', "Token sent to <b>$request->email</b>. Check your inbox");
+            return redirect('/password/change')->with('success', "Token sent to $request->email. Check your inbox");
 
         } else {
             return back()->with('error', "<b>$request->email</b> not found. User has not registered");

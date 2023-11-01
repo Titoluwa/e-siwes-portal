@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use KingFlamez\Rave\Facades\Rave as Flutterwave;
+use Illuminate\Support\Facades\Http;
 
 class StudentController extends Controller
 {
@@ -155,7 +157,18 @@ class StudentController extends Controller
         $orgs = Organization::all();
         $bank = BankDetail::where('user_id', $id)->first();
 
-        return view('student.profile', compact('student', 'orgs', 'bank'));
+        $banks = Flutterwave::banks()->nigeria();
+        // $one_bank = $banks['data'][109];        
+        // dd($one_bank);
+
+
+        // $response = Http::get('https://quizapi.io/api/v1/questions', [
+        //     'apiKey' => 'JKW9hO0ayY6MKNjaNfOnu8cB3m2De815UuB4VA2r',
+        //     'limit' => 10,
+        // ]);
+        // $quizzes = json_decode($response->body());
+
+        return view('student.profile', compact('student', 'orgs', 'bank', 'banks'));
     }
         // Show StudentUser edit form
     public function edit()
@@ -271,6 +284,7 @@ class StudentController extends Controller
     }
     public function store_bank(Request $request)
     {
+        dd($request->all());
         $bank = BankDetail::create($request->all());
         $bank->save();
 
