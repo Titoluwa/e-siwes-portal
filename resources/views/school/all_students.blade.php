@@ -14,6 +14,14 @@
                     </div>
 
                     <div class="card-body">
+                        @if ($s_swep->siwes_type->name == "SWEP 200")
+                            <form class="float-right" action="/school/upload-swep" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <p>Upload SWEP result</p>
+                                <input type="file" name="file" id="result_file" class="form-control-file" accept=".csv" required>
+                                <button type="submit" class="float-right btn btn-sm btn-warning">Submit</button>
+                            </form>
+                        @endif
                         <div class="m-3">
                             {{-- <div class="m-3">
                                 <h4 class="blue-text">List of Students for {{$siwes_type->name}} in {{$session->year}} session</h4>
@@ -55,10 +63,17 @@
                                                         <input class="score_id" type="hidden" value="{{$siwes->id}}">
                                                         <a href="" data-toggle="modal" data-target="#editScoreModal" class="editscore blue-text" style="text-decoration-line: none"><i class="fa fa-edit"></i></a>
                                                     </td>
-                                                    <td>{{count($siwes->swep_attendance)}} &nbsp;&nbsp;
-                                                        @if ($siwes->swep_attendance[count($siwes->swep_attendance)-1] != $today)
+                                                    <td>
+                                                        @if ($siwes->swep_attendance == null)
+                                                            0 &nbsp;&nbsp;
                                                             <input class="siwes_val" type="hidden" value="{{$siwes->id}}">
                                                             <a class="attendance btn btn-sm btn-outline-secondary"> + </a>
+                                                        @else
+                                                            {{count($siwes->swep_attendance)}} &nbsp;&nbsp;
+                                                            @if ($siwes->swep_attendance[count($siwes->swep_attendance)-1] != $today)
+                                                                <input class="siwes_val" type="hidden" value="{{$siwes->id}}">
+                                                                <a class="attendance btn btn-sm btn-outline-secondary"> + </a>
+                                                            @endif
                                                         @endif
                                                     </td>
                                                 @endif
@@ -98,7 +113,7 @@
                             <div class="col-md-1"></div>
                             <div class="col-md-4">
                                 <input type="hidden" name="swep_id" id='swep_id'>
-                                <input type="number" name="score" id="edit_score" value="{{ old('score') }}" required class="form-control @error('score') is-invalid @enderror">
+                                <input type="number" name="swep_score" id="edit_score" value="{{ old('score') }}" required class="form-control @error('score') is-invalid @enderror">
                                 @error('score')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -152,7 +167,8 @@
         $('.editscore').click(function(e) {
             e.preventDefault();
             var id = $(this).closest('td').find('.score_id').val();
-            $.get('/school/swep-200/'+id, function(data)
+            // alert(id);
+            $.get('/school/swep-200/edit/'+id, function(data)
             {
                 $('#score_name').html(data.user.last_name + " " + data.user.first_name);
                 $('#edit_score').val(data.swep_score);

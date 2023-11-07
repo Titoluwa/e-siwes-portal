@@ -41,7 +41,6 @@ class Siwes extends Model
     {
         return $this->belongsTo(Staff::class, 'assigned_staff_id');
     }
-
     public function total_score()
     {
         return $this->swep_score + $this->itcu_score;

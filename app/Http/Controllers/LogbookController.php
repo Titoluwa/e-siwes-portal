@@ -189,6 +189,9 @@ class LogbookController extends Controller
     {
         $user_id = Auth::user()->id;
         $siwes = Siwes::create($request->all());
+        if ($request->siwes_type_id == 1){
+            $siwes->swep_attendance = [];
+        }
         $siwes->user_id = $user_id;
         $siwes->save();
         $print = new PrintDoc();

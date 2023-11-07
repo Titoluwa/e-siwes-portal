@@ -184,6 +184,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         KingFlamez\Rave\RaveServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         // Yajra\Datatables\DatatablesServiceProvider::class,
         // Yajra\DataTables\ButtonsServiceProvider::class,
 
@@ -253,6 +254,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Rave' =>  KingFlamez\Rave\RaveServiceProvider::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

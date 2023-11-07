@@ -469,6 +469,21 @@ class AdminController extends Controller
 
         return back()->with('success', "Score Updated Successfully!");
     }
+    public function uploadResult(Request $request)
+    {
+        $file = $request->file('file');
+        $fileContents = file($file->getPathname());
+        
+        foreach ($fileContents as $line) {
+            $data = str_getcsv($line);
+            Siwes::where('siwes_type_id', 1)
+                ->join('students', 'siwes.student_id','=','students.id')
+                ->where('matric_no', $data[0])
+                ->update(['itcu_score' => $data[1]]);
+        }
+
+        return redirect()->back()->with('success', 'Result file uploaded successfully.');
+    }
     public function materials()
     {
         $sessions = Session::orderBy('id', 'DESC')->get();

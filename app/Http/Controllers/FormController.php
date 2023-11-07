@@ -36,17 +36,22 @@ class FormController extends Controller
         $siwes = Siwes::where('id', $id)->with('org', 'student','assigned_staff')->first();
         $assessment = SiwesAssessment::where('siwes_id', $id)->first();
         $industry_supervisor = OrgSupervisor::where('org_id', $siwes->org_id)->first();
-
-        return view('_templates.ssf', compact('siwes', 'assessment', 'industry_supervisor'));
+        if ($assessment == null) {
+            return response('No Assessment Found', 404);
+        }else{
+            return view('_templates.ssf', compact('siwes', 'assessment', 'industry_supervisor'));
+        }
     }
     public function viewdocumentSIAR($id)
     {
         $siwes = Siwes::where('id', $id)->with('org', 'student','assigned_staff')->first();
         $assessment = OrgAssessment::where('siwes_id', $id)->first();
         $industry_supervisor = OrgSupervisor::where('org_id', $siwes->org_id)->first();
-
-        return view('_templates.siar', compact('siwes', 'assessment', 'industry_supervisor'));
-
+        if ($assessment == null) {
+            return response('No Assessment Found', 404);
+        }else{
+            return view('_templates.siar', compact('siwes', 'assessment', 'industry_supervisor'));
+        }
     }
     public function viewdocumentForm8($id)
     {
@@ -76,9 +81,12 @@ class FormController extends Controller
         $siwes = Siwes::where('id', $id)->with('org', 'student','assigned_staff')->first();
         $assessment = OrgAssessment::where('siwes_id', $id)->first();
         $industry_supervisor = OrgSupervisor::where('org_id', $siwes->org_id)->first();
-
-        $pdf = PDF::loadView('_templates.siar', compact('siwes', 'assessment', 'industry_supervisor'));
-        return $pdf->download('SIAR.pdf');
+        if ($assessment == null) {
+            return response('No Assessment Found', 404);
+        }else{
+            $pdf = PDF::loadView('_templates.siar', compact('siwes', 'assessment', 'industry_supervisor'));
+            return $pdf->download('SIAR.pdf');
+        }
     }
     public function downloadSSF($id)
     {
@@ -86,8 +94,12 @@ class FormController extends Controller
         $assessment = SiwesAssessment::where('siwes_id', $id)->first();
         $industry_supervisor = OrgSupervisor::where('org_id', $siwes->org_id)->first();
 
-        $pdf = PDF::loadView('_templates.ssf', compact('siwes', 'assessment', 'industry_supervisor'));
-        return $pdf->download('SSF.pdf');
+        if ($assessment == null) {
+            return response('No Assessment Found', 404);
+        }else{
+            $pdf = PDF::loadView('_templates.ssf', compact('siwes', 'assessment', 'industry_supervisor'));
+            return $pdf->download('SSF.pdf');
+        }
     }
     public function downloadForm8($id)
     {

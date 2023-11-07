@@ -326,18 +326,22 @@ class SchoolController extends Controller
 
         $session = Session::where('id', $session_id)->first();
         $siwes_type = SiwesType::where('id', $siwes_type_id)->first();
+        $s_swep = Siwes::where('session_id', $session_id)->where('siwes_type_id', 1)->first();
         $siwes = Siwes::where('session_id', $session_id)->where('siwes_type_id', $siwes_type_id)->with('user', 'student', 'org')->get();
         $filtered = $siwes->reject(function ($value, $key) {
             $staff = Staff::where('user_id', Auth::user()->id)->first();
             return $value->student->department != $staff->department;
         });
-      
-        return view('school.all_students', compact('staff', 'session', 'siwes_type', 'filtered', 'today'));
+        // dd(($filtered));
+        return view('school.all_students', compact('staff', 'session', 'siwes_type', 'filtered', 'today', 's_swep'));
     }
     public function swep_attendance($siwes_id)
     {
         $today = Carbon::today()->toDateString();
         $siwes = Siwes::where('id', $siwes_id)->first();
+        if ($siwes->siwes_type_id == 1){
+            $siwes->swep_attendance = [];
+        }
         $newarr = $siwes->swep_attendance;
         array_push($newarr, $today);
         $siwes->swep_attendance = $newarr;
@@ -346,14 +350,29 @@ class SchoolController extends Controller
         return response()->json(['status'=>"Marked as Present!!"]);
     }
     public function edit_swep_score(Request $request)
-    {
-        Siwes::where('id', $request->swep_id)->update(['swep_score'=> $request->score]);
+    { 
+        // dd($request->all());
+        Siwes::where('id', $request->swep_id)->update(['swep_score'=> $request->swep_score]);
 
-        return back()->with('success', "Score Upadated Successfully");
+        return back()->with('success', "Score Updated Successfully!");
+    }
+    public function uploadResult(Request $request)
+    {
+        $file = $request->file('file');
+        $fileContents = file($file->getPathname());
+
+        foreach ($fileContents as $line) {
+            $data = str_getcsv($line);
+            Siwes::where('siwes_type_id', 1)
+                ->join('students', 'siwes.student_id','=','students.id')
+                ->where('matric_no', $data[0])
+                ->update(['swep_score' => $data[1]]);
+        }
+
+        return redirect()->back()->with('success', 'Result file uploaded successfully.');
     }
     public function store_material(Request $request)
     {
-        // dd($request->all());
         $material = Material::create($request->all());
         $material->file = $request->file('file')->store('materials', 'public');
         $material->name = $request->file('file')->getClientOriginalName();

@@ -166,8 +166,6 @@ class StudentController extends Controller
     {
         $id = Auth::user()->id;
         $student = Student::where('user_id', $id)->first();
-        // $banks = {{baseurl}}v2/api/identity/ng/bank-account-number/bank-list;
-        // dd($banks);
         return view('student.profile_edit', compact('student'));
     }
         // Update the information for StudentUser

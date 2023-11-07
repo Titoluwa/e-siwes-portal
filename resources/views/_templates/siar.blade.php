@@ -79,10 +79,22 @@
             </tr>
             <tr class="main-row">
                 <td style="padding-left: 15px">
-                    <p><b>{{$assessment->qualitative}}</b></p>
+                    <p>
+                        <b>
+                            @if($assessment->qualitative != null)
+                                {{$assessment->qualitative}}
+                            @endif
+                        </b>
+                    </p>
                 </td>
                 <td style="padding-left: 15px">
-                    <p><b>{{$assessment->qualitative_score}}</b>
+                    <p>
+                        <b>
+                            @if($assessment->qualitative_score != null)
+                                {{$assessment->qualitative_score}}
+                            @endif
+                        </b>
+                    </p>
                 </td>
             </tr>
         </table>

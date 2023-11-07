@@ -97,6 +97,7 @@ Route::prefix('admin')->group(function ()
     Route::get('/student-200/{id}', 'AdminController@student200');
 
     Route::post('/student/edit-itcu-score', 'AdminController@edit_itcu_score');
+    Route::post('/upload-swep', 'AdminController@uploadResult');
 
     Route::delete('/user/deactivate/{id}', 'AdminController@deactivateUser');
     Route::delete('/user/activate/{id}', 'AdminController@activateUser');
@@ -172,7 +173,8 @@ Route::prefix('school')->group(function ()
 
     Route::post('/swep-attendance/{siwes_id}', 'SchoolController@swep_attendance');
 
-    Route::get('/swep-200/{id}', 'SchoolController@swep200student');
+    Route::get('/swep-200/edit/{id}', 'SchoolController@swep200student');
+    Route::post('/upload-swep', 'SchoolController@uploadResult');
     
     Route::post('/student/edit-swep-score', 'SchoolController@edit_swep_score');
 
