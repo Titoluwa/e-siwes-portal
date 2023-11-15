@@ -14,7 +14,7 @@
                         <h4 style="font-weight: 700;">{{ $student->user->name() }}</h4>
                     </div>
                     <div class="float-right mt-1" style="display: inline-flex">
-                        <a class="mr-2" href="" data-toggle="modal" data-target="#editStudentModal">
+                        <a class="mr-2"  data-toggle="modal" data-target="#editStudentModal">
                             <i class="fas fa-edit"></i> Edit
                         </a>
                         <a href="/admin/students" class="btn btn-sm btn-warning ml-2">Back</a>

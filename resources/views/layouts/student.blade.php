@@ -50,7 +50,7 @@
                         </a>
                     </li> --}}
                     {{-- <li>
-                        <a href="" class="nav-link">
+                        <a  class="nav-link">
                         <i class="fa fa-user-tie"></i> Forms*
                         </a>
                     </li> --}}
@@ -64,12 +64,12 @@
                                 <a class="dropdown-item" href="/student/form8">Form 8</a>
                                 <a class="dropdown-item" href="/student/scaf">SCAF</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Assessment</a>
+                                <a class="dropdown-item" >Assessment</a>
                             </div>
                         </div>
                     </li>
                     <!-- <li>
-                        <a href="" class="nav-link">
+                        <a  class="nav-link">
                         <i class="fa fa-poll"></i> Letter from Company
                         </a>
                     </li> -->

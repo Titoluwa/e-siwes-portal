@@ -98,13 +98,13 @@
                                             @foreach($siwes as $student)
                                                 <tr>
                                                     <td>{{$loop->index + 1}}</td>
-                                                    <td><a onclick="studentDetails({{$student->id}})" href="" data-toggle="modal" data-target="#viewStudent">{{$student->user->name()}} ({{$student->siwes_type->name}})</a></td>
+                                                    <td><a onclick="studentDetails({{$student->id}})"  data-toggle="modal" data-target="#viewStudent">{{$student->user->name()}} ({{$student->siwes_type->name}})</a></td>
                                                     {{-- <td><a href="/industry/student/{{$student->user_id}}">{{$student->user->name()}} ({{$student->siwes_type->name}})</a></td> --}}
                                                     <td>{{$student->student->matric_no}} </td>
                                                     <td>{{$student->student->department}} </td>
                                                     <td>
                                                         <a target="_blank" href="/industry/logbook/{{$student->id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
-                                                        {{-- <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Forms</a> --}}
+                                                        {{-- <a  class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Forms</a> --}}
                                                         <button type='button' class='btn btn-sm btn-outline-danger delete'><i class="fa fa-trash-alt"></i></button>
                                                     </td>
                                                 </tr>

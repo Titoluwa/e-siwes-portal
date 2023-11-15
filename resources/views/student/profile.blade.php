@@ -164,9 +164,7 @@
                     var value = $(this).val();
                     var sortCode = $(this).attr('id');
                     // var _token = $('input[name="_token"]').val();
-                    console.log(sortCode);
-                    console.log(value);
-                    $('#sort_code').val(sortCode);
+                    // $('#sort_code').val(sortCode);
                 }
             });
         });

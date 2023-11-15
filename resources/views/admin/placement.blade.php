@@ -59,7 +59,7 @@
                                                 <td>
                                                     {{$student->itcu_score}}
                                                     <input class="score_id" type="hidden" value="{{$student->id}}">
-                                                    <a href="" data-toggle="modal" data-target="#editScoreModal" class="editscore blue-text" style="text-decoration-line: none"><i class="fa fa-edit"></i></a>
+                                                    <a  data-toggle="modal" data-target="#editScoreModal" class="editscore blue-text" style="text-decoration-line: none"><i class="fa fa-edit"></i></a>
                                                 </td>
                                                 <td>{{$student->total_score()}}</td>
                                             @endif

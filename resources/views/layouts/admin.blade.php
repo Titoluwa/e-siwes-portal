@@ -2,7 +2,7 @@
 
 @section('home', '(ITCU)')
 {{-- @section('nav')
-    <a href="" class="nav-link">ITCU</a>
+    <a  class="nav-link">ITCU</a>
 @endsection --}}
 
 @section('style')

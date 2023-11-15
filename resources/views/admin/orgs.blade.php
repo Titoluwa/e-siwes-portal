@@ -67,7 +67,7 @@
                                                     <span class="text-danger">nil</span>
                                                 @else
                                                     <button onclick="get_orgdetails({{$sup->org->id}})" class='m-1 btn btn-sm btn-outline-primary' data-toggle="modal" data-target="#viewOrgModal">Details</button>
-                                                    <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Edit</a>
+                                                    <a  class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Edit</a>
                                                     <button type='button' class='m-1 btn btn-sm btn-outline-danger delete' disabled><i class="fa fa-unlink"></i></button>
                                                 @endif
                                             </td>

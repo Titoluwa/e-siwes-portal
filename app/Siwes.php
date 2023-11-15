@@ -10,6 +10,7 @@ class Siwes extends Model
     protected $casts = [
         'swep_attendance' => 'array'
     ];
+    public $with = ['bank_details'];
     protected $guarded = ['id'];
     protected $timestamp = true;
     
@@ -40,6 +41,10 @@ class Siwes extends Model
     public function assigned_staff()
     {
         return $this->belongsTo(Staff::class, 'assigned_staff_id');
+    }
+    public function bank_details()
+    {
+        return $this->belongsTo(BankDetail::class, 'user_id', 'user_id');
     }
     public function total_score()
     {

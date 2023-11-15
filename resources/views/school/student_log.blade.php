@@ -26,7 +26,7 @@
                 </p>
                 @if (!empty($assessment))
                     <p class="text-center">
-                        <b class="text-success">Visitation Supervision Assessment has been submitted. </b> <a href="" data-toggle="modal" data-target="#edit_supervisionForm" ><i class="fa fa-edit"></i> Edit</a>
+                        <b class="text-success">Visitation Supervision Assessment has been submitted. </b> <a  data-toggle="modal" data-target="#edit_supervisionForm" ><i class="fa fa-edit"></i> Edit</a>
                     </p>
                 @endif
                 <div id="Records" class="mt-4">

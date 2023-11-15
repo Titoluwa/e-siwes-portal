@@ -147,7 +147,7 @@
         <a class="nav-link" href="/industry/org">Register Organisation</a>
     @endif
     <a class="nav-link" href="/industry/student">Manage Students</a>
-    <a class="nav-link" href="">Edit Profile</a> -->
+    <a class="nav-link" >Edit Profile</a> -->
 
 @section('scripts')
 <script>

@@ -25,7 +25,7 @@
                                             <a class="dropdown-item" href="/student/form8">Form 8</a>
                                             <a class="dropdown-item" href="/student/scaf">SCAF</a> --}}
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Assessment</a>
+                                            <a class="dropdown-item" >Assessment</a>
                                         </div>
                                     </div>
                             @else
@@ -40,7 +40,7 @@
                                         <a target="_blank" class="dropdown-item" href="/form/download-ssf/{{$siwes->id}}">Supervision Form</a>
                                         <a target="_blank" class="dropdown-item" href="/form/download-siar/{{$siwes->id}}">Industry Assessment Report</a>
                                         <a target="_blank" class="dropdown-item" href="/form/download-form8/{{$siwes->id}}">Form 8</a>
-                                        {{-- <a class="dropdown-item" href="#">Assessment</a> --}}
+                                        {{-- <a class="dropdown-item" >Assessment</a> --}}
                                     </div>
                                 </div>
                             @endif

@@ -50,7 +50,7 @@
                                         <td>
                                             @if ($user->logged == 1)
                                                 <input class="logout_val" type="hidden" value="{{$user->id}}">
-                                                <span class="text-success logout"><a href="">IN</a></span>
+                                                <span class="text-success logout"><a >IN</a></span>
                                             @else
                                                 <span class="text-danger">Out</span>
                                             @endif

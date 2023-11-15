@@ -326,7 +326,7 @@ class SchoolController extends Controller
 
         $session = Session::where('id', $session_id)->first();
         $siwes_type = SiwesType::where('id', $siwes_type_id)->first();
-        $s_swep = Siwes::where('session_id', $session_id)->where('siwes_type_id', 1)->first();
+        $s_swep = Siwes::where('session_id', $session_id)->where('siwes_type_id', $siwes_type_id)->first();
         $siwes = Siwes::where('session_id', $session_id)->where('siwes_type_id', $siwes_type_id)->with('user', 'student', 'org')->get();
         $filtered = $siwes->reject(function ($value, $key) {
             $staff = Staff::where('user_id', Auth::user()->id)->first();

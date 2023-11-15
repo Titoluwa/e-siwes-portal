@@ -34,7 +34,7 @@
                                             <td>{{$itf->state_location}}</td>
                                             <td>
                                                 <a href="admin/setup/itf/{{$itf->id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> View</a>
-                                                <a href="" class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Edit</a>
+                                                <a  class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Edit</a>
                                                 <button type='button' class='btn btn-sm btn-outline-danger delete'><i class="fa fa-trash-alt"></i></button>
                                             </td>
                                         </tr>

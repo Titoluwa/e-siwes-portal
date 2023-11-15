@@ -158,6 +158,8 @@ class StudentController extends Controller
         $bank = BankDetail::where('user_id', $id)->first();
 
         $banks = Flutterwave::banks()->nigeria();
+        // dd($banks);
+        // dd($banks['data'][4]['name']);
 
         return view('student.profile', compact('student', 'orgs', 'bank', 'banks'));
     }
@@ -273,7 +275,7 @@ class StudentController extends Controller
     }
     public function store_bank(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $bank = BankDetail::create($request->all());
         $bank->save();
 

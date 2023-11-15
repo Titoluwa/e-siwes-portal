@@ -11,7 +11,7 @@
                     <h3 class="text-primary"><i class="fa fa-university"></i> Departments</h3>
                 </div>
                 <div class="float-right">
-                    <a href="" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#AddDepartmemt"> <i class="fa fa-plus"></i> Add </a>
+                    <a  class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#AddDepartmemt"> <i class="fa fa-plus"></i> Add </a>
                 </div>
                 <div class="table-responsive mt-3">
                     <table id="departmentsTable" class="table table-bordered">

@@ -14,7 +14,7 @@
                     <a class="blue-text ml-3" style="text-decoration-line: none" onclick="board()"><i class="fa fa-chalkboard"></i> Notice Board</a>
                     {{-- <a class="blue-text ml-3"  data-toggle="modal" data-target="#getStudentModal" style="text-decoration-line: none"><i class="fas fa-user-friends"></i> All Students</a> --}}
                     <div class="float-right">
-                        <a href="" data-toggle="modal" data-target="#getStudentModal" class="blue-text" style="text-decoration-line: none"><i class="fas fa-user-friends"></i> All Students</a>
+                        <a  data-toggle="modal" data-target="#getStudentModal" class="blue-text" style="text-decoration-line: none"><i class="fas fa-user-friends"></i> All Students</a>
                     </div>
                 </div>
 
@@ -53,14 +53,14 @@
                                             @foreach($siwes as $siwes)
                                                 <tr>
                                                     <td>{{$loop->index + 1}}</td>
-                                                    <td><a href="" data-toggle="modal" data-target="#viewstudentModal" onclick="get_student({{$siwes->user_id}})">{{$siwes->user->name()}} <small>({{$siwes->siwes_type->name}})</small></a></td>
+                                                    <td><a  data-toggle="modal" data-target="#viewstudentModal" onclick="get_student({{$siwes->user_id}})">{{$siwes->user->name()}} <small>({{$siwes->siwes_type->name}})</small></a></td>
                                                     {{-- <td><a href="/school/student/{{$siwes->user_id}}">{{$siwes->user->name()}} <small>({{$siwes->siwes_type->name}})</small></a></td> --}}
                                                     <td>{{$siwes->student->matric_no}} </td>
                                                     <td>{{$siwes->student->department}} </td>
-                                                    <td><a href="" data-toggle="modal" data-target="#vieworgModal" onclick="get_orgdetails({{$siwes->org_id}})">{{$siwes->org->name}}</a></td>
+                                                    <td><a  data-toggle="modal" data-target="#vieworgModal" onclick="get_orgdetails({{$siwes->org_id}})">{{$siwes->org->name}}</a></td>
                                                     <td>
                                                         <a target="_blank" href="/school/{{$siwes->siwes_type->code_name}}/{{$siwes->user_id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
-                                                        {{-- <button href="" class='btn btn-sm btn-outline-primary' disabled><i class="fa fa-list"></i> Forms</button> --}}
+                                                        {{-- <button  class='btn btn-sm btn-outline-primary' disabled><i class="fa fa-list"></i> Forms</button> --}}
                                                         {{-- <button type='button' class='btn btn-sm btn-outline-danger delete'><i class="fa fa-trash-alt"></i></button> --}}
                                                     </td>
                                                 </tr>
