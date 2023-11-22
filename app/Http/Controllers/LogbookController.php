@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Form8;
 use App\PrintDoc;
 use App\Student;
 use Carbon\Carbon;
@@ -30,6 +31,7 @@ class LogbookController extends Controller
         $orgs = Organization::all();
         $sessions = Session::all();
         $currentdate = Carbon::now()->format('Y-m-d');
+        $form8 = Form8::where('siwes_id', $siwes400->id)->first();
 
         if (!empty($siwes400)){
             $all_dailys = DailyRecord::where('siwes_id', $siwes400->id)->where('user_id', $id)->orderBy('date', 'ASC')->first();
@@ -75,7 +77,7 @@ class LogbookController extends Controller
             $monthlyrecords = null;
         }
 
-        return view('student.log', compact('student', 'siwes400', 'orgs', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'sessions'));
+        return view('student.log', compact('student', 'siwes400', 'orgs', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'sessions', 'form8'));
     }
     public function index200()
     {
@@ -352,5 +354,11 @@ class LogbookController extends Controller
         };
         $record->delete();
         return response()->json(['status'=>"Record Deleted Successfully!"]);
+    }
+    public function store_form8(Request $request)
+    {
+        $form8 = new Form8($request->all());
+        $form8->save();
+        return response()->json(['status'=>"Form Submitted Successfully!"]);
     }
 }

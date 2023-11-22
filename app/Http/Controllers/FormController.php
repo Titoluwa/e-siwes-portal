@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
+use App\Form8;
 use App\Siwes;
 use App\OrgAssessment;
 use App\OrgSupervisor;
-use App\SiwesAssessment;
-use PDF;
 // use Illuminate\Http\Request;
+use App\SiwesAssessment;
 use Illuminate\Http\Response;
 
 class FormController extends Controller
@@ -56,8 +57,10 @@ class FormController extends Controller
     public function viewdocumentForm8($id)
     {
         $siwes = Siwes::where('id', $id)->with('org', 'student','assigned_staff')->first();
-
-        return view('_templates.form8', compact('siwes'));
+        $form8 = Form8::where('siwes_id', $id)->with('siwes')->first();
+        $industry_supervisor = OrgSupervisor::where('org_id', $siwes->org_id)->first();
+        
+        return view('_templates.form8', compact('siwes', 'form8', 'industry_supervisor'));
 
     }
     public function downloadSCAF($id)

@@ -16,6 +16,7 @@
         }
         span{
             font-weight: bold;
+            text-decoration: underline;
         }
         #imgg{
             margin: 10% 20%;
@@ -26,8 +27,8 @@
         }
         #watermark{
             position: fixed;
-            /* /* bottom: 19px; */
-            /* right: 19p */
+            /* bottom: 19px; */
+            /* right: 19px; */
             opacity: 0.6;
             color: black;
             display: block;
@@ -85,7 +86,7 @@
                     1.
                 </td>
                 <td>
-                    (a) Name in full: <span>   </span>
+                    (a) Name in full: <span>  {{$siwes->user->name()}} {{$siwes->user->middle_name}} </span>
                 </td>
             </tr>
             <tr>
@@ -93,21 +94,21 @@
                     
                 </td>
                 <td>
-                    (b) Registration/Matriculation Number: <span> </span>
+                    (b) Registration/Matriculation Number: <span> {{$siwes->student->matric_no}}</span>
                 </td>
             </tr>
             <tr>
                 <td>
                 </td>
                 <td>
-                    (c) Course of Study:  <span> </span>
+                    (c) Course of Study:  <span> {{$siwes->student->course_of_study}}</span>
                 </td>
             </tr>
             <tr>
                 <td>
                 </td>
                 <td>
-                    (d) Year of Study:  <span> </span>
+                    (d) Year of Study:  <span> {{$siwes->year_of_training}} </span>
                 </td>
             </tr>
             <tr>
@@ -122,22 +123,22 @@
                     2.
                 </td>
                 <td>
-                    (a) Name & Address of the Company/Establishment: <span> </span>
+                    (a) Name & Address of the Company/Establishment: <span> {{$siwes->org->name}} / {{$siwes->org->full_address}}</span>
                 </td>
             </tr>
             <tr>
                 <td>
                 </td>
                 <td>
-                    (b) The Department/Section: <span> </span>
+                    (b) The Department/Section: <span> {{$form8->depts_at_org}} </span>
                 </td>
             </tr>
             <tr>
                 <td>
                 </td>
                 <td>
-                    (c) Period of Attachment: From: <span></span>  To: <span></span>
-                    <br> Number of Weeks <span></span>
+                    (c) Period of Attachment: From: <span>{{$siwes->resumption_date}}</span>  To: <span>{{$siwes->ending_date}}</span>
+                    <br> Number of Weeks: <span> {{$siwes->duration_of_training}}</span>
                 </td>
             </tr>
             <tr>
@@ -145,7 +146,7 @@
                     3.
                 </td>
                 <td>
-                    Total Allowance Received by Student: # <span></span>
+                    Total Allowance Received by Student:  <span>#{{$form8->total_allowance}}</span>
                 </td>
             </tr>
             <tr>
@@ -153,28 +154,28 @@
                     4.
                 </td>
                 <td>
-                    Brief Outline of experience/relevance of training provided: <span></span>
+                    Brief Outline of experience/relevance of training provided: <span>{{$form8->experience_outline}}</span>
                 </td>
             </tr>
             <tr>
                 <td>
                 </td>
                 <td>
-                    (a) Where were you attached last (if applicable): <span>   </span>
+                    (a) Where were you attached last (if applicable): <span> {{$form8->perivous_attachement}}  </span>
                 </td>
             </tr>
             <tr>
                 <td>
                 </td>
                 <td>
-                    (b) Total Number of weeks engaged on industrial attachment: <span> </span>
+                    (b) Total Number of weeks engaged on industrial attachment: <span> {{$form8->weeks_engaged}}</span>
                 </td>
             </tr>
             <tr>
                 <td>
                 </td>
                 <td>
-                    Signature: <span></span>  Date: <span></span>
+                    Signature: <span><img src="/storage/{{$siwes->student->signature}}" alt="signature" width="10%" height="3%"></span>  Date: <span>{{$form8->student_filled}}</span>
                 </td>
             </tr>
         </table>
@@ -190,12 +191,11 @@
                 <td>
                     Do you agree with the student's comments in items 3&4 in Part A?
                     <span>   
-                    {{-- @if()
-                        <b>NO</b>
-                        Why? <b>{{$assessment->why_not_available}}</b>
-                    @else
-                        <b>YES</b>
-                    @endif     --}}
+                        @if($form8->employer_agree_3 == 0)
+                            <b>NO</b>
+                        @else
+                            <b>YES</b>
+                        @endif    
                     </span>
                 </td>
             </tr>
@@ -204,14 +204,14 @@
                     
                 </td>
                 <td>
-                    State total amount paid to student as ITF allowance: #<span> </span>
+                    State total amount paid to student as ITF allowance: <span>#{{$form8->employer_total_allowance}}</span>
                 </td>
             </tr>
             <tr>
                 <td>
                 </td>
                 <td>
-                    In Words: <span> </span>
+                    In Words: <span> {{strval($form8->employer_total_allowance)}}</span>
                 </td>
             </tr>
             <tr>
@@ -219,7 +219,7 @@
                     6.
                 </td>
                 <td>
-                    Assess the student's overall performance: <span> </span>
+                    Assess the student's overall performance: <span> {{$form8->employer_assessment}}</span>
                 </td>
             </tr>
             <tr>
@@ -229,6 +229,7 @@
                 <td>
                     Will you accept the student in any future attachment?
                     <span> 
+                        {{$form8->accept_student}}
                         {{-- @if()
                             <b>NO</b>
                             Why? <b>{{$assessment->why_not_available}}</b>
@@ -243,7 +244,7 @@
                     8.
                 </td>
                 <td>
-                    Is your Company/Establishment in a position to offer this student a job in the future? <span> </span>
+                    Is your Company/Establishment in a position to offer this student a job in the future? <span> {{$form8->future_position}}</span>
                 </td>
             </tr>
             <tr>
@@ -251,14 +252,14 @@
                     9.
                 </td>
                 <td>
-                    Name of Reporting Officer: <span> </span>
+                    Name of Reporting Officer: <span>{{$industry_supervisor->user->name()}}</span>
                 </td>
             </tr>
             <tr>
                 <td>
                 </td>
                 <td>
-                    Designation/Rank: <span></span>
+                    Designation/Rank: <span>{{$form8->employer_rank}}</span>
                 </td>
             </tr>
             <tr>
@@ -269,7 +270,7 @@
                 <td>
                 </td>
                 <td>
-                    Signature/Stamp: <span></span>  Date: <span></span>
+                    Signature/Stamp: <span><img src="/storage/{{$industry_supervisor->user->signature}}" alt="signature" width="10%" height="3%"></span>  Date: <span>{{$form8->employer_filled}}</span>
                 </td>
             </tr>
         </table>
@@ -285,7 +286,7 @@
                     10.
                 </td>
                 <td>
-                    Indicate number of visit(s): <span> </span>
+                    Indicate number of visit(s): <span> {{$form8->no_of_visits}}</span>
                 </td>
             </tr>
             <tr>
@@ -293,7 +294,7 @@
                     11.
                 </td>
                 <td>
-                    Assessment of facilites provided by Company during visit(s): <span> </span>
+                    Assessment of facilites provided by Company during visit(s): <span> {{$form8->assess_facilties}}</span>
                 </td>
             </tr>
             <tr>
@@ -301,7 +302,7 @@
                     12.
                 </td>
                 <td>
-                    Impression of the Student's involvement in training: <span> </span>
+                    Impression of the Student's involvement in training: <span>{{$form8->student_impression}}</span>
                 </td>
             </tr>
             <tr>
@@ -309,7 +310,7 @@
                     13.
                 </td>
                 <td>
-                    Assessment of student's performance (Grading): <span> </span>
+                    Assessment of student's performance (Grading): <span> {{$form8->assess_student_grade}}</span>
                 </td>
             </tr>
             <tr>
@@ -317,7 +318,7 @@
                     
                 </td>
                 <td>
-                    Full name of Supervisor: <span> </span>
+                    Full name of Supervisor: <span>{{$siwes->assigned_staff->user->name()}} </span>
                 </td>
             </tr>
             <tr>
@@ -325,7 +326,7 @@
 
                 </td>
                 <td>
-                    Rank: <span> </span>
+                    Rank: <span> {{$form8->staff_rank}}</span>
                 </td>
             </tr>
             <tr>
@@ -333,7 +334,7 @@
 
                 </td>
                 <td>
-                    Department/Discipline: <span> </span>
+                    Department/Discipline: <span>{{$siwes->assigned_staff->department}} </span>
                 </td>
             </tr>
             <tr>
@@ -348,7 +349,7 @@
                 <td>
                 </td>
                 <td>
-                    Signature/Stamp: <span></span>  Date: <span></span>
+                    Signature/Stamp: <span><img src="/storage/{{$siwes->assigned_staff->user->signature}}" alt="signature" width="10%" height="3%"></span>  Date: <span>{{$form8->staff_filled}}</span>
                 </td>
             </tr>
         </table>    

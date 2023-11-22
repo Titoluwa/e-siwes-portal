@@ -202,7 +202,7 @@
                                         <label class="form-check-label" for="female">Female</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" id="male" value="Male">
+                                        <input class="form--input" type="radio" name="gender" id="male" value="Male">
                                         <label class="form-check-label" for="male">Male</label>
                                     </div>
                                     @error('gender')

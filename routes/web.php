@@ -135,6 +135,7 @@ Route::prefix('student')->group(function ()
     // Logbook for SIWES 400
     Route::get('/log', 'LogbookController@index400');
     Route::post('/log/initiate', 'LogbookController@initiate_logbook');
+    Route::post('/log/form8', 'LogbookController@store_form8');
 
     // Logbook for SWEP 200
     Route::get('/log200', 'LogbookController@index200');
@@ -180,6 +181,8 @@ Route::prefix('school')->group(function ()
 
     Route::post('/supervision/store', 'SchoolController@store_supervisionform');
     Route::put('/supervision/update/{id}', 'SchoolController@update_supervisionform');
+
+    Route::post('/log/form8', 'SchoolController@store_form8');
     
 });
 
@@ -206,6 +209,7 @@ Route::prefix('industry')->group(function ()
 
     Route::post('/supervision/store', [IndustryController::class, 'store_assessment']);
     Route::put('/supervision/update/{id}', [IndustryController::class, 'update_assessment']);
+    Route::post('/log/form8', [IndustryController::class,'store_form8']);
 });
 
 // PDF Form downloads

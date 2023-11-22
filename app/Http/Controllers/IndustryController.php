@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Form8;
 use App\Siwes;
 use App\Session;
 use App\Student;
@@ -256,6 +257,8 @@ class IndustryController extends Controller
     {
         $siwes = Siwes::where('id', $siwes_id)->first();
         $org_assessment = OrgAssessment::where('siwes_id', $siwes_id)->first();
+        $form8 = Form8::where('siwes_id', $siwes->id)->first();
+
         if (!empty($siwes)){
             $all_dailys = DailyRecord::where('siwes_id', $siwes_id)->where('user_id', $siwes->user_id)->orderBy('date', 'ASC')->first();
             $all_weeks = WeeklyRecord::where('siwes_id', $siwes_id)->where('user_id', $siwes->user_id)->first();
@@ -307,7 +310,8 @@ class IndustryController extends Controller
         }else{
             $monthlyrecords = null;
         }
-        return view('industry.student_log', compact('siwes', 'orgs', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'org_assessment'));
+
+        return view('industry.student_log', compact('siwes', 'orgs', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'org_assessment', 'form8'));
     }
 
     public function approve_week($id)
@@ -345,12 +349,18 @@ class IndustryController extends Controller
     }
     public function update_assessment(Request $request, $id)
     {
-        // dd($request->all());
         $assessment = OrgAssessment::where('id', $id)->first();
         $assessment->qualitative = $request->qualitative;
         $assessment->qualitative_score = $request->qualitative_score;
         $assessment->update();
 
         return back()->with('success', 'Assessment Report Submitted');
+    }
+    public function store_form8(Request $request)
+    {
+        $form8 = Form8::where('siwes_id', $request->siwes_id)->first();
+        $form8->update($request->all());
+
+        return response()->json(['status'=>"Form Submitted Successfully!"]);
     }
 }

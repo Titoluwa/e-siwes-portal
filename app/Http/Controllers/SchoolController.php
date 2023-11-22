@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Form8;
 use App\Siwes;
-use App\Staff;
 
+use App\Staff;
 use App\Session;
 use App\Student;
 use App\Material;
@@ -172,8 +173,10 @@ class SchoolController extends Controller
     }
     public function siwes400($id)
     {
+        $staff = Staff::where('user_id', Auth()->user()->id)->first();
         $student = Student::where('user_id', $id)->first();
         $siwes = Siwes::where('siwes_type_id', 3)->where('user_id', $id)->first();
+        $form8 = Form8::where('siwes_id', $siwes->id)->first();
         $currentdate = Carbon::now()->format('Y-m-d');
         $assessment = SiwesAssessment::where('siwes_id', $siwes->id)->first();
         $all_dailys = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->first();
@@ -211,7 +214,7 @@ class SchoolController extends Controller
         }else{
             $monthlyrecords = null;
         }
-        return view('school.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes', 'assessment'));
+        return view('school.student_log', compact('staff', 'student', 'form8', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes', 'assessment'));
     }
     public function siwes300($id)
     {
@@ -405,6 +408,13 @@ class SchoolController extends Controller
         return back()->with('success', 'Assessment Updated Successfully!');
     }
 
+    public function store_form8(Request $request)
+    {
+        $form8 = Form8::where('siwes_id', $request->siwes_id)->first();
+        $form8->update($request->all());
+
+        return response()->json(['status'=>"Form Submitted Successfully!"]);
+    }
     // To validate the inputs
     // private function validateRequest(){
     //     return request()->validate([
