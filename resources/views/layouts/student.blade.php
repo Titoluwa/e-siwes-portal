@@ -8,9 +8,8 @@
 @section('style')
     <style>
         .sidebar{
-            /* background-attachment: fixed;
-            background-color:
-            height: 100%; */
+            background-attachment: fixed;
+            height: 100vh;
         }
     </style>
 @endsection
@@ -54,7 +53,7 @@
                         <i class="fa fa-user-tie"></i> Forms*
                         </a>
                     </li> --}}
-                    <li>
+                    {{-- <li>
                         <div class="dropdown">
                             <a class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-file"></i> Form
@@ -67,7 +66,7 @@
                                 <a class="dropdown-item" >Assessment</a>
                             </div>
                         </div>
-                    </li>
+                    </li> --}}
                     <!-- <li>
                         <a  class="nav-link">
                         <i class="fa fa-poll"></i> Letter from Company

@@ -225,6 +225,7 @@ Route::prefix('form')->group(function ()
     Route::get('/download-sp3/{id}', [FormController::class, 'downloadSP3']);
     Route::get('/download-siar/{id}', [FormController::class, 'downloadSIAR']);
     Route::get('/download-ssf/{id}', [FormController::class, 'downloadSSF']);
+    Route::get('/download-form8/{id}', [FormController::class, 'downloadForm8']);
 
 });
 

@@ -10,6 +10,10 @@
         body{
             background-image: url('images/oau-view-3.webp') !important;
         }
+        .sidebar{
+            background-attachment: fixed;
+            height: 100vh;
+        }
     </style>
 @endsection
 

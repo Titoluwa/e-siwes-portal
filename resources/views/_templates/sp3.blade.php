@@ -66,7 +66,7 @@
                     The SIWES Coordinator,
                 </p>
                 <p class="inserted-text no-margin">
-                    <i>{{$siwes->department_coord->user->name()}}</i>
+                    <i>{{$dept_coord->user->name()}}</i>
                 </p>
                 <p class="no-margin">
                     Obafemi Awolowo University

@@ -21,26 +21,38 @@
                                             <i class="fa fa-file"></i> SWEP 200
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            {{-- <a class="dropdown-item" href="/student/sp3">SP. 3</a>
-                                            <a class="dropdown-item" href="/student/form8">Form 8</a>
-                                            <a class="dropdown-item" href="/student/scaf">SCAF</a> --}}
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" >Assessment</a>
+                                            {{-- <a class="dropdown-item" href="/student/sp3">SP. 3</a>--}}
+                                            {{-- <a class="dropdown-item" href="/student/form8">Form 8</a> --}}
+                                            {{-- <a class="dropdown-item" href="/student/scaf">SCAF</a>  --}}
+                                            {{-- <div class="dropdown-divider"></div> --}}
+                                            <a class="dropdown-item">Assessment</a>
                                         </div>
                                     </div>
-                            @else
+                            @elseif ($siwes->siwes_type_id == 2)
                                 <div class="dropdown">
                                     <a class="btn btn-sm btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-file"></i> Form
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a target="_blank" class="dropdown-item" href="/form/download-sp3/{{$siwes->id}}">SP.3</a>
-                                        <a target="_blank" class="dropdown-item" href="/form/download-scaf/{{$siwes->id}}">SCAF</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#SP3previewmodal">SP.3</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#Scafpreviewmodal">SCAF</a>
                                         <div class="dropdown-divider"></div>
-                                        <a target="_blank" class="dropdown-item" href="/form/download-ssf/{{$siwes->id}}">Supervision Form</a>
-                                        <a target="_blank" class="dropdown-item" href="/form/download-siar/{{$siwes->id}}">Industry Assessment Report</a>
-                                        <a target="_blank" class="dropdown-item" href="/form/form8/{{$siwes->id}}">Form 8</a>
-                                        {{-- <a class="dropdown-item" >Assessment</a> --}}
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#ssfpreviewmodal">Supervision Form<</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#siarpreviewmodal">Industry Assessment Report</a>
+                                    </div>
+                                </div>
+                            @elseif ($siwes->siwes_type_id == 3)
+                                <div class="dropdown">
+                                    <a class="btn btn-sm btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-file"></i> Form
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#SP3previewmodal">SP.3</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#Scafpreviewmodal">SCAF</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#ssfpreviewmodal">Supervision Form</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#siarpreviewmodal">Industry Assessment Report</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#Form8previewmodal">Form 8</a>
                                     </div>
                                 </div>
                             @endif
@@ -202,7 +214,7 @@
                 </div>
 
                 <!-- MODALS -->
-            <!-- View Weekly Activity Modal -->
+                <!-- View Weekly Activity Modal -->
                 <div class="modal fade" id="view_weekly_modal" tabindex="-1" role="dialog" aria-labelledby="view_weekly" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content">
@@ -246,7 +258,7 @@
                         </div>
                     </div>
                 </div>
-            <!-- View Monthly Activity Modal -->
+                <!-- View Monthly Activity Modal -->
                 <div class="modal fade" id="view_monthly_modal" tabindex="-1" role="dialog" aria-labelledby="view_monthly" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content">
@@ -293,6 +305,8 @@
                         </div>
                     </div>
                 </div>
+
+                @include('_templates.preview_modals')
 
             </div>
         </div>

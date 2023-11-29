@@ -85,8 +85,8 @@
         }
         .navv{
             color: white;
-            padding: 0 25px;
-            font-size: 16px;
+            /* padding: 0 25px;
+            font-size: 16px; */
             font-weight: 700;
             /* letter-spacing: .1rem; */
             text-decoration: none;
@@ -107,7 +107,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark nav-color">
+        <header class="navbar navbar-expand-md navbar-dark nav-color">
             <div class="container navv">
                 {{-- @yield('homelink') --}}
                 <a class="navbar-brand" href="/">
@@ -189,7 +189,7 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </header>
 
         <main class="container-fluid">
             @yield('content')

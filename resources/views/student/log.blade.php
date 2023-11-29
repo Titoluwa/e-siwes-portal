@@ -11,19 +11,35 @@
                         <h3 style="font-weight: 700;">SIWES 400 LogBook</h3>
                         <small>Fill in your daily activities after each day of training</small>
                     </div>
-                    <div class="float-right">
-
+                    <div class="float-right mt-3">
+                        @if($siwes400 != null)
+                        <div class="dropdown">
+                            <a class="btn btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-file"></i> SIWES 400
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" data-toggle="modal" data-target="#SP3previewmodal">SP.3</a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#Scafpreviewmodal">SCAF</a>
+                                @if($form8 != null)
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#Form8previewmodal">Form 8</a>
+                                @else
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#fill_form8_modal">Fill Form 8</a>
+                                @endif
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
 
                 <div class="card-body border-warning m-4 p-2">
                     @if ($siwes400 != null)
                         <div class="row">
-                            <div class="col-lg-9">
+                            <div class="col-lg-12">
                                 <p class="">Your duration of training at <b>{{$siwes400->org->name}}</b> is <b>{{$siwes400->duration_of_training}}</b> in <b>{{$siwes400->year_of_training}}</b>.</p>
                                 <p class="mb-4">You are to fill your Logbook with each day's activities.</p>
                             </div>
-                            <div class="col-lg-3 mb-4">
+                            {{-- <div class="col-lg-3 mb-4">
                                 <div class="dropdown">
                                     <a class="btn btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-file"></i> SIWES 400
@@ -39,7 +55,7 @@
                                         @endif
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>  
                        
                         <div id="Records">
@@ -373,6 +389,7 @@
                 </div>
 
                 @include('student.log_modals')
+                @include('_templates.preview_modals')
 
             </div>
         </div>

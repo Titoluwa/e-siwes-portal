@@ -81,8 +81,8 @@
                 <td style="padding-left: 15px">
                     <p>
                         <b>
-                            @if($assessment->qualitative != null)
-                                {{$assessment->qualitative}}
+                            @if($orgassessment->qualitative != null)
+                                {{$orgassessment->qualitative}}
                             @endif
                         </b>
                     </p>
@@ -90,8 +90,8 @@
                 <td style="padding-left: 15px">
                     <p>
                         <b>
-                            @if($assessment->qualitative_score != null)
-                                {{$assessment->qualitative_score}}
+                            @if($orgassessment->qualitative_score != null)
+                                {{$orgassessment->qualitative_score}}
                             @endif
                         </b>
                     </p>

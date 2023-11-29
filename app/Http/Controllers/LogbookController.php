@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Form8;
-use App\PrintDoc;
+use App\Siwes;
+use App\Staff;
+use App\Session;
 use App\Student;
+use App\PrintDoc;
 use Carbon\Carbon;
 use App\DailyRecord;
 use App\Organization;
 use App\WeeklyRecord;
 use App\MonthlyRecord;
-use App\Session;
-use App\Siwes;
+use App\OrgSupervisor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -27,11 +29,13 @@ class LogbookController extends Controller
     {
         $id = Auth::user()->id;
         $student = Student::where('user_id', $id)->first();
-        $siwes400 = Siwes::where('siwes_type_id', 3)->where('user_id', $id)->first();
+        $siwes = $siwes400 = Siwes::where('siwes_type_id', 3)->where('user_id', $id)->first();
         $orgs = Organization::all();
         $sessions = Session::all();
         $currentdate = Carbon::now()->format('Y-m-d');
         $form8 = Form8::where('siwes_id', $siwes400->id)->first();
+        $industry_supervisor = OrgSupervisor::where('org_id', $siwes400->org_id)->first();
+        $dept_coord = Staff::where('department', $siwes->department())->first();
 
         if (!empty($siwes400)){
             $all_dailys = DailyRecord::where('siwes_id', $siwes400->id)->where('user_id', $id)->orderBy('date', 'ASC')->first();
@@ -77,7 +81,7 @@ class LogbookController extends Controller
             $monthlyrecords = null;
         }
 
-        return view('student.log', compact('student', 'siwes400', 'orgs', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'sessions', 'form8'));
+        return view('student.log', compact('siwes', 'student', 'siwes400', 'orgs', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'sessions', 'form8', 'industry_supervisor', 'dept_coord'));
     }
     public function index200()
     {

@@ -3,7 +3,7 @@
 @section('studentcontent')
 
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card border-warning">
                 <div class="card-header border-warning bg-othe-color">
 

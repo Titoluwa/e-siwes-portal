@@ -11,8 +11,12 @@
                         <h3 style="font-weight: 700;">SWEP 200 LogBook</h3>
                         <small>Fill in your daily activities after each day of your SWEP classes </small>
                     </div>
-                    <div class="float-right">
-
+                    <div class="float-right mt-3">
+                        @if ($siwes200->itcu_score != null && $siwes200->swep_score != null)
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#SwepScoreModal">
+                            View SWEP Result
+                            </button> 
+                        @endif
                     </div>
                 </div>
 
@@ -878,6 +882,47 @@
                                         </h6>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View Swep Score Modal -->
+                <div class="modal fade" data-keyboard="false" data-backdrop="static" id="SwepScoreModal" tabindex="-1" role="dialog" aria-labelledby="view_score" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="view_scoreLabel"><b> View SWEP 200 Score </b></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><b>&times;</b></span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <table>
+
+                                </table>
+                                <table class="table table-bordered" style="width:100%">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            {{-- <th>Course</th> --}}
+                                            <th>Department Grade (/50)</th>
+                                            <th>ITCU Grade (/50)</th>
+                                            <th>Total Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            {{-- <td>SWEP 200</td> --}}
+                                            <td>{{$siwes200->swep_score}}</td>
+                                            <td>{{$siwes200->itcu_score}}</td>
+                                            <td><b>{{$siwes200->total_score()}}</b></td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
