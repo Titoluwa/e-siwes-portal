@@ -14,18 +14,30 @@
                         <h4 style="font-weight: 700;">{{ $student->user->name() }}</h4>
                     </div>
                     <div class="float-right mt-1" style="display: inline-flex">
-                        <a class="mr-2"  data-toggle="modal" data-target="#editStudentModal">
-                            <i class="fas fa-edit"></i> Edit
-                        </a>
-                        <a href="/admin/students" class="btn btn-sm btn-warning ml-2">Back</a>
+                        <div class="dropdown m-1">
+                            <a class='btn btn-sm btn-primary dropdown-toggle' id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-book"></i> Logbooks
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                              <a target="_blank" class="dropdown-item" href="/admin/swep-200/{{$student->user_id}}">SWEP 200</a>
+                              <a target="_blank" class="dropdown-item" href="/admin/siwes-300/{{$student->user_id}}">SIWES 300</a>
+                              <a target="_blank" class="dropdown-item" href="/admin/siwes-400/{{$student->user_id}}">SIWES 400</a>
+                            </div>
+                        </div>
+                        {{-- <a href="/admin/students" class="btn btn-sm btn-warning ml-2">Back</a> --}}
                     </div>
                                       
                 </div>
                 <div class="card-body">
                     <div class="float-left">
-                        <h5><b> Personal Information </b></h5>
+                        <h5> <b> Personal Information </b> </h5>
                     </div>
-                    <br>
+                    <div class="float-right">
+                        <a class="mr-2"  data-toggle="modal" data-target="#editStudentModal">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                    </div>
+                    <div class="clearfix"></div>
                     <div class="mt-2">
                         @if ($student->user->profile_pic != null)
                             <img class="rounded border-warning float-right img-thumbnail" src="{{asset('storage/'. $student->user->profile_pic)}}" alt="profile image" srcset="" width="150" height="150">

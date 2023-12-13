@@ -43,7 +43,7 @@
                 <div class="clearfix mt-1 ">
                     <div class="float-left">
                         <p class="blue-text mb-2">
-                            You are to View and Assess this student weekly and monthly activitites at your Organization
+                            You are to View and Assess this student weekly and monthly activities at your Organization
                         </p>
                     </div>
                     <div class="float-right mb-4">

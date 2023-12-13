@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Staffs')
+@section('title', 'Departments')
 
 @section('admincontent')
     <div class="row">

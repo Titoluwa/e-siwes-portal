@@ -119,7 +119,7 @@
     <script  type="text/javascript">
         new DataTable('#materialsTable');
         // $('#usersTable').DataTable( {
-        //     dom: 'Bfrtip',
+        //     dom: 'lBfrtip',
         //     stateSave: true,
         //     buttons: [
         //         {

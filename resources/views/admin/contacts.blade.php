@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'All Contacts')
+@section('title', 'All Users')
 
 @section('admincontent')
     
@@ -195,24 +195,24 @@
     <script  type="text/javascript">
         // new DataTable('#usersTable');
         $('#usersTable').DataTable( {
-            dom: 'Bfrtip',
+            dom: 'lBfrtip',
             stateSave: true,
             buttons: [
-                {
-                    extend:    'copyHtml5',
-                    text:      '<i class="far fa-copy"></i> Copy',
-                    titleAttr: 'Copy'
-                },
+                // {
+                //     extend:    'copyHtml5',
+                //     text:      '<i class="far fa-copy"></i> Copy',
+                //     titleAttr: 'Copy'
+                // },
                 {
                     extend:    'excelHtml5',
                     text:      '<i class="far fa-file-excel"></i> Excel',
                     titleAttr: 'Excel'
                 },
-                // {
-                //     extend:    'pdfHtml5',
-                //     text:      '<i class="far fa-file-pdf"></i> PDF',
-                //     titleAttr: 'PDF'
-                // },
+                {
+                    extend:    'pdfHtml5',
+                    text:      '<i class="far fa-file-pdf"></i> PDF',
+                    titleAttr: 'PDF'
+                },
                 'colvis'
             ]
         } );

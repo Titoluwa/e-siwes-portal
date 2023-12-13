@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Students')
+@section('title', 'Students List')
 
 @section('admincontent')
     
@@ -14,10 +14,10 @@
                             <h4 class="text-primary">Placement List for {{$s_siwes->siwes_type->name}} <span id="session_name" >({{$current_session->year}})</span></h4>
                         @endif
                         @if ($s_siwes->siwes_type->name == "SWEP 200")
-                            <form class="float-right" action="/admin/upload-swep" method="POST" enctype="multipart/form-data">
+                            <form class="float-left" action="/admin/upload-swep" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <p>Upload ITCU result</p>
-                                <input type="file" name="file" id="result_file" class="form-control-file" accept=".csv" required>
+                                <input type="file" name="file" id="result_file" class="form-control-file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, .csv" required>
                                 <button type="submit" class="float-right btn btn-sm btn-warning">Submit</button>
                             </form>
                         @endif
@@ -152,7 +152,7 @@
                                     <div class="col-md-1"></div>
                                     <div class="col-md-4">
                                         <input type="hidden" name="swep_id" id='swep_id'>
-                                        <input type="number" name="score" id="edit_score" value="{{ old('score') }}" required class="form-control @error('score') is-invalid @enderror">
+                                        <input type="number" name="score" id="edit_score" value="{{ old('score') }}" max="50" required class="form-control @error('score') is-invalid @enderror">
                                         @error('score')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -192,15 +192,15 @@
         });
         // new DataTable('#placementTable');
         $('#placementTable').DataTable( {
-            dom: 'Bfrtip',
+            dom: 'lBfrtip',
             stateSave: true,
             lengthChange: true,
             buttons: [
-                {
-                    extend:    'copyHtml5',
-                    text:      '<i class="far fa-copy"></i> Copy',
-                    titleAttr: 'Copy'
-                },
+                // {
+                //     extend:    'copyHtml5',
+                //     text:      '<i class="far fa-copy"></i> Copy',
+                //     titleAttr: 'Copy'
+                // },
                 {
                     extend:    'excelHtml5',
                     text:      '<i class="far fa-file-excel"></i> Excel',

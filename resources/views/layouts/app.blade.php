@@ -18,6 +18,7 @@
     @yield('style')
     <style>
         body {
+            font-family: 'Poppins', sans-serif;
             background-image: url('/images/oau-view-3.webp') !important;
             background-color: white;
             position: relative;

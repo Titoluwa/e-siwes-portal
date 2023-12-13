@@ -13,35 +13,68 @@
                 </div>
                 
                 <div class="float-right">
-                    {{-- @if (empty($assessment))
-                        <button class=" m-2 btn btn-sm btn-secondary" data-toggle="modal" data-target="#supervisionForm" >Supervision Form</button>
-                    @endif --}}
-                    <div class="dropdown">
-                        <a class="m-2 btn btn-secondary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-file"></i> Forms
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            @if($form8 != null && $form8->student_filled != null && $form8->employer_filled != null && $form8->staff_filled == null)  
-                                <a class="dropdown-item" data-toggle="modal" data-target="#fill_form8_modal">Fill Form 8</a>
-                            @elseif ($form8 != null && $form8->staff_filled != null)
-                                <a class="dropdown-item" data-toggle="modal" data-target="#fill_form8_modal">Edit Form 8</a>
-                            @endif
-                            @if (empty($assessment))
-                                <a class="dropdown-item" data-toggle="modal" data-toggle="modal" data-target="#supervisionForm">Supervision Form</a>
-                            {{-- @else
-                                <a class="dropdown-item" data-toggle="modal" data-toggle="modal" data-target="#supervisionForm">Supervision Form<</a> --}}
-                            @endif
-                        </div>
-                    </div>
+                    @if (!empty($siwes))
+                        @if ($siwes->siwes_type_id == 1)
+                            <div class="dropdown">
+                                <a class="btn btn-sm btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-file"></i> SWEP 200
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" disabled>Assessment</a>
+                                </div>
+                            </div>
+                        @elseif ($siwes->siwes_type_id == 2)
+                            <div class="dropdown">
+                                <a class="btn btn-sm btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-file"></i> Forms
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#SP3previewmodal">SP.3</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#Scafpreviewmodal">SCAF</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#ssfpreviewmodal">Supervision Form<</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#siarpreviewmodal">Industry Assessment Report</a>
+                                </div>
+                            </div>
+                        @elseif ($siwes->siwes_type_id == 3)
+                            <div class="dropdown">
+                                <a class="btn btn-sm btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-file"></i> Form
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#SP3previewmodal">SP.3</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#Scafpreviewmodal">SCAF</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#siarpreviewmodal">Industry Assessment Report</a>
+                                    @if (empty($assessment) && ($siwes->assigned_staff->user->id == Auth()->user()->id ))
+                                        <a class="dropdown-item" data-toggle="modal" data-toggle="modal" data-target="#supervisionForm">Fill Supervision Form</a>
+                                    @else
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#ssfpreviewmodal">Supervision Form</a>
+                                    @endif
+                                    @if ($siwes->assigned_staff->user->id == Auth()->user()->id )
+                                        @if($form8 != null && $form8->student_filled != null && $form8->employer_filled != null && $form8->staff_filled == null)  
+                                            <a class="dropdown-item" data-toggle="modal" data-target="#fill_form8_modal">Fill Form 8</a>
+                                        @elseif ($form8 != null && $form8->staff_filled != null)
+                                            <a class="dropdown-item" data-toggle="modal" data-target="#fill_form8_modal">Edit Form 8</a>
+                                        @endif
+                                    @endif
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#Form8previewmodal">Form 8</a>
+                                </div>
+                            </div>
+                        @endif
+                    @endif
                 </div>
             </div>
 
             <div class="card-body border-warning bg-light">
 
                 <p class="text-center blue-text mb-2">
-                    View and Assess on this student's weekly and monthly activitites at their Organization of attachment
+                    View and Assess on this student's weekly and monthly activities at their Organization of attachment
                 </p>
-                @if (!empty($assessment))
+                <p class="text-center blue-text mb-2">
+                    Assigned to <b>{{$siwes->assigned_staff->user->name()}} ({{$siwes->assigned_staff->department}})</b>
+                </p>
+                @if (!empty($assessment) && ($siwes->assigned_staff->user->id == Auth()->user()->id ))
                     <p class="text-center">
                         <b class="text-success">Visitation Supervision Assessment has been submitted. </b> <a  data-toggle="modal" data-target="#edit_supervisionForm" ><i class="fa fa-edit"></i> Edit</a>
                     </p>
@@ -503,7 +536,7 @@
                             {{-- <hr> --}}
                             <div class="col-lg-4 p-2">
                                 <label class="col-form-label" for="visitation_date">Date of Visit:</label>
-                                <input class="form-control" type="date" name="visitation_date" id="visitation_date" value="{{ old('visistation_date') }}">
+                                <input class="form-control" type="date" name="visitation_date" id="visitation_date" value="{{ old('visistation_date') }}" required>
                             </div>
                             <div class="col-8 p-2">
                                 
@@ -571,7 +604,7 @@
                                 <input class="form-control" type="text" name="attitude_student" id="attitude_student" value="{{ old('attitude_student') }}">
                             </div>
                             <div class="col-12 p-2">
-                                <label class="col-form-label" for="challenges"> Any major challenge(s) requiring immediate attetion of the SIWES office ? Please specify</label>
+                                <label class="col-form-label" for="challenges"> Any major challenge(s) requiring immediate attention of the SIWES office ? Please specify</label>
                                 <textarea class="form-control" name="challenges" id="challenges" rows="2">{{ old('challenges') }}</textarea>
                             </div>
                         </div>
@@ -710,7 +743,7 @@
                                 <input class="form-control" type="text" name="attitude_student" id="attitude_student" value="{{ $assessment->attitude_student }}">
                             </div>
                             <div class="col-12 p-2">
-                                <label class="col-form-label" for="challenges"> Any major challenge(s) requiring immediate attetion of the SIWES office ? Please specify</label>
+                                <label class="col-form-label" for="challenges"> Any major challenge(s) requiring immediate attention of the SIWES office ? Please specify</label>
                                 <textarea class="form-control" name="challenges" id="challenges" rows="2">{{ $assessment->challenges }}</textarea>
                             </div>
                         </div>
@@ -806,6 +839,12 @@
                 </div>
             </div>
         </div>
+        @endif
+
+        @if (!empty($siwes))
+            @if ($siwes->siwes_type_id == 3 || $siwes->siwes_type_id == 2)
+                @include('_templates.preview_modals')
+            @endif 
         @endif
 
         {{-- End OF MODALS --}}

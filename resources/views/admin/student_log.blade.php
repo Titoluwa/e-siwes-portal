@@ -21,10 +21,6 @@
                                             <i class="fa fa-file"></i> SWEP 200
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            {{-- <a class="dropdown-item" href="/student/sp3">SP. 3</a>--}}
-                                            {{-- <a class="dropdown-item" href="/student/form8">Form 8</a> --}}
-                                            {{-- <a class="dropdown-item" href="/student/scaf">SCAF</a>  --}}
-                                            {{-- <div class="dropdown-divider"></div> --}}
                                             <a class="dropdown-item">Assessment</a>
                                         </div>
                                     </div>
@@ -67,6 +63,11 @@
                             <p>Details of activties done at SWEP classes</p>
                         @else
                             <p class="">The duration of training at <b>{{$siwes->org->name}}</b> is <b>{{$siwes->duration_of_training}}</b> for <b>{{$siwes->year_of_training}}</b>.</p>
+                            <p class="">
+                                Assigned to <b><a href="mailto:{{$siwes->assigned_staff->user->email}}">{{$siwes->assigned_staff->user->name()}} </a> ({{$siwes->assigned_staff->department}})</b>
+                                <br>
+                                Industry based Supervisor <b><a href="mailto:{{$industry_supervisor->user->email}}">{{$industry_supervisor->user->name()}}</a> - (0{{$industry_supervisor->user->contact_no}})</b>
+                            </p>
                         @endif
 
                         <div id="Records">
@@ -306,7 +307,11 @@
                     </div>
                 </div>
 
-                @include('_templates.preview_modals')
+                @if (!empty($siwes))
+                    @if ($siwes->siwes_type_id == 3 || $siwes->siwes_type_id == 2)
+                        @include('_templates.preview_modals')
+                    @endif 
+                @endif
 
             </div>
         </div>

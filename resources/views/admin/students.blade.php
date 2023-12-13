@@ -327,14 +327,14 @@
     
     <script  type="text/javascript">
         $('#studentsTable').DataTable( {
-            dom: 'Bfrtip',
+            dom: 'lBfrtip',
             stateSave: true,
             buttons: [
-                {
-                    extend:    'copyHtml5',
-                    text:      '<i class="far fa-copy"></i> Copy',
-                    titleAttr: 'Copy'
-                },
+                // {
+                //     extend:    'copyHtml5',
+                //     text:      '<i class="far fa-copy"></i> Copy',
+                //     titleAttr: 'Copy'
+                // },
                 {
                     extend:    'excelHtml5',
                     text:      '<i class="far fa-file-excel"></i> Excel',
@@ -345,9 +345,9 @@
                     text:      '<i class="far fa-file-pdf"></i> PDF',
                     titleAttr: 'PDF'
                 },
-                'colvis'
+                // 'colvis'
             ]
-        } );
+        });
 
         $(document).ready(function(){
             $.ajaxSetup({

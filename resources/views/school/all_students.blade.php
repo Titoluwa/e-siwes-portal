@@ -21,10 +21,10 @@
                     <div class="card-body">
                         <div id="student_list">
                             @if ($s_swep->siwes_type->name == "SWEP 200")
-                                <form class="float-right" action="/school/upload-swep" method="POST" enctype="multipart/form-data">
+                                <form class="float-left" action="/school/upload-swep" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <p>Upload SWEP result</p>
-                                    <input type="file" name="file" id="result_file" class="form-control-file" accept=".csv" required>
+                                    <input type="file" name="file" id="result_file" class="form-control-file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
                                     <button type="submit" class="float-right btn btn-sm btn-warning">Submit</button>
                                 </form>
                             @endif
@@ -169,7 +169,7 @@
                             <div class="col-md-1"></div>
                             <div class="col-md-4">
                                 <input type="hidden" name="swep_id" id='swep_id'>
-                                <input type="number" name="swep_score" id="edit_score" value="{{ old('score') }}" required class="form-control @error('score') is-invalid @enderror">
+                                <input type="number" name="swep_score" id="edit_score" value="{{ old('score') }}" min="0" max="50" required class="form-control @error('score') is-invalid @enderror">
                                 @error('score')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -196,14 +196,19 @@
 
     <script>
     $('#studentsTable').DataTable( {
-        dom: 'Bfrtip',
+        dom: 'lBfrtip',
         stateSave: true,
         lengthChange: true,
         buttons: [
+            // {
+            //     extend:    'copyHtml5',
+            //     text:      '<i class="far fa-copy"></i> Copy',
+            //     titleAttr: 'Copy'
+            // },
             {
-                extend:    'copyHtml5',
-                text:      '<i class="far fa-copy"></i> Copy',
-                titleAttr: 'Copy'
+                extend:    'pdfHtml5',
+                text:      '<i class="far fa-file-pdf"></i> PDF',
+                titleAttr: 'PDF'
             },
             {
                 extend:    'excelHtml5',
@@ -216,14 +221,19 @@
     </script>
     <script>
         $('#bankDetailsTable').DataTable( {
-            dom: 'Bfrtip',
+            dom: 'lBfrtip',
             stateSave: true,
             lengthChange: true,
             buttons: [
+                // {
+                //     extend:    'copyHtml5',
+                //     text:      '<i class="far fa-copy"></i> Copy',
+                //     titleAttr: 'Copy'
+                // },
                 {
-                    extend:    'copyHtml5',
-                    text:      '<i class="far fa-copy"></i> Copy',
-                    titleAttr: 'Copy'
+                    extend:    'pdfHtml5',
+                    text:      '<i class="far fa-file-pdf"></i> PDF',
+                    titleAttr: 'PDF'
                 },
                 {
                     extend:    'excelHtml5',

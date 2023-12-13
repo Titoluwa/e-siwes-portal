@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Form8;
 use App\Siwes;
-
 use App\Staff;
 use App\Session;
 use App\Student;
@@ -18,6 +17,8 @@ use App\Announcement;
 use App\Organization;
 use App\WeeklyRecord;
 use App\MonthlyRecord;
+use App\OrgAssessment;
+use App\OrgSupervisor;
 use App\SiwesAssessment;
 use App\Mail\Registration;
 use Illuminate\Support\Str;
@@ -178,6 +179,9 @@ class SchoolController extends Controller
         $siwes = Siwes::where('siwes_type_id', 3)->where('user_id', $id)->first();
         $form8 = Form8::where('siwes_id', $siwes->id)->first();
         $currentdate = Carbon::now()->format('Y-m-d');
+        $dept_coord = Staff::where('department', $siwes->department())->first();
+        $industry_supervisor = OrgSupervisor::where('org_id', $siwes->org_id)->first();
+        $orgassessment = OrgAssessment::where('siwes_id', $siwes->id)->first();
         $assessment = SiwesAssessment::where('siwes_id', $siwes->id)->first();
         $all_dailys = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->first();
         $all_weeks = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
@@ -214,7 +218,8 @@ class SchoolController extends Controller
         }else{
             $monthlyrecords = null;
         }
-        return view('school.student_log', compact('staff', 'student', 'form8', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes', 'assessment'));
+        return view('school.student_log', compact('staff', 'student', 'form8', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 
+        'monthlyrecords', 'all_weeks', 'siwes', 'assessment', 'dept_coord', 'industry_supervisor', 'orgassessment'));
     }
     public function siwes300($id)
     {
@@ -257,7 +262,8 @@ class SchoolController extends Controller
         }else{
             $monthlyrecords = null;
         }
-        return view('school.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes', 'assessment'));
+        return view('school.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 
+        'all_weeks', 'siwes', 'assessment'));
     }
 
     public function swep200($id)
@@ -301,7 +307,8 @@ class SchoolController extends Controller
         }else{
             $monthlyrecords = null;
         }
-        return view('school.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes', 'assessment'));
+        return view('school.student_log', compact('student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 
+        'all_weeks', 'siwes', 'assessment'));
     }
 
 
