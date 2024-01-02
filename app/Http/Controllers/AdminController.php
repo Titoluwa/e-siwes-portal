@@ -281,61 +281,65 @@ class AdminController extends Controller
         $siwes_type = SiwesType::where('id', 3)->first();
         $siwes = Siwes::where('siwes_type_id', 3)->where('user_id', $id)->first();
         $currentdate = Carbon::now()->format('Y-m-d');
-        
-        if (!empty($siwes)){
-            $all_dailys = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->first();
-            $all_weeks = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
-            $dailyrecords = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
-            $weeklyrecords = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
-            $monthlyrecords = MonthlyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
-            $form8 = Form8::where('siwes_id', $siwes->id)->first();
-            $dept_coord = Staff::where('department', $siwes->department())->first();
-            $industry_supervisor = OrgSupervisor::where('org_id', $siwes->org_id)->first();
-            $assessment = SiwesAssessment::where('siwes_id', $siwes->id)->first();
-            $orgassessment = OrgAssessment::where('siwes_id', $siwes->id)->first();
+        if (!empty($siwes) AND $siwes->org_id == 1) {
+            return abort(404);
         }else{
-            $all_dailys = null;
-            $all_weeks = null;
-            $dailyrecords = null;
-            $weeklyrecords = null;
-            $monthlyrecords = null;
-            $form8 = null;
-            $dept_coord = null;
-            $industry_supervisor = null;
-            $assessment = null;
-            $orgassessment = null;
-        }
 
-        if (!empty($all_dailys)){
-            $all_dailys = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->get();
-        }else{
-            $all_dailys = null;
-        }
+            if (!empty($siwes)){
+                $all_dailys = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->first();
+                $all_weeks = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+                $dailyrecords = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+                $weeklyrecords = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+                $monthlyrecords = MonthlyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+                $form8 = Form8::where('siwes_id', $siwes->id)->first();
+                $dept_coord = Staff::where('department', $siwes->department())->first();
+                $industry_supervisor = OrgSupervisor::where('org_id', $siwes->org_id)->first();
+                $assessment = SiwesAssessment::where('siwes_id', $siwes->id)->first();
+                $orgassessment = OrgAssessment::where('siwes_id', $siwes->id)->first();
+            }else{
+                $all_dailys = null;
+                $all_weeks = null;
+                $dailyrecords = null;
+                $weeklyrecords = null;
+                $monthlyrecords = null;
+                $form8 = null;
+                $dept_coord = null;
+                $industry_supervisor = null;
+                $assessment = null;
+                $orgassessment = null;
+            }
 
-        if (!empty($dailyrecords)){
-            $dailyrecords = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->get();
-        }else{
-            $dailyrecords = null;
-        }
-        
-        if (!empty($weeklyrecords)){
-            $weeklyrecords = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('created_at', 'ASC')->get();
-        }else{
-            $weeklyrecords = null;
-        }
-        
-        if (!empty($all_weeks)){
-            $all_weeks = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->get();
-        }else{
-            $all_weeks = null;
-        }
+            if (!empty($all_dailys)){
+                $all_dailys = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->get();
+            }else{
+                $all_dailys = null;
+            }
 
-        if (!empty($monthlyrecords)){
-            $monthlyrecords = MonthlyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->get();
-        }else{
-            $monthlyrecords = null;
+            if (!empty($dailyrecords)){
+                $dailyrecords = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->get();
+            }else{
+                $dailyrecords = null;
+            }
+            
+            if (!empty($weeklyrecords)){
+                $weeklyrecords = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('created_at', 'ASC')->get();
+            }else{
+                $weeklyrecords = null;
+            }
+            
+            if (!empty($all_weeks)){
+                $all_weeks = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->get();
+            }else{
+                $all_weeks = null;
+            }
+
+            if (!empty($monthlyrecords)){
+                $monthlyrecords = MonthlyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->get();
+            }else{
+                $monthlyrecords = null;
+            }
+            return view('admin.student_log', compact('orgassessment', 'assessment', 'form8', 'industry_supervisor', 'student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes', 'siwes_type', 'sessions', 'dept_coord'));
         }
-        return view('admin.student_log', compact('orgassessment', 'assessment', 'form8', 'industry_supervisor', 'student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes', 'siwes_type', 'sessions', 'dept_coord'));
     }
     public function siwes300($id)
     {
@@ -343,59 +347,64 @@ class AdminController extends Controller
         $student = Student::where('user_id', $id)->first();
         $siwes_type = SiwesType::where('id', 2)->first();
         $siwes = Siwes::where('siwes_type_id', 2)->where('user_id', $id)->first();
-        if (!empty($siwes)){
-            $all_dailys = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->first();
-            $all_weeks = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
-            $dailyrecords = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
-            $weeklyrecords = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
-            $monthlyrecords = MonthlyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
-            $dept_coord = Staff::where('department', $siwes->department())->first();
-            $industry_supervisor = OrgSupervisor::where('org_id', $siwes->org_id)->first();
-            $assessment = SiwesAssessment::where('siwes_id', $siwes->id)->first();
-            $orgassessment = OrgAssessment::where('siwes_id', $siwes->id)->first();
+        if (!empty($siwes) AND $siwes->org_id == 1) {
+            return abort(404);
         }else{
-            $all_dailys = null;
-            $all_weeks = null;
-            $dailyrecords = null;
-            $weeklyrecords = null;
-            $monthlyrecords = null;
-            $dept_coord = null;
-            $industry_supervisor = null;
-            $assessment = null;
-            $orgassessment = null;
-        }
-        $currentdate = Carbon::now()->format('Y-m-d');
-
-        if (!empty($all_dailys)){
-            $all_dailys = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->get();
-        }else{
-            $all_dailys = null;
-        }
-
-        if (!empty($dailyrecords)){
-            $dailyrecords = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->get();
-        }else{
-            $dailyrecords = null;
-        }
         
-        if (!empty($weeklyrecords)){
-            $weeklyrecords = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('created_at', 'ASC')->get();
-        }else{
-            $weeklyrecords = null;
-        }
-        
-        if (!empty($all_weeks)){
-            $all_weeks = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->get();
-        }else{
-            $all_weeks = null;
-        }
+            if (!empty($siwes)){
+                $all_dailys = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->first();
+                $all_weeks = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+                $dailyrecords = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+                $weeklyrecords = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+                $monthlyrecords = MonthlyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->first();
+                $dept_coord = Staff::where('department', $siwes->department())->first();
+                $industry_supervisor = OrgSupervisor::where('org_id', $siwes->org_id)->first();
+                $assessment = SiwesAssessment::where('siwes_id', $siwes->id)->first();
+                $orgassessment = OrgAssessment::where('siwes_id', $siwes->id)->first();
+            }else{
+                $all_dailys = null;
+                $all_weeks = null;
+                $dailyrecords = null;
+                $weeklyrecords = null;
+                $monthlyrecords = null;
+                $dept_coord = null;
+                $industry_supervisor = null;
+                $assessment = null;
+                $orgassessment = null;
+            }
+            $currentdate = Carbon::now()->format('Y-m-d');
 
-        if (!empty($monthlyrecords)){
-            $monthlyrecords = MonthlyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->get();
-        }else{
-            $monthlyrecords = null;
+            if (!empty($all_dailys)){
+                $all_dailys = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->get();
+            }else{
+                $all_dailys = null;
+            }
+
+            if (!empty($dailyrecords)){
+                $dailyrecords = DailyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('date', 'ASC')->get();
+            }else{
+                $dailyrecords = null;
+            }
+            
+            if (!empty($weeklyrecords)){
+                $weeklyrecords = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->orderBy('created_at', 'ASC')->get();
+            }else{
+                $weeklyrecords = null;
+            }
+            
+            if (!empty($all_weeks)){
+                $all_weeks = WeeklyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->get();
+            }else{
+                $all_weeks = null;
+            }
+
+            if (!empty($monthlyrecords)){
+                $monthlyrecords = MonthlyRecord::where('siwes_id', $siwes->id)->where('user_id', $id)->get();
+            }else{
+                $monthlyrecords = null;
+            }
+            return view('admin.student_log', compact('orgassessment', 'assessment','industry_supervisor', 'dept_coord', 'student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes', 'siwes_type', 'sessions'));
         }
-        return view('admin.student_log', compact('orgassessment', 'assessment','industry_supervisor', 'dept_coord', 'student', 'currentdate', 'dailyrecords', 'weeklyrecords', 'all_dailys', 'monthlyrecords', 'all_weeks', 'siwes', 'siwes_type', 'sessions'));
     }
     public function swep200($id)
     {

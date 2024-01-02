@@ -104,6 +104,22 @@
             color: black;
             font-weight: 900;
         }
+        .sidebar {
+            width: 20%;
+            background-attachment: fixed;
+            height: 100vh;
+        }
+        .otherside{
+            width: 80%;
+        }
+        @media(max-width: 768px){
+            .sidebar {
+                width: 30%;
+            }
+            .otherside{
+                width: 70%;
+            }
+        }
     </style>
 </head>
 <body>

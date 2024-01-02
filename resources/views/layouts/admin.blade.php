@@ -10,16 +10,13 @@
         body{
             background-image: url('images/oau-view-3.webp') !important;
         }
-        .sidebar{
-            background-attachment: fixed;
-            height: 100vh;
-        }
+
     </style>
 @endsection
 
 @section('content')
     <div class="row">
-        <div class="bg-othe-color othe-color shadow-sm" style="width: 20%;">
+        <div class="sidebar bg-othe-color othe-color shadow-sm">
             <div class="m-2">
                 <h6 class="mt-3 text-center" style="font-size:17px; font-weight: 700;"><a href="/admin" class="no-deco oth-color"><i class="fa fa-home"></i> Home</a></h6>
                 <hr>
@@ -127,7 +124,7 @@
                 </ul>
             </div>
         </div>
-        <div class="p-5" style="width: 80%;">
+        <div class="p-5 otherside">
             @if (\Session::has('success'))
                 <div class="alert alert-success" role="alert">
                     <strong>

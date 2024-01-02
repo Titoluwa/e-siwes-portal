@@ -128,9 +128,15 @@
                     <div id="siwes-300" style="display: none;">
                         @if ($siwes300 != null)
                             <p class="text-center">SIWES 300 training at <b>{{$siwes300->org->name}}</b></p>
-                            <div class="text-center">
-                                <a href="/student/log300" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
-                            </div>  
+                            @if ($siwes300->org_id == 1)
+                                <div class="text-center">
+                                    <a href="/student/siwes/{{$siwes300->id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-link"></i> Re-Attach</a>
+                                </div>
+                            @else
+                                <div class="text-center">
+                                    <a href="/student/log300" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
+                                </div>
+                            @endif
                         @else
                             <hr>
                             <p class="text-center"><b>Fill this form to start your SIWES 300</b></p>
@@ -277,9 +283,16 @@
                     <div id="siwes-400" style="display: none;">
                         @if ($siwes400 != null)
                             <p class="text-center">SIWES 400 training at <b>{{$siwes400->org->name}}</b></p>  
-                            <div class="text-center">
-                                <a href="/student/log" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
-                            </div>
+                            @if ($siwes400->org_id == 1)
+                                <div class="text-center">
+                                    <a href="/student/siwes/{{$siwes400->id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-link"></i> Re-Attach</a>
+                                </div>
+                            @else
+                                <div class="text-center">
+                                    <a href="/student/log" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
+                                </div>
+                            @endif
+                            
                         @else
                             <hr>
                             <p class="text-center"><b>Fill this form to start your SIWES 400</b></p>

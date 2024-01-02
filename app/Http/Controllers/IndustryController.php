@@ -69,6 +69,7 @@ class IndustryController extends Controller
                 $supervisor->user_id = $user->id;
                 $supervisor->staff_id = $request->staff_id;
                 $supervisor->department = $request->department;
+                $supervisor->rank = $request->rank;
                 if ($request->hasFile('signature')){
                     $supervisor->signature = $request->file('signature')->store('signatures', 'public');
                 }
@@ -153,13 +154,17 @@ class IndustryController extends Controller
         if ($request->hasFile('logo')){
             $org->logo = $request->file('logo')->store('logos', 'public');
         }
-        $org->save();
-        
-        $org_supervisor = OrgSupervisor::where('id', Auth::user()->id)->first();
-        $org_supervisor->org_id = $org->id;
-        $org_supervisor->update();
+        if ($request->hasFile('stamp')){
+            $org->stamp = $request->file('stamp')->store('stamps', 'public');
+        }
 
-        return redirect('industry')->with('success', "Ypur Organizationhas been registered Successfully!");
+        if ($org->save()) {
+            $org_supervisor = OrgSupervisor::where('id', Auth::user()->id)->first();
+            $org_supervisor->org_id = $org->id;
+            $org_supervisor->update();
+        }
+
+        return redirect('industry')->with('success', "Your Organization has been registered Successfully!");
     }
         // Shows the edit form for organization.
     public function org_edit()
@@ -177,15 +182,20 @@ class IndustryController extends Controller
         $org->postal_address = $request->postal_address;
         $org->year_of_est = $request->year_of_est;
         $org->nature = $request->nature;
+        $org->state = $request->state;
+        $org->area = $request->area;
         $org->specialization = $request->specialization;
         $org->plant_capacity = $request->plant_capacity;
         $org->other_info = $request->other_info;
         if ($request->hasFile('logo')){
             $org->logo = $request->file('logo')->store('logos', 'public');
         }
+        if ($request->hasFile('stamp')){
+            $org->stamp = $request->file('stamp')->store('stamps', 'public');
+        }
         $org->update();
 
-        return redirect('industry')->with('success', "<b>$request->name</b> profile updated succesfully");
+        return redirect('industry')->with('success', "<b>$org->name</b> Profile Updated Succesfully");
     }
         // Show the edit form for Industry Supervisor user
     public function profile()
@@ -227,14 +237,20 @@ class IndustryController extends Controller
             if ($request->hasFile('profile_pic')){
                 $user->profile_pic = $request->file('profile_pic')->store('profile_pics', 'public');
             }
+            if ($request->hasFile('signature')){
+                $user->signature = $request->file('signature')->store('signatures', 'public');
+            }
             $user->update();
 
             $supervisor->staff_id = $request->staff_id;
             $supervisor->department = $request->department;
+            $supervisor->rank = $request->rank;
+            if ($request->hasFile('signature')){
+                $supervisor->signature = $request->file('signature')->store('signatures', 'public');
+            }
             $supervisor->update();
 
-            return redirect("/industry");
-            // ->with('success', "<b>$request->name</b> profile updated succesfully");
+            return redirect("/industry") ->with('success', "<b>$user->last_name</b> Profile Updated Succesfully");
 
         } catch(\Exception $e){
             DB::rollback();
@@ -362,5 +378,17 @@ class IndustryController extends Controller
         $form8->update($request->all());
 
         return response()->json(['status'=>"Form Submitted Successfully!"]);
+    }
+
+    public function detach_student($id)
+    {
+        $student = Siwes::findorFail($id);
+        $student->org_id = 1;
+        $student->save();
+        if ($student->save()) {
+            return response()->json(['status'=>"Student Detached Successfully!"]);
+            
+        }
+
     }
 }

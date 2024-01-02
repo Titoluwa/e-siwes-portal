@@ -201,6 +201,7 @@ Route::prefix('industry')->group(function ()
 
     Route::get('/student/{id}', 'IndustryController@student');
     Route::get('/siwes-student/{id}', 'IndustryController@siwes_student');
+    Route::delete('/student-detach/{id}', 'IndustryController@detach_student');
     Route::get('/logbook/{siwes_id}', 'IndustryController@siwes_log');
 
 

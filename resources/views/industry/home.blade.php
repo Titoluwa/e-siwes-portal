@@ -105,7 +105,11 @@
                                                     <td>
                                                         <a target="_blank" href="/industry/logbook/{{$student->id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
                                                         {{-- <a  class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Forms</a> --}}
-                                                        <button type='button' class='btn btn-sm btn-outline-danger delete'><i class="fa fa-trash-alt"></i></button>
+                                                        <input class="delete_val" type="hidden" value="{{$student->id}}">
+                                                        <a class="delete btn btn-sm btn-outline-danger">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </a>
+                                                        {{-- <button type='button' class='btn btn-sm btn-outline-danger delete'><i class="fa fa-trash-alt"></i></button> --}}
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -208,5 +212,41 @@
                 $('#signature').html(`<img src="storage/${data.student.signature}" alt="signature" width="180" height="30">`);                
             })
         }; 
+
+        $('.delete').click(function(e) {
+                e.preventDefault();
+                var delete_id = $(this).closest('td').find('.delete_val').val();
+                // alert(delete_id);
+                swal({
+                    title: "Remove Student?",
+                    text: "This student's record will be detached from your organization",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                        var data = {
+                            "_token": $('input[name=_token]').val(),
+                            "id": delete_id,
+                        }
+                        $.ajax({
+                            type: "DELETE",
+                            url: "/industry/student-detach/"+ delete_id,
+                            data: data,
+                            success: function (response){
+                                swal(response.status, {
+                                    icon: "success",
+                                })
+                                .then((result)=>{
+                                    location.reload();
+                                });
+                            }
+                        });
+                    }
+                });
+
+            });
     </script>
 @endsection

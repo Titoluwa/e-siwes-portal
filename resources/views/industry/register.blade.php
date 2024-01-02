@@ -72,7 +72,7 @@
 
                         <div class="form-group row">
 
-                            <div class="col-lg-6">
+                            <div class="col-lg-5">
                                 <label for="department" class="col-form-label">Department <small class="text-danger">*</small></label>
                                 <input id="department" type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{ old('department') }}" required>
                                 @error('department')
@@ -81,7 +81,16 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
+                                <label for="rank" class="col-form-label">Rank/Position</label>
+                                <input id="rank" type="text" class="form-control @error('rank') is-invalid @enderror" name="rank" value="{{ old('rank') }}">
+                                @error('rank')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="col-lg-3">
                                 <label for="gender" class="col-form-label">Gender <small class="text-danger">*</small></label>
                                 <br>
                                 <div class="form-check form-check-inline">
