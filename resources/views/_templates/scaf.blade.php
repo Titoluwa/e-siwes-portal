@@ -114,16 +114,17 @@
             <td>{{$siwes->resumption_date}}</td>
             <td>{{$siwes->ending_date}}</td>
             <td>
-                {{-- <img src="data:image/png;base64, <?php echo base64_encode(file_get_contents(base_path('/storage/'.$siwes->student->signature))); ?>" width="100%">
-                src="{{ storage_path('app/public/images/codeanddeploy.jpg') }}"
-                <img src="{{ storage_path('app/public/'.$siwes->student->signature) }}" alt=""> --}}
-                <img src="/storage/{{$siwes->student->signature}}" alt="signature" width="100%">
+                <img src="{{asset('storage/'. $siwes->student->signature)}}" alt="signature" width="100%">
             </td> 
         </tr>
     </table>
     <br>
     <p><b>Date: </b> <span class="inserted">{{Carbon\Carbon::now()->format('d/m/Y')}}</span></p>
-    <p><b>Stamp and Signature: </b> <span class="inserted"><img src="/storage/{{$industry_supervisor->profile_pic}}" alt="signature" width="180" height="30"></span></p>
+    <p>
+        <b>Stamp and Signature: </b> 
+        <span class="inserted"><img src="{{asset('storage/'. $industry_supervisor->user->signature)}}" alt="signature" width="180" height="30"></span>
+        <span class="inserted"><img src="{{asset('storage/'. $siwes->org->stamp)}}" alt="signature" width="180" height="30"></span>
+    </p>
     <div id="watermark">
         <img class="logo" name="oau" width="60" height="60" src="https://res.cloudinary.com/dwpdkfhmv/image/upload/v1696958202/OAU-Logo_grazuh.png" alt="">
         <img class="logo" name="itf" width="60" height="60" src="https://res.cloudinary.com/dwpdkfhmv/image/upload/v1696958202/itf_logo_large_tasfhy.png" alt="">

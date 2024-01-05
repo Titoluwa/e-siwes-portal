@@ -603,10 +603,15 @@
                 @csrf
                 <div class="modal-body">
                     <input type="hidden" name="siwes_id" id="form8_siwes_id" value="{{$siwes400->id}}">
+                    <div class="row">
+                        <div class="flex-center text-danger mx-3 px-2">
+                            <small class="text-center">*<b style="font-weight: bolder !important;">Carefully fill this form!</b> Once this form is submitted you will not be able to edit it</small>
+                        </div>     
+                    </div>
                     <div class="row form-group">
                         <div class="col-lg-4">
                             <label for="name" class="col-form-label"><b>Fullname</b></label>
-                            <input type="text" class="form-control" value="{{ $siwes400->user->name() }} {{ $siwes400->user->middle_name }}" disabled>
+                            <input type="text" class="form-control" value="{{ $siwes400->user->fullname() }}" disabled>
                         </div>
                         <div class="col-lg-4">
                             <label for="matric_no" class="col-form-label"><b>Matric Number</b></label>
@@ -670,6 +675,11 @@
                             <input type="date" class="form-control" name="student_filled_disabled" value="{{$currentdate}}" disabled>
                             <input type="hidden" name="student_filled" id="student_filled" value="{{$currentdate}}" >
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="flex-center text-danger mx-3 px-2">
+                            <small class="text-center">*<b style="font-weight: bolder !important;">Carefully fill this form!</b> Once this form is submitted you will not be able to edit it</small>
+                        </div>     
                     </div>
         
                 </div>

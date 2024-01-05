@@ -207,7 +207,7 @@ class LogbookController extends Controller
         if($siwes){
             return back()->with('success', "Your SIWES has been registered. Check your Logbook");
         }else{
-            return back()->with('deleted', "<b>ERROR!</b> loading Logbook");
+            return back()->with('error', "<b>ERROR!</b> loading Logbook");
         }
     }
     

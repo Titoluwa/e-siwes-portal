@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\PrintDoc;
 use Illuminate\Database\Eloquent\Model;
 
 class Siwes extends Model
@@ -49,5 +50,15 @@ class Siwes extends Model
     public function total_score()
     {
         return $this->swep_score + $this->itcu_score;
+    }
+    public function printed($doctype)
+    {
+        $doc = PrintDoc::where('siwes_id', $this->id)->first();
+        if($doc != null AND $doc->$doctype == 1)
+        {
+            return true;
+        }else{
+            return false;
+        }
     }
 }

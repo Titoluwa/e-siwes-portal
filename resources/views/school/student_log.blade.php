@@ -72,7 +72,7 @@
                     View and Assess on this student's weekly and monthly activities at their Organization of attachment
                 </p>
                 <p class="text-center blue-text mb-2">
-                    Assigned to <b>{{$siwes->assigned_staff->user->name()}} ({{$siwes->assigned_staff->department}})</b>
+                    Assigned to <b>{{$siwes->assigned_staff->user->name()}} - (0{{$siwes->assigned_staff->user->contact_no}} / {{$siwes->assigned_staff->department}})</b>
                 </p>
                 @if (!empty($assessment) && ($siwes->assigned_staff->user->id == Auth()->user()->id ))
                     <p class="text-center">

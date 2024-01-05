@@ -98,12 +98,12 @@
             <tr>
                 <td class="width60">
                     <p>
-                        RANK: <span class="inserted-text">{{$industry_supervisor->position}}</span>
+                        RANK: <span class="inserted-text">{{$industry_supervisor->rank}}</span>
                     </p>
                 </td>
                 <td class="width40"> 
                     <p>
-                        SIGNATURE: <img src="/storage/{{$siwes->student->signature}}" alt="signature" width="10%" height="3%"> 
+                        SIGNATURE: <img src="{{asset('storage/'. $industry_supervisor->user->signature)}}" alt="signature" width="10%" height="3%"> 
                     </p>
                 </td>
             </tr>
@@ -139,7 +139,7 @@
                 </td>
                 <td class="width60">
                     <p>
-                        SIGNATURE/DATE: <img src="/storage/{{$siwes->student->signature}}" alt="signature" width="10%" height="3%"> {{Carbon\Carbon::now()->format('d/m/Y')}}
+                        SIGNATURE/DATE: <img src="{{asset('storage/'. $siwes->student->signature)}}" alt="signature" width="10%" height="3%"> {{Carbon\Carbon::now()->format('d/m/Y')}}
                     </p>
                 </td>
             </tr>

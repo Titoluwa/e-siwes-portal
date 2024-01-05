@@ -166,7 +166,7 @@
                 <td>
                 </td>
                 <td>
-                    Signature: <span style="text-decoration: underline; font-weight: bold; "><img src="/storage/{{$siwes->student->signature}}" alt="signature" width="10%" height="3%"></span>  Date: <span style="text-decoration: underline; font-weight: bold; ">{{$form8->student_filled}}</span>
+                    Signature: <span style="text-decoration: underline; font-weight: bold; "><img src="{{asset('storage/'. $siwes->student->signature)}}" alt="signature" width="10%" height="3%"></span>  Date: <span style="text-decoration: underline; font-weight: bold; ">{{$form8->student_filled}}</span>
                 </td>
             </tr>
         </table>
@@ -202,7 +202,7 @@
                 <td>
                 </td>
                 <td>
-                    In Words: <span style="text-decoration: underline; font-weight: bold; "> {{strval($form8->employer_total_allowance)}}</span>
+                    In Words: <span style="text-decoration: underline; font-weight: bold; "> {{numberToWords($form8->employer_total_allowance)}} Naira</span>
                 </td>
             </tr>
             <tr>
@@ -261,7 +261,7 @@
                 <td>
                 </td>
                 <td>
-                    Signature/Stamp: <span style="text-decoration: underline; font-weight: bold; "><img src="/storage/{{$industry_supervisor->user->signature}}" alt="signature" width="10%" height="3%"></span>  Date: <span style="text-decoration: underline; font-weight: bold; ">{{$form8->employer_filled}}</span>
+                    Signature/Stamp: <span style="text-decoration: underline; font-weight: bold; "><img src="{{asset('storage/'. $industry_supervisor->user->signature)}}" alt="signature" width="10%" height="3%"></span>  Date: <span style="text-decoration: underline; font-weight: bold; ">{{$form8->employer_filled}}</span>
                 </td>
             </tr>
         </table>
@@ -340,7 +340,7 @@
                 <td>
                 </td>
                 <td>
-                    Signature/Stamp: <span style="text-decoration: underline; font-weight: bold; "><img src="/storage/{{$siwes->assigned_staff->user->signature}}" alt="signature" width="10%" height="3%"></span>  Date: <span style="text-decoration: underline; font-weight: bold; ">{{$form8->staff_filled}}</span>
+                    Signature/Stamp: <span style="text-decoration: underline; font-weight: bold; "><img src="{{asset('storage/'. $siwes->assigned_staff->user->signature)}}" width="10%" height="3%"></span>  Date: <span style="text-decoration: underline; font-weight: bold; ">{{$form8->staff_filled}}</span>
                 </td>
             </tr>
         </table>    

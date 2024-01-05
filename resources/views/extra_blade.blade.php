@@ -10,6 +10,9 @@
                             
                         </div>
                         <br>
+                                        {{-- <img src="data:image/png;base64, <?php echo base64_encode(file_get_contents(base_path('/storage/'.$siwes->student->signature))); ?>" width="100%">
+                src="{{ storage_path('app/public/images/codeanddeploy.jpg') }}"
+                <img src="{{ storage_path('app/public/'.$siwes->student->signature) }}" alt=""> --}}
                         <div class="mt-3">
                                 <p>
                                     Address during of Industrial Training: <b> {{$student->org->full_address}}</b>

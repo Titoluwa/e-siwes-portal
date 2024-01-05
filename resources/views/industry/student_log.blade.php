@@ -55,10 +55,18 @@
                                 @if($form8 != null && $form8->student_filled != null && $form8->employer_filled == null) 
                                     <a class="dropdown-item" data-toggle="modal" data-target="#fill_form8_modal">Fill Form 8</a>
                                 @elseif ($form8 != null && $form8->employer_filled != null)
-                                    <a class="dropdown-item" data-toggle="modal" data-target="#fill_form8_modal">Edit Form 8</a>
+                                    @if ($siwes->printed('form8') == 1)
+                                        <a class="dropdown-item text-muted">Form8 <sup>Printed</sup></a>
+                                    @else
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#fill_form8_modal">Edit Form 8</a>  
+                                    @endif
                                 @endif
                                 @if (!empty($org_assessment))
-                                    <a class="dropdown-item" data-toggle="modal" data-toggle="modal" data-target="#supervisionForm">Edit Assessment</a>
+                                    @if ($siwes->printed('siar') == 1)
+                                        <a class="dropdown-item text-muted">Assessment <sup>Printed</sup></a>
+                                    @else
+                                        <a class="dropdown-item" data-toggle="modal" data-toggle="modal" data-target="#supervisionForm">Edit Assessment</a>  
+                                    @endif    
                                 @else
                                     <a class="dropdown-item" data-toggle="modal" data-toggle="modal" data-target="#supervisionForm">Assessment</a>
                                 @endif

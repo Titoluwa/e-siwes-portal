@@ -115,8 +115,8 @@
                    <b> {{$industry_supervisor->user->name()}}</b>
                 </td>
                 <td>
-                    <b>{{$industry_supervisor->user->signature}}</b>
-                    <b>{{$siwes->org->stamp}}  </b>
+                    <b><img src="{{asset('storage/'. $industry_supervisor->user->signature)}}" alt="signature" width="10%" height="3%"></b>
+                    <b><img src="{{asset('storage/'. $siwes->org->stamp)}}" alt="signature" width="10%" height="3%"></b>
                     <b>{{Carbon\Carbon::now()->format('d/m/Y')}}</b>
                 </td>
             </tr>

@@ -133,10 +133,10 @@
                     </strong>
                 </div>
             @endif
-            @if (\Session::has('deleted'))
+            @if (\Session::has('error'))
                 <div class="alert alert-danger" role="alert">
                     <strong>
-                        {!! \Session::get('deleted') !!}
+                        {!! \Session::get('error') !!}
                         {{-- Deletion Done!! --}}
                         <a class="float-right text-danger" onclick="hide_alert()" style="text-decoration: none; cursor: default; justify-content:center;">&times;</a>
                     </strong>

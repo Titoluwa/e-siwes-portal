@@ -13,6 +13,10 @@ class User extends Authenticatable
     {
         return $this->last_name . " ". $this->first_name;
     }
+    public function fullname()
+    {
+        return $this->last_name . " ". $this->first_name . " ". $this->middle_name;
+    }
     /**
      * The attributes that are mass assignable.
      *

@@ -175,7 +175,7 @@
                 <td>
                 </td>
                 <td>
-                    Signature: <span><img src="/storage/{{$siwes->student->signature}}" alt="signature" width="10%" height="3%"></span>  Date: <span>{{$form8->student_filled}}</span>
+                    Signature: <span><img src="{{asset('storage/'. $siwes->student->signature)}}" alt="signature" width="10%" height="3%"></span>  Date: <span>{{$form8->student_filled}}</span>
                 </td>
             </tr>
         </table>
@@ -211,7 +211,7 @@
                 <td>
                 </td>
                 <td>
-                    In Words: <span> {{strval($form8->employer_total_allowance)}}</span>
+                    In Words: <span> {{numberToWords($form8->employer_total_allowance)}} Naira</span>
                 </td>
             </tr>
             <tr>
@@ -270,7 +270,7 @@
                 <td>
                 </td>
                 <td>
-                    Signature/Stamp: <span><img src="/storage/{{$industry_supervisor->user->signature}}" alt="signature" width="10%" height="3%"></span>  Date: <span>{{$form8->employer_filled}}</span>
+                    Signature/Stamp: <span><img src="{{asset('storage/'. $industry_supervisor->user->signature)}}" alt="signature" width="10%" height="3%"></span>  Date: <span>{{$form8->employer_filled}}</span>
                 </td>
             </tr>
         </table>
@@ -349,7 +349,7 @@
                 <td>
                 </td>
                 <td>
-                    Signature/Stamp: <span><img src="/storage/{{$siwes->assigned_staff->user->signature}}" alt="signature" width="10%" height="3%"></span>  Date: <span>{{$form8->staff_filled}}</span>
+                    Signature/Stamp: <span><img src="{{asset('storage/'. $siwes->assigned_staff->user->signature)}}" alt="signature" width="10%" height="3%"></span>  Date: <span>{{$form8->staff_filled}}</span>
                 </td>
             </tr>
         </table>    

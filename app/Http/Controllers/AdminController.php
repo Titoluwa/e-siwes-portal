@@ -6,8 +6,10 @@ use App\User;
 use App\Form8;
 use App\Siwes;
 use App\Staff;
+use Exception;
 use App\Session;
 use App\Student;
+use App\Swep200;
 use App\Material;
 use App\SiwesType;
 use Carbon\Carbon;
@@ -22,8 +24,10 @@ use App\OrgSupervisor;
 use App\SiwesAssessment;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Imports\Swep200Import;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 
@@ -503,18 +507,60 @@ class AdminController extends Controller
     }
     public function uploadResult(Request $request)
     {
-        $file = $request->file('file');
-        $fileContents = file($file->getPathname());
-        
-        foreach ($fileContents as $line) {
-            $data = str_getcsv($line);
-            Siwes::where('siwes_type_id', 1)
-                ->join('students', 'siwes.student_id','=','students.id')
-                ->where('matric_no', $data[0])
-                ->update(['itcu_score' => $data[1]]);
-        }
+        try{
+            $file = $request->file('file');
+            $fileContents = file($file->getPathname());
 
-        return redirect()->back()->with('success', 'Result file uploaded successfully.');
+            foreach ($fileContents as $line) {
+                $data = str_getcsv($line);
+                Siwes::where('siwes_type_id', 1)
+                    ->join('students', 'siwes.student_id','=','students.id')
+                    ->where('matric_no', $data[0])
+                    ->update(['itcu_score' => $data[1]]);
+            }
+            return redirect()->back()->with('success', 'Result file uploaded successfully.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Error encountered while uploading Result File');
+        }
+        // try {
+        //     \DB::beginTransaction();
+        //     if ($request->hasFile('file')) {
+        //         $file = $request->file('file');
+        //         $collection = (new Swep200Import)->collection($file);
+        //         dd($collection);
+        //         // dd('here');
+        //         // Excel::import(new Swep200Import, $request->file('file'));
+        //         $file = $request->file('file');
+        //         $path = $request->file('file')->getRealPath();
+        //         $import = Swep200::all();
+
+        //         $data = Excel::import(new Swep200Import, $path);
+
+        //         dd($data);
+        //         // $import = new Swep200Import; // Replace YourImportClass with your actual import class
+        //         // $data = Excel::toCollection($file)->get(); // Get collection of data from Excel file
+
+        //         // Loop through the data to update the database
+        //         foreach ($data as $row) {
+        //             // Assuming the first column contains IDs and the second column contains new values
+        //             $id = $row[0]; // Get the ID from the Excel file
+        //             $newValue = $row[1]; // Get the new value from the Excel file
+
+        //             // Retrieve the corresponding record from the database
+        //             $record = Swep200::where('matric_number', $id)->first(); // Replace YourModel with your actual model name
+
+        //             if ($record) {
+        //                 // Update the specific field in the database
+        //                 $record->update(['itcu_score' => $newValue]);
+        //             }
+        //         }
+        //     }
+        //     \DB::commit();
+        //     return redirect()->back()->with('success', 'Result file uploaded successfully.');
+        // } catch (Exception $e) {
+        //     \DB::rollback();
+        //     return redirect()->back()->with('error', 'Error Encountered While uploading Result File');
+        // }
     }
     public function materials()
     {
@@ -598,7 +644,7 @@ class AdminController extends Controller
         //    return back()->with('success', 'Download Successfully!!');
         } else {
             // return redirect('/404');
-            return back()->with('deleted', 'Document Not Found');
+            return back()->with('error', 'Document Not Found');
         } 
     }
     public function dept_create()

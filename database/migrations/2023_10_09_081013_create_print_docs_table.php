@@ -21,6 +21,11 @@ class CreatePrintDocsTable extends Migration
             $table->boolean('siar')->default(0);
             $table->boolean('ssf')->default(0);
             $table->boolean('form8')->default(0);
+            $table->date('scaf_print')->nullable();
+            $table->date('sp3_print')->nullable();
+            $table->date('siar_print')->nullable();
+            $table->date('ssf_print')->nullable();
+            $table->date('form8_print')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

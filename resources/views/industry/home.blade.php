@@ -105,11 +105,13 @@
                                                     <td>
                                                         <a target="_blank" href="/industry/logbook/{{$student->id}}" class='btn btn-sm btn-outline-primary'><i class="fa fa-book"></i> Logbook</a>
                                                         {{-- <a  class='btn btn-sm btn-outline-primary'><i class="fa fa-list"></i> Forms</a> --}}
-                                                        <input class="delete_val" type="hidden" value="{{$student->id}}">
-                                                        <a class="delete btn btn-sm btn-outline-danger">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </a>
-                                                        {{-- <button type='button' class='btn btn-sm btn-outline-danger delete'><i class="fa fa-trash-alt"></i></button> --}}
+                                                        @if (($student->printed('scaf') != 1) && ($student->printed('sp3') != 1))
+                                                            <input class="delete_val" type="hidden" value="{{$student->id}}">
+                                                            <a class="delete btn btn-sm btn-outline-danger">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </a>
+                                                        @endif
+                                                        
                                                     </td>
                                                 </tr>
                                             @endforeach

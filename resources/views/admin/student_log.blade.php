@@ -64,7 +64,7 @@
                         @else
                             <p class="">The duration of training at <b>{{$siwes->org->name}}</b> is <b>{{$siwes->duration_of_training}}</b> for <b>{{$siwes->year_of_training}}</b>.</p>
                             <p class="">
-                                Assigned to <b><a href="mailto:{{$siwes->assigned_staff->user->email}}">{{$siwes->assigned_staff->user->name()}} </a> ({{$siwes->assigned_staff->department}})</b>
+                                Assigned to <b><a href="mailto:{{$siwes->assigned_staff->user->email}}">{{$siwes->assigned_staff->user->name()}} </a> - (0{{$siwes->assigned_staff->user->contact_no}} / {{$siwes->assigned_staff->department}})</b>
                                 <br>
                                 Industry based Supervisor <b><a href="mailto:{{$industry_supervisor->user->email}}">{{$industry_supervisor->user->name()}}</a> - (0{{$industry_supervisor->user->contact_no}})</b>
                             </p>
